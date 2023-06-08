@@ -1,0 +1,6 @@
+.navigation {
+  background-color: #f1f1f1;
+  width: 200px;
+  padding: 20px;
+  direction: rtl; /* Add this line */
+}
