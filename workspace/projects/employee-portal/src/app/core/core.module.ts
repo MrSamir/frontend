@@ -13,7 +13,7 @@ import { NavBarComponent } from './compoenents/nav-bar/nav-bar.component';
     NavBarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule 
   ],
   exports:[
     HeaderComponent,
