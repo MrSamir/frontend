@@ -8,10 +8,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'employee-portal';
-  portalbreadcrumbroutes : ActivatedRoute=new ActivatedRoute();
-  constructor(private activerouter: ActivatedRoute) {
-   
-    this.portalbreadcrumbroutes=activerouter;
-  }
- 
 }

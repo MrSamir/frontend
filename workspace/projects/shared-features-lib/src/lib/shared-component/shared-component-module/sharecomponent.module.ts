@@ -1,16 +1,19 @@
+import { NgBootstrapHijriGregorianDatepickerModule } from './../../ng-bootstrap-hijri-gregorian-datepicker/ng-bootstrap-hijri-gregorian-datepicker.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { NgBootstrapHijriGregorianDatepickerComponent } from '../../ng-bootstrap-hijri-gregorian-datepicker/ng-bootstrap-hijri-gregorian-datepicker.component';
+
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent],
+  declarations: [BreadcrumbComponent ],
   imports: [
-    CommonModule,BreadcrumbModule
+    BreadcrumbModule,NgBootstrapHijriGregorianDatepickerModule
   ],
   exports:[
-    BreadcrumbComponent
+    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent
   ]
 
 })

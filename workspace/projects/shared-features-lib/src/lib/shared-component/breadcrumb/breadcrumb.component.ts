@@ -7,15 +7,11 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./breadcrumb.component.css']
 })
 export class BreadcrumbComponent implements OnInit {
-  @Input() breadcrumbroutes : ActivatedRoute=new ActivatedRoute()  ;
-  @Input() breadcrumbdata : string=""  ;
   breadcrumbs: MenuItem[]=[];
-   
-  constructor(private router: Router) {
+  constructor(private router: Router,private activerouter: ActivatedRoute) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.breadcrumbs = this.createBreadcrumbs(this.breadcrumbroutes.root);
-        console.log(this.breadcrumbroutes.root);
+        this.breadcrumbs = this.createBreadcrumbs(activerouter.root);
       }
     });
   }
@@ -26,17 +22,14 @@ export class BreadcrumbComponent implements OnInit {
     if (route.firstChild) {
       const childRoute = route.firstChild;
       const breadcrumb: MenuItem = {
-        label: this.breadcrumbdata, //childRoute.snapshot.data.breadcrumb,
+        label: childRoute.snapshot.data['breadcrumb'],
         url: childRoute.snapshot.url.join('/')
       };
-
       if (breadcrumb.label) {
         breadcrumbs.push(breadcrumb);
       }
-
       return this.createBreadcrumbs(childRoute, breadcrumbs);
     }
-
     return breadcrumbs;
   }
 }
