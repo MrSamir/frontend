@@ -22,7 +22,8 @@
             "tsConfig": "projects/public-portal/tsconfig.app.json",
             "assets": [
               "projects/public-portal/src/favicon.ico",
-              "projects/public-portal/src/assets"
+              "projects/public-portal/src/assets",
+              "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
               "styles/styles.css"
@@ -113,7 +114,8 @@
             "tsConfig": "projects/employee-portal/tsconfig.app.json",
             "assets": [
               "projects/employee-portal/src/favicon.ico",
-              "projects/employee-portal/src/assets"
+              "projects/employee-portal/src/assets",  
+              "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
               "styles/styles.css"
