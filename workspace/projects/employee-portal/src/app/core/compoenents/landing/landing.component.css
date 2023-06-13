@@ -1,0 +1,25 @@
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust the minmax value to control the card width */
+    grid-gap: 20px; /* Adjust the gap between cards */
+  }
+  
+  .card {
+    background-color: #ffffff;
+    padding: 10px;
+  }
+  
+  .card-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .card a {
+    text-decoration: none;
+    color: #000;
+  }
+  
+
+  .card-description {
+    margin-bottom: 10px;
+  }

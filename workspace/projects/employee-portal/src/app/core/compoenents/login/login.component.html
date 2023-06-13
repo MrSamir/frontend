@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center my-6">
+  <div class="col-lg-4">
+    <div class="">
+      <h3 class="text-awq-primary my-3">
+         
+        تسجيل دخول الموظفين
+      </h3>
+    </div>
+    <div class="bg-white rounded-lg p-5">
+
+       
+        <div class="alert alert-primary" role="alert">
+         الرجاء إدخال إسم المستخدم وكلمة المرور المستخدمة في الشبكة الداخلية
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="usernameInput">اسم المستخدم</label>
+          <input    required minlength="1" maxlength="15" type="text" class="form-control"  name="username" id="usernameInput" placeholder="أدخل اسم المستخدم">
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="passwordInput"> كلمة المرور</label>
+          <input type="password"  maxlength="20" required  class="form-control" name="password" id="passwordInput" placeholder="أدخل كلمة المرور">
+        </div>
+        <div class="form-group ">
+            <button type="submit" [routerLink]="['/employee/']" class="btn btn-awq-secondary btn-block">تسجيل الدخول</button>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="false">
+           اسم المستخدم أو كلمة المرور غير صحيحة
+        </div>
+      
+
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,30 @@
+
+
+<p-tabView>
+  <ng-container *ngFor="let tabItem of items">
+  
+    <p-tabPanel header="{{ tabItem.CategoryName }}" *ngIf="tabItem.InquiryServices">
+      <div class="nested-tabs-container">
+        <div class="card-grid">
+        <div class="card" *ngFor="let nestedTab of tabItem.InquiryServices">
+          <div class="card-header">{{ nestedTab.title }}</div>
+          <div class="card-description">{{ nestedTab.description }}</div>
+        
+
+          <div class="card-footer">
+            <a [routerLink]="'yaqeen/request'">طلب الخدمة</a>
+          </div>
+            <!-- <a (click)="navigateToNestedTab(tabItem.CategoryEntryPoint, nestedTab.requestFormRoutingUrl)">{{ nestedTab.title }}</a> -->
+
+        </div></div>
+      </div>
+    </p-tabPanel>
+
+
+
+
+    
+  </ng-container>
+</p-tabView>
+
+
