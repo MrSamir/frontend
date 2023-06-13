@@ -7,7 +7,6 @@ import {CoreModule} from "./core/core.module";
 import { ButtonModule } from 'primeng/button';
 import { /*...,*/ APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ApplicationConfigurationLoaderModule } from 'projects/core-lib/src/public-api';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
 
@@ -28,8 +27,7 @@ export function setupAppConfigServiceFactory(
     CoreModule,
     BrowserAnimationsModule ,
     ButtonModule,
-    HttpClientModule,
-    ApplicationConfigurationLoaderModule
+    HttpClientModule
   ],
   providers: [
     {
