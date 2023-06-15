@@ -15,8 +15,7 @@ const routes: Routes = [
 
   {
     path: 'employee',
-    component: LandingComponent,
-    children: [{path:'' ,loadChildren: () => import('projects/employee-portal/src/app/modules/employee-portal.module').then(m => m.EmployeePortalModule)}],
+    loadChildren: () => import('projects/employee-portal/src/app/modules/employee-portal.module').then(m => m.EmployeePortalModule)
    
   }
 
