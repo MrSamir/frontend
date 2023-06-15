@@ -67,7 +67,12 @@
               "browserTarget": "public-portal:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "browserTarget": "proxy-for-angular:build",
+            "proxyConfig": "proxy.conf.json"
+            
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -159,7 +164,12 @@
               "browserTarget": "employee-portal:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "browserTarget": "proxy-for-angular:build",
+            "proxyConfig": "proxy.conf.json"
+            
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

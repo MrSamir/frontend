@@ -1,0 +1,14 @@
+{
+    "/api/suggestion": {
+      "target": "http://localhost:3000/suggestion",
+      "secure": false
+    },
+    "/suggestion": {
+      "target": "http://localhost:3000/suggestion",
+      "secure": false
+    },
+    "/api/bitcoinMarketData": {
+      "target": "http://localhost:3000/bitcoinMarketData",
+      "secure": false
+    }
+  }
