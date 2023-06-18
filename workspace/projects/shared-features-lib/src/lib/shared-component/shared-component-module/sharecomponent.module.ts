@@ -7,23 +7,24 @@ import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker
 import { FormsModule } from '@angular/forms';
 import {  NgbCalendar, NgbCalendarIslamicCivil, NgbDatepickerI18n, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
-import { HijriDatepickerComponent, IslamicI18n } from '../ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/hijri-datepicker.component';
+import { HijriDatepickerComponent } from '../ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/hijri-datepicker.component';
+
 
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent,HijriDatepickerComponent ,NgBootstrapHijriGregorianDatepickerComponent],
+  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent],
   imports: [
-    BreadcrumbModule,FormsModule,BrowserModule,NgbDatepickerModule
+    BreadcrumbModule,FormsModule,BrowserModule,NgbDatepickerModule,
   ],
   exports:[
     BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent
   ],
 
   providers: [
-    { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
-		{ provide: NgbDatepickerI18n, useClass: IslamicI18n },
-    DateFormatterService
+    // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
+		// { provide: NgbDatepickerI18n, useClass: IslamicI18n },
+     DateFormatterService
   ],
   
 })

@@ -1,16 +1,12 @@
-  <p>
-	The civil calendar is a type of Hijri calendars used in islamic countries. It uses a fixed cycle of alternating 29-
-	and 30-day months, with a leap day added to the last month of 11 out of every 30 years
-</p>
-
-<ngb-datepicker class="rtl" #dp [(ngModel)]="model" [firstDayOfWeek]="7"> </ngb-datepicker>
-
-<hr />
-
-<button class="btn btn-sm btn-outline-primary me-2" (click)="selectToday();">Select Today</button>
-<button class="btn btn-sm btn-outline-primary me-2" (click)="dp.navigateTo()">To current month</button>
-<button class="btn btn-sm btn-outline-primary me-2" (click)="dp.navigateTo({year: 1434, month: 2})">
-	
-</button>
-
-<hr />  
+<div class="form-group" >
+	<label for="input-birth-Date" [class]="labelcss">{{Label}}</label>
+	<input [class]="class"  [placeholder]="placeholder" [required]="IsRequired" [name]="name" [minDate]="min" [ngModelOptions]="{standalone:true}" readonly
+	  [maxDate]="max" [disabled]="IsDisabled" [(ngModel)]="SelectedDate" (dateSelect)="changeDate()" (blur)="onBlur()" [footerTemplate]="footerTemplate"
+	  (click)="nhdatepicker.toggle()" ngbDatepicker #nhdatepicker="ngbDatepicker">
+  </div>
+  <ng-template #footerTemplate>
+	<hr class="my-0">
+	<button class="btn btn-secondary btn-sm m-2 float-right" type="button" (click)="close()">Close</button>
+	<button class="btn btn-primary btn-sm m-2 float-left" type="button" (click)="clear()">Clear</button>
+  </ng-template>
+  
