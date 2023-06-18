@@ -9,6 +9,11 @@ import { /*...,*/ APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
+import { ToastModule } from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
+import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
+import { MessageService } from 'primeng/api';
+import { CoreLibModule } from 'core-lib';
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService, 
@@ -25,9 +30,10 @@ export function setupAppConfigServiceFactory(
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    CoreLibModule,
     BrowserAnimationsModule ,
     ButtonModule,
-    HttpClientModule
+    HttpClientModule,MessagesModule,ToastModule
   ],
   providers: [
     {
@@ -37,8 +43,9 @@ export function setupAppConfigServiceFactory(
             AppconfigurationLoaderService
         ],
         multi: true
-    }
-    
+    },
+    MessageService,
+    AppMessageService
   ],
   bootstrap: [AppComponent]
 })
