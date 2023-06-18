@@ -1,4 +1,4 @@
-import { HijriDatepickerComponent, IslamicI18n } from './../ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/hijri-datepicker.component';
+
 import { NgModule } from '@angular/core';
 import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -7,6 +7,7 @@ import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker
 import { FormsModule } from '@angular/forms';
 import {  NgbCalendar, NgbCalendarIslamicCivil, NgbDatepickerI18n, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserModule } from '@angular/platform-browser';
+import { HijriDatepickerComponent, IslamicI18n } from '../ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/hijri-datepicker.component';
 
 
 
