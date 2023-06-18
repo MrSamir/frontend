@@ -7,9 +7,9 @@ import * as momentjs from 'moment';
 
 const moment = momentjs;
 
-// import * as momentHijri from 'moment-hijri';
+  import * as momentHijri from 'moment-hijri';
 
-// const hijriDate: any = momentHijri('1443/10/10', 'iYYYY/iM/iD');
+ const hijriDate: any = momentHijri('1443/10/10', 'iYYYY/iM/iD');
  
 
 @Injectable()
