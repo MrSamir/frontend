@@ -5,7 +5,7 @@ import { FooterComponent } from './compoenents/footer/footer.component';
 import { NavBarComponent } from './compoenents/nav-bar/nav-bar.component';
 import {SidebarModule} from 'primeng/sidebar';
 import {ButtonModule} from 'primeng/button';
-import { LandingComponent } from './compoenents/landing/landing.component';
+import { LandingComponent } from '../modules/inquiry-module/components/landing/landing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
  

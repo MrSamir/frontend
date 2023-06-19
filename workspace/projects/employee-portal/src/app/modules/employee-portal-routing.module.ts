@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { YaqeenServiceComponent } from './inquiry-module/components/yaqeen-service/yaqeen-service.component';
 import { MojServiceComponent } from './inquiry-module/components/moj-service/moj-service.component';
-import { LandingComponent } from '../core/compoenents/landing/landing.component';
+import { LandingComponent } from './inquiry-module/components/landing/landing.component';
 
 
 

@@ -3,8 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
  
  
 import { LoginComponent } from './core/compoenents/login/login.component';
-import { LandingComponent } from './core/compoenents/landing/landing.component';
- 
+  
 
 const routes: Routes = [
 
