@@ -12,22 +12,24 @@ import { CardModule } from 'primeng/card';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { LoginComponent } from './compoenents/login/login.component';
+import { TableModule } from 'primeng/table';
+import { EmployeePortalRoutingModule } from '../modules/employee-portal-routing.module';
  
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     NavBarComponent,
-    LandingComponent,LoginComponent
+    LoginComponent
   ],
   imports: [
-    CommonModule ,SidebarModule,ButtonModule,CardModule, TabMenuModule,TabViewModule,HttpClientModule
+    CommonModule ,SidebarModule,ButtonModule,CardModule,HttpClientModule,EmployeePortalRoutingModule
     
   ],
   exports:[
     HeaderComponent,
     FooterComponent,
-    NavBarComponent,LandingComponent,LoginComponent
+    NavBarComponent,LoginComponent
   ]
 })
 export class CoreModule { }

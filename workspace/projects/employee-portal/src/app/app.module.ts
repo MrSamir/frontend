@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
 import { HttpClient } from '@angular/common/http';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     CoreModule,
-   
+    TableModule
     
   ],
   providers: [HttpClient],
