@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 //import { AssetsDemoComponent, LoginDemoComponent } from 'projects/shared-features-lib/src/public-api';
 import { AssetsDemoModule, LoginDemoModule } from 'projects/shared-features-lib/src/public-api';
+import { CoreLibModule } from 'projects/core-lib/src/public-api';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AssetsDemoModule, LoginDemoModule } from 'projects/shared-features-lib/
     CommonModule,
     AppRoutingModule,
     LoginDemoModule,
-    AssetsDemoModule
+    AssetsDemoModule,
+    CoreLibModule
   ],
   providers: [],
   bootstrap: [AppComponent]

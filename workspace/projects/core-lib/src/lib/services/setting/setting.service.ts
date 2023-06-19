@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
+import { appCoreLoader } from '../../loaders/appCoreLoader';
+import { AppCoreSubjectService } from '../app-core-subject.service';
+import { appCore } from '../../Classes/appCore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingService {
 
-  get(name: string): string {
-      return appCore.setting.get(name);
+  constructor(private customLoader: appCoreLoader, private appCoreSubject: AppCoreSubjectService) {
   }
+  getSettings() {
+    let app = this.appCoreSubject.getAppCore();
+    if(!app.settings){
+      this.customLoader.load("", app).then((result:appCore)=>{this.appCoreSubject.setAppCore(result);});
+    }
 
-  getBoolean(name: string): boolean {
-      return appCore.setting.getBoolean(name);
+    app = this.appCoreSubject.getAppCore();
+    const settings = app.settings;
+    return settings
   }
-
-  getInt(name: string): number {
-      return appCore.setting.getInt(name);
-  }
-
 }

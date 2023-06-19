@@ -12,6 +12,7 @@ export class LoacalizationBaseComponent implements OnInit {
   ngOnInit() {
   }
 
-  openPage(routename: string) {
-    //this.router.navigateByUrl(`/${routename}`);
-  }
+  // openPage(routename: string) {
+  //   //this.router.navigateByUrl(`/${routename}`);
+  // }
+}

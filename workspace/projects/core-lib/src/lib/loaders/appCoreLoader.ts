@@ -1,23 +1,23 @@
 //import {TranslateLoader} from '@ngx-translate/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { appCore } from '../Interfaces/appCore';
+import { appCore } from '../Classes/appCore';
 
 @NgModule({
   declarations: [],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+  ],
 })
-export class CustomLoaderModule {
+export class appCoreLoader {
   constructor(private http: HttpClient) {
 
   }
-
   data :appCore = new appCore();
   load(configFilePath:string, appCoreModel?: any): Promise<any> {
+    debugger;
     return new Promise<any>(resolve => {
       this.http.get(configFilePath).subscribe(
         response => {
@@ -33,7 +33,7 @@ export class CustomLoaderModule {
       );
     });
   }
-  getLocalization(langCountry: string) {
+  getLocalization() {
    return this.data.localization;
   }
   getSettings() {
