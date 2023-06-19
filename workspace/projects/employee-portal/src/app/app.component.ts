@@ -18,8 +18,9 @@ export class AppComponent {
     //this.AppMessageService.showMessage('Hello, world!', 'success', 'Success Toast');
     //this.AppMessageService.showMessage('tl1','sdfsdf', 'info', 'Info',  'Message Content'); 
     //this.AppMessageService.showMessage(MessageTypeEnum.toast,{key:'msg1',message:'Hello, world!',severity:'success', summary:'Success Message'});
-    this.AppMessageService.showMessage(MessageTypeEnum.Dialog,{key:'confirmdlg',message:'Please Confirm',header:'Confirmation Dialog',icon:'pi pi-exclamation-triangle'});
-    //this.AppMessageService.showMessage('msg1','Hello, world!', 'success', 'Success Message');
+    //this.AppMessageService.showMessage(MessageTypeEnum.Dialog,{key:'confirmdlg',message:'Please Confirm',header:'Confirmation Dialog',icon:'pi pi-exclamation-triangle'});
+    //this.AppMessageService.showMessage(MessageTypeEnum.Dialog,{key:'confirmdlg',message:'Please Confirm',severity:"error",header:'error',icon:'pi pi-exclamation-triangle'});
+    this.AppMessageService.showMessage(MessageTypeEnum.toast,{key:'msg1',message:'Hello, world!',severity:'error', summary:'Success Message'});
   }
 
   public showMessage():void
