@@ -6,14 +6,17 @@ import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
 import { ButtonModule } from 'primeng/button';
 import { /*...,*/ APP_INITIALIZER } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { CoreLibModule } from 'core-lib';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/services/httpResponseInterceptor';
+
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService, 
@@ -33,7 +36,7 @@ export function setupAppConfigServiceFactory(
     CoreLibModule,
     BrowserAnimationsModule ,
     ButtonModule,
-    HttpClientModule,MessagesModule,ToastModule
+    HttpClientModule,MessagesModule,ToastModule,ConfirmDialogModule
   ],
   providers: [
     {
@@ -45,7 +48,7 @@ export function setupAppConfigServiceFactory(
         multi: true
     },
     MessageService,
-    AppMessageService
+    AppMessageService,ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
