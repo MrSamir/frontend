@@ -15,7 +15,8 @@ import { AppMessageService } from 'projects/core-lib/src/lib/services/app-messag
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CoreLibModule } from 'core-lib';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/services/httpResponseInterceptor';
+import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/services/interceptors/httpResponseInterceptor';
+import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
 
 
 export function setupAppConfigServiceFactory(
@@ -48,7 +49,8 @@ export function setupAppConfigServiceFactory(
         multi: true
     },
     MessageService,
-    AppMessageService,ConfirmationService
+    AppMessageService,ConfirmationService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })
