@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 
 import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
@@ -17,8 +18,8 @@ export class AppComponent {
   {
     //this.AppMessageService.showMessage('Hello, world!', 'success', 'Success Toast');
     //this.AppMessageService.showMessage('tl1','sdfsdf', 'info', 'Info',  'Message Content'); 
-    //this.AppMessageService.showMessage(MessageTypeEnum.toast,{key:'msg1',message:'Hello, world!',severity:'success', summary:'Success Message'});
-    this.AppMessageService.showMessage(MessageTypeEnum.Dialog,{key:'confirmdlg',message:'Please Confirm',header:'Confirmation Dialog',icon:'pi pi-exclamation-triangle'});
+    this.AppMessageService.showMessage(MessageTypeEnum.toast,{key:'tl1',message:'Hello, world!',severity:MessageSeverity.Warning, summary:'Success Message'});
+    //this.AppMessageService.showMessage(MessageTypeEnum.Dialog,{key:'confirmdlg',message:'Please Confirm',header:'Confirmation Dialog',icon:'pi pi-exclamation-triangle'});
     //this.AppMessageService.showMessage('msg1','Hello, world!', 'success', 'Success Message');
   }
 
