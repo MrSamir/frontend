@@ -22,28 +22,38 @@ export class HttpResponseInterceptor implements HttpInterceptor {
   constructor(private appMessageService: AppMessageService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<ApiResponse>> {
+    let errorMessage: string | undefined;
     return next.handle(request).pipe(
       tap({
         next: (event) => {
           if (event instanceof HttpResponse) {
 
             if (event.status == HttpStatusCode.Unauthorized) {
-              this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: 'Unauthorized access!', severity: MessageSeverity.Error, summary: 'Error' });
+              errorMessage = 'Unauthorized access!';
+
             }
             else if (!event.body?.isSuccess) {
-              this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: event.body?.message, severity: MessageSeverity.Error, summary: 'Error' });
+              errorMessage = event.body?.message;
             }
+
+            if (errorMessage)
+              this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: errorMessage, severity: MessageSeverity.Error, summary: 'Error' });
+
           }
+
           return event;
         },
         error: (error) => {
           if (error.status === HttpStatusCode.Unauthorized) {
-            this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: 'Unauthorized access!', severity: MessageSeverity.Error, summary: 'Error' });
-
+            errorMessage = 'Unauthorized access!';
           }
           else if (error.status === HttpStatusCode.NotFound) {
-            this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: 'Not Found', severity: MessageSeverity.Error, summary: 'Error' });
+            errorMessage = 'Not Found';
           }
+
+
+          if (errorMessage)
+            this.appMessageService.showMessage(MessageTypeEnum.toast, { key: 'tl1', message: errorMessage, severity: MessageSeverity.Error, summary: 'Error' });
         }
       }));
   }
