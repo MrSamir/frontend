@@ -7,9 +7,9 @@ import { LandingComponent } from './inquiry-module/components/landing/landing.co
 
 
 const routes: Routes = [ 
-  { path: '', component: LandingComponent },
-  { path: 'moj/request', component: MojServiceComponent },
-  { path: 'yaqeen/request', component: YaqeenServiceComponent },   
+  { path: '', component: LandingComponent,data: { title: 'منصة الاستعلامات' } },
+  { path: 'moj/request', component: MojServiceComponent ,data: { title: 'وزارة العدل' }},
+  { path: 'yaqeen/request', component: YaqeenServiceComponent ,data: { title: 'وزارة الداخلية' }},   
   
  
 ];
