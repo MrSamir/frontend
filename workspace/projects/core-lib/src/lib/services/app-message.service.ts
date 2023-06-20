@@ -10,7 +10,7 @@ import {ConfirmationService, ConfirmEventType} from 'primeng/api';
 })
 export class AppMessageService {
 
-  private toastMessageModel:ToastMessageModel | undefined;
+  public toastMessageModel:ToastMessageModel | undefined;
   private dialogModel:DialogModel| undefined;
   constructor(private messageService:MessageService,private confirmationService:ConfirmationService) 
   { }

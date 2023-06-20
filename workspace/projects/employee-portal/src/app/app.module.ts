@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
 import { ButtonModule } from 'primeng/button';
 import { /*...,*/ APP_INITIALIZER } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
 import { ToastModule } from 'primeng/toast';
@@ -15,6 +15,8 @@ import { AppMessageService } from 'projects/core-lib/src/lib/services/app-messag
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { CoreLibModule } from 'core-lib';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/services/interceptors/httpResponseInterceptor';
+import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
 
 
 export function setupAppConfigServiceFactory(
@@ -47,7 +49,8 @@ export function setupAppConfigServiceFactory(
         multi: true
     },
     MessageService,
-    AppMessageService,ConfirmationService
+    AppMessageService,ConfirmationService,
+    LoadingService
   ],
   bootstrap: [AppComponent]
 })

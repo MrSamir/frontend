@@ -1,17 +1,29 @@
 import { NgModule } from '@angular/core';
-import { CoreLibComponent } from './core-lib.component';
-import { ToastMessageModel } from './models/toast-message';
-import { DialogModel } from './models/dialog';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpResponseInterceptor } from './services/interceptors/httpResponseInterceptor';
+import { LoadingInterceptor } from './services/interceptors/loading-interceptor';
+import { SpinnerComponent } from './components/spinner/spinner-component';
 
 
 
 @NgModule({
   declarations: [
-
+      SpinnerComponent
   ],
   imports: [
   ],
   exports: [
+    SpinnerComponent
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpResponseInterceptor,
+      multi: true
+    },
   ]
 })
 export class CoreLibModule { }
