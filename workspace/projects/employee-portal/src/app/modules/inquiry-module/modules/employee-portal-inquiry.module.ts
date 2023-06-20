@@ -8,7 +8,7 @@ import { LandingComponent } from '../components/landing/landing.component';
 import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
-
+import { PanelModule } from 'primeng/panel';
  
  
 
@@ -22,7 +22,8 @@ import { CardModule } from 'primeng/card';
     EmployeePortalRoutingModule,
     TabViewModule,
     TableModule ,
-    CardModule
+    CardModule,
+    PanelModule 
     
 
 
