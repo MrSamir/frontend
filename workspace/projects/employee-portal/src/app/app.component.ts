@@ -1,13 +1,17 @@
+ 
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { LoadingService } from 'core-lib';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Employee Portal';
- 
+  constructor (public loadingService:LoadingService){}
+  title = 'employee-portal';
+
 }
+
 
