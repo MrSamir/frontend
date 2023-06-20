@@ -14,19 +14,8 @@ import { map } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor (private AppMessageService: AppMessageService, public loadingService:LoadingService, private httpClient:HttpClient){}
+  constructor (public loadingService:LoadingService){}
   title = 'employee-portal';
-
-  public showToast():void
-  {
-    this.AppMessageService.showMessage(MessageTypeEnum.toast,{key:'tl1',message:'Hello, world!',severity:MessageSeverity.Error, summary:'Error'});
-  }
-
-  public showMessage():void
-  {
-    //this.AppMessageService.showMessage('msg1','Hello, world!', 'success', 'Success Message');
-  }
-
 
 }
 
