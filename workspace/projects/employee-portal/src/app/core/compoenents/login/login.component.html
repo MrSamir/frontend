@@ -1,0 +1,65 @@
+<div class="container d-flex justify-content-center my-6">
+  <div class="col-lg-4">
+    <div class="">
+      <h3 class="text-awq-primary my-3">
+         
+        تسجيل دخول الموظفين
+      </h3>
+    </div>
+    <div class="bg-white rounded-lg p-5">
+
+       
+        <div class="alert alert-primary" role="alert">
+         الرجاء إدخال إسم المستخدم وكلمة المرور المستخدمة في الشبكة الداخلية
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="usernameInput">اسم المستخدم</label>
+          <input    required minlength="1" maxlength="15" type="text" class="form-control"  name="username" id="usernameInput" placeholder="أدخل اسم المستخدم">
+        </div>
+        <div class="form-group">
+          <label class="col-form-label" for="passwordInput"> كلمة المرور</label>
+          <input type="password"  maxlength="20" required  class="form-control" name="password" id="passwordInput" placeholder="أدخل كلمة المرور">
+        </div>
+        <div class="form-group ">
+            <!-- <button type="submit" [routerLink]="['/employee/']" class="btn btn-awq-secondary btn-block">تسجيل الدخول</button> -->
+
+            <button class="w-100 btn btn-lg btn-primary" [routerLink]="['/employee/']" type="submit">تسجيل الدخول</button>
+        </div>
+        <div class="alert alert-danger" role="alert" *ngIf="false">
+           اسم المستخدم أو كلمة المرور غير صحيحة
+        </div>
+      
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- <main class="form-signin">
+  <form>
+    <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+    <div class="form-floating">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+  </form>
+</main> -->
+
+
+
+

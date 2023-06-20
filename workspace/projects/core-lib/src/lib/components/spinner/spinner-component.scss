@@ -1,0 +1,43 @@
+@keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .modal {
+    z-index: 2000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: rgba(0.5, 0.5, 0.5, 0.4);
+  }
+  
+  .spinner-container {
+    z-index: 2200;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+  
+  .loading-spinner {
+    z-index: 2300;
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 40%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    border: 10px solid #ecf1ef; /* The circle */
+    border-top: 10px solid #1c614e; /* The arc */
+    border-radius: 50%;
+    animation: spinner 1.0s linear infinite;
+  }
+  
