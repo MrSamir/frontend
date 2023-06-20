@@ -9,10 +9,10 @@ import {
   HttpInterceptor,
   HttpStatusCode
 } from '@angular/common/http';
-import { ApiResponse } from '../../models/apiResponse';
-import { AppMessageService } from '../app-message.service';
-import { MessageTypeEnum } from '../../enums/message-type';
-import { MessageSeverity } from '../../enums/message-severity';
+import { ApiResponse } from '../models/apiResponse';
+import { AppMessageService } from '../services/app-message.service';
+import { MessageTypeEnum } from '../enums/message-type';
+import { MessageSeverity } from '../enums/message-severity';
 
 
 
