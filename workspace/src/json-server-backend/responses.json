@@ -1,0 +1,21 @@
+
+{
+    "suggestion": ["SELL"],
+    "bitcoinMarketData": [
+       {
+          "currency": "EUR",
+          "high": null,
+          "latest_trade": 1566979086,
+          "weighted_price": null,
+          "bid": 9173.0,
+          "volume": 0,
+          "ask": 9219.89,
+          "low": null,
+          "duration": 901181,
+          "close": 9282.49,
+          "avg": null,
+          "symbol": "btcdeEUR - fake data from JSON Server",
+          "currency_volume": 0
+       }
+     ]
+    }

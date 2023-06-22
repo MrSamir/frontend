@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 //import { AssetsDemoComponent, LoginDemoComponent } from 'projects/shared-features-lib/src/public-api';
 import { AssetsDemoModule, LoginDemoModule } from 'projects/shared-features-lib/src/public-api';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CoreLibModule } from 'projects/core-lib/src/public-api';
     AppRoutingModule,
     LoginDemoModule,
     AssetsDemoModule,
-    CoreLibModule
+    CoreLibModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

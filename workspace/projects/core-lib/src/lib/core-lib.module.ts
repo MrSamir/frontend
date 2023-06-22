@@ -5,6 +5,10 @@ import { LocalizationService } from './services/localization/localization.servic
 import { LocalizePipe } from './pipes/localize.pipe';
 import { appCoreLoader } from './loaders/appCoreLoader';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpResponseInterceptor } from './interceptors/httpResponseInterceptor';
+import { LoadingInterceptor } from './interceptors/loading-interceptor';
+import { SpinnerComponent } from './components/spinner/spinner-component';
 
 export function setupTranslateServiceFactory(
   service: LocalizationService): Function {
@@ -15,7 +19,8 @@ return () => service.use('ar');
   declarations: [
     CoreLibComponent,
     LoacalizationBaseComponent,
-    LocalizePipe
+    LocalizePipe,
+      SpinnerComponent
   ],
   imports: [
     HttpClientModule
@@ -26,6 +31,14 @@ return () => service.use('ar');
     LoacalizationBaseComponent
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpResponseInterceptor,
+      multi: true
+    },
     HttpClient,
     appCoreLoader,
     LocalizationService,
@@ -37,7 +50,6 @@ return () => service.use('ar');
       ],
       multi: true
     }
-  ],
-
+  ]
 })
 export class CoreLibModule { }
