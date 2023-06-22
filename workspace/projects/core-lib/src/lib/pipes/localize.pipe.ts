@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, EventEmitter, Injectable, OnDestroy, Pipe, PipeTransform} from '@angular/core';
+import { ChangeDetectorRef, EventEmitter, Injectable, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { LocalizationService } from '../services/localization/localization.service';
 import { Subscription } from 'rxjs';
 
@@ -21,18 +21,16 @@ export class LocalizePipe implements PipeTransform {
 
   transform(query: any, args?: any): any {
 
-    debugger;
     if (!query) {
       return '';
     }
 
-    let translatedValue = this.localization.currentLanguageData[query];
+    let translatedValue = !this.localization.currentLanguageData ? undefined : this.localization.currentLanguageData[query];
 
     if (args) {
       for (const key in args) {
-        debugger;
         if (args.hasOwnProperty(key)) {
-          translatedValue = translatedValue.replace(new RegExp(`{{${key}}}`, 'g'), args[key]);
+          translatedValue = !translatedValue ? undefined : translatedValue.replace(new RegExp(`{{${key}}}`, 'g'), args[key]);
         }
       }
     }

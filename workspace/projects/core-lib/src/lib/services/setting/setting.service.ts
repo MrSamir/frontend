@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { appCoreLoader } from '../../loaders/appCoreLoader';
 import { AppCoreSubjectService } from '../app-core-subject.service';
 import { appCore } from '../../Classes/appCore';
+import { setting } from '../../Classes/setting';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class SettingService {
   }
   getSettings() {
     let app = this.appCoreSubject.getAppCore();
-    if(!app.settings){
+    if(app.settings != new setting()){
       this.customLoader.load("", app).then((result:appCore)=>{this.appCoreSubject.setAppCore(result);});
     }
 

@@ -22,7 +22,8 @@ return () => service.use('ar');
   ],
   exports: [
     CoreLibComponent,
-    LocalizePipe
+    LocalizePipe,
+    LoacalizationBaseComponent
   ],
   providers: [
     HttpClient,

@@ -16,8 +16,7 @@ export class appCoreLoader {
 
   }
   data :appCore = new appCore();
-  load(configFilePath:string, appCoreModel?: any): Promise<any> {
-    debugger;
+  async load(configFilePath:string, appCoreModel?: any): Promise<any> {
     return new Promise<any>(resolve => {
       this.http.get(configFilePath).subscribe(
         response => {

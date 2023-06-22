@@ -12,19 +12,33 @@ import { AppCoreSubjectService } from '../app-core-subject.service';
 export class LocalizationService {
 
   currentLanguageData:any;
+  appData: appCore = new appCore;
   constructor(private customLoader: appCoreLoader, private appCoreSubject: AppCoreSubjectService) {
   }
 
     use(lang: string){
       debugger;
       let app = this.appCoreSubject.getAppCore();
-      if(!app.localization){
-        this.customLoader.load("", app).then((result:appCore)=>{this.appCoreSubject.setAppCore(result);});
+      if(app.localization.languagesInfo.length == 0){
+         this.customLoader.load("http://localhost:5022/Home/GetAppCore", app).then((result:appCore)=>{
+          this.appData = result;
+          this.appCoreSubject.setAppCore(this.appData);
+          app = this.appCoreSubject.getAppCore();
+          this.setLocalization(app, lang);
+        });
+
       }
+      else
+        {
+          this.setLocalization(app, lang);
+        }
 
-      app = this.appCoreSubject.getAppCore();
+      return this.currentLanguageData
+    }
+
+    setLocalization(app: appCore, lang: any){
       let locals = app.localization;
-
+      debugger;
       // ///for test
       // let l1 = new languageInfo;
       // l1.name = "ar";
@@ -36,10 +50,9 @@ export class LocalizationService {
       // l2.languageData = "{\"common.welcom\":\"welcom {{name}}\"}";
       // locals.languages.push(l1, l2);
 
-      let currentLanguage = locals?.languages?.find(l=>l.name == lang)
+      let currentLanguage = locals?.languagesInfo?.find(l=>l.name == lang)
       this.currentLanguageData = JSON.parse(currentLanguage?.languageData || "{}");
       console.log(this.currentLanguageData);
-      return this.currentLanguageData
     }
 
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalizationService } from '../services/localization/localization.service';
 
 @Component({
   selector: 'lib-loacalization-base',
@@ -7,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoacalizationBaseComponent implements OnInit {
 
-  constructor() { }
+  constructor(private service: LocalizationService) { }
 
   ngOnInit() {
   }
 
-  // openPage(routename: string) {
-  //   //this.router.navigateByUrl(`/${routename}`);
-  // }
+  setLang(lang: string) {
+    this.service.use(lang);
+  }
 }
