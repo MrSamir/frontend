@@ -14,13 +14,13 @@ export function setupTranslateServiceFactory(
   service: LocalizationService): Function {
 return () => service.use('ar');
 }
-
+debugger;
 @NgModule({
   declarations: [
     CoreLibComponent,
     LoacalizationBaseComponent,
     LocalizePipe,
-      SpinnerComponent
+    SpinnerComponent
   ],
   imports: [
     HttpClientModule
@@ -28,7 +28,8 @@ return () => service.use('ar');
   exports: [
     CoreLibComponent,
     LocalizePipe,
-    LoacalizationBaseComponent
+    LoacalizationBaseComponent,
+    SpinnerComponent
   ],
   providers: [
     {

@@ -1,6 +1,6 @@
- 
+
 import { Component } from '@angular/core';
-import { LoadingService } from 'core-lib';
+import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
 
 
 @Component({

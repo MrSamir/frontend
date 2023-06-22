@@ -16,15 +16,17 @@ export class appCoreLoader {
 
   }
   data :appCore = new appCore();
-  async load(configFilePath:string, appCoreModel?: any): Promise<any> {
-    return new Promise<any>(resolve => {
+  load(configFilePath: string, appCoreModel?: any): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
       this.http.get(configFilePath).subscribe(
         response => {
           console.log('using server-side core data');
           this.data = Object.assign({}, appCoreModel || {}, response || {});
           resolve(this.data);
         },
-        () => {
+        error => {
+          console.log(`error loading config file: ${configFilePath}`);
+          console.log(error);
           console.log('using default core data');
           this.data = Object.assign({}, appCoreModel || {});
           resolve(this.data);

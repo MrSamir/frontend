@@ -17,15 +17,15 @@ import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
 import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
- 
+
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/interceptors/httpResponseInterceptor';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
-import { CoreLibModule } from 'core-lib';
- 
+import { CoreLibModule } from 'projects/core-lib/src/lib/core-lib.module';
+
 
 export function setupAppConfigServiceFactory(
-  service:AppconfigurationLoaderService, 
+  service:AppconfigurationLoaderService,
   appConfigSetting?: AppConfig
 ): Function {
   return () => service.load('app.config.json',appConfigSetting);

@@ -9,7 +9,7 @@
     <title>منصة الاستعلامات</title>
 
 
-    
+
 
     <!-- Bootstrap core CSS -->
 
@@ -30,18 +30,18 @@
       }
     </style>
 
-    
+
     <!-- Custom styles for this template -->
 
   </head>
   <body>
- 
+
 
 <header class="navbar   sticky-top   flex-md-nowrap p-0 shadow header-with-background">
   <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
     <span class="company-logo"></span>
-  
-  </a> 
+
+  </a>
 
 <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="عرض/إخفاء لوحة التنقل">
 <span class="navbar-toggler-icon"></span>
@@ -60,8 +60,8 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
         <app-nav-bar></app-nav-bar>
-      
-       
+
+
       </div>
     </nav>
 
@@ -83,13 +83,13 @@
       <canvas class="my-4 w-100" id="myChart" width="900" height="20"></canvas>
 
     <router-outlet></router-outlet>
-    
+
     </main>
   </div>
 </div>
 
 <spinner *ngIf="loadingService.isLoading"></spinner>
 <p-toast position="top-center" key="tl1"></p-toast>
-  
+
   </body>
 </html>
