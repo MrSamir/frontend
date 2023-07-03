@@ -1,0 +1,18 @@
+ 
+
+<div  class="form-group">
+
+	<input   [placeholder]="placeholder" [required]="IsRequired" readonly
+	[name]="name"  (blur)="onBlur()"
+	  [minDate]="min"
+	  [maxDate]="max" [disabled]="IsDisabled"  
+	  [(ngModel)]="model" 
+	  [ngModelOptions]="{standalone:true}" 
+	  (click)="dp.toggle()" ngbDatepicker   #dp="ngbDatepicker"  [firstDayOfWeek]="7" >
+  </div>
+	
+ 
+
+<hr />  
+
+<!-- <pre>Model: {{ model | json }}</pre> -->

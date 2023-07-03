@@ -1,0 +1,28 @@
+<!--  
+  <div>
+    <label for="idNumber">{{getSelectedTypeName()}}</label>
+    <input type="text" id="idNumber"   maxlength="10" pattern="^1[0-9]{9}$">
+  
+   
+  </div>
+  -->
+
+
+  <form [formGroup]="IDNumberForm" (ngSubmit)="onSubmit()">
+    <label for="idNumber">{{getSelectedTypeName()}}</label>
+    <input type="text" id="idNumber" formControlName="idNumber" maxLength="10"  >
+    <div *ngIf="IDNumberForm.get('idNumber')?.invalid && (IDNumberForm.get('idNumber')?.dirty || IDNumberForm.get('idNumber')?.touched)">
+      <div *ngIf="IDNumberForm.get('idNumber')?.hasError('pattern')">
+        Id Number must be start 1.
+      </div>
+    </div>
+
+    <input type="text" id="iqamaId" formControlName="iqamaId" maxLength="10">
+    <div *ngIf="IDNumberForm.get('iqamaId')?.invalid && (IDNumberForm.get('iqamaId')?.dirty || IDNumberForm.get('iqamaId')?.touched)">
+      <div *ngIf="IDNumberForm.get('iqamaId')?.hasError('pattern')">
+        Id Number must be start 2.
+      </div>
+    </div>
+
+    <button type="submit">Submit</button>
+  </form>

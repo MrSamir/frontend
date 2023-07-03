@@ -4,6 +4,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
+import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
+
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 
@@ -38,6 +41,8 @@ export function setupAppConfigServiceFactory(
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    SharecomponentModule,
+    
     CoreLibModule,
     BrowserAnimationsModule ,
     ButtonModule,

@@ -1,0 +1,22 @@
+<div  class="form-group">
+  <label  [class]="labelcss">{{Label}}</label>
+  <input [class]="class"   [placeholder]="placeholder"  [required]="IsRequired" readonly
+  [name]="name"  (blur)="onBlur()"
+    [minDate]="min"
+    [maxDate]="max" [disabled]="IsDisabled"  
+    [(ngModel)]="SelectedDate" 
+    [ngModelOptions]="{standalone:true}" (dateSelect)="onDateSelect()" 
+    (click)="ngdatepicker.toggle()" ngbDatepicker #ngdatepicker="ngbDatepicker"  [footerTemplate]="footerTemplate">
+</div>
+
+
+ 
+<label  [class]="labelcss">{{Label}}</label>
+<app-hijri-datepicker  [class]="class"   [(SelectedDate)]="SelectedDate" > </app-hijri-datepicker >    
+  
+
+<ng-template #footerTemplate>
+  <hr class="my-0">
+  <button class="btn btn-secondary btn-sm m-2 float-right" type="button" (click)="close()">Close</button>
+  <button class="btn btn-primary btn-sm m-2 float-left" type="button" (click)="clear()">Clear</button>
+</ng-template>
