@@ -1,7 +1,8 @@
 import { ActivatedRoute, Routes } from '@angular/router';
  
 import { Component } from '@angular/core';
-//import { LoadingService } from 'core-lib';
+import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
+
 
 
 @Component({
@@ -11,7 +12,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   constructor (
-    //public loadingService:LoadingService
+    public loadingService:LoadingService
     ){}
   title = 'employee-portal';
 
