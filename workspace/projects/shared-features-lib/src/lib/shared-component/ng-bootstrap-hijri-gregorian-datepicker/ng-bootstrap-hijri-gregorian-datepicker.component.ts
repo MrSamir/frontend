@@ -3,7 +3,7 @@ import {NgbDateStruct, NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { ngBootstrapDatePickerDateType } from './Const';
 import { I18n } from './datepicker-I18n/datepickerI18n';
 import '@angular/localize/init';
-import * as moment from 'moment';
+import { DateTime } from 'luxon';
 
 import { DateFormatterService } from './date-formatter.service';
 @Component({
@@ -30,6 +30,22 @@ export class NgBootstrapHijriGregorianDatepickerComponent{// implements OnInit, 
   labelcss = "col-form-label";
 
    constructor(private _i18n: I18n, private dateFormatterService: DateFormatterService,private cd: ChangeDetectorRef) {
+  //   options : Intl.DateTimeFormatOptions
+  // options={calender: 'islamic-umalqura',month: 'numeric', day: 'numeric', year: 'numeric'};
+
+const hijriformat= new Intl.DateTimeFormat('en-SA-u-ca-islamic-umalqura',
+{calendar: 'islamic-umalqura', year: 'numeric', month: '2-digit', day: '2-digit' });
+
+
+
+
+    // const  hij= new Date('2022-03-03').toLocaleDateString('en-SA-u-ca-islamic-umalqura',
+    //   { timeZone: 'UTC', month: 'numeric', day: 'numeric', year: 'numeric' }
+    // ) ;
+ 
+const  hij= hijriformat.format(new Date());  // new Date(hij).toLocaleDateString('en-US', { timeZone: 'UTC' });
+//console.log(hij);
+console.log(hij);
 
     }
     ngAfterContentChecked(): void {
@@ -45,8 +61,11 @@ export class NgBootstrapHijriGregorianDatepickerComponent{// implements OnInit, 
       } else if  (!changes['CalenderType'].isFirstChange()){
         //this.SelectedDate = this.dateFormatterService.ToGregorian(this.SelectedDate);
         this.SelectedDateChange.emit(this.SelectedDate!);
+       
       }
     }
+
+    
   }
   set Locale(language: string) {
     
@@ -61,7 +80,7 @@ export class NgBootstrapHijriGregorianDatepickerComponent{// implements OnInit, 
     if (this.CalenderType == ngBootstrapDatePickerDateType.Hijri) {
       //this.SelectedDate = this.dateFormatterService.ToHijriDateStruct(date, 'iD/iM/iYYYY');
     } else {
-      this.SelectedDate = this.dateFormatterService.ToGregorianDateStruct(date, 'D/M/YYYY');
+      //this.SelectedDate = this.dateFormatterService.ToGregorianDateStruct(date, 'D/M/YYYY');
     }
     this.SelectedDateChange.emit(this.SelectedDate!);
   }
@@ -77,7 +96,8 @@ export class NgBootstrapHijriGregorianDatepickerComponent{// implements OnInit, 
       return null;
       //momentHijri(formattedDate, 'iD/iM/iYYYY').locale('en').format();
     } else
-      return moment(formattedDate, 'D/M/YYYY').locale('en').format();
+     // return moment(formattedDate, 'D/M/YYYY').locale('en').format();
+     return '';
   }
   ngOnInit() {
     this.class = this.class + " calicon";
