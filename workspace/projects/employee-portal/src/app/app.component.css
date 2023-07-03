@@ -8,37 +8,6 @@ body {
   vertical-align: text-bottom;
 }
 
-/*
- * Sidebar
- */
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100; /* Behind the navbar */
-  padding: 130px 0 0; /* Height of navbar */
-  box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1);
-  background-color: white;
-}
-
-@media (max-width: 767.98px) {
-  .sidebar {
-    top: 5rem;
-  }
-}
-
-.sidebar-sticky {
-  position: relative;
-  top: 0;
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
-  overflow-x: hidden;
-  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-
-
 
 
 
@@ -80,6 +49,7 @@ body {
 .header-with-background {
   background-image: url('../assets/images/header-bg.png');
   background-size: cover;
+  height: 70px;
 }
 
 
@@ -163,25 +133,56 @@ html {
     margin-bottom: 15px;
 } 
 
+/*
+ * Sidebar
+ */
+
+ .sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 140px;
+  z-index: 100; /* Behind the navbar */
+  padding: 140px 0 0; /* Height of navbar */
+  box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1);
+   
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+ 
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+
+
+
 footer { 
     display:  block;
     margin: 0; 
     padding: 0; 
     border: 0; 
     outline: 0; 
+ 
     font-family: 'FrutigerLTArabic-65Bold';
 } 
 
 @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
   footer { 
-    margin-top: 20px !important;
+    margin-top: 40px !important;
   } 
 }     
 
-footer { 
-    position: relative; 
-    margin-top: 20px;
-} 
+ 
 
 *,:after,:before { 
     box-sizing: border-box;
@@ -379,15 +380,7 @@ a {
     text-decoration: none;
 } 
 
-a:hover { 
-    color: #0056b3; 
-    text-decoration: underline;
-} 
 
-a,a:hover,a:active { 
-    text-decoration: none; 
-    outline: none;
-} 
 
 .footer-content ul li a:hover  { 
     color: #cb9831; 
@@ -396,9 +389,10 @@ a,a:hover,a:active {
 
 
 body {
-  min-height: 85vh;
-  display: flex;
+  /* min-height: 85vh; */
+  height: 850px ;
   flex-direction: column;
+ 
 }
 
 footer {

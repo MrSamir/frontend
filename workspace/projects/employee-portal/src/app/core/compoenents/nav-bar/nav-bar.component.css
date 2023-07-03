@@ -60,6 +60,13 @@
     text-transform: uppercase;
   }
   
+
+
+  a { 
+    color:   #007bff; 
+    
+  } 
+
   /*
    * Navbar
    */

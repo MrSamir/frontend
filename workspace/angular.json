@@ -139,9 +139,12 @@
               "projects/employee-portal/src/assets/primeng/tabview/primeng.tabview.css",
 
            
-            
+              "projects/employee-portal/src/assets/style-rtl.css",
 
-              "styles/styles.css"
+              "styles/styles.css",
+
+              "projects/employee-portal/src/assets/card-style.css"
+             
             ],
             "scripts": [
            "node_modules/bootstrap/dist/js/bootstrap.js" 

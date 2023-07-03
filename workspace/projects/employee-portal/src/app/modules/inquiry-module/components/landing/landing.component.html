@@ -4,31 +4,77 @@
     <p-tabPanel header="{{ tabItem.CategoryName }}" *ngIf="tabItem.InquiryServices" >
       <div class="nested-tabs-container">
         <div class="card-grid">
-          <div class="card" *ngFor="let nestedTab of tabItem.InquiryServices">
-            <div class="card-header">{{ nestedTab.title }}</div>
-            <div class="card-description">{{ nestedTab.description }}</div>
 
 
-            <div class="card-footer">
-              <a [routerLink]="'yaqeen/request'">طلب الخدمة</a>
+
+
+
+
+      
+
+            <div class="service-list-view-page view view-service view-id-service view-display-id-service_list_view_page  " >
+  
+              <div class="view-content">
+                <div id="views-bootstrap-service-service-list-view-page" class="grid views-view-grid">
+                  <div class="row">
+                  
+                
+                        
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 row-of-services" *ngFor="let nestedTab of tabItem.InquiryServices">
+                      <div data-history-node-id="32994" class="row">
+                        <div class="col-12" >
+                          <div class="field-group service-card-wrapping">
+                            <div class="field field--name-field-media field--type-entity-reference field--label-hidden field__item ">
+                              <img loading="lazy" src="https://www.awqaf.gov.sa/sites/default/files/2022-10/tafweed.svg" alt="tafweed" typeof="foaf:Image" >
+                            </div>
+                            <div class="field field--name-node-title field--type-ds field--label-hidden field__item">
+                              <h2 >
+                                {{ nestedTab.title }}
+                              </h2>
+                            </div>
+                            <div class="field-description">
+                              <p >
+                                {{ nestedTab.description }}
+                              </p>
+                            </div>
+                            <div class="field field--name-field-link field--type-link field--label-hidden field__item ">
+                              
+
+                              <a [routerLink]="'yaqeen/request'">طلب الخدمة</a>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
+
+     
+
+
+           
             <!-- <a (click)="navigateToNestedTab(tabItem.CategoryEntryPoint, nestedTab.requestFormRoutingUrl)">{{ nestedTab.title }}</a> -->
 
           </div>
 
-<!-- 
-          <p-panel>
-            <ng-template pTemplate="header"> <span class="text-primary font-semibold text-xl">Header</span></ng-template>
-            Body Content
-            <ng-template pTemplate="footer"> Footer content here </ng-template>
-        </p-panel> -->
 
-        </div>
+
+   
       </div>
 
       
 
     </p-tabPanel>
+
+
+ 
+
+
 
 
 

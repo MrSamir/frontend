@@ -1,2 +1,5 @@
-<app-yaqeen-service-request (click)="toggleResult()"  ></app-yaqeen-service-request>
+<app-yaqeen-service-request (showResult)="toggleResult()"></app-yaqeen-service-request>
+
+
+
 <app-yaqeen-service-result *ngIf="showResult"></app-yaqeen-service-result>
