@@ -1,8 +1,13 @@
-<div dir="rtl">
-<app-header></app-header>
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>منصة الاستعلامات</title>
 
-<div class="container">
-  <app-nav-bar></app-nav-bar>
 
   <div class="content">
     <h2>Main Content</h2>
@@ -14,9 +19,73 @@
    <app-IDNumberWithValidation [IsSaudi]=true></app-IDNumberWithValidation>
     <router-outlet> </router-outlet>
   </div>
+
+  </head>
+  <body>
+ 
+
+<header class="navbar   sticky-top   flex-md-nowrap p-0 shadow header-with-background">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
+    <span class="company-logo"></span>
+  
+  </a> 
+
+<button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="عرض/إخفاء لوحة التنقل">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="navbar-nav">
+<div class="nav-item text-nowrap">
+  <a class="nav-link px-3" href="#">تسجيل الخروج</a>
 </div>
+</div>
+
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <app-nav-bar></app-nav-bar>
+      
+       
+      </div>
+    </nav>
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">منصة الاستعلامات</h1>
+        
+      </div>
+
+      <canvas class="my-4 w-100" id="myChart" width="900" height="20"></canvas>
+
+    <router-outlet></router-outlet>
+    
+    </main>
+
+  </div>
+ 
+
+
+  
+  
+
+
+ 
+</div>
+
+
+<spinner *ngIf="loadingService.isLoading"></spinner>
+<p-toast position="top-center" key="tl1"></p-toast>
+  
+
+
+
+  </body>
 
 <app-footer></app-footer>
 
 
 </div>
+   
+</html>

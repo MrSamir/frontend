@@ -1,0 +1,11 @@
+.p-accordion .p-accordion-header .p-accordion-header-link
+{
+  border:0px !important;
+  background:transparent !important
+}
+
+.p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link
+{
+  border:0px !important;
+  background:transparent !important
+}

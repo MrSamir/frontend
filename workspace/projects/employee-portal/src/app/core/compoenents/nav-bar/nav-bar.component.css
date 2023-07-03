@@ -1,6 +1,72 @@
-.navigation {
-  background-color: #f1f1f1;
-  width: 200px;
-  padding: 20px;
-  direction: rtl; /* Add this line */
-}
+.nav-link:hover {
+    background-color: rgb(0, 171, 122);
+   color: white;
+  }
+  
+
+
+
+
+  
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 130px 0 0; /* Height of navbar */
+    box-shadow: inset 1px 0 0 rgba(0, 0, 0, .1);
+    background-color: white;
+  }
+  
+  @media (max-width: 767.98px) {
+    .sidebar {
+      top: 5rem;
+    }
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+  
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+  }
+
+ 
+  
+  .sidebar .nav-link .feather {
+    margin-left: 4px;
+    color: #727272;
+  }
+  
+  .sidebar .nav-link.active {
+    color: white;
+  }
+  
+  .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: white;
+  }
+  
+  .sidebar-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+  }
+  
+
+
+  a { 
+    color:   #007bff; 
+    
+  } 
+
+  /*
+   * Navbar
+   */
