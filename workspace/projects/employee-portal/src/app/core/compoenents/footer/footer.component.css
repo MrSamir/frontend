@@ -1,382 +1,381 @@
 @font-face { 
-    font-family:'FrutigerLTArabic-65Bold';
-    src:url("http://silah/Style%20Library/Portal/fonts/FrutigerLTArabic-65Bold.eot?#iefix") format("embedded-opentype"), url("http://silah/Style%20Library/Portal/fonts/FrutigerLTArabic-65Bold.woff") format("woff"), url("http://silah/Style%20Library/Portal/fonts/FrutigerLTArabic-65Bold.ttf") format("truetype"), url("http://silah/Style%20Library/Portal/fonts/FrutigerLTArabic-65Bold.svg#FrutigerLTArabic-65Bold") format("svg");
-    font-weight:normal;
-    font-style:normal;
+  font-family:'FrutigerLTArabic-65Bold';
+  src:url("/workspace/projects/employee-portal/src/assets/fonts/FrutigerLTArabic-65Bold.eot?#iefix") format("embedded-opentype"), url("/workspace/projects/employee-portal/src/assets/fonts/FrutigerLTArabic-65Bold.woff") format("woff"), url("/workspace/projects/employee-portal/src/assets/fonts/FrutigerLTArabic-65Bold.ttf") format("truetype"), url("/workspace/projects/employee-portal/src/assets/fonts/FrutigerLTArabic-65Bold.svg#FrutigerLTArabic-65Bold") format("svg");
+  font-weight:normal;
+  font-style:normal;
+} 
+* { 
+    box-sizing: border-box;
+} 
+
+a { 
+    color:   #007bff; 
+    text-decoration:  none; 
+    background-color:   transparent;
+    margin:  0; 
+    padding:  0; 
+    font-size:  100%; 
+    vertical-align:  baseline; 
+    background:  transparent; 
+    -webkit-transition:  all 0.3s ease-out; 
+    transition:  all 0.3s ease-out;
+    outline: none;
+} 
+
+div { 
+    margin:   0; 
+    padding:   0; 
+    border:   0; 
+    outline:   0; 
+    font-family:  'FrutigerLTArabic-65Bold';
+
+} 
+
+.col-12,.col-lg-4,.col-xl-3 { 
+    position: relative; 
+    width: 100%; 
+    padding-right: 15px; 
+    padding-left: 15px;
+} 
+
+.col-12 { 
+    -ms-flex: 0 0 100%; 
+    flex: 0 0 100%; 
+    max-width: 100%;
+} 
+
+@media (min-width: 992px){ 
+  .col-lg-4 { 
+    -ms-flex: 0 0 33.333333%; 
+    flex: 0 0 33.333333%; 
+    max-width: 33.333333%;
   } 
-  * { 
-      box-sizing: border-box;
+}     
+
+@media (min-width: 1200px){ 
+  .col-xl-3 { 
+    -ms-flex: 0 0 25%; 
+    flex: 0 0 25%; 
+    max-width: 25%;
   } 
-  
-  a { 
-      color:   #007bff; 
-      text-decoration:  none; 
-      background-color:   transparent;
-      margin:  0; 
-      padding:  0; 
-      font-size:  100%; 
-      vertical-align:  baseline; 
-      background:  transparent; 
-      -webkit-transition:  all 0.3s ease-out; 
-      transition:  all 0.3s ease-out;
-      outline: none;
-  } 
-  
-  div { 
-      margin:   0; 
-      padding:   0; 
-      border:   0; 
-      outline:   0; 
-      font-family:  'FrutigerLTArabic-65Bold';
-  
-  } 
-  
-  .col-12,.col-lg-4,.col-xl-3 { 
-      position: relative; 
-      width: 100%; 
-      padding-right: 15px; 
-      padding-left: 15px;
-  } 
-  
-  .col-12 { 
-      -ms-flex: 0 0 100%; 
-      flex: 0 0 100%; 
-      max-width: 100%;
-  } 
-  
-  @media (min-width: 992px){ 
-    .col-lg-4 { 
-      -ms-flex: 0 0 33.333333%; 
-      flex: 0 0 33.333333%; 
-      max-width: 33.333333%;
-    } 
-  }     
-  
-  @media (min-width: 1200px){ 
-    .col-xl-3 { 
-      -ms-flex: 0 0 25%; 
-      flex: 0 0 25%; 
-      max-width: 25%;
-    } 
-  }     
-  
-  .row { 
-      display: -ms-flexbox; 
-      display: flex; 
-      -ms-flex-wrap: wrap; 
-      flex-wrap: wrap; 
-      margin-right: -15px; 
-      margin-left: -15px;
-  } 
-  
-  .align-items-center { 
-      -ms-flex-align: center!important; 
-      align-items: center!important;
-  } 
-  
+}     
+
+.row { 
+    display: -ms-flexbox; 
+    display: flex; 
+    -ms-flex-wrap: wrap; 
+    flex-wrap: wrap; 
+    margin-right: -15px; 
+    margin-left: -15px;
+} 
+
+.align-items-center { 
+    -ms-flex-align: center!important; 
+    align-items: center!important;
+} 
+
+.container { 
+    width: 100%; 
+    padding-right: 15px; 
+    padding-left: 15px; 
+    margin-right: auto; 
+    margin-left: auto;
+} 
+
+@media (min-width: 576px){ 
   .container { 
-      width: 100%; 
-      padding-right: 15px; 
-      padding-left: 15px; 
-      margin-right: auto; 
-      margin-left: auto;
+    max-width: 540px;
   } 
-  
-  @media (min-width: 576px){ 
-    .container { 
-      max-width: 540px;
-    } 
-  }     
-  
-  @media (min-width: 768px){ 
-    .container { 
-      max-width: 720px;
-    } 
-  }     
-  
-  @media (min-width: 992px){ 
-    .container { 
-      max-width: 960px;
-    } 
-  }     
-  
-  @media (min-width: 1200px){ 
-    .container { 
-      max-width: 1140px;
-    } 
-  }     
-  
+}     
+
+@media (min-width: 768px){ 
   .container { 
-      position: relative; 
-      max-width: 1560px;
+    max-width: 720px;
   } 
-  
+}     
+
+@media (min-width: 992px){ 
+  .container { 
+    max-width: 960px;
+  } 
+}     
+
+@media (min-width: 1200px){ 
+  .container { 
+    max-width: 1140px;
+  } 
+}     
+
+.container { 
+    position: relative; 
+    max-width: 1560px;
+} 
+
+header { 
+    display:   block;
+    margin:  0; 
+    padding:  15px 0 10px 0; 
+    border:  0; 
+    outline:  0; 
+    font-family:  'FrutigerLTArabic-65Bold';
+    position: relative; 
+    z-index: 2; 
+    margin-top: 30px; 
+    background: #fff; 
+    box-shadow: -9px 3px 8px rgba(0, 0, 0, 0.2); 
+    margin-bottom: 30px;
+} 
+
+@media only screen and (min-width: 1600px) and (max-width: 1920px){ 
   header { 
-      display:   block;
-      margin:  0; 
-      padding:  15px 0 10px 0; 
-      border:  0; 
-      outline:  0; 
-      font-family:  'FrutigerLTArabic-65Bold';
-      position: relative; 
-      z-index: 2; 
-      margin-top: 30px; 
-      background: #fff; 
-      box-shadow: -9px 3px 8px rgba(0, 0, 0, 0.2); 
-      margin-bottom: 30px;
+    margin-top: 0 !important; 
+    padding: 15px 0 5px 0; 
+    margin-bottom: 20px;
   } 
-  
-  @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
-    header { 
-      margin-top: 0 !important; 
-      padding: 15px 0 5px 0; 
-      margin-bottom: 20px;
-    } 
-  }     
-  
-  header { 
-      margin-top: 0;
+}     
+
+header { 
+    margin-top: 0;
+} 
+
+#layout { 
+    position: relative;
+} 
+
+body { 
+    margin:  0; 
+    font-family:  'FrutigerLTArabic-65Bold'; 
+    font-size:  14px; 
+    font-weight:    400; 
+    line-height:    1.5; 
+    color:    #212529; 
+    text-align:  right; 
+    background-color:  initial;
+    padding:  0; 
+    border:   0; 
+    outline:   0; 
+    direction: rtl; 
+    overflow-x: hidden; 
+    background: url(/workspace/projects/employee-portal/src/assets/images/bg.jpg) no-repeat fixed; 
+    background-size: cover; 
+    background-image: url("/workspace/projects/employee-portal/src/assets/images/bg.jpg"); 
+    background-position-x: initial; 
+    background-position-y: initial; 
+    background-repeat-x: no-repeat; 
+    background-repeat-y: no-repeat; 
+    background-attachment: fixed; 
+    background-origin: initial; 
+    background-clip: initial; 
+} 
+
+html { 
+    font-family:  'FrutigerLTArabic-65Bold';
+    line-height:  1.15; 
+    -webkit-text-size-adjust:  100%; 
+    -webkit-tap-highlight-color:  transparent;
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0; 
+} 
+
+.video { 
+    position: relative; 
+    min-height: 230px; 
+    margin-bottom: 15px;
+} 
+
+img { 
+    vertical-align:   middle; 
+    border-style:   none;
+    margin:  0; 
+    padding:  0; 
+    border:  none; 
+    outline:  0; 
+    font-family:  'FrutigerLTArabic-65Bold';
+    width: auto; 
+    height: auto;
+} 
+
+.img-fluid { 
+    max-width:  100%; 
+    height:  auto;
+    -o-object-fit: cover; 
+    object-fit: cover;
+} 
+
+@media only screen and (min-width: 1600px) and (max-width: 1920px){ 
+  .logo img { 
+    max-height: 70px;
   } 
-  
-  #layout { 
-      position: relative;
-  } 
-  
-  body { 
-      margin:  0; 
-      font-family:  'FrutigerLTArabic-65Bold'; 
-      font-size:  14px; 
-      font-weight:    400; 
-      line-height:    1.5; 
-      color:    #212529; 
-      text-align:  right; 
-      background-color:  initial;
-      padding:  0; 
-      border:   0; 
-      outline:   0; 
-      direction: rtl; 
-      overflow-x: hidden; 
-      background: url(http://silah/Style%20Library/Portal/images/bg.jpg) no-repeat fixed; 
-      background-size: cover; 
-      background-image: url("http://silah/Style%20Library/Portal/images/bg.jpg"); 
-      background-position-x: initial; 
-      background-position-y: initial; 
-      background-repeat-x: no-repeat; 
-      background-repeat-y: no-repeat; 
-      background-attachment: fixed; 
-      background-origin: initial; 
-      background-clip: initial; 
-  } 
-  
-  html { 
-      font-family:  'FrutigerLTArabic-65Bold';
-      line-height:  1.15; 
-      -webkit-text-size-adjust:  100%; 
-      -webkit-tap-highlight-color:  transparent;
-      margin: 0; 
-      padding: 0; 
-      border: 0; 
-      outline: 0; 
-  } 
-  
-  .video { 
-      position: relative; 
-      min-height: 230px; 
-      margin-bottom: 15px;
-  } 
-  
-  img { 
-      vertical-align:   middle; 
-      border-style:   none;
-      margin:  0; 
-      padding:  0; 
-      border:  none; 
-      outline:  0; 
-      font-family:  'FrutigerLTArabic-65Bold';
-      width: auto; 
-      height: auto;
-  } 
-  
-  .img-fluid { 
-      max-width:  100%; 
-      height:  auto;
-      -o-object-fit: cover; 
-      object-fit: cover;
-  } 
-  
-  @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
-    .logo img { 
-      max-height: 70px;
-    } 
-  }     
-  
-  *,:after,:before { 
-      box-sizing: border-box;
-  } 
-  
-  :before,:after { 
-      box-sizing: border-box;
-  } 
-  
-  :selection { 
-      color: #ffffff; 
-      background: #cb9831;
-  } 
-  
-  .footer-content  { 
-      display: -webkit-box; 
-      display: flex; 
-      -webkit-box-orient: vertical; 
-      -webkit-box-direction: normal; 
-      flex-direction: column; 
-      -webkit-box-align: center; 
-      align-items: center; 
-      -webkit-box-pack: justify; 
-      justify-content: space-between;
-  } 
-  
-  .col-12 { 
-      position: relative; 
-      width: 100%; 
-      padding-right: 15px; 
-      padding-left: 15px;
-  } 
-  
+}     
+
+*,:after,:before { 
+    box-sizing: border-box;
+} 
+
+:before,:after { 
+    box-sizing: border-box;
+} 
+
+:selection { 
+    color: #ffffff; 
+    background: #cb9831;
+} 
+
+.footer-content  { 
+    display: -webkit-box; 
+    display: flex; 
+    -webkit-box-orient: vertical; 
+    -webkit-box-direction: normal; 
+    flex-direction: column; 
+    -webkit-box-align: center; 
+    align-items: center; 
+    -webkit-box-pack: justify; 
+    justify-content: space-between;
+} 
+
+.col-12 { 
+    position: relative; 
+    width: 100%; 
+    padding-right: 15px; 
+    padding-left: 15px;
+} 
+
+footer { 
+    display:  block;
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0; 
+    font-family: 'FrutigerLTArabic-65Bold';
+} 
+
+@media only screen and (min-width: 1600px) and (max-width: 1920px){ 
   footer { 
-      display:  block;
-      margin: 0; 
-      padding: 0; 
-      border: 0; 
-      outline: 0; 
-      font-family: 'FrutigerLTArabic-65Bold';
+    margin-top: 20px !important;
   } 
-  
-  @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
-    footer { 
-      margin-top: 20px !important;
-    } 
-  }     
-  
-  footer { 
-      position: relative; 
-      margin-top: 20px;
-  } 
-  
-  ul { 
-      margin-top:   0; 
-      margin-bottom:   1rem;
-      margin:  0; 
-      padding:  0px;
-      border:  0; 
-      outline:  0; 
-      font-family:  'FrutigerLTArabic-65Bold';
-  } 
-  
-  @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
-    ul  { 
-      padding: 5px 0 !important;
-    } 
-  }     
-  
+}     
+
+footer { 
+    position: relative; 
+    margin-top: 20px;
+} 
+
+ul { 
+    margin-top:   0; 
+    margin-bottom:   1rem;
+    margin:  0; 
+    padding:  0px;
+    border:  0; 
+    outline:  0; 
+    font-family:  'FrutigerLTArabic-65Bold';
+} 
+
+@media only screen and (min-width: 1600px) and (max-width: 1920px){ 
   ul  { 
-      background: url(http://silah/Style%20Library/Portal/images/footer-bg.PNG) no-repeat; 
-      background-size: cover; 
-      width: 100%; 
-      display: -webkit-box; 
-      display: flex; 
-      -webkit-box-align: center; 
-      align-items: center; 
-      -webkit-box-pack: center; 
-      justify-content: center; 
-      flex-wrap: wrap; 
-      padding: 10px; 
-      background-image: url("http://silah/Style%20Library/Portal/images/footer-bg.PNG"); 
-      background-position-x: initial; 
-      background-position-y: initial; 
-      background-repeat-x: no-repeat; 
-      background-repeat-y: no-repeat; 
-      background-attachment: initial; 
-      background-origin: initial; 
-      background-clip: initial; 
-      background-color: initial;
+    padding: 5px 0 !important;
   } 
-  
-  p { 
-      margin-top:  0; 
-      margin-bottom:  1rem;
-      margin: 0; 
-      padding: 0; 
-      border: 0; 
-      outline: 0; 
-      font-family: 'FrutigerLTArabic-65Bold';
-  } 
-  
-  @media only screen and (min-width: 1600px) and (max-width: 1920px){ 
-    p  { 
-      margin: 10px 0 !important;
-    } 
-  }     
-  
+}     
+
+ul  { 
+    background: url(http://silah/Style%20Library/Portal/images/footer-bg.PNG) no-repeat; 
+    background-size: cover; 
+    width: 100%; 
+    display: -webkit-box; 
+    display: flex; 
+    -webkit-box-align: center; 
+    align-items: center; 
+    -webkit-box-pack: center; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    padding: 10px; 
+    background-image: url("http://silah/Style%20Library/Portal/images/footer-bg.PNG"); 
+    background-position-x: initial; 
+    background-position-y: initial; 
+    background-repeat-x: no-repeat; 
+    background-repeat-y: no-repeat; 
+    background-attachment: initial; 
+    background-origin: initial; 
+    background-clip: initial; 
+    background-color: initial;
+} 
+
+p { 
+    margin-top:  0; 
+    margin-bottom:  1rem;
+    margin: 0; 
+    padding: 0; 
+    border: 0; 
+    outline: 0; 
+    font-family: 'FrutigerLTArabic-65Bold';
+} 
+
+@media only screen and (min-width: 1600px) and (max-width: 1920px){ 
   p  { 
-      color: #666666; 
-      margin: 20px 0;
+    margin: 10px 0 !important;
   } 
-  
-  li { 
-      margin:  0; 
-      padding:  0; 
-      border:  0; 
-      outline:  0; 
-      font-family:  'FrutigerLTArabic-65Bold';
-      list-style-type: none;
-  } 
-  
-  ul li  { 
-      display: inline-block; 
-      margin: 10px 0; 
-      padding: 0 15px; 
-      position: relative; 
-      list-style-type: none;
-  } 
-  
-  ul li:after  { 
-      content: ""; 
-      display: block; 
-      width: 1px; 
-      height: 100%; 
-      background-color: #ffffff; 
-      position: absolute; 
-      bottom: 0; 
-      left: 0;
-  } 
-  
-  ul li:last-child:after  { 
-      display: none;
-  } 
-  
-  ul li a  { 
-      color: #ffffff; 
-      font-weight: 400; 
-      position: relative; 
-      -webkit-transition: all .2s ease-in; 
-      transition: all .2s ease-in; 
-      text-decoration: none;
-  } 
-  
-  a:hover { 
-      color: #0056b3; 
-      text-decoration: underline;
-  } 
-  
-  a,a:hover,a:active { 
-      text-decoration: none; 
-      outline: none;
-  } 
-  
-  ul li a:hover  { 
-      color: #cb9831; 
-      text-decoration: underline;
-  } 
-  
-  
-  
+}     
+
+p  { 
+    color: #666666; 
+    margin: 20px 0;
+} 
+
+li { 
+    margin:  0; 
+    padding:  0; 
+    border:  0; 
+    outline:  0; 
+    font-family:  'FrutigerLTArabic-65Bold';
+    list-style-type: none;
+} 
+
+ul li  { 
+    display: inline-block; 
+    margin: 10px 0; 
+    padding: 0 15px; 
+    position: relative; 
+    list-style-type: none;
+} 
+
+ul li:after  { 
+    content: ""; 
+    display: block; 
+    width: 1px; 
+    height: 100%; 
+    background-color: #ffffff; 
+    position: absolute; 
+    bottom: 0; 
+    left: 0;
+} 
+
+ul li:last-child:after  { 
+    display: none;
+} 
+
+ul li a  { 
+    color: #ffffff; 
+    font-weight: 400; 
+    position: relative; 
+    -webkit-transition: all .2s ease-in; 
+    transition: all .2s ease-in; 
+    text-decoration: none;
+} 
+
+a:hover { 
+    color: #0056b3; 
+    text-decoration: underline;
+} 
+
+a,a:hover,a:active { 
+    text-decoration: none; 
+    outline: none;
+} 
+
+ul li a:hover  { 
+    color: #cb9831; 
+    text-decoration: underline;
+} 
+
+
