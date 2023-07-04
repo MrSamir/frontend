@@ -25,7 +25,8 @@
                         <div class="col-12" >
                           <div class="field-group service-card-wrapping">
                             <div class="field field--name-field-media field--type-entity-reference field--label-hidden field__item ">
-                              <img loading="lazy" src="https://www.awqaf.gov.sa/sites/default/files/2022-10/tafweed.svg" alt="tafweed" typeof="foaf:Image" >
+                              <img loading="lazy" src="https://www.awqaf.gov.sa/sites/default/files/2022-10/tafweed.svg" alt="{{ nestedTab.title }}" typeof="foaf:Image" >
+                              <!-- <img loading="lazy" src="/workspace/projects/employee-portal/src/assets/images/tafweed.svg" alt="tafweed" typeof="foaf:Image" > -->
                             </div>
                             <div class="field field--name-node-title field--type-ds field--label-hidden field__item">
                               <h2 >
@@ -35,12 +36,17 @@
                             <div class="field-description">
                               <p >
                                 {{ nestedTab.description }}
+                           
                               </p>
                             </div>
                             <div class="field field--name-field-link field--type-link field--label-hidden field__item ">
-                              
+                                
+                            
 
-                              <a [routerLink]="'yaqeen/request'">طلب الخدمة</a>
+
+                              <a [routerLink]="tabItem.CategoryEntryPoint + '/' +  nestedTab.requestFormRoutingUrl">طلب الخدمة</a>
+
+
                             </div>
                             
                           </div>

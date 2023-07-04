@@ -10,7 +10,7 @@ export class YaqeenServiceRequestComponent implements OnInit {
 
   @Output() showResult: EventEmitter<boolean> = new EventEmitter<boolean>();
   identityTypeFormGroup: FormGroup;
-  citizen = false;
+  citizen = true;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -21,11 +21,11 @@ export class YaqeenServiceRequestComponent implements OnInit {
 createForm(){
 
   this.identityTypeFormGroup = this.fb.group({
-    identityType: ['resident', Validators.required],
-    identityNo: [] ,
+    identityType: ['citizen', Validators.required],
+    identityNo: [,Validators.required] ,
     iqamaNo: [] ,
     dob:[] ,
-    dobHijri: [] 
+    dobHijri: [,Validators.required] 
      
 
   });
@@ -33,7 +33,15 @@ createForm(){
 }
 
   check() {
-    this.showResult.emit(true);
+debugger;
+    if (this.identityTypeFormGroup.valid){
+      this.showResult.emit(true);
+    }
+
+    else{
+      this.showResult.emit(false);
+    }
+    
   }
 
   identityTypeChange() {
