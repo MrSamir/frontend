@@ -1,5 +1,3 @@
-//import {TranslateLoader} from '@ngx-translate/core';
-
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -40,9 +38,5 @@ export class appCoreLoader {
   getSettings() {
     return this.data.settings;
    }
-  //  getMessages() {
-  //   return this.data.message;
-  //  }
-
 }
 
