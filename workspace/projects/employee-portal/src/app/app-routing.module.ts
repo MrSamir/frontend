@@ -1,9 +1,5 @@
-import { SearchRoutingModule } from './core/compoenents/search/SearchRouting/SearchRouting.module';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './core/compoenents/home/home.component';
-import { PageoneComponent } from './core/compoenents/pageone/pageone.component';
-import { PagetwoComponent } from './core/compoenents/pagetwo/pagetwo.component';
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './core/compoenents/login/login.component';
 
 const routes: Routes = [

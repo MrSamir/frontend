@@ -9,6 +9,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
+import { ReactiveFormsModule } from '@angular/forms';
  
  
 
@@ -23,8 +24,8 @@ import { PanelModule } from 'primeng/panel';
     TabViewModule,
     TableModule ,
     CardModule,
-    PanelModule 
-    
+    PanelModule ,
+    ReactiveFormsModule
 
 
   ],
