@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./moj-service.component.css']
 })
 export class MojServiceComponent implements OnInit {
-
+ showResult=false;
   constructor() { }
 
   ngOnInit() {
   }
+showMojResult(showResult:boolean){
+this.showResult=showResult;
 
+}
 }

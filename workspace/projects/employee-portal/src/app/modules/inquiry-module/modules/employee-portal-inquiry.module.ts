@@ -10,13 +10,16 @@ import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MojServiceRequestComponent } from '../components/moj-service/moj-service-request/moj-service-request.component';
+import { MojServiceResultComponent } from '../components/moj-service/moj-service-result/moj-service-result.component';
+import { MojServiceComponent } from '../components/moj-service/moj-service.component';
  
  
 
 
 @NgModule({
   declarations: [
-    YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent
+    YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent,MojServiceRequestComponent,MojServiceResultComponent,MojServiceComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
   ],
   exports:[
-     YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent
+     YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent,MojServiceRequestComponent,MojServiceResultComponent
   ]
 
 })

@@ -1,3 +1,27 @@
-<p>
-  moj-service-request works!
-</p>
+<form [formGroup]="attorneyInquiryFormGroup">
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row g-3 align-items-center">
+          
+          <div class="col">
+            <label  class="form-label" for="attorneyNo">رقم صك الوكالة</label>
+            <input  type="text" id="attorneyNo" class="form-control" placeholder="ارقام فقط" formControlName="attorneyNo">
+  
+  
+            
+          </div>
+          <div class="col">
+            <label  class="form-label" for="attorneyIdentityNo">رقم هوية الوكيل</label>
+            <input  type="text" id="attorneyIdentityNo" class="form-control" placeholder="ارقام فقط" formControlName="attorneyIdentityNo">
+  
+          </div>
+          <div class="col-auto align-self-end">
+            <button type="submit" (click)="check()" class="btn btn-primary">تحقق</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+  

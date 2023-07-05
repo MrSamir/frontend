@@ -1,3 +1,3 @@
-<p>
-  moj-service works!
-</p>
+<app-moj-service-request (showResult)="showMojResult($event)"></app-moj-service-request>
+
+<app-moj-service-result *ngIf="showResult"></app-moj-service-result>
