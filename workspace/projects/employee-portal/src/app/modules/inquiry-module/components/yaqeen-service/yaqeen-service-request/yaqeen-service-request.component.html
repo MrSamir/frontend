@@ -3,7 +3,7 @@
   <div class="card-body">
     <div class="container-fluid">
       <div class="row g-3 align-items-center">
-        <div class="col-auto">
+        <div class="ms-sm-auto col-lg-3">
           <label class="form-label">نوع الهوية</label>
           <div class="form-group">
             <div class="form-check form-check-inline">
@@ -19,7 +19,7 @@
            
           </div>
         </div>
-        <div class="col">
+        <div class="ms-sm-auto col-lg-3">
           <label *ngIf="!citizen" class="form-label" for="iqamaNo">رقم الاقامة</label>
           <input *ngIf="!citizen" type="text" id="iqamaNo" class="form-control" placeholder="ارقام فقط" formControlName="iqamaNo">
 
@@ -27,7 +27,7 @@
           <label *ngIf="citizen" class="form-label" for="identityNo">رقم الهوية الوطنية</label>
           <input *ngIf="citizen" type="text" id="identityNo" class="form-control" placeholder="ارقام فقط" formControlName="identityNo">
         </div>
-        <div class="col">
+        <div class="ms-sm-auto col-lg-3">
           <label *ngIf="!citizen" class="form-label" for="dob"> (ميلادي)تاريخ الميلاد</label>
           <input *ngIf="!citizen" type="date" id="dob" class="form-control" formControlName="dob">
 
@@ -35,7 +35,7 @@
           <label *ngIf="citizen" class="form-label" for="dobHijri"> (هجري)تاريخ الميلاد</label>
           <input *ngIf="citizen" type="date" id="dobHijri" class="form-control" formControlName="dobHijri">
         </div>
-        <div class="col-auto align-self-end">
+        <div class="ms-sm-auto col-lg-3 align-self-end">
           <button type="submit" (click)="check()" class="btn btn-primary">تحقق</button>
         </div>
       </div>
