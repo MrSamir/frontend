@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 
 import { ButtonModule } from 'primeng/button';
 import { /*...,*/ APP_INITIALIZER } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
 import { ToastModule } from 'primeng/toast';
@@ -23,7 +23,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
  
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
-import { CoreLibModule } from 'core-lib';
+import { CoreLibModule } from 'projects/core-lib/src/public-api';
+ 
+ 
+
  
 
 export function setupAppConfigServiceFactory(

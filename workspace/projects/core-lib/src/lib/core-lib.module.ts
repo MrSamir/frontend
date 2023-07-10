@@ -15,7 +15,7 @@ import { SpinnerComponent } from './components/spinner/spinner-component';
       SpinnerComponent
   ],
   imports: [
-    SpinnerComponent
+    
   ],
   exports: [
     

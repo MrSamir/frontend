@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MojServiceRequestComponent } from '../components/moj-service/moj-service-request/moj-service-request.component';
 import { MojServiceResultComponent } from '../components/moj-service/moj-service-result/moj-service-result.component';
 import { MojServiceComponent } from '../components/moj-service/moj-service.component';
+import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
  
  
 
@@ -28,8 +30,8 @@ import { MojServiceComponent } from '../components/moj-service/moj-service.compo
     TableModule ,
     CardModule,
     PanelModule ,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    SharecomponentModule
 
   ],
   exports:[

@@ -7,7 +7,7 @@ import { NgBootstrapHijriGregorianDatepickerComponent } from '../ng-bootstrap-hi
 import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { BrowserModule } from '@angular/platform-browser';
+ 
 import { HijriDatepickerComponent } from '../ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/hijri-datepicker.component';
 import { IDNumberWithValidationComponent } from '../IDNumberWithValidation/IDNumberWithValidation.component';
 
@@ -18,7 +18,7 @@ import { IDNumberWithValidationComponent } from '../IDNumberWithValidation/IDNum
   declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,
     IDNumberWithValidationComponent,ValidationMessagesComponent],
   imports: [
-    BreadcrumbModule,FormsModule,BrowserModule,NgbDatepickerModule   ,ReactiveFormsModule
+    BreadcrumbModule,FormsModule,NgbDatepickerModule   ,ReactiveFormsModule
   ],
   exports:[
     BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent

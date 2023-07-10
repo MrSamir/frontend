@@ -30,10 +30,12 @@
         <div class="ms-sm-auto col-lg-3">
           <label *ngIf="!citizen" class="form-label" for="dob"> (ميلادي)تاريخ الميلاد</label>
           <input *ngIf="!citizen" type="date" id="dob" class="form-control" formControlName="dob">
-
-
+          
+<!-- <app-hijri-datepicker></app-hijri-datepicker> -->
           <label *ngIf="citizen" class="form-label" for="dobHijri"> (هجري)تاريخ الميلاد</label>
           <input *ngIf="citizen" type="date" id="dobHijri" class="form-control" formControlName="dobHijri">
+
+          <!-- <app-ng-bootstrap-hijri-gregorian-datepicker formControlName="dobHijri" *ngIf="citizen"></app-ng-bootstrap-hijri-gregorian-datepicker> -->
         </div>
         <div class="ms-sm-auto col-lg-3 align-self-end">
           <button type="submit" (click)="check()" class="btn btn-primary">تحقق</button>
