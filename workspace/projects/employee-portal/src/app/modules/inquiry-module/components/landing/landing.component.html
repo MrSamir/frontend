@@ -18,12 +18,55 @@
                 <div id="views-bootstrap-service-service-list-view-page" class="grid views-view-grid">
                   <div class="row">
                   
-                
+                    <!-- <div class="servicesBox mb-6">
+                      <div class="container">
+                          <div class="text-center pt-6 pb-2">
+                            <h1 class="fa-2x text-awq-secondary mb-4"><b>منصة الاستعلامات</b></h1>
+                            <p>هي منصة تتيح للمستخدم الإستعلام عن صحة المعلومات عن طريق عدة روابط</p>
+                  
+                          </div>
+                  
+                          <div class="row row-cols-2 row-cols-md-7 row-cols-lg-7 mt-6">
+                            <div class="form-group col">
+                              <a [routerLink]="['/internal/inquiry-yaqeen']" class="serviceBox">
+                                <img class="py-5" src="assets/images/index-5.svg" alt="">
+                                <h2><b>خدمة يقين</b></h2>
+                                <p class="small">تهدف خدمة يقين إلى التحقق من بيانات الأشخاص ذوي العلاقة بالأوقاف ومدى تطابقها مع السجلات الرسمية
+                                  والموثقة لدى مركز المعلومات الوطني</p>
+                                <button type="button" class="btn btn-primary px-5">
+                                  ابدأ الخدمة
+                                </button>
+                              </a>
+                            </div>
+                  
+                            <div class="form-group col">
+                              <a [routerLink]="['/internal/inquiries/moj/attornies']" class="serviceBox">
+                                <img class="py-5" src="assets/images/index-5.svg" alt="">      
+                                <h2><b>خدمة الوكالات العدلية</b></h2>
+                                <p class="small">يمكن التحقق من صلاحية أرقام الوكالات والمعلومات الرئيسية لها الصادرة من وزارة العدل</p>
+                                <button type="button" class="btn btn-primary px-5">
+                                  ابدأ الخدمة
+                                </button>
+                              </a>
+                           </div>
+                  
+                          </div>
+                  
+                  
+                  
+                  
+                        </div>
+                  </div> -->
                         
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3 row-of-services" *ngFor="let nestedTab of tabItem.InquiryServices">
                       <div data-history-node-id="32994" class="row">
                         <div class="col-12" >
+                          
+                         
                           <div class="field-group service-card-wrapping">
+
+
+
                             <div class="field field--name-field-media field--type-entity-reference field--label-hidden field__item ">
                               <img loading="lazy" src="https://www.awqaf.gov.sa/sites/default/files/2022-10/tafweed.svg" alt="{{ nestedTab.title }}" typeof="foaf:Image" >
                               <!-- <img loading="lazy" src="/workspace/projects/employee-portal/src/assets/images/tafweed.svg" alt="tafweed" typeof="foaf:Image" > -->

@@ -6,9 +6,9 @@
       "InquiryServices": [
         {
           "serviceCode":"YaqeenInquirySvc",
-          "title": "يقين",
+          "title": "خدمة يقين",
           "icon": "",
-          "description": "22 تفاصيل الخدمة",
+          "description": "تهدف خدمة يقين إلى التحقق من بيانات الأشخاص ذوي العلاقة بالأوقاف ومدى تطابقها مع السجلات الرسمية والموثقة لدى مركز المعلومات الوطني",
           "requestFormRoutingUrl": "request"
         },
         {
@@ -31,9 +31,9 @@
         "InquiryServices": [
           {
             "serviceCode":"AttorneyInquirySvc",
-            "title": "11 الاستعلام عن الوكالات",
+            "title": "خدمة الوكالات العدلية",
             "icon": "",
-            "description": "22  خدمة تمكن من الاستعلام عن الوكالات الصادرة من وزارة العدل",
+            "description": "يمكن التحقق من صلاحية أرقام الوكالات والمعلومات الرئيسية لها الصادرة من وزارة العدل",
             "requestFormRoutingUrl": "request"
           },
           {

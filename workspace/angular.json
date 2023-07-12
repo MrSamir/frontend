@@ -124,8 +124,8 @@
               "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
-   
-   
+              "projects/employee-portal/src/assets/snipped.css" ,
+          
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.rtl.css",
@@ -143,7 +143,7 @@
 
               "styles/styles.css",
 
-              "projects/employee-portal/src/assets/card-style.css"
+              "projects/employee-portal/src/assets/card-style.css" 
              
             ],
             "scripts": [

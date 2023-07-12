@@ -1,0 +1,49 @@
+
+.serviceBox {
+    display: block;
+    border-radius: .3rem;
+    text-align: center;
+    padding: 1.25rem;
+    background-color: #fff;
+    height: 100%;
+    transition: .3s all ease-in-out;
+    overflow: hidden
+}
+
+.serviceBox h2 {
+    color: #1c614e
+}
+
+.serviceBox p {
+    color: #7e8c76
+}
+
+.serviceBox button {
+    transform: translateY(200px)
+}
+
+.serviceBox h2,
+.serviceBox p,
+.serviceBox button,
+.serviceBox img {
+    transition: .3s all ease-in-out
+}
+
+.serviceBox:hover {
+    background-color: #00846c
+}
+
+.serviceBox:hover h2,
+.serviceBox:hover p {
+    color: #fff
+}
+
+.serviceBox:hover img {
+    transform: translateY(-200px)
+}
+
+.serviceBox:hover h2,
+.serviceBox:hover p,
+.serviceBox:hover button {
+    transform: translateY(-50px)
+}
