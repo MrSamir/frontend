@@ -23,9 +23,10 @@
             "assets": [
               "projects/public-portal/src/favicon.ico",
               "projects/public-portal/src/assets",
-              "projects/employee-portal/src/app.config.json"
+              "projects/public-portal/src/app.config.json"
             ],
             "styles": [
+              "projects/public-portal/src/assets/main.css" ,
               "styles/styles.css"
             ],
             "scripts": []
@@ -124,6 +125,8 @@
               "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
+
+           
               "projects/employee-portal/src/assets/snipped.css" ,
           
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",

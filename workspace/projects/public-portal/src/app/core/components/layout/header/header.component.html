@@ -1,0 +1,52 @@
+<div>
+  <div class="top-nav swatch-awq-primary">
+    <div class="container py-2 d-flex justify-content-between">
+      <a  routerLink="/login" *ngIf="!isUserLoggedIn"  class="text-white">تسجيل الدخول</a>
+      <a  routerLink="" *ngIf="!isUserLoggedIn" (click)="internalLogin()" class="text-white">تسجيل الدخول للموظفين</a>
+      <a  routerLink="" *ngIf="isUserLoggedIn" (click)="logout()" class="text-white">تسجيل الخروج</a>
+<!--      <a href="javascript:void(0)" class="text-white">Eng</a>-->
+    </div>
+  </div>
+  <div class="bg-white main-navbar">
+    <div class="container">
+
+      <nav class="navbar navbar-expand-lg navbar-light px-0">
+        <a class="navbar-brand ml-0" href="#">
+          <img src="assets/images/logo.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+          aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation"
+          (click)="isCollapsed = !isCollapsed">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor03" [ngbCollapse]="isCollapsed">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">الرئيسية <span class="sr-only">(current)</span></a>
+            </li>
+ 
+            <li class="nav-item">
+              <a class="nav-link" *ngIf="isUserLoggedIn" [routerLink]="['/public/dashboard']">لوحة التحكم</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" *ngIf="isUserLoggedIn" [routerLink]="['/public/my-profile']">الملف الشخصي</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" *ngIf="isUserLoggedIn" [routerLink]="['/public/seerCertifications']">سجل تسجيل الناظر</a>
+            </li>
+          </ul>
+        </div>
+
+      </nav>
+
+    </div>
+  </div>
+  <div class="bg-light BQ-pageTitle">
+    <div class="container">
+      <div class="small text-black-50 pt-4"><a href="/">الرئيسية</a></div>
+      <h2 class="mainTitle">{{pageTitle}}</h2>
+    </div>
+  </div>
+</div>
+
