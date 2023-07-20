@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import {SidebarModule} from 'primeng/sidebar';
 import {ButtonModule} from 'primeng/button';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
  
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -16,11 +16,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/layout/footer/footer.component';
 import { LoginComponent } from './components/login/login.component';
+import { LandingComponent } from './components/landing/landing.component';
 
  
 @NgModule({
+  
   declarations: [
-    HeaderComponent,FooterComponent,LoginComponent
+    HeaderComponent,FooterComponent,LoginComponent,LandingComponent
    
   ],
   imports: [

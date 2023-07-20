@@ -1,0 +1,73 @@
+[
+    {
+      "CategoryCode":"MOI",
+      "CategoryName": "وزارة الداخلية",
+      "CategoryEntryPoint": "yaqeen",
+      "InquiryServices": [
+        {
+          "serviceCode":"YaqeenInquirySvc",
+          "title": "خدمة يقين",
+          "icon": "",
+          "description": "تهدف خدمة يقين إلى التحقق من بيانات الأشخاص ذوي العلاقة بالأوقاف ومدى تطابقها مع السجلات الرسمية والموثقة لدى مركز المعلومات الوطني",
+          "requestFormRoutingUrl": "request"
+        },
+        {
+          "serviceCode":"YaqeenInquirySvc",
+          "title": "الاستعلام 2",
+          "icon": "",
+          "description": "22 تفاصيل الخدمة",
+          "requestFormRoutingUrl": "second-yaqeen-request"
+        }
+      ]
+      
+    },
+
+
+
+    {
+        "CategoryCode":"MOJ",
+        "CategoryName": "وزارة العدل",
+        "CategoryEntryPoint": "moj",
+        "InquiryServices": [
+          {
+            "serviceCode":"AttorneyInquirySvc",
+            "title": "خدمة الوكالات العدلية",
+            "icon": "",
+            "description": "يمكن التحقق من صلاحية أرقام الوكالات والمعلومات الرئيسية لها الصادرة من وزارة العدل",
+            "requestFormRoutingUrl": "request"
+          },
+          {
+            "serviceCode":"AttorneyInquirySvc",
+            "title": "22 الاستعلام عن الوكالات",
+            "icon": "",
+            "description": "22 خدمة تمكن من الاستعلام عن الوكالات الصادرة من وزارة العدل",
+            "requestFormRoutingUrl": "moj-second-request"
+          },
+          {
+            "serviceCode":"AttorneyInquirySvc",
+            "title": "33 الاستعلام عن الوكالات",
+            "icon": "",
+            "description": "33 خدمة تمكن من الاستعلام عن الوكالات الصادرة من وزارة العدل",
+            "requestFormRoutingUrl": "moj-third-request"
+          }
+        ]
+      },
+
+
+
+      
+    {
+        "CategoryCode":"MOC",
+        "CategoryName": "وزارة التجارة",
+        "CategoryEntryPoint": "moc",
+        "InquiryServices": [
+          {
+            "serviceCode":"MOCInquirySvc",
+            "title": "الاستعلام عن الخدمة",
+            "icon": "",
+            "description": "تفاصيل الخدمة",
+            "requestFormRoutingUrl": ""
+          }
+        ]
+      }
+  ]

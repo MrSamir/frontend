@@ -2,7 +2,7 @@
   <div class="top-nav swatch-awq-primary">
     <div class="container py-2 d-flex justify-content-between">
       <a  routerLink="/login" *ngIf="!isUserLoggedIn"  class="text-white">تسجيل الدخول</a>
-      <a  routerLink="" *ngIf="!isUserLoggedIn" (click)="internalLogin()" class="text-white">تسجيل الدخول للموظفين</a>
+      <!-- <a  routerLink="" *ngIf="!isUserLoggedIn" (click)="internalLogin()" class="text-white">تسجيل الدخول للموظفين</a> -->
       <a  routerLink="" *ngIf="isUserLoggedIn" (click)="logout()" class="text-white">تسجيل الخروج</a>
 <!--      <a href="javascript:void(0)" class="text-white">Eng</a>-->
     </div>
