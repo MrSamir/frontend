@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
   private state = 'normal';
 
   menuHidden = true;
-  constructor() { }
+  constructor( private titleService: Title) { }
 
   ngOnInit() {
   }
@@ -34,7 +35,7 @@ export class HeaderComponent implements OnInit {
 
   internalLogin(){}
   get pageTitle(): string {
-    return "test";
-    // return this.titleService.getTitle();
+    
+     return this.titleService.getTitle();
   }
 }

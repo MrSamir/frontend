@@ -11,9 +11,20 @@ const routes: Routes = [
     data: { title: 'الدخول للمنصة' }
   },
   {
+    path: '',
+    component: LoginComponent,
+    data: { title: 'الدخول للمنصة' }
+  },
+  {
     path: 'landing',
     component: LandingComponent,
-    data: { title: 'الدخول للمنصة' }
+    data: { title: 'الخدمات الالكترونية' }
+  },
+
+  {
+    path: 'endowmentregistration', 
+    loadChildren: () => import('../app/modules/endowment-registration/modules/endowment-registration.module').then(m => m.EndowmentRegistrationModule),
+     data: { title: 'تسجيل وقف' }
   },
   // {
   //   path: 'usertask',

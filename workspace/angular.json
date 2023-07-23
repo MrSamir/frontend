@@ -26,8 +26,7 @@
               "projects/public-portal/src/app.config.json"
             ],
             "styles": [
-              "projects/public-portal/src/assets/main.css" ,
-              "styles/styles.css"
+              "projects/public-portal/src/assets/main.css"
             ],
             "scripts": []
           },
