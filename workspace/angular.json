@@ -71,7 +71,7 @@
           "options": {
             "browserTarget": "proxy-for-angular:build",
             "proxyConfig": "proxy.conf.json"
-            
+
           }
         },
         "extract-i18n": {
@@ -120,7 +120,7 @@
             "tsConfig": "projects/employee-portal/tsconfig.app.json",
             "assets": [
               "projects/employee-portal/src/favicon.ico",
-              "projects/employee-portal/src/assets",  
+              "projects/employee-portal/src/assets",
               "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
@@ -128,6 +128,7 @@
            
               "projects/employee-portal/src/assets/snipped.css" ,
           
+
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.rtl.css",
@@ -140,8 +141,8 @@
               "projects/employee-portal/src/assets/primeng/accordion/accordion.css",
               "projects/employee-portal/src/assets/primeng/tabview/primeng.tabview.css",
 
-           
-            
+
+
 
               "styles/styles.css",
 
@@ -149,9 +150,9 @@
              
             ],
             "scripts": [
-           "node_modules/bootstrap/dist/js/bootstrap.js" 
+           "node_modules/bootstrap/dist/js/bootstrap.js"
 
-   
+
             ]
           },
           "configurations": {
@@ -195,7 +196,7 @@
           "options": {
             "browserTarget": "proxy-for-angular:build",
             "proxyConfig": "proxy.conf.json"
-            
+
           }
         },
         "extract-i18n": {
@@ -266,7 +267,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/core-lib/ng-package.json"            
+            "project": "projects/core-lib/ng-package.json"
           },
           "configurations": {
             "production": {
