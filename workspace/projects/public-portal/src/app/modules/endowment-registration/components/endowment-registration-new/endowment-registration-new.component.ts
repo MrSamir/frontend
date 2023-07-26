@@ -11,4 +11,9 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  getLoggedInUserData(){
+
+    
+  }
 }

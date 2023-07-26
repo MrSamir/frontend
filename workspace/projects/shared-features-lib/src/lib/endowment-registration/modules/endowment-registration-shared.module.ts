@@ -1,16 +1,42 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
- import { ApplicantEditComponent } from '../components/applicant-edit/applicant-edit.component';
+ import { EndowmentApplicantEditComponent } from '../components/endowment-applicant-edit/endowment-applicant-edit.component';
+ 
+import { ReactiveFormsModule } from '@angular/forms';
+import { CoreLibModule } from 'projects/core-lib/src/public-api';
+ import { EndowmentSeersListComponent } from '../components/endowment-seers-list/endowment-seers-list.component';
+import { EndowmentBeneficiariesListComponent } from '../components/endowment-beneficiaries-list/endowment-beneficiaries-list.component';
+import { EndowmentEndowersListComponent } from '../components/endowment-endowers-list/endowment-endowers-list.component';
+import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
+import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
+ 
 
 @NgModule({
   imports: [
     CommonModule,
-     
+     ReactiveFormsModule,CoreLibModule
   ],
   exports: [
     CommonModule,
-     ApplicantEditComponent
+      
+   EndowmentApplicantEditComponent,
+   EndowmentEndowersListComponent,
+EndowmentBeneficiariesListComponent,
+EndowmentSeersListComponent,
+EndowmentInfoEditComponent,
+EndowmentAssetsEditComponent
+
+
   ],
-  declarations: [ApplicantEditComponent]
+  declarations: [
+    
+    EndowmentEndowersListComponent,
+    EndowmentApplicantEditComponent,
+    EndowmentSeersListComponent,
+    EndowmentBeneficiariesListComponent,
+    EndowmentInfoEditComponent,
+    EndowmentAssetsEditComponent
+  
+  ]
 })
 export class EndowmentRegistrationSharedModule { }
