@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
  import { EndowmentApplicantEditComponent } from '../components/endowment-applicant-edit/endowment-applicant-edit.component';
  
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
  import { EndowmentSeersListComponent } from '../components/endowment-seers-list/endowment-seers-list.component';
 import { EndowmentBeneficiariesListComponent } from '../components/endowment-beneficiaries-list/endowment-beneficiaries-list.component';
