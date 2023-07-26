@@ -10,5 +10,9 @@
     "/api/bitcoinMarketData": {
       "target": "http://localhost:3000/bitcoinMarketData",
       "secure": false
+    },
+    "/api/getUsers": {
+      "target": "http://localhost:3000/getUsers",
+      "secure": false
     }
   }

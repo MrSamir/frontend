@@ -15,6 +15,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
  
+import { ArchwizardModule } from 'angular-archwizard';
  
 @NgModule({
   declarations: [

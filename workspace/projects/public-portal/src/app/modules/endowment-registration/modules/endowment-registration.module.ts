@@ -8,24 +8,21 @@ import { EndowmentRegistrationStartServiceComponent } from '../components/endowm
 import { EndowmentRegistrationNewComponent } from '../components/endowment-registration-new/endowment-registration-new.component';
 import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/public-api';
 import { ArchwizardModule } from 'angular-archwizard';
-import { AutoCompleteModule } from 'primeng/autocomplete';
  
-
- 
- 
-
  
 
 @NgModule({
   declarations: [
     EndowmentRegistrationStartServiceComponent,
     EndowmentRegistrationNewComponent,
+
+   
   ],
   imports: [
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
-    EndowmentRegistrationSharedModule, AutoCompleteModule
-
+    EndowmentRegistrationSharedModule,
+    ArchwizardModule
  
      
 

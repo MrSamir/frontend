@@ -1,0 +1,45 @@
+<div>
+  <ngx-file-drop *ngIf="showFileDrop && (invalidFildIds || allowMultipleFiles)"
+    [ngClass]="{ 'invalid':isInvalid, 'dropzone-active' : isOver, 'dropzone' : !isOver }" (onFileDrop)="dropped($event)"
+    [multiple]="allowMultipleFiles" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+    [dropZoneClassName]="'upload-zone'" [contentClassName]="'upload'">
+    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+      <div class="row">
+        <button type="button" class="btn btn-outline-awq-secondary px-5 btn-lg" (click)="openFileSelector()">
+          <svg-icon icon="upload" styleClass="h1 mr-3"></svg-icon>
+          <span>تحميل المرفق </span>
+        </button>
+      </div>
+    </ng-template>
+  </ngx-file-drop>
+
+  <div *ngIf="isInvalid" class="invalid-feedback" style="display: contents;">
+    المرفق مطلوب
+  </div>
+  <div *ngIf="!invalidFildIds">
+    <label class="col-form-label col-12 col-md-3"></label>
+    <div *ngFor="let obj of objects; let i=index" class="py-4 px-3" content>
+
+      <div class="row">
+
+        <div class="w-100 center p-2 swatch-100 border-bottom">
+          <label class="mb-0">{{fileDisplayName ?? obj[keys[0]] }}</label>
+          <div class="actions">
+            <a (click)="deleteFile(i)" *ngIf="showDeleteButton" class="mx-2" href="javascript:void(0)" ngbTooltip="حذف">
+              <svg-icon icon="trash-alt" styleClass="fa-w-14 h4 mt-2 text-danger"></svg-icon>
+            </a>
+            <a (click)="downloadFile(i)" *ngIf="showDownloadButton" class="mx-2" href="javascript:void(0)"
+              ngbTooltip="تحميل">
+              <svg-icon icon="download" styleClass="fa-w-16 h4 mt-2 text-dcc-warning"></svg-icon>
+            </a>
+
+            <a (click)="openFileInNewTab(i)" *ngIf="showOpenInNewtabButton" class="mx-2" href="javascript:void(0)"
+              ngbTooltip="تحميل في صفحة أخري">
+              <svg-icon icon="eye" styleClass="fa-w-16 h4 mt-2 text-dcc-warning"></svg-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

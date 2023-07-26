@@ -11,19 +11,20 @@ import { HttpResponseInterceptor } from './interceptors/httpResponseInterceptor'
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner-component';
 import { BreadcrumbComponent } from 'projects/shared-features-lib/src/public-api';
-
+ 
 
 export function setupTranslateServiceFactory(
   service: LocalizationService): Function {
 return () => service.use('ar');
 }
-debugger;
+ 
 @NgModule({
   declarations: [
  
     LoacalizationBaseComponent,
     LocalizePipe,
-    SpinnerComponent
+    SpinnerComponent,
+     
   ],
   imports: [
     HttpClientModule
@@ -32,7 +33,8 @@ debugger;
     
     LocalizePipe,
     LoacalizationBaseComponent,
-    SpinnerComponent
+    SpinnerComponent,
+     
   ],
   providers: [
     {

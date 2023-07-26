@@ -16,7 +16,7 @@ export class LocalizationService {
     use(lang: string){
       let app = this.appCoreSubject.getAppCore();
       if(app.localization.languagesInfo.length == 0){
-         this.customLoader.load("http://localhost:5022/Home/GetAppCore", app).then((result:appCore)=>{
+         this.customLoader.load("https://localhost:7057/api/AppCoreConfigurationsService/GetAppCoreConfigurations", app).then((result:any)=>{
           this.appData = result;
           this.appCoreSubject.setAppCore(this.appData);
           app = this.appCoreSubject.getAppCore();

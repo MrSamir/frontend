@@ -23,6 +23,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<ApiResponse>> {
     let errorMessage: string | undefined;
+ 
     return next.handle(request).pipe(
       tap({
         next: (event) => {
