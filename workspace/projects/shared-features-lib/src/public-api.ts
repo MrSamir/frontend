@@ -10,6 +10,8 @@ export * from './lib/components/assets-demo/assets-demo.module';
 
 
 export * from './lib/shared-component/breadcrumb/breadcrumb.component';
+export * from './lib/endowment-registration/components/endowment-info/endowment-info.component';
+export * from './lib/endowment-registration/components/applicant-edit/applicant-edit.component';
 
 
 export * from './lib/endowment-registration/modules/endowment-registration-shared.module'

@@ -1,3 +1,25 @@
-<p>
- <app-applicant-edit></app-applicant-edit>
-</p>
+ 
+<aw-wizard  #wizard [disableNavigationBar]="true" class="awq-custom" [navBarLayout]="'large-empty'" navigateBackward="deny" navigateForward="deny">
+  
+   
+    <aw-wizard-step stepTitle="معلومات الوقف" [navigationSymbol]="{ symbol: '1' }" stepId="0" > 
+        <!--=========================   step one  =========================-->
+        <div class="aw-wrpper_content">
+            <app-applicant-edit></app-applicant-edit>
+        </div>
+        
+        </aw-wizard-step>  
+   
+    <aw-wizard-step stepTitle="معلومات المتقدم" [navigationSymbol]="{ symbol: '2' }" stepId="1" >  
+        <!--=========================   step one  =========================-->
+        <div class="aw-wrpper_content">
+        
+          <app-endowment-info></app-endowment-info>
+        </div>
+        
+        </aw-wizard-step>  
+
+
+    
+
+</aw-wizard>
