@@ -26,6 +26,8 @@ const routes: Routes = [
     loadChildren: () => import('../app/modules/endowment-registration/modules/endowment-registration.module').then(m => m.EndowmentRegistrationModule),
      data: { title: 'تسجيل وقف' }
   },
+
+ 
   // {
   //   path: 'usertask',
   //   component: PublicUserTaskComponent,

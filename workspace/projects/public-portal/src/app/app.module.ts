@@ -15,18 +15,20 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
 
  
-import { ArchwizardModule } from 'angular-archwizard';
+import { PublicPortalSharedModule } from './modules/shared/modules/public-portal-shared.module';
+import {  MultiSelectModule } from 'primeng/multiselect';
+ 
  
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-
  
+ MultiSelectModule,
     BrowserModule,
     SharecomponentModule,
- 
+ PublicPortalSharedModule,
     CommonModule,
     AppRoutingModule,
     LoginDemoModule,

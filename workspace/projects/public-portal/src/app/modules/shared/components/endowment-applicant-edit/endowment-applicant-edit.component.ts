@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { showError } from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { AspNetUser } from '../../models/AspNetUser';
+ 
+ 
 
 @Component({
   selector: 'app-endowment-applicant-edit',
@@ -17,12 +19,17 @@ export class EndowmentApplicantEditComponent implements OnInit {
 
 
   yaqeenErrorMessage = '';
+
+
+  @Input() _applicantData: AspNetUser = new AspNetUser();
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
 
     this.initiateApplicantForm();
     this.initiateAttorneyForm();
+  
   }
 
   get applicantform() {
@@ -36,11 +43,12 @@ export class EndowmentApplicantEditComponent implements OnInit {
     this.applicantForm = this.fb.group({
 
       isApplicantAsAgent: [false],
-      firstNameAr: [],
-      secondNameAr: [],
-      thirdNameAr: [],
-      lastNameAr: [],
-      idNumber: [],
+      firstNameAr: [this._applicantData.FirstNameAr],
+      secondNameAr: [this._applicantData.SecondNameAr],
+      thirdNameAr: [this._applicantData.ThirdNameAr],
+      lastNameAr: [this._applicantData.LastNameAr],
+      idNumber: [this._applicantData.IdNumber],
+      birthDateGregorian: [this._applicantData.BirthDateGregorian],
 
 
     })

@@ -30,31 +30,31 @@
       <div class="form-group col">
         <!-- <label class="col-form-label">{{'Module1.awqafService.firstNameArr' | localize}}<span class="text-danger">*</span></label> -->
         <label class="col-form-label">الإسم الأول<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" [value]="" disabled >
+        <input type="text" class="form-control" formControlName="firstNameAr"   readonly >
       </div>
       <div class="form-group col">
         <label class="col-form-label">
           
           إسم الأب <span class="text-danger">*</span></label>
         <!-- <label class="col-form-label">{{'Module1.awqafService.secondNameAr' | localize}}<span class="text-danger">*</span></label> -->
-        <input type="text" class="form-control" [value]="" disabled >
+        <input type="text" class="form-control" formControlName="secondNameAr"  [value]="" readonly >
       </div>
       <div class="form-group col">
         <!-- <label class="col-form-label">{{'Module1.awqafService.thirdNameAr' | localize}}<span class="text-danger">*</span></label> -->
         <label class="col-form-label">إسم الجد<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" [value]="" disabled >
+        <input type="text" class="form-control" formControlName="thirdNameAr"  [value]="" readonly >
       </div>
       <div class="form-group col">
         <!-- <label class="col-form-label">{{'Module1.awqafService.lastNameAr' | localize}}<span class="text-danger">*</span></label> -->
         <label class="col-form-label">إسم العائلة<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" [value]="" disabled >
+        <input type="text" class="form-control" formControlName="lastNameAr" [value]="" readonly >
       </div>
 
       <div class="form-group col">
         <label class="col-form-label">تاريخ الميلاد <span class="text-danger">*</span></label>
         <div class='input-group mr-3 calendar-alt'>
-          <input type="text" class="form-control" placeholder="yyyy-mm-dd" name="wp" [value]=""
-                 disabled >
+          <input type="text" class="form-control" formControlName="birthDateGregorian"   name="wp" 
+                 readonly >
           <i class="icon" ></i>
         </div>
       </div>
@@ -189,9 +189,9 @@
   </div>
 
 
-  <div class="aw-btn">
+  <!-- <div class="aw-btn">
     <div>
       <button type="button" class="btn btn-outline-awq-secondary" [disabled]="!(isApplicantAsAgent)||applicantForm?.invalid || !isDeedFound() || !yaqeenValidationResult" (click)="onNextBtnClicked()">التالي</button>
     </div>
-  </div>
+  </div> -->
 </form>
