@@ -32,6 +32,12 @@ export class EndowmentApplicantEditComponent implements OnInit {
   
   }
 
+
+
+  get applicantBirthDate() {
+    return this._applicantData.HijriBirthDate ?? this._applicantData.BirthDateGregorian;
+  }
+
   get applicantform() {
     return this.applicantForm.controls;
   }
@@ -49,6 +55,7 @@ export class EndowmentApplicantEditComponent implements OnInit {
       lastNameAr: [this._applicantData.LastNameAr],
       idNumber: [this._applicantData.IdNumber],
       birthDateGregorian: [this._applicantData.BirthDateGregorian],
+      applicantBirthDate: [this.applicantBirthDate],
 
 
     })
