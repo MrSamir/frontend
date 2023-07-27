@@ -15089,27 +15089,27 @@ html[dir=rtl] .mx-auto {
 }
 
 @font-face {
-    font-family: Elm-font;
+    font-family:sans-serif  ;
     font-weight: 400;
     font-style: normal;
-    src: url(URWDINArabicRegular.b745503757472a8c.eot);
-    src: url(URWDINArabicRegular.b745503757472a8c.eot?#iefix) format("embedded-opentype"), url(URWDINArabicRegular.fc3ec121c5414fae.woff) format("woff"), url(URWDINArabicRegular.1541d1bb800de6a4.ttf) format("truetype")
+    src: url(./fonts/URWDINArabicRegular/URWDINArabicRegular.eot);
+    src: url(./fonts/URWDINArabicRegular/URWDINArabicRegular.eot?#iefix) format("embedded-opentype"), url(./fonts/URWDINArabicRegular/URWDINArabicRegular.woff) format("woff"), url(./fonts/URWDINArabicRegular/URWDINArabicRegular.ttf) format("truetype")
 }
 
 @font-face {
-    font-family: Elm-font;
+    font-family: sans-serif;
     font-weight: 500;
     font-style: normal;
-    src: url(URWDINArabicMedium.61a25f69167e07f4.eot);
-    src: url(URWDINArabicMedium.61a25f69167e07f4.eot?#iefix) format("embedded-opentype"), url(URWDINArabicMedium.eae6f8adbfa9016d.woff) format("woff"), url(URWDINArabicMedium.c1424be13a33338c.ttf) format("truetype")
+    src: url(./fonts/URWDINArabicMedium/URWDINArabicMedium.eot);
+    src: url(./fonts/URWDINArabicMedium/URWDINArabicMedium.eot?#iefix) format("embedded-opentype"), url(./fonts/URWDINArabicMedium/URWDINArabicMedium.woff) format("woff"), url(./fonts/URWDINArabicMedium/URWDINArabicMedium.ttf) format("truetype")
 }
 
 @font-face {
-    font-family: Elm-font;
+    font-family: sans-serif;
     font-weight: 700;
     font-style: normal;
-    src: url(URWDINArabicBold.91e98ff965a73e26.eot);
-    src: url(URWDINArabicBold.91e98ff965a73e26.eot?#iefix) format("embedded-opentype"), url(URWDINArabicBold.7a10edb613743562.woff) format("woff"), url(URWDINArabicBold.7af26098b2aceb77.ttf) format("truetype")
+    src: url(./fonts/URWDINArabicBold/URWDINArabicBold.eot);
+    src: url(./fonts/URWDINArabicBold/URWDINArabicBold.eot?#iefix) format("embedded-opentype"), url(./fonts/URWDINArabicBold/URWDINArabicBold.woff) format("woff"), url(./fonts/URWDINArabicBold/URWDINArabicBold.ttf) format("truetype")
 }
 
 html {
@@ -15138,7 +15138,7 @@ a {
 }
 
 .shape-bg {
-    background: url(shape-bg.46368dc6399d27b9.svg) no-repeat bottom left;
+    background: url(./images/shape-bg.svg) no-repeat bottom left;
     background-size: contain;
     min-height: 500px
 }
@@ -15191,7 +15191,7 @@ a {
     content: "";
     width: 24px;
     height: 26px;
-    background-image: url(steps-arrow.347d7be4e3b62ea0.svg);
+    background-image: url(./images/steps-arrow.svg);
     background-repeat: no-repeat;
     top: calc(50% - 13px);
     right: -1.5rem

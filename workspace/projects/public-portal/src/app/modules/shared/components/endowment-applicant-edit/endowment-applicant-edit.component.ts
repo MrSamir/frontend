@@ -81,6 +81,8 @@ this.isApplicantAsAgent= true;
     else {
 this.isApplicantAsAgent=false;
       // this.nullifyAgentData();
+
+      
     }
 
 

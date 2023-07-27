@@ -3,8 +3,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-landing',
-  templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.css'] 
+  templateUrl: './landing.component.html' 
 })
 export class LandingComponent implements OnInit {
 
@@ -18,7 +17,7 @@ export class LandingComponent implements OnInit {
   }
   ngOnInit() {
     this.loadServices();
-    this.renderer.addClass(document.body, 'IndexPages');
+    // this.renderer.addClass(document.body, 'IndexPages');
   }
 
 }
