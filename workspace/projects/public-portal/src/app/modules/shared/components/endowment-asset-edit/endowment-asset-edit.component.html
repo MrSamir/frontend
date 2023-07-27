@@ -1,0 +1,61 @@
+<div class="d-flex justify-content-center my-6" *ngIf="!this.Assets || this.Assets?.length === 0">
+    <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)">
+      <svg-icon styleClass="fa-3x mr-3 mb-2 " icon="add-icon"></svg-icon>
+      <span>يجب إضافة أصل واحد على الأقل</span>
+    </a>
+  </div>
+  
+  <div *ngIf="!!this.Assets && this.Assets?.length > 0">
+    <div class="table-responsive mt-2">
+      <div>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <td class="text-center" scope="col">#</td>
+              <td class="text-center" scope="col">نوع الأصل</td>
+              <td class="text-center" scope="col">مراجعة</td>
+              <td class="text-center" scope="col">تعديل</td>
+              <td class="text-center" scope="col">حذف</td>
+            </tr>
+          </thead>
+          <!--   ==============    if the have result ============== -->
+          <tbody>
+            <tr *ngFor="let foundAsset of this.Assets;index as i">
+              <td class="text-center" scope="col">
+                {{i+1}}
+              </td>
+              <td class="text-center" scope="col">
+                <!-- {{ assetTypeMap[foundAsset.assetTypeId]}} -->  <!--   ==============  uncomment after building backend ============== -->
+              </td>
+              <td class="text-center" scope="col">
+                <button class="btn btn-sm btn-outline-awq-secondary rounded"
+                  (click)="onViewTableCellClicked(addData, foundAsset.id, i)">
+                  <svg-icon icon="eye"></svg-icon>
+                </button>
+              </td>
+              <td class="text-center" scope="col">
+                <button class="btn btn-sm btn-outline-awq-secondary rounded"
+                  (click)="onEditTableCellClicked(addData, foundAsset.id, i)">
+                  <svg-icon icon="pencil"></svg-icon>
+                </button>
+              </td>
+              <td class="text-center" scope="col">
+                <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(foundAsset, i)">
+                  <svg-icon icon="trash-alt"></svg-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div class="d-flex justify-content-end my-6">
+      <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
+        (click)="onAddNewAssetClicked(addData)">
+        <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon>
+        <span>إضافة أصل آخر</span>
+      </a>
+    </div>
+  </div>
+  
