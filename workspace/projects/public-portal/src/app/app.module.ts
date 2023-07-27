@@ -13,11 +13,8 @@ import { ButtonModule } from 'primeng/button';
 import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
-
- 
 import { PublicPortalSharedModule } from './modules/shared/modules/public-portal-shared.module';
 import {  MultiSelectModule } from 'primeng/multiselect';
- 
  
 @NgModule({
   declarations: [

@@ -9,3 +9,4 @@ export * from './lib/services/app-message.service';
  
 export * from './lib/core-lib.module';
 export * from './lib/services/loading.service';
+export * from './lib/enums/EnumValidation';

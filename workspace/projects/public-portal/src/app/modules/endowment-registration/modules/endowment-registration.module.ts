@@ -23,8 +23,6 @@ import { PublicPortalSharedModule } from '../../shared/modules/public-portal-sha
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
-    ArchwizardModule,
- 
     PublicPortalSharedModule 
 
 
