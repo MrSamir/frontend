@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 import { EndowmentRegistrationRoutingModule } from './endowment-registration-routing.module';
 import { EndowmentRegistrationStartServiceComponent } from '../components/endowment-registration-start-service/endowment-registration-start-service.component';
 import { EndowmentRegistrationNewComponent } from '../components/endowment-registration-new/endowment-registration-new.component';
-import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/public-api';
-import { ArchwizardModule } from 'angular-archwizard';
+ import { ArchwizardModule } from 'angular-archwizard';
 import { PublicPortalSharedModule } from '../../shared/modules/public-portal-shared.module';
+import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/lib/endowment-registration/modules/endowment-registration-shared.module';
  
  
 

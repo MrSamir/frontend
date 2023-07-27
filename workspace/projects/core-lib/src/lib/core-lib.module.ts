@@ -10,8 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpResponseInterceptor } from './interceptors/httpResponseInterceptor';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner-component';
-import { BreadcrumbComponent } from 'projects/shared-features-lib/src/public-api';
- 
+  
 
 export function setupTranslateServiceFactory(
   service: LocalizationService): Function {
