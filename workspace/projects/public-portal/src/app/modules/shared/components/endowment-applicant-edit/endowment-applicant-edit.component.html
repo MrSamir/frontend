@@ -53,7 +53,7 @@
       <div class="form-group col">
         <label class="col-form-label">تاريخ الميلاد <span class="text-danger">*</span></label>
         <div class='input-group mr-3 calendar-alt'>
-          <input type="text" class="form-control" formControlName="birthDateGregorian"   name="wp" 
+          <input type="text" class="form-control" formControlName="applicantBirthDate" [value]="applicantBirthDate"   name="wp" 
                  readonly >
           <i class="icon" ></i>
         </div>
@@ -142,7 +142,7 @@
   
         <div class="form-group col-12">
           <div class="d-flex">
-            <!-- <label class="col col-form-label">{{translations.agencyDeed}}<span class="text-danger">*</span></label> -->
+         
             <label class="col col-form-label">{{'Module1.awqafService.agencyDeed' | localize}}<span class="text-danger">*</span></label>
             <!-- <hint [hintContent]="agencyDeedHint?.hintContentAr" [hintTitle]="agencyDeedHint?.hintTitleAr" ></hint> -->
           </div>
@@ -166,20 +166,20 @@
         </div>
   
         <div class="form-group col-12">
-          <!-- <label class="col-form-label">{{translations.agencyStatus}}</label> -->
+       
           <label class="col-form-label">{{'Module1.awqafService.agencyStatus' | localize}}</label>
           <input type="text" class="form-control"  [readonly]="true"   formControlName="agentStatus" required>
         </div>
   
         <div class="form-group col-12">
-          <!-- <label class="col-form-label">{{translations.startOfAgency}}</label> -->
+    
           <label class="col-form-label">{{'Module1.awqafService.startOfAgency' | localize}}</label>
           <input type="text" class="form-control"  [readonly]="true"
          formControlName="agentIssueDateHijri"         required >
         </div>
   
         <div class="form-group col-12">
-          <!-- <label class="col-form-label">{{translations.endOfAgency}}</label> -->
+    
           <label class="col-form-label">{{'Module1.awqafService.endOfAgency' | localize}}</label>
           <input type="text" class="form-control"    formControlName="agentIssueDateHijri"  [readonly]="true" required>
         </div>
