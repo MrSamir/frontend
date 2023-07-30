@@ -23,16 +23,11 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
-<<<<<<< HEAD
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
  
  
 
  
-=======
-import { CoreLibModule } from 'projects/core-lib/src/lib/core-lib.module';
-
->>>>>>> 8a99bdc5d55134ebe0b0cd96381765bef019f9b2
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService,
