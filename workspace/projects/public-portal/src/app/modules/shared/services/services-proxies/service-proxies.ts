@@ -261,6 +261,130 @@ export class EntitySampleApplicationServiceServiceProxy {
 }
 
 @Injectable()
+export class LookupApplicationServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getAllLookups(body: InputLookUpDto | undefined): Observable<ApiResponseOfPagedResultDtoOfLookupDto> {
+        let url_ = this.baseUrl + "/api/LookupApplicationService/GetAllLookups";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAllLookups(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAllLookups(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfPagedResultDtoOfLookupDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfPagedResultDtoOfLookupDto>;
+        }));
+    }
+
+    protected processGetAllLookups(response: HttpResponseBase): Observable<ApiResponseOfPagedResultDtoOfLookupDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfPagedResultDtoOfLookupDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getById(body: InputLookUpDto | undefined): Observable<ApiResponseOfLookupDto> {
+        let url_ = this.baseUrl + "/api/LookupApplicationService/GetById";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetById(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetById(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfLookupDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfLookupDto>;
+        }));
+    }
+
+    protected processGetById(response: HttpResponseBase): Observable<ApiResponseOfLookupDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfLookupDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class SendNotificationApplicationServiceServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -478,7 +602,7 @@ export class ApiResponseOfEntitySampleDto implements IApiResponseOfEntitySampleD
     isSuccess!: boolean;
     dto!: EntitySampleDto;
     message!: string | undefined;
-    validationResultMessage!: ValidationResultMessage;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
 
     constructor(data?: IApiResponseOfEntitySampleDto) {
         if (data) {
@@ -494,7 +618,11 @@ export class ApiResponseOfEntitySampleDto implements IApiResponseOfEntitySampleD
             this.isSuccess = _data["isSuccess"];
             this.dto = _data["dto"] ? EntitySampleDto.fromJS(_data["dto"]) : <any>undefined;
             this.message = _data["message"];
-            this.validationResultMessage = _data["validationResultMessage"] ? ValidationResultMessage.fromJS(_data["validationResultMessage"]) : <any>undefined;
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
         }
     }
 
@@ -510,7 +638,11 @@ export class ApiResponseOfEntitySampleDto implements IApiResponseOfEntitySampleD
         data["isSuccess"] = this.isSuccess;
         data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
         data["message"] = this.message;
-        data["validationResultMessage"] = this.validationResultMessage ? this.validationResultMessage.toJSON() : <any>undefined;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -519,14 +651,126 @@ export interface IApiResponseOfEntitySampleDto {
     isSuccess: boolean;
     dto: EntitySampleDto;
     message: string | undefined;
-    validationResultMessage: ValidationResultMessage;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfLookupDto implements IApiResponseOfLookupDto {
+    isSuccess!: boolean;
+    dto!: LookupDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfLookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? LookupDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfLookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfLookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfLookupDto {
+    isSuccess: boolean;
+    dto: LookupDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfPagedResultDtoOfLookupDto implements IApiResponseOfPagedResultDtoOfLookupDto {
+    isSuccess!: boolean;
+    dto!: PagedResultDtoOfLookupDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfPagedResultDtoOfLookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? PagedResultDtoOfLookupDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfPagedResultDtoOfLookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfPagedResultDtoOfLookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfPagedResultDtoOfLookupDto {
+    isSuccess: boolean;
+    dto: PagedResultDtoOfLookupDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfSentNotificationMessagesDto {
     isSuccess!: boolean;
     dto!: SentNotificationMessagesDto;
     message!: string | undefined;
-    validationResultMessage!: ValidationResultMessage;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
 
     constructor(data?: IApiResponseOfSentNotificationMessagesDto) {
         if (data) {
@@ -542,7 +786,11 @@ export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfS
             this.isSuccess = _data["isSuccess"];
             this.dto = _data["dto"] ? SentNotificationMessagesDto.fromJS(_data["dto"]) : <any>undefined;
             this.message = _data["message"];
-            this.validationResultMessage = _data["validationResultMessage"] ? ValidationResultMessage.fromJS(_data["validationResultMessage"]) : <any>undefined;
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
         }
     }
 
@@ -558,7 +806,11 @@ export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfS
         data["isSuccess"] = this.isSuccess;
         data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
         data["message"] = this.message;
-        data["validationResultMessage"] = this.validationResultMessage ? this.validationResultMessage.toJSON() : <any>undefined;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
         return data;
     }
 }
@@ -567,7 +819,7 @@ export interface IApiResponseOfSentNotificationMessagesDto {
     isSuccess: boolean;
     dto: SentNotificationMessagesDto;
     message: string | undefined;
-    validationResultMessage: ValidationResultMessage;
+    validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class AppCore implements IAppCore {
@@ -686,6 +938,58 @@ export interface IEntitySampleDto {
     id: number;
 }
 
+export class InputLookUpDto implements IInputLookUpDto {
+    lookUpName!: string | undefined;
+    id!: number;
+    lookupExtraDatas!: LookupExtraData[] | undefined;
+
+    constructor(data?: IInputLookUpDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.lookUpName = _data["lookUpName"];
+            this.id = _data["id"];
+            if (Array.isArray(_data["lookupExtraDatas"])) {
+                this.lookupExtraDatas = [] as any;
+                for (let item of _data["lookupExtraDatas"])
+                    this.lookupExtraDatas!.push(LookupExtraData.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): InputLookUpDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputLookUpDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["lookUpName"] = this.lookUpName;
+        data["id"] = this.id;
+        if (Array.isArray(this.lookupExtraDatas)) {
+            data["lookupExtraDatas"] = [];
+            for (let item of this.lookupExtraDatas)
+                data["lookupExtraDatas"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IInputLookUpDto {
+    lookUpName: string | undefined;
+    id: number;
+    lookupExtraDatas: LookupExtraData[] | undefined;
+}
+
 export class LanguageInfo implements ILanguageInfo {
     name!: string | undefined;
     languageData!: any | undefined;
@@ -772,6 +1076,114 @@ export class Localization implements ILocalization {
 export interface ILocalization {
     languagesInfo: LanguageInfo[] | undefined;
     currentLanguage: LanguageInfo;
+}
+
+export class LookupDto implements ILookupDto {
+    localizedKey!: string | undefined;
+    isEnabled!: boolean;
+    name!: string | undefined;
+    hintLoclizedKey!: string | undefined;
+    hint!: string | undefined;
+    lookupExtraDatas!: LookupExtraData[] | undefined;
+    id!: number;
+
+    constructor(data?: ILookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.localizedKey = _data["localizedKey"];
+            this.isEnabled = _data["isEnabled"];
+            this.name = _data["name"];
+            this.hintLoclizedKey = _data["hintLoclizedKey"];
+            this.hint = _data["hint"];
+            if (Array.isArray(_data["lookupExtraDatas"])) {
+                this.lookupExtraDatas = [] as any;
+                for (let item of _data["lookupExtraDatas"])
+                    this.lookupExtraDatas!.push(LookupExtraData.fromJS(item));
+            }
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): LookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["localizedKey"] = this.localizedKey;
+        data["isEnabled"] = this.isEnabled;
+        data["name"] = this.name;
+        data["hintLoclizedKey"] = this.hintLoclizedKey;
+        data["hint"] = this.hint;
+        if (Array.isArray(this.lookupExtraDatas)) {
+            data["lookupExtraDatas"] = [];
+            for (let item of this.lookupExtraDatas)
+                data["lookupExtraDatas"].push(item.toJSON());
+        }
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ILookupDto {
+    localizedKey: string | undefined;
+    isEnabled: boolean;
+    name: string | undefined;
+    hintLoclizedKey: string | undefined;
+    hint: string | undefined;
+    lookupExtraDatas: LookupExtraData[] | undefined;
+    id: number;
+}
+
+export class LookupExtraData implements ILookupExtraData {
+    dataName!: string | undefined;
+    dataValue!: string | undefined;
+
+    constructor(data?: ILookupExtraData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dataName = _data["dataName"];
+            this.dataValue = _data["dataValue"];
+        }
+    }
+
+    static fromJS(data: any): LookupExtraData {
+        data = typeof data === 'object' ? data : {};
+        let result = new LookupExtraData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dataName"] = this.dataName;
+        data["dataValue"] = this.dataValue;
+        return data;
+    }
+}
+
+export interface ILookupExtraData {
+    dataName: string | undefined;
+    dataValue: string | undefined;
 }
 
 export class NotificationMessageDto implements INotificationMessageDto {
@@ -872,6 +1284,54 @@ export interface INotificationMessageDto {
     parameters: TemplateParameter[] | undefined;
     notificationTemplateId: number;
     id: string;
+}
+
+export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
+    totalCount!: number;
+    items!: LookupDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfLookupDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(LookupDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfLookupDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfLookupDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfLookupDto {
+    totalCount: number;
+    items: LookupDto[] | undefined;
 }
 
 export class SentNotificationMessagesDto implements ISentNotificationMessagesDto {

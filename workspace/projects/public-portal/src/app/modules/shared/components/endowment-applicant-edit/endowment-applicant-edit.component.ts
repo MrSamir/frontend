@@ -32,7 +32,10 @@ export class EndowmentApplicantEditComponent implements OnInit {
   
   }
 
+get isAlive():string {
 
+  return this._applicantData.IsAlive? "حى" : "متوفي";
+}
 
   get applicantBirthDate() {
     return this._applicantData.HijriBirthDate ?? this._applicantData.BirthDateGregorian;
@@ -54,8 +57,12 @@ export class EndowmentApplicantEditComponent implements OnInit {
       thirdNameAr: [this._applicantData.ThirdNameAr],
       lastNameAr: [this._applicantData.LastNameAr],
       idNumber: [this._applicantData.IdNumber],
-      birthDateGregorian: [this._applicantData.BirthDateGregorian],
-      applicantBirthDate: [this.applicantBirthDate],
+      email: [this._applicantData.Email],
+      nationalityName: [this._applicantData.NationalityName],
+      isAlive: [this.isAlive],
+      mobileNumber: [this._applicantData.MobileNumber],
+       applicantBirthDate: [this.applicantBirthDate],
+       gender: [{value:this._applicantData.Gender.toString(),disabled: true}],
 
 
     })

@@ -63,15 +63,15 @@
         <label class="col-form-label">الجنس <span class="text-danger">*</span></label>
         <div>
           <div class="custom-control custom-radio custom-control-inline" >
-            <input type="radio" class="custom-control-input" id="radio111" name="optradio"
-                   [checked]="true" disabled>
+            <input type="radio" class="custom-control-input" id="radio111" formControlName="gender" value="0"  
+                    readonly>
             <!-- <input type="radio" class="custom-control-input" id="radio111" name="optradio"
                    [checked]="createRegisterWaqfApplicantDto.requestor.gender==0" disabled> -->
             <label class="custom-control-label" for="radio111">ذكر</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline" >
-            <input type="radio" class="custom-control-input" id="radio221" name="optradio"
-                   [checked]="" disabled>
+            <input type="radio" class="custom-control-input" id="radio221" formControlName="gender" value="1"   
+                    readonly>
             <!-- <input type="radio" class="custom-control-input" id="radio221" name="optradio"
                    [checked]="createRegisterWaqfApplicantDto.requestor.gender==1" disabled> -->
             <label class="custom-control-label" for="radio221">أنثى</label>
@@ -80,23 +80,23 @@
       </div>
 
       <div class="form-group col">
-        <label class="col-form-label">الجنسية<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" [value]="" disabled >
+        <label class="col-form-label">الجنسية<span class="text-danger" >*</span></label>
+        <input type="text" class="form-control" [value]="" readonly  formControlName="nationalityName">
       </div>
 
       <div class="form-group col">
-        <label class="col-form-label">على قيد الحياة</label>
-        <input   type="text" class="form-control" disabled [value]="">
+        <label class="col-form-label">حالة الحياة</label>
+        <input   type="text" class="form-control" formControlName="isAlive" readonly [value]="">
       </div>
 
       <div class="form-group col">
         <label class="col-form-label">رقم الجوال<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" required  name="mobileNumber"
+        <input type="text" class="form-control" required  name="mobileNumber" formControlName="mobileNumber" readonly
              
                mask="^((0|9)|(96{1,2})|(9665)|(05)|(((05)|(9665))\d{1,8}))$"
                placeholder="05xxxxxxxx | 9665xxxxxxxx"
                inputmode="numeric"
-               disabled
+                
         >
         <!-- <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="">
           <p *ngIf="mobileNumber.errors?.['required']" class="text-danger pt-1 small">رقم الجوال مطلوب</p>
@@ -108,8 +108,8 @@
       <div class="form-group col">
         <label class="col-form-label">البريد الإلكتروني<span class="text-danger">*</span></label>
        
-        <input type="email" class="form-control"   name="email"   required
-          disabled>
+        <input type="email" class="form-control"   name="email"   required formControlName="email"
+          readonly>
         <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)" class="">
           <p *ngIf="email.errors?.['required']" class="text-danger pt-1 small">البريد الإلكتروني مطلوب</p>
           <p *ngIf="email.errors?.['pattern']" class="text-danger pt-1 small">البريد الإلكتروني غير صحيح</p>

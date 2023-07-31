@@ -32,6 +32,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this._applicantData.IsAlive=true;
     this._applicantData.MobileNumber="2088755802"
     this._applicantData.Email="m.eldesouky.c@awqaf.gov.sa"
+    this._applicantData.Gender=0;
     
   }
 }
