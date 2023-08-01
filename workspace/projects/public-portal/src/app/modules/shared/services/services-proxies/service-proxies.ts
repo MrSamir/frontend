@@ -207,6 +207,58 @@ export class EntitySampleApplicationServiceServiceProxy {
      * @param body (optional) 
      * @return Success
      */
+    testHtmlToPDf(body: CreateSampleEntityDto | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/EntitySampleApplicationService/TestHtmlToPDf";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processTestHtmlToPDf(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processTestHtmlToPDf(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processTestHtmlToPDf(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
     updateEntity(body: UpdateSampleEntity | undefined): Observable<ApiResponseOfEntitySampleDto> {
         let url_ = this.baseUrl + "/api/EntitySampleApplicationService/UpdateEntity";
         url_ = url_.replace(/[?&]$/, "");
@@ -249,6 +301,200 @@ export class EntitySampleApplicationServiceServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ApiResponseOfEntitySampleDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class FileLibraryApplicationServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    downloadFilePost(body: InputFileDto | undefined): Observable<ApiResponseOfOutputFileDto> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DownloadFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDownloadFilePost(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDownloadFilePost(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputFileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputFileDto>;
+        }));
+    }
+
+    protected processDownloadFilePost(response: HttpResponseBase): Observable<ApiResponseOfOutputFileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputFileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param entityName (optional) 
+     * @param id (optional) 
+     * @return Success
+     */
+    downloadFileGet(entityName: string | undefined, id: string | undefined): Observable<void> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DownloadFile?";
+        if (entityName === null)
+            throw new Error("The parameter 'entityName' cannot be null.");
+        else if (entityName !== undefined)
+            url_ += "entityName=" + encodeURIComponent("" + entityName) + "&";
+        if (id === null)
+            throw new Error("The parameter 'id' cannot be null.");
+        else if (id !== undefined)
+            url_ += "id=" + encodeURIComponent("" + id) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDownloadFileGet(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDownloadFileGet(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<void>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<void>;
+        }));
+    }
+
+    protected processDownloadFileGet(response: HttpResponseBase): Observable<void> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param entityName (optional) 
+     * @param file (optional) 
+     * @param fileExtraDatas (optional) 
+     * @return Success
+     */
+    uploadFile(entityName: string | undefined, file: FileParameter | undefined, fileExtraDatas: FileExtraData[] | undefined): Observable<ApiResponseOfOutputFileDto> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/UploadFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (entityName === null || entityName === undefined)
+            throw new Error("The parameter 'entityName' cannot be null.");
+        else
+            content_.append("entityName", entityName.toString());
+        if (file === null || file === undefined)
+            throw new Error("The parameter 'file' cannot be null.");
+        else
+            content_.append("file", file.data, file.fileName ? file.fileName : "file");
+        if (fileExtraDatas === null || fileExtraDatas === undefined)
+            throw new Error("The parameter 'fileExtraDatas' cannot be null.");
+        else
+            fileExtraDatas.forEach(item_ => content_.append("fileExtraDatas", item_.toString()));
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUploadFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUploadFile(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputFileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputFileDto>;
+        }));
+    }
+
+    protected processUploadFile(response: HttpResponseBase): Observable<ApiResponseOfOutputFileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputFileDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -373,6 +619,125 @@ export class LookupApplicationServiceServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ApiResponseOfLookupDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class MojDataMigrationApplicationServicesServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @return Success
+     */
+    registerAllEndowment(): Observable<ApiResponseOfEndowmentDto> {
+        let url_ = this.baseUrl + "/api/MojDataMigrationApplicationServices/RegisterAllEndowment";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegisterAllEndowment(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegisterAllEndowment(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfEndowmentDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfEndowmentDto>;
+        }));
+    }
+
+    protected processRegisterAllEndowment(response: HttpResponseBase): Observable<ApiResponseOfEndowmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfEndowmentDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param deedNumber (optional) 
+     * @return Success
+     */
+    registerEndowmentByDeedNumber(deedNumber: number | undefined): Observable<ApiResponseOfEndowmentDto> {
+        let url_ = this.baseUrl + "/api/MojDataMigrationApplicationServices/RegisterEndowmentByDeedNumber?";
+        if (deedNumber === null)
+            throw new Error("The parameter 'deedNumber' cannot be null.");
+        else if (deedNumber !== undefined)
+            url_ += "deedNumber=" + encodeURIComponent("" + deedNumber) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRegisterEndowmentByDeedNumber(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRegisterEndowmentByDeedNumber(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfEndowmentDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfEndowmentDto>;
+        }));
+    }
+
+    protected processRegisterEndowmentByDeedNumber(response: HttpResponseBase): Observable<ApiResponseOfEndowmentDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfEndowmentDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -598,6 +963,118 @@ export class WeatherForecastServiceProxy {
     }
 }
 
+export class ApiResponse implements IApiResponse {
+    isSuccess!: boolean;
+    dto!: any | undefined;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"];
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponse {
+    isSuccess: boolean;
+    dto: any | undefined;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfEndowmentDto implements IApiResponseOfEndowmentDto {
+    isSuccess!: boolean;
+    dto!: EndowmentDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfEndowmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? EndowmentDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfEndowmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfEndowmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfEndowmentDto {
+    isSuccess: boolean;
+    dto: EndowmentDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
 export class ApiResponseOfEntitySampleDto implements IApiResponseOfEntitySampleDto {
     isSuccess!: boolean;
     dto!: EntitySampleDto;
@@ -706,6 +1183,62 @@ export class ApiResponseOfLookupDto implements IApiResponseOfLookupDto {
 export interface IApiResponseOfLookupDto {
     isSuccess: boolean;
     dto: LookupDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfOutputFileDto implements IApiResponseOfOutputFileDto {
+    isSuccess!: boolean;
+    dto!: OutputFileDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfOutputFileDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? OutputFileDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfOutputFileDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfOutputFileDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfOutputFileDto {
+    isSuccess: boolean;
+    dto: OutputFileDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -898,6 +1431,42 @@ export interface ICreateSampleEntityDto {
     name: string | undefined;
 }
 
+export class EndowmentDto implements IEndowmentDto {
+    id!: string;
+
+    constructor(data?: IEndowmentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): EndowmentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EndowmentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IEndowmentDto {
+    id: string;
+}
+
 export class EntitySampleDto implements IEntitySampleDto {
     name!: string | undefined;
     id!: number;
@@ -938,10 +1507,558 @@ export interface IEntitySampleDto {
     id: number;
 }
 
+export class FileExtraData implements IFileExtraData {
+    dataName!: string | undefined;
+    dataValue!: string | undefined;
+
+    constructor(data?: IFileExtraData) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dataName = _data["dataName"];
+            this.dataValue = _data["dataValue"];
+        }
+    }
+
+    static fromJS(data: any): FileExtraData {
+        data = typeof data === 'object' ? data : {};
+        let result = new FileExtraData();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dataName"] = this.dataName;
+        data["dataValue"] = this.dataValue;
+        return data;
+    }
+}
+
+export interface IFileExtraData {
+    dataName: string | undefined;
+    dataValue: string | undefined;
+}
+
+export class InputAnimalOrAgriculturalAssetDto implements IInputAnimalOrAgriculturalAssetDto {
+    regionId!: number;
+    cityId!: number;
+    animalOrAgriculturaDescription!: string | undefined;
+    id!: string;
+
+    constructor(data?: IInputAnimalOrAgriculturalAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.animalOrAgriculturaDescription = _data["animalOrAgriculturaDescription"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputAnimalOrAgriculturalAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputAnimalOrAgriculturalAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["animalOrAgriculturaDescription"] = this.animalOrAgriculturaDescription;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputAnimalOrAgriculturalAssetDto {
+    regionId: number;
+    cityId: number;
+    animalOrAgriculturaDescription: string | undefined;
+    id: string;
+}
+
+export class InputApplicantDto implements IInputApplicantDto {
+    fullName!: string | undefined;
+    birthDate!: DateTime;
+    birthDateHijri!: string | undefined;
+    gender!: UserGender;
+    idTypeId!: number | undefined;
+    regionId!: number | undefined;
+    cityId!: number | undefined;
+    firstNameEn!: string | undefined;
+    thirdNameEn!: string | undefined;
+    secondNameEn!: string | undefined;
+    lastNameEn!: string | undefined;
+    firstNameAr!: string | undefined;
+    secondNameAr!: string | undefined;
+    thirdNameAr!: string | undefined;
+    lastNameAr!: string | undefined;
+    idExpiryDate!: string | undefined;
+    idIssueDate!: string | undefined;
+    idIssuePlace!: string | undefined;
+    placeOfBirth!: string | undefined;
+    iqamaExpiryDateGregorian!: DateTime | undefined;
+    iqamaIssueDateGregorian!: DateTime | undefined;
+    iqamaIssuePlaceCode!: string | undefined;
+    placeOfBirthCode!: string | undefined;
+    nationalityId!: number | undefined;
+    noIdentityReason!: number | undefined;
+    validatedByYaqeen!: boolean | undefined;
+    isAlive!: boolean | undefined;
+
+    constructor(data?: IInputApplicantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.fullName = _data["fullName"];
+            this.birthDate = _data["birthDate"] ? DateTime.fromISO(_data["birthDate"].toString()) : <any>undefined;
+            this.birthDateHijri = _data["birthDateHijri"];
+            this.gender = _data["gender"];
+            this.idTypeId = _data["idTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.firstNameEn = _data["firstNameEn"];
+            this.thirdNameEn = _data["thirdNameEn"];
+            this.secondNameEn = _data["secondNameEn"];
+            this.lastNameEn = _data["lastNameEn"];
+            this.firstNameAr = _data["firstNameAr"];
+            this.secondNameAr = _data["secondNameAr"];
+            this.thirdNameAr = _data["thirdNameAr"];
+            this.lastNameAr = _data["lastNameAr"];
+            this.idExpiryDate = _data["idExpiryDate"];
+            this.idIssueDate = _data["idIssueDate"];
+            this.idIssuePlace = _data["idIssuePlace"];
+            this.placeOfBirth = _data["placeOfBirth"];
+            this.iqamaExpiryDateGregorian = _data["iqamaExpiryDateGregorian"] ? DateTime.fromISO(_data["iqamaExpiryDateGregorian"].toString()) : <any>undefined;
+            this.iqamaIssueDateGregorian = _data["iqamaIssueDateGregorian"] ? DateTime.fromISO(_data["iqamaIssueDateGregorian"].toString()) : <any>undefined;
+            this.iqamaIssuePlaceCode = _data["iqamaIssuePlaceCode"];
+            this.placeOfBirthCode = _data["placeOfBirthCode"];
+            this.nationalityId = _data["nationalityId"];
+            this.noIdentityReason = _data["noIdentityReason"];
+            this.validatedByYaqeen = _data["validatedByYaqeen"];
+            this.isAlive = _data["isAlive"];
+        }
+    }
+
+    static fromJS(data: any): InputApplicantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputApplicantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["fullName"] = this.fullName;
+        data["birthDate"] = this.birthDate ? this.birthDate.toString() : <any>undefined;
+        data["birthDateHijri"] = this.birthDateHijri;
+        data["gender"] = this.gender;
+        data["idTypeId"] = this.idTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["firstNameEn"] = this.firstNameEn;
+        data["thirdNameEn"] = this.thirdNameEn;
+        data["secondNameEn"] = this.secondNameEn;
+        data["lastNameEn"] = this.lastNameEn;
+        data["firstNameAr"] = this.firstNameAr;
+        data["secondNameAr"] = this.secondNameAr;
+        data["thirdNameAr"] = this.thirdNameAr;
+        data["lastNameAr"] = this.lastNameAr;
+        data["idExpiryDate"] = this.idExpiryDate;
+        data["idIssueDate"] = this.idIssueDate;
+        data["idIssuePlace"] = this.idIssuePlace;
+        data["placeOfBirth"] = this.placeOfBirth;
+        data["iqamaExpiryDateGregorian"] = this.iqamaExpiryDateGregorian ? this.iqamaExpiryDateGregorian.toString() : <any>undefined;
+        data["iqamaIssueDateGregorian"] = this.iqamaIssueDateGregorian ? this.iqamaIssueDateGregorian.toString() : <any>undefined;
+        data["iqamaIssuePlaceCode"] = this.iqamaIssuePlaceCode;
+        data["placeOfBirthCode"] = this.placeOfBirthCode;
+        data["nationalityId"] = this.nationalityId;
+        data["noIdentityReason"] = this.noIdentityReason;
+        data["validatedByYaqeen"] = this.validatedByYaqeen;
+        data["isAlive"] = this.isAlive;
+        return data;
+    }
+}
+
+export interface IInputApplicantDto {
+    fullName: string | undefined;
+    birthDate: DateTime;
+    birthDateHijri: string | undefined;
+    gender: UserGender;
+    idTypeId: number | undefined;
+    regionId: number | undefined;
+    cityId: number | undefined;
+    firstNameEn: string | undefined;
+    thirdNameEn: string | undefined;
+    secondNameEn: string | undefined;
+    lastNameEn: string | undefined;
+    firstNameAr: string | undefined;
+    secondNameAr: string | undefined;
+    thirdNameAr: string | undefined;
+    lastNameAr: string | undefined;
+    idExpiryDate: string | undefined;
+    idIssueDate: string | undefined;
+    idIssuePlace: string | undefined;
+    placeOfBirth: string | undefined;
+    iqamaExpiryDateGregorian: DateTime | undefined;
+    iqamaIssueDateGregorian: DateTime | undefined;
+    iqamaIssuePlaceCode: string | undefined;
+    placeOfBirthCode: string | undefined;
+    nationalityId: number | undefined;
+    noIdentityReason: number | undefined;
+    validatedByYaqeen: boolean | undefined;
+    isAlive: boolean | undefined;
+}
+
+export class InputAssetDto implements IInputAssetDto {
+    assetTypeId!: number;
+    assetSizeId!: number;
+    assetApproximatelyAmount!: number;
+    requestId!: string;
+    animalOrAgriculturalAsset!: InputAnimalOrAgriculturalAssetDto;
+    businessEntityAsset!: InputBusinessEntityAssetDto;
+    fiscalAsset!: InputFiscalAssetDto;
+    intellectualPropertyAndTrademarkAsset!: InputIntellectualPropertyAndTrademarkAssetDto;
+    movableAsset!: InputMovableAssetDto;
+    monetaryAsset!: InputMonetaryAssetDto;
+    particularBenefitAsset!: InputParticularBenefitAssetDto;
+    realEstateAsset!: InputRealEstateAssetDto;
+    waqfId!: string | undefined;
+
+    constructor(data?: IInputAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetTypeId = _data["assetTypeId"];
+            this.assetSizeId = _data["assetSizeId"];
+            this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
+            this.requestId = _data["requestId"];
+            this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? InputAnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
+            this.businessEntityAsset = _data["businessEntityAsset"] ? InputBusinessEntityAssetDto.fromJS(_data["businessEntityAsset"]) : <any>undefined;
+            this.fiscalAsset = _data["fiscalAsset"] ? InputFiscalAssetDto.fromJS(_data["fiscalAsset"]) : <any>undefined;
+            this.intellectualPropertyAndTrademarkAsset = _data["intellectualPropertyAndTrademarkAsset"] ? InputIntellectualPropertyAndTrademarkAssetDto.fromJS(_data["intellectualPropertyAndTrademarkAsset"]) : <any>undefined;
+            this.movableAsset = _data["movableAsset"] ? InputMovableAssetDto.fromJS(_data["movableAsset"]) : <any>undefined;
+            this.monetaryAsset = _data["monetaryAsset"] ? InputMonetaryAssetDto.fromJS(_data["monetaryAsset"]) : <any>undefined;
+            this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
+            this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
+            this.waqfId = _data["waqfId"];
+        }
+    }
+
+    static fromJS(data: any): InputAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetTypeId"] = this.assetTypeId;
+        data["assetSizeId"] = this.assetSizeId;
+        data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
+        data["requestId"] = this.requestId;
+        data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
+        data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
+        data["fiscalAsset"] = this.fiscalAsset ? this.fiscalAsset.toJSON() : <any>undefined;
+        data["intellectualPropertyAndTrademarkAsset"] = this.intellectualPropertyAndTrademarkAsset ? this.intellectualPropertyAndTrademarkAsset.toJSON() : <any>undefined;
+        data["movableAsset"] = this.movableAsset ? this.movableAsset.toJSON() : <any>undefined;
+        data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
+        data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
+        data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
+        data["waqfId"] = this.waqfId;
+        return data;
+    }
+}
+
+export interface IInputAssetDto {
+    assetTypeId: number;
+    assetSizeId: number;
+    assetApproximatelyAmount: number;
+    requestId: string;
+    animalOrAgriculturalAsset: InputAnimalOrAgriculturalAssetDto;
+    businessEntityAsset: InputBusinessEntityAssetDto;
+    fiscalAsset: InputFiscalAssetDto;
+    intellectualPropertyAndTrademarkAsset: InputIntellectualPropertyAndTrademarkAssetDto;
+    movableAsset: InputMovableAssetDto;
+    monetaryAsset: InputMonetaryAssetDto;
+    particularBenefitAsset: InputParticularBenefitAssetDto;
+    realEstateAsset: InputRealEstateAssetDto;
+    waqfId: string | undefined;
+}
+
+export class InputBusinessEntityAssetDto implements IInputBusinessEntityAssetDto {
+    businessEntityName!: string;
+    assetSubTypeId!: number;
+    regionId!: number;
+    cityId!: number;
+    longitude!: number;
+    latitude!: number;
+    registrationDocumentNumber!: number;
+    waqfResponserPortion!: number | undefined;
+    waqfPercentageFromAsset!: number | undefined;
+    commercialRegisterAttachmentId!: string;
+    id!: string;
+
+    constructor(data?: IInputBusinessEntityAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.businessEntityName = _data["businessEntityName"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.registrationDocumentNumber = _data["registrationDocumentNumber"];
+            this.waqfResponserPortion = _data["waqfResponserPortion"];
+            this.waqfPercentageFromAsset = _data["waqfPercentageFromAsset"];
+            this.commercialRegisterAttachmentId = _data["commercialRegisterAttachmentId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputBusinessEntityAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputBusinessEntityAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["businessEntityName"] = this.businessEntityName;
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["registrationDocumentNumber"] = this.registrationDocumentNumber;
+        data["waqfResponserPortion"] = this.waqfResponserPortion;
+        data["waqfPercentageFromAsset"] = this.waqfPercentageFromAsset;
+        data["commercialRegisterAttachmentId"] = this.commercialRegisterAttachmentId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputBusinessEntityAssetDto {
+    businessEntityName: string;
+    assetSubTypeId: number;
+    regionId: number;
+    cityId: number;
+    longitude: number;
+    latitude: number;
+    registrationDocumentNumber: number;
+    waqfResponserPortion: number | undefined;
+    waqfPercentageFromAsset: number | undefined;
+    commercialRegisterAttachmentId: string;
+    id: string;
+}
+
+export class InputFileDto implements IInputFileDto {
+    entityName!: string | undefined;
+    id!: string | undefined;
+    filters!: FileExtraData[] | undefined;
+
+    constructor(data?: IInputFileDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.entityName = _data["entityName"];
+            this.id = _data["id"];
+            if (Array.isArray(_data["filters"])) {
+                this.filters = [] as any;
+                for (let item of _data["filters"])
+                    this.filters!.push(FileExtraData.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): InputFileDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputFileDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["entityName"] = this.entityName;
+        data["id"] = this.id;
+        if (Array.isArray(this.filters)) {
+            data["filters"] = [];
+            for (let item of this.filters)
+                data["filters"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IInputFileDto {
+    entityName: string | undefined;
+    id: string | undefined;
+    filters: FileExtraData[] | undefined;
+}
+
+export class InputFiscalAssetDto implements IInputFiscalAssetDto {
+    assetSubTypeId!: number;
+    investmentPortfolioNumber!: number;
+    numberOfShare!: number;
+    currentAssetValue!: number;
+    fiscalAssetAttachementId!: string;
+    id!: string;
+
+    constructor(data?: IInputFiscalAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.investmentPortfolioNumber = _data["investmentPortfolioNumber"];
+            this.numberOfShare = _data["numberOfShare"];
+            this.currentAssetValue = _data["currentAssetValue"];
+            this.fiscalAssetAttachementId = _data["fiscalAssetAttachementId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputFiscalAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputFiscalAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["investmentPortfolioNumber"] = this.investmentPortfolioNumber;
+        data["numberOfShare"] = this.numberOfShare;
+        data["currentAssetValue"] = this.currentAssetValue;
+        data["fiscalAssetAttachementId"] = this.fiscalAssetAttachementId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputFiscalAssetDto {
+    assetSubTypeId: number;
+    investmentPortfolioNumber: number;
+    numberOfShare: number;
+    currentAssetValue: number;
+    fiscalAssetAttachementId: string;
+    id: string;
+}
+
+export class InputIntellectualPropertyAndTrademarkAssetDto implements IInputIntellectualPropertyAndTrademarkAssetDto {
+    ipatType!: string;
+    ipatDescription!: string | undefined;
+    ipatValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string;
+
+    constructor(data?: IInputIntellectualPropertyAndTrademarkAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ipatType = _data["ipatType"];
+            this.ipatDescription = _data["ipatDescription"];
+            this.ipatValue = _data["ipatValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputIntellectualPropertyAndTrademarkAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputIntellectualPropertyAndTrademarkAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ipatType"] = this.ipatType;
+        data["ipatDescription"] = this.ipatDescription;
+        data["ipatValue"] = this.ipatValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputIntellectualPropertyAndTrademarkAssetDto {
+    ipatType: string;
+    ipatDescription: string | undefined;
+    ipatValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string;
+}
+
 export class InputLookUpDto implements IInputLookUpDto {
     lookUpName!: string | undefined;
     id!: number;
-    lookupExtraDatas!: LookupExtraData[] | undefined;
+    filters!: LookupExtraData[] | undefined;
 
     constructor(data?: IInputLookUpDto) {
         if (data) {
@@ -956,10 +2073,10 @@ export class InputLookUpDto implements IInputLookUpDto {
         if (_data) {
             this.lookUpName = _data["lookUpName"];
             this.id = _data["id"];
-            if (Array.isArray(_data["lookupExtraDatas"])) {
-                this.lookupExtraDatas = [] as any;
-                for (let item of _data["lookupExtraDatas"])
-                    this.lookupExtraDatas!.push(LookupExtraData.fromJS(item));
+            if (Array.isArray(_data["filters"])) {
+                this.filters = [] as any;
+                for (let item of _data["filters"])
+                    this.filters!.push(LookupExtraData.fromJS(item));
             }
         }
     }
@@ -975,10 +2092,10 @@ export class InputLookUpDto implements IInputLookUpDto {
         data = typeof data === 'object' ? data : {};
         data["lookUpName"] = this.lookUpName;
         data["id"] = this.id;
-        if (Array.isArray(this.lookupExtraDatas)) {
-            data["lookupExtraDatas"] = [];
-            for (let item of this.lookupExtraDatas)
-                data["lookupExtraDatas"].push(item.toJSON());
+        if (Array.isArray(this.filters)) {
+            data["filters"] = [];
+            for (let item of this.filters)
+                data["filters"].push(item.toJSON());
         }
         return data;
     }
@@ -987,7 +2104,263 @@ export class InputLookUpDto implements IInputLookUpDto {
 export interface IInputLookUpDto {
     lookUpName: string | undefined;
     id: number;
-    lookupExtraDatas: LookupExtraData[] | undefined;
+    filters: LookupExtraData[] | undefined;
+}
+
+export class InputMonetaryAssetDto implements IInputMonetaryAssetDto {
+    assetSubTypeId!: number;
+    monetaryAssetAmount!: number;
+    id!: string;
+
+    constructor(data?: IInputMonetaryAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.monetaryAssetAmount = _data["monetaryAssetAmount"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputMonetaryAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputMonetaryAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["monetaryAssetAmount"] = this.monetaryAssetAmount;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputMonetaryAssetDto {
+    assetSubTypeId: number;
+    monetaryAssetAmount: number;
+    id: string;
+}
+
+export class InputMovableAssetDto implements IInputMovableAssetDto {
+    movableAssetType!: string;
+    movableAssetDescription!: string | undefined;
+    movableAssetOwnershipNumber!: number | undefined;
+    movableValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string;
+
+    constructor(data?: IInputMovableAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.movableAssetType = _data["movableAssetType"];
+            this.movableAssetDescription = _data["movableAssetDescription"];
+            this.movableAssetOwnershipNumber = _data["movableAssetOwnershipNumber"];
+            this.movableValue = _data["movableValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputMovableAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputMovableAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["movableAssetType"] = this.movableAssetType;
+        data["movableAssetDescription"] = this.movableAssetDescription;
+        data["movableAssetOwnershipNumber"] = this.movableAssetOwnershipNumber;
+        data["movableValue"] = this.movableValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputMovableAssetDto {
+    movableAssetType: string;
+    movableAssetDescription: string | undefined;
+    movableAssetOwnershipNumber: number | undefined;
+    movableValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string;
+}
+
+export class InputParticularBenefitAssetDto implements IInputParticularBenefitAssetDto {
+    benefitType!: string;
+    benefitDescription!: string | undefined;
+    benefitValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string;
+
+    constructor(data?: IInputParticularBenefitAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.benefitType = _data["benefitType"];
+            this.benefitDescription = _data["benefitDescription"];
+            this.benefitValue = _data["benefitValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputParticularBenefitAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputParticularBenefitAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["benefitType"] = this.benefitType;
+        data["benefitDescription"] = this.benefitDescription;
+        data["benefitValue"] = this.benefitValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputParticularBenefitAssetDto {
+    benefitType: string;
+    benefitDescription: string | undefined;
+    benefitValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string;
+}
+
+export class InputRealEstateAssetDto implements IInputRealEstateAssetDto {
+    id!: string;
+    assetSubTypeId!: number;
+    regionId!: number;
+    cityId!: number;
+    longitude!: number;
+    latitude!: number;
+    ownershipDeedAttachementId!: string;
+    estimatedAmount!: number;
+
+    constructor(data?: IInputRealEstateAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.ownershipDeedAttachementId = _data["ownershipDeedAttachementId"];
+            this.estimatedAmount = _data["estimatedAmount"];
+        }
+    }
+
+    static fromJS(data: any): InputRealEstateAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputRealEstateAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["ownershipDeedAttachementId"] = this.ownershipDeedAttachementId;
+        data["estimatedAmount"] = this.estimatedAmount;
+        return data;
+    }
+}
+
+export interface IInputRealEstateAssetDto {
+    id: string;
+    assetSubTypeId: number;
+    regionId: number;
+    cityId: number;
+    longitude: number;
+    latitude: number;
+    ownershipDeedAttachementId: string;
+    estimatedAmount: number;
+}
+
+export class InputRemoveAssetDto implements IInputRemoveAssetDto {
+    requestId!: string;
+    id!: string;
+
+    constructor(data?: IInputRemoveAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): InputRemoveAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputRemoveAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IInputRemoveAssetDto {
+    requestId: string;
+    id: string;
 }
 
 export class LanguageInfo implements ILanguageInfo {
@@ -1286,6 +2659,70 @@ export interface INotificationMessageDto {
     id: string;
 }
 
+export class OutputFileDto implements IOutputFileDto {
+    id!: string;
+    fileData!: string | undefined;
+    fileName!: string | undefined;
+    size!: number;
+    contentType!: string | undefined;
+    extraDatas!: FileExtraData[] | undefined;
+
+    constructor(data?: IOutputFileDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.fileData = _data["fileData"];
+            this.fileName = _data["fileName"];
+            this.size = _data["size"];
+            this.contentType = _data["contentType"];
+            if (Array.isArray(_data["extraDatas"])) {
+                this.extraDatas = [] as any;
+                for (let item of _data["extraDatas"])
+                    this.extraDatas!.push(FileExtraData.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): OutputFileDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputFileDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["fileData"] = this.fileData;
+        data["fileName"] = this.fileName;
+        data["size"] = this.size;
+        data["contentType"] = this.contentType;
+        if (Array.isArray(this.extraDatas)) {
+            data["extraDatas"] = [];
+            for (let item of this.extraDatas)
+                data["extraDatas"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IOutputFileDto {
+    id: string;
+    fileData: string | undefined;
+    fileName: string | undefined;
+    size: number;
+    contentType: string | undefined;
+    extraDatas: FileExtraData[] | undefined;
+}
+
 export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
     totalCount!: number;
     items!: LookupDto[] | undefined;
@@ -1498,6 +2935,12 @@ export interface IUpdateSampleEntity {
     name: string | undefined;
 }
 
+export enum UserGender {
+    Male = 0,
+    Female = 1,
+    None = -1,
+}
+
 export class ValidationResultDetails implements IValidationResultDetails {
     errorCode!: string | undefined;
     errorMessage!: string | undefined;
@@ -1632,6 +3075,11 @@ export interface IWeatherForecast {
     temperatureC: number;
     temperatureF: number;
     summary: string | undefined;
+}
+
+export interface FileParameter {
+    data: any;
+    fileName: string;
 }
 
 export class ApiException extends Error {
