@@ -26,7 +26,7 @@
               "projects/public-portal/src/app.config.json"
             ],
             "styles": [
-              "styles/styles.css"
+              "projects/public-portal/src/assets/main.css"
             ],
             "scripts": []
           },
@@ -125,6 +125,9 @@
             ],
             "styles": [
 
+           
+              "projects/employee-portal/src/assets/snipped.css" ,
+          
 
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
@@ -141,7 +144,10 @@
 
 
 
-              "styles/styles.css"
+              "styles/styles.css",
+
+              "projects/employee-portal/src/assets/card-style.css" 
+             
             ],
             "scripts": [
            "node_modules/bootstrap/dist/js/bootstrap.js"

@@ -9,13 +9,19 @@ import { TabViewModule } from 'primeng/tabview';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MojServiceRequestComponent } from '../components/moj-service/moj-service-request/moj-service-request.component';
+import { MojServiceResultComponent } from '../components/moj-service/moj-service-result/moj-service-result.component';
+import { MojServiceComponent } from '../components/moj-service/moj-service.component';
+import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
  
  
 
 
 @NgModule({
   declarations: [
-    YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent
+    YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent,MojServiceRequestComponent,MojServiceResultComponent,MojServiceComponent
   ],
   imports: [
     CommonModule,
@@ -23,13 +29,13 @@ import { PanelModule } from 'primeng/panel';
     TabViewModule,
     TableModule ,
     CardModule,
-    PanelModule 
-    
-
+    PanelModule ,
+    ReactiveFormsModule,
+    SharecomponentModule
 
   ],
   exports:[
-     YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent
+     YaqeenServiceComponent,YaqeenServiceRequestComponent,YaqeenServiceResultComponent,LandingComponent,MojServiceRequestComponent,MojServiceResultComponent
   ]
 
 })

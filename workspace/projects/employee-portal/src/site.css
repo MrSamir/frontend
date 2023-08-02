@@ -1,0 +1,197 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+@import url(//fonts.googleapis.com/earlyaccess/notokufiarabic.css);
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Noto Kufi Arabic', sans-serif;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background-color: #696969;
+}
+
+#show-pdf-button {
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+}
+
+#file-to-upload {
+    display: none;
+}
+
+#pdf-main-container {
+    width: 400px;
+    margin: 20px auto;
+}
+
+#pdf-loader {
+    display: none;
+    text-align: center;
+    color: #999999;
+    font-size: 13px;
+    line-height: 100px;
+    height: 100px;
+}
+
+#pdf-contents {
+    display: none;
+}
+
+#pdf-meta {
+    overflow: hidden;
+    margin: 0 0 20px 0;
+}
+
+#pdf-buttons {
+    float: left;
+}
+
+#page-count-container {
+    float: right;
+    color: #000;
+}
+
+#pdf-current-page {
+    display: inline;
+}
+
+#pdf-total-pages {
+    display: inline;
+}
+
+#pdf-canvas {
+    border: 1px solid rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    margin-left: -300px !important;
+}
+
+#page-loader {
+    height: 100px;
+    line-height: 100px;
+    text-align: center;
+    display: none;
+    color: #999999;
+    font-size: 13px;
+}
+html, body {
+
+ 
+
+    background-color: #fff;
+    }
+    
+    .jumbotron {
+   
+    background-color: #fff;
+    border: 1px solid #106634;
+}
+
+ 
+
+
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #cb9831;
+    border-color: #cb9831;
+}
+.btn-outline-primary {
+    background: #106634;
+    color: #fff;
+}
+
+ 
+
+#pdf-meta {
+    overflow: hidden;
+    margin: 0 0 20px 0;
+    margin-left: 36%;
+}
+
+ 
+
+.btn-info {
+    color: #fff;
+    background-color: #106634;
+    border-color: #106634;
+}
+
+ 
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #cb9831;
+    border-color: #cb9831;
+}
+

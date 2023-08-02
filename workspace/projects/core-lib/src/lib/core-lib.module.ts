@@ -1,5 +1,6 @@
+ 
 import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { CoreLibComponent } from './core-lib.component';
+
 import { LoacalizationBaseComponent } from './loacalization-base/loacalization-base.component';
 import { LocalizationService } from './services/localization/localization.service';
 import { LocalizePipe } from './pipes/localize.pipe';
@@ -9,27 +10,30 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpResponseInterceptor } from './interceptors/httpResponseInterceptor';
 import { LoadingInterceptor } from './interceptors/loading-interceptor';
 import { SpinnerComponent } from './components/spinner/spinner-component';
+  
 
 export function setupTranslateServiceFactory(
   service: LocalizationService): Function {
 return () => service.use('ar');
 }
-debugger;
+ 
 @NgModule({
   declarations: [
-    CoreLibComponent,
+ 
     LoacalizationBaseComponent,
     LocalizePipe,
-    SpinnerComponent
+    SpinnerComponent,
+     
   ],
   imports: [
     HttpClientModule
   ],
   exports: [
-    CoreLibComponent,
+    
     LocalizePipe,
     LoacalizationBaseComponent,
-    SpinnerComponent
+    SpinnerComponent,
+     
   ],
   providers: [
     {

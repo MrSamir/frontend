@@ -1,43 +1,47 @@
- 
+<form [formGroup]="identityTypeFormGroup">
+<div class="card mb-4">
+  <div class="card-body">
+    <div class="container-fluid">
+      <div class="row g-3 align-items-center">
+        <div class="ms-sm-auto col-lg-3">
+          <label class="form-label">نوع الهوية</label>
+          <div class="form-group">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" formControlName="identityType" id="citizen" value="citizen" (change)="identityTypeChange()">
+              <label class="form-check-label" for="citizen">مواطن</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio"formControlName="identityType" id="resident" value="resident" (change)="identityTypeChange()"  >
+              <label class="form-check-label" for="resident">مقيم</label>
+            </div>
+            
 
-
-  <div class="card">
-    
-    <div class="card-body">
-        <!-- <h4 class="card-title">يقين</h4> -->
-        <div class="container-fluid">
-          <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label class="form-label">نوع الهوية</label>
-              <div class="form-group ">
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="status" id="citizen" value="{3:option1}">
-                  <label class="form-check-label" for="citizen">مواطن</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="status" id="resident" value="option2">
-                  <label class="form-check-label" for="resident">مقيم</label>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <label class="form-label" for="iqamaNo">رقم الاقامة</label>
-              <input type="text" id="iqamaNo" class="form-control" placeholder="ارقام فقط">
-            </div>
-            <div class="col">
-              <label class="form-label" for="dob">تاريخ الميلاد</label>
-              <input type="date" id="dob" class="form-control">
-            </div>
-            <div class="col-auto align-self-end"> <!-- Added 'align-self-end' class -->
-              <button type="submit" (click)="check()" class="btn btn-primary">تحقق</button>
-            </div>
+           
           </div>
         </div>
+        <div class="ms-sm-auto col-lg-3">
+          <label *ngIf="!citizen" class="form-label" for="iqamaNo">رقم الاقامة</label>
+          <input *ngIf="!citizen" type="text" id="iqamaNo" class="form-control" placeholder="ارقام فقط" formControlName="iqamaNo">
+
+
+          <label *ngIf="citizen" class="form-label" for="identityNo">رقم الهوية الوطنية</label>
+          <input *ngIf="citizen" type="text" id="identityNo" class="form-control" placeholder="ارقام فقط" formControlName="identityNo">
+        </div>
+        <div class="ms-sm-auto col-lg-3">
+          <label *ngIf="!citizen" class="form-label" for="dob"> (ميلادي)تاريخ الميلاد</label>
+          <input *ngIf="!citizen" type="date" id="dob" class="form-control" formControlName="dob">
+          
+<!-- <app-hijri-datepicker></app-hijri-datepicker> -->
+          <label *ngIf="citizen" class="form-label" for="dobHijri"> (هجري)تاريخ الميلاد</label>
+          <input *ngIf="citizen" type="date" id="dobHijri" class="form-control" formControlName="dobHijri">
+
+          <!-- <app-ng-bootstrap-hijri-gregorian-datepicker formControlName="dobHijri" *ngIf="citizen"></app-ng-bootstrap-hijri-gregorian-datepicker> -->
+        </div>
+        <div class="ms-sm-auto col-lg-3 align-self-end">
+          <button type="submit" (click)="check()" class="btn btn-primary">تحقق</button>
+        </div>
+      </div>
     </div>
- 
-
-
-
- 
- 
+  </div>
 </div>
+</form>

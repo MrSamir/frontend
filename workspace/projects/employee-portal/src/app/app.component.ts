@@ -1,3 +1,7 @@
+ 
+ 
+ 
+
 
 import { Component } from '@angular/core';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
@@ -9,7 +13,9 @@ import { LoadingService } from 'projects/core-lib/src/lib/services/loading.servi
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor (public loadingService:LoadingService){}
+  constructor (
+    public loadingService:LoadingService
+    ){}
   title = 'employee-portal';
 
 }

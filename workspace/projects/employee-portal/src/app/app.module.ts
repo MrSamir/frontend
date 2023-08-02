@@ -4,13 +4,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
+import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
+
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
 
 
 import { ButtonModule } from 'primeng/button';
 import { /*...,*/ APP_INITIALIZER } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {  HttpClientModule } from '@angular/common/http';
 import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/application-configuration-loader/appconfiguration-loader.service';
 import { AppConfig } from './app-config';
 import { ToastModule } from 'primeng/toast';
@@ -19,10 +22,12 @@ import { AppMessageService } from 'projects/core-lib/src/lib/services/app-messag
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { HttpResponseInterceptor } from 'projects/core-lib/src/lib/interceptors/httpResponseInterceptor';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
-import { CoreLibModule } from 'projects/core-lib/src/lib/core-lib.module';
+import { CoreLibModule } from 'projects/core-lib/src/public-api';
+ 
+ 
 
+ 
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService,
@@ -39,6 +44,8 @@ export function setupAppConfigServiceFactory(
     BrowserModule,
     AppRoutingModule,
     CoreModule,
+    SharecomponentModule,
+    
     CoreLibModule,
     BrowserAnimationsModule ,
     ButtonModule,

@@ -6,14 +6,15 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./yaqeen-service.component.css']
 })
 export class YaqeenServiceComponent implements OnInit {
-  showResult = false;
+ showResult=false;
   constructor() { }
 
   ngOnInit() {
   }
-  toggleResult(): void {
-    this.showResult = !this.showResult;
-  }
+ 
+showYaqeenResult(showResult:boolean){
+this.showResult=showResult;
 
+}
  
 }

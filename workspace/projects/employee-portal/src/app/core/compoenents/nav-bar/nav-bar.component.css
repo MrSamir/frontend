@@ -1,12 +1,16 @@
 .nav-link:hover {
-    background-color: rgb(0, 171, 122);
+    background-color: #1c614e;
    color: white;
+   border-right: 10px solid #d6bd81; 
   }
   
 
-
-
-
+  a { 
+    color:   #000000; 
+    
+  } 
+ 
+  
   
 .sidebar {
     position: fixed;
@@ -60,6 +64,9 @@
     text-transform: uppercase;
   }
   
+
+
+
   /*
    * Navbar
    */
