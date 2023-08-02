@@ -15,4 +15,6 @@
 
 // export * from './lib/shared-component/ng-bootstrap-hijri-gregorian-datepicker/ng-bootstrap-hijri-gregorian-datepicker.component';
 
-export * from './lib/shared-component/shared-component-module/sharecomponent.module';
+// export * from './lib/shared-component/shared-component-module/sharecomponent.module';
+
+export * from './lib/modules/sharecomponent.module'
