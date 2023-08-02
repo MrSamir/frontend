@@ -1,4 +1,12 @@
 import {Component, Input,EventEmitter,Output, OnInit, ViewChild} from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { WizardComponent } from 'angular-archwizard';
+import { EnumValidation } from 'projects/core-lib/src/public-api';
+import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
+import { CreateWaqfInputDto } from '../../models/CreateWaqfInputDto';
+import { LookupService } from '../../models/lookup.service';
+import { LookupModel } from '../../models/LookupModel';
 // import {WizardComponent} from "angular-archwizard";
 // import {NgForm} from "@angular/forms";
 // import {
@@ -14,7 +22,7 @@ import {Component, Input,EventEmitter,Output, OnInit, ViewChild} from '@angular/
 // import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 // import {hijriDateExtensions} from "@app/lib/core/hijri-date-extensions";
 // import {handleError, handleServiceProxyError, showSuccess} from "@app/services/alert/alert.service";
-// import { ServiceRequestTypeEnum } from '@app/enum/requestType.enum';
+//  import { ServiceRequestTypeEnum } from '@app/enum/requestType.enum';
 
  
 
@@ -24,21 +32,21 @@ import {Component, Input,EventEmitter,Output, OnInit, ViewChild} from '@angular/
   styleUrls: ['./endowment-info-edit.component.css']
 })
 export class EndowmentInfoEditComponent implements OnInit {
-  // @Input() public IsCreate: boolean=true;
-  // @Input() createWaqfInputDto: CreateWaqfInputDto;
-  // @Input() editWaqfInputDto: EditWaqfInputDto;
-  // @Input()   cityLookup: LookupModel[] = [];
-  // @Input()  deedCitiesLookup: LookupModel[] = [];
-  // @Input() public wizard: WizardComponent;
+   @Input() public IsCreate: boolean=true;
+   @Input() createWaqfInputDto: CreateWaqfInputDto;
+
+   @Input()   cityLookup: LookupModel[] = [];
+   @Input()  deedCitiesLookup: LookupModel[] = [];
+ @Input() public wizard: WizardComponent;
   // @Input() map: MapModel = new MapModel() ;
   // @Output() _createWaqfInputDto = new EventEmitter<CreateWaqfInputDto>();
   // @Output() _editWaqfInputDto = new EventEmitter<EditWaqfInputDto>();
-  // @Input() IsDeedDisabled :boolean=false;
+   @Input() IsDeedDisabled :boolean=false;
   // @Output() onNewWaqfRegistered = new EventEmitter<string>();
-  // @ViewChild(NgForm,{static:false}) form:NgForm;
+   @ViewChild(NgForm,{static:false}) form:NgForm;
 
 
-  // ePatternValidation = EnumValidation;
+  ePatternValidation = EnumValidation;
 
 
   // citiLookupsReverseMap: ReverseLookupMap = new ReverseLookupMap([]);
@@ -49,19 +57,20 @@ export class EndowmentInfoEditComponent implements OnInit {
 
 
 
-  // minHijriForWaqf: NgbDateStruct = {year: 1, month: 1, day: 1};
-  // minDeedDate: NgbDateStruct = {year: 912, month: 8, day: 22};
-  // maxDeedDate: NgbDateStruct = {year: 912, month: 8, day: 22};
+  minHijriForWaqf: NgbDateStruct = {year: 1, month: 1, day: 1};
+  minDeedDate: NgbDateStruct = {year: 912, month: 8, day: 22};
+  maxDeedDate: NgbDateStruct = {year: 912, month: 8, day: 22};
 
-  // waqfInitialDate: NgbDateStruct;
-  // deedDate: NgbDateStruct;
-  // oldDeedAttachmentId: string;
+   waqfInitialDate: NgbDateStruct;
+   deedDate: NgbDateStruct;
+   oldDeedAttachmentId: string;
 
-  // constructor(//public lookupService: LookupService,
-  //             //private dateHelper: DateFormatterService,
+   constructor(
+    public lookupService: LookupService,
+private dateHelper: DateFormatterService,
   //             //private registerWaqfServiceProxy: RegisterWaqfRequestServiceProxy
-  //             ) {
-  // }
+              )
+               {}
 
   ngOnInit(): void {
     //this.init();
@@ -130,14 +139,14 @@ export class EndowmentInfoEditComponent implements OnInit {
   //   }
   // }
 
-  // private setDateLimits() {
-  //   this.minDeedDate = {year: 100, month: 1, day: 1};
-  //   //this.maxDeedDate = this.dateHelper.GetTodayHijri();
+  private setDateLimits() {
+    this.minDeedDate = {year: 100, month: 1, day: 1};
+    //this.maxDeedDate = this.dateHelper.GetTodayHijri();
 
-  //   ///this.deedDate = this.dateHelper.GetTodayHijri();
-  //   //this.waqfInitialDate = this.dateHelper.GetTodayHijri();
-  //   this.minHijriForWaqf = {year: 100, month: 1, day: 1};
-  // }
+    //this.deedDate = this.dateHelper.GetTodayHijri();
+    //this.waqfInitialDate = this.dateHelper.GetTodayHijri();
+    this.minHijriForWaqf = {year: 100, month: 1, day: 1};
+  }
 
   // private setOptionsDefaultValues()
   // {
@@ -153,17 +162,17 @@ export class EndowmentInfoEditComponent implements OnInit {
   //   }
   // }
  
-  // getcityLookup(value: number, updateCity: boolean = false) {
-  //   // this.lookupService.getCityByRegionID(value).subscribe((res: LookupModel[]) => {
-  //   //   this.cityLookup = res;
-  //   //   this.citiLookupsReverseMap = new ReverseLookupMap(this.cityLookup);
-  //   //   if( updateCity ) {
-  //   //     this.createWaqfInputDto.cityId = res[0].value;
-  //   //   }
-  //   // });
-  // }
+  getcityLookup(value: number, updateCity: boolean = false) {
+    // this.lookupService.getCityByRegionID(value).subscribe((res: LookupModel[]) => {
+    //   this.cityLookup = res;
+    //   this.citiLookupsReverseMap = new ReverseLookupMap(this.cityLookup);
+    //   if( updateCity ) {
+    //     this.createWaqfInputDto.cityId = res[0].value;
+    //   }
+    // });
+  }
 
-  // onNewDeedRegionSelected(newDeedRegionId: number, updateCity: boolean = false) {
+   onNewDeedRegionSelected(newDeedRegionId: number, updateCity: boolean = false) {
   //   // this.lookupService.getCityByRegionID(newDeedRegionId).subscribe(
   //   //   (cities: LookupModel[]) => {
   //   //     this.deedCitiesLookup = cities;
@@ -174,11 +183,11 @@ export class EndowmentInfoEditComponent implements OnInit {
   //   //   },
   //   //   error => handleError<LookupModel[]>(error.error)
   //   // );
-  // }
+   }
 
-  // changewagafType(event: any) {
+   changewagafType(event: any) {
    
-  // }
+   }
   // loadHints()
   // {
    
@@ -190,20 +199,20 @@ export class EndowmentInfoEditComponent implements OnInit {
   //     !this.createWaqfInputDto.deedAttachmentId;
   // }
 
-  // get navigationButtonsDisabled() {
-
+   get navigationButtonsDisabled() {
+return;
   //   return this.form?.invalid || this.mapNotSelectedYet() || !this.createWaqfInputDto.waqfInitialDate|| !this.createWaqfInputDto.deedDate ;
-  // }
-  // get requestType() {
-  //   return ServiceRequestTypeEnum;
-  // }
+  }
+  get requestType() {
+     return null;//ServiceRequestTypeEnum;
+  }
 
 
-  // onBackBtnClicked() {
-  //   this.wizard.goToPreviousStep();
-  // }
+  onBackBtnClicked() {
+    this.wizard.goToPreviousStep();
+  }
 
-  // onNextBtnClicked() {
+   onNextBtnClicked() {
   //   if (this.IsCreate) {
   //     this._createWaqfInputDto.emit(this.createWaqfInputDto);
   //     this.onNewWaqfRegistered.emit(this.createWaqfInputDto.waqfTypeId.toString());
@@ -217,7 +226,7 @@ export class EndowmentInfoEditComponent implements OnInit {
   //   }
 
  
-  // }
+   }
 
 
  

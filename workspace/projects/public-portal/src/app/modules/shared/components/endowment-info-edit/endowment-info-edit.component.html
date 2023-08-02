@@ -1,0 +1,218 @@
+<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" *ngIf="!!createWaqfInputDto">
+    <div class="aw-content">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="form-group col">
+          <label class="col-form-label">{{'Module1.awqafService.EndowmentName'}}<span class="text-danger">*</span></label>
+          <input type="text" class="form-control" #waqfName="ngModel" name="waqfName"
+                 [(ngModel)]="createWaqfInputDto.waqfName" required>
+          <div *ngIf="waqfName.invalid && (waqfName.dirty || waqfName.touched)" class="">
+            <p *ngIf="waqfName.errors" class="text-danger pt-1 small">اسم الوقف مطلوب</p>
+          </div>
+        </div>
+        <div class="form-group col">
+          <div class="d-flex">
+            <label class="col col-form-label">{{'Module1.awqafService.EndowmentType'}}<span class="text-danger">*</span></label>
+          
+          </div>
+          <select class="custom-select" #waqfTypeId="ngModel" name="waqfTypeId" (change)="changewagafType($event)"
+                  [(ngModel)]=createWaqfInputDto.waqfTypeId required>
+            <!-- <option *ngFor="let waqfTypes of lookupService.waqfTypes" value={{waqfTypes.value}}
+              {{waqfTypes.name}}
+            </option> -->
+          </select>
+          <div *ngIf="waqfTypeId.invalid && (waqfTypeId.dirty || waqfTypeId.touched)" class="">
+            <p *ngIf="waqfTypeId.errors" class="text-danger pt-1 small">نوع الوقف مطلوب</p>
+          </div>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{'Module1.awqafService.EndowmentSpendingCategories'}}<span class="text-danger">*</span></label>
+          <p-multiSelect #awjuhElSarfIds="ngModel" display="chip" name="awjuhElSarfIds"
+                         [options]="lookupService.awjuhElsarfs" optionLabel="name" optionValue="value"
+                         [(ngModel)]=createWaqfInputDto.awjuhElSarfIds required></p-multiSelect>
+          <div *ngIf="awjuhElSarfIds.invalid && (awjuhElSarfIds.dirty || awjuhElSarfIds.touched)" class="">
+            <p *ngIf="awjuhElSarfIds.errors" class="text-danger pt-1 small">أوجه الصرف مطلوب</p>
+          </div>
+        </div>
+  
+        <!-- <div class="form-group col">
+          <ng-bootstrap-hijri-gregorian-datepicker
+            [Label]={{'Module1.awqafService.EndowmentSpendingCategories'}}
+            [IsRequired]=true
+            [min]="minDeedDate"
+            [max]="maxDeedDate"
+            [(SelectedDate)]="waqfInitialDate"
+  
+            (SelectedDateChange)="onWaqfDateChange($event)"  [IsDisabled]="IsDeedDisabled"
+            #datePicker
+          >
+          </ng-bootstrap-hijri-gregorian-datepicker>
+  
+        </div> -->
+  
+        <div class="form-group col">
+          <div class="d-flex">
+            <label class=" col  col-form-label">{{'Module1.awqafService.EndowmentRevenue'}}<span class="text-danger">*</span></label>
+      
+          </div>
+  <!-- pattern_number -->
+          <input type="number" class="form-control" #revenue="ngModel" name="revenue"
+                 placeholder="إجمالي الإيرادات المتحصلة من تشغيل واستثمار وتنمية الوقف"
+                 [pattern]="ePatternValidation.pattern_number" [(ngModel)]="createWaqfInputDto.revenue" required>
+          <div *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)" class="">
+            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">الإيرادات مطلوب</p>
+            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">الحقل يجب ان يكون ارقام</p>
+          </div>
+        </div>
+  
+        <div class="form-group col-12 m-0 ">
+          <label class="col-form-label font-weight-bold" >جمع التبرعات
+            {{'Module1.awqafService.EndowmentRevenue'}}
+          </label>
+        </div>
+        <div class="form-group col">
+            <label class="col-form-label" >جمع التبرعات
+            </label>
+            <p-inputSwitch [(ngModel)]="createWaqfInputDto.acceptDonations" name="acceptDonations"></p-inputSwitch>
+        </div>
+        <div class="form-group col">
+            <label class="col-form-label" >قبول الهبات
+            </label>
+            <p-inputSwitch [(ngModel)]="createWaqfInputDto.acceptGiveaways" name="acceptGiveaways"></p-inputSwitch>
+        </div>
+  
+        <div class="form-group col-12"> </div>
+        <!-- Section Title -->
+        <div class="form-group col">
+          <label class="col-form-label">منطقة الوقف<span class="text-danger">*</span></label>
+          <select class="custom-select" #regionId="ngModel" name="regionId" [(ngModel)]=createWaqfInputDto.regionId
+                  required (change)="getcityLookup(regionId.value, true)">
+            <option [value]="null" disabled selected></option>
+            <option *ngFor="let region of lookupService.regions" value={{region.value}}>
+              {{region.name}}</option>
+          </select>
+  
+          <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
+            <p *ngIf="regionId.errors" class="text-danger pt-1 small">منطقة الوقف مطلوب</p>
+          </div>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">مدينة الوقف<span class="text-danger">*</span></label>
+          <select class="custom-select" #cityId="ngModel" name="cityId" [(ngModel)]=createWaqfInputDto.cityId required>
+            <option *ngFor="let city of cityLookup" value={{city.value}}>
+              {{city.name}}</option>
+          </select>
+          <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
+            <p *ngIf="cityId.errors" class="text-danger pt-1 small">مدينة الوقف مطلوب</p>
+          </div>
+        </div>
+<!--   
+        <div class="form-group col-12">
+          <label class="col-form-label">موقع الوقف<span class="text-danger">*</span></label>
+          <div class="col-sm-12 px-0">
+            <google-map (mapChange)="onChangeMap()" [(map)]="map" required></google-map>
+          </div>
+        </div> -->
+  
+        <div class="form-group col-12">
+          <label class="col-form-label">شرط الواقف</label>
+          <textarea [rows]="5" cols="10" class="form-control" #condition="ngModel" name="condition"
+                    [(ngModel)]="createWaqfInputDto.condition"
+                    >
+          </textarea>
+          <div *ngIf="condition.invalid && (condition.dirty || condition.touched)" class="">
+            <p *ngIf="condition.errors" class="text-danger pt-1 small">شرط الوقف مطلوب</p>
+          </div>
+        </div>
+        <!-- Section Title -->
+  
+        <div class="mt-4 col-12">
+          <h3 class="text-awq-primary my-3">
+            <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
+            معلومات الصك
+          </h3>
+        </div>
+  
+        <div class="form-group col">
+          <label class="col-form-label">رقم صك الوقفية<span class="text-danger">*</span></label>
+          <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="IsDeedDisabled"
+                 [(ngModel)]="createWaqfInputDto.deedNumber" [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required>
+          <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
+            <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">رقم صك الوقفية مطلوب</p>
+          </div>
+        </div>
+  
+        <!-- <div class="form-group col">
+          <ng-bootstrap-hijri-gregorian-datepicker 
+            [Label]="'تاريخ الصك'"
+            [IsRequired]=true
+            [min]="minDeedDate"
+            [max]="maxDeedDate"
+            [(SelectedDate)]="deedDate"
+            (SelectedDateChange)="onSakDateChange($event)"  [IsDisabled]="IsDeedDisabled"
+            #datePicker
+          >
+          </ng-bootstrap-hijri-gregorian-datepicker>
+        </div> -->
+  
+        <div class="form-group col">
+          <label class="col-form-label">منطقة إصدار الصك<span class="text-danger">*</span></label>
+          <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="IsDeedDisabled"
+                  [(ngModel)]=createWaqfInputDto.deedRegionId required
+                  (change)="onNewDeedRegionSelected(deedRegionId.value, true)">
+            <option [value]="null" disabled selected></option>
+            <option *ngFor="let region of lookupService.regions" value={{region.value}}>
+              {{region.name}}</option>
+          </select>
+        </div>
+  
+        <div class="form-group col">
+          <label class="col-form-label">مدينة إصدار الصك<span class="text-danger">*</span></label>
+          <select class="custom-select" #deedCityId="ngModel" name="deedCityId" [(ngModel)]=createWaqfInputDto.deedCityId [disabled]="IsDeedDisabled"
+                  required>
+            <option *ngFor="let city of deedCitiesLookup" value={{city.value}}>
+              {{city.name}}</option>
+          </select>
+        </div>
+  
+        <div class="form-group col">
+          <label class="col-form-label">محكمة إصدار الصك<span class="text-danger">*</span></label>
+          <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId" [disabled]="IsDeedDisabled"
+                  [(ngModel)]=createWaqfInputDto.issuanceCourtId required>
+            <option *ngFor="let issuanceCourtItem of lookupService.issuanceCourts" value={{issuanceCourtItem.value}}>
+              {{issuanceCourtItem.name}}</option>
+          </select>
+        </div>
+  
+        <div class="form-group col-12">
+          <div class="d-flex">
+            <label class="col col-form-label">صك الوقفية<span class="text-danger">*</span></label>
+        
+          </div>
+  
+          <div class="input-group mb-3 download p-2">
+            <div class="flex-grow-1">
+              <!-- <file-uploader
+                [showDownloadButton]="true"
+                [showDeleteButton]="true"
+                [allowedExtensions]="['.pdf']"
+                [objects]="[ createWaqfInputDto ]"
+                [keys]="['deedAttachmentId']"
+                [fileDisplayName]="'صك الوقفية'"
+                [serviceTypeId]="requestType.NewWaqf"
+              >
+              </file-uploader> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="aw-btn">
+      <div>
+        <!--      <button type="button" class="btn btn-outline-warning" [disabled]="navigationButtonsDisabled" (click)="onSaveDraftClicked()">حفظ ومتابعة لاحقا</button>-->
+        <button type="button" class="btn btn-outline-awq-secondary" [disabled]="navigationButtonsDisabled" (click)="onNextBtnClicked()">التالي</button>
+      </div>
+      <button type="button" class="btn btn-outline-awq-secondary" [hidden]="!IsCreate" (click)="onBackBtnClicked()">السابق</button>
+    </div>
+  </form>
+  

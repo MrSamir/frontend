@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
-import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
  
 
 import { HttpClient } from '@angular/common/http';
@@ -23,16 +23,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
-<<<<<<< HEAD
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
+import { SharecomponentModule } from 'projects/shared-features-lib/src/lib/modules/sharecomponent.module';
  
  
 
  
-=======
-import { CoreLibModule } from 'projects/core-lib/src/lib/core-lib.module';
-
->>>>>>> 8a99bdc5d55134ebe0b0cd96381765bef019f9b2
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService,
