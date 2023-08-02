@@ -443,7 +443,7 @@ export class FileLibraryApplicationServiceServiceProxy {
      * @return Success
      */
     uploadFile(entityName: string | undefined, file: FileParameter | undefined, fileExtraDatas: FileExtraData[] | undefined): Observable<ApiResponseOfOutputFileDto> {
-        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/UploadFile";
+        let url_ = "https://localhost:7057" + "/api/FileLibraryApplicationService/UploadFile";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();

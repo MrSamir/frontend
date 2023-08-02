@@ -21,6 +21,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { LandingComponent } from './layout/landing/landing.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServicesProxyModule } from './modules/shared/services/services.module';
 
 
 @NgModule({
@@ -34,6 +36,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
     MultiSelectModule,
     BrowserModule,
+    BrowserAnimationsModule,
     SharecomponentModule,
     PublicPortalSharedModule,
     CommonModule,
@@ -42,7 +45,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CoreLibModule,
     ButtonModule,
     MessagesModule,
-    NgbModule
+    NgbModule,
+ ServicesProxyModule
   ],
   providers: [
     MessageService,

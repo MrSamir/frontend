@@ -136,9 +136,9 @@
             <p *ngIf="attorneyform['attorneyNumber'].errors?.['pattern']" class="text-danger pt-1 small">رقم الوكالة غير صحيح</p>
           </div>
         </div>
-        <div class="form-group col">
+        <!-- <div class="form-group col">
           <button type="button" class="btn btn-awq-secondary mt-6"  (click)="fetchAgentDetails()" >تحقق</button>
-        </div>
+        </div> -->
   
         <div class="form-group col-12">
           <div class="d-flex">
@@ -146,26 +146,19 @@
             <label class="col col-form-label">{{'Module1.awqafService.agencyDeed' | localize}}<span class="text-danger">*</span></label>
             <!-- <hint [hintContent]="agencyDeedHint?.hintContentAr" [hintTitle]="agencyDeedHint?.hintTitleAr" ></hint> -->
           </div>
-  
+ 
           <div class="input-group mb-3 download p-2">
             <div class="flex-grow-1">
   
-              FileUpload
-              <!-- <file-uploader
-                [showDownloadButton]="true"
-                [showDeleteButton]="true"
-                [allowedExtensions]="[ '.pdf' ]"
-                [objects]="[ createRegisterWaqfApplicantDto.agentDto ]"
-                [keys]="['representativeAttachmentId']"
-                [fileDisplayName]="translations.agencyDeedFileDisplayName"
-                [serviceTypeId]="requestType.NewWaqf"
-              >
-              </file-uploader> -->
+ 
+            <lib-file-uploader (_uploadedFilesEvent)="onFileSelect($event)"></lib-file-uploader>
+              
+
             </div>
           </div>
         </div>
   
-        <div class="form-group col-12">
+        <!-- <div class="form-group col-12">
        
           <label class="col-form-label">{{'Module1.awqafService.agencyStatus' | localize}}</label>
           <input type="text" class="form-control"  [readonly]="true"   formControlName="agentStatus" required>
@@ -182,7 +175,7 @@
     
           <label class="col-form-label">{{'Module1.awqafService.endOfAgency' | localize}}</label>
           <input type="text" class="form-control"    formControlName="agentIssueDateHijri"  [readonly]="true" required>
-        </div>
+        </div> -->
       </div>
     </form>
  

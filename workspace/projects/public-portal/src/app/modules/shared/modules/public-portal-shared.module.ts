@@ -8,10 +8,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
+import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
  
  
  
- 
+import { FileUploadModule } from 'primeng/fileupload';
+
+import { ToastModule } from 'primeng/toast';
  
 
 @NgModule({
@@ -26,8 +29,8 @@ EndowmentInfoEditComponent
    
  CommonModule,
     ReactiveFormsModule,
- CoreLibModule,
-MultiSelectModule
+ CoreLibModule,SharecomponentModule,
+MultiSelectModule,FileUploadModule,ToastModule
   ],
   exports: [
     

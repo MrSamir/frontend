@@ -10,20 +10,26 @@ import { HijriDatepickerComponent } from '../components/ng-bootstrap-hijri-grego
 import { IDNumberWithValidationComponent } from '../components/IDNumberWithValidation/IDNumberWithValidation.component';
 import { DateFormatterService } from '../components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { FileUploadModule } from 'primeng/fileupload';
+
+import { ToastModule } from 'primeng/toast';
+
+import { FileUploaderComponent } from '../components/file-uploader/file-uploader.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,
+  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,FileUploaderComponent,
     IDNumberWithValidationComponent],
   imports: [
     
     BreadcrumbModule,
-    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule
+    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule
   ],
   exports:[
-    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent
+    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent
   ],
 
   providers: [
