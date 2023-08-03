@@ -13,9 +13,11 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { FileUploadModule } from 'primeng/fileupload';
 
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
 
 import { FileUploaderComponent } from '../components/file-uploader/file-uploader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
  
 
 
@@ -26,7 +28,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     
     BreadcrumbModule,
-    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule
+    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule,CommonModule,TableModule
   ],
   exports:[
     BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent

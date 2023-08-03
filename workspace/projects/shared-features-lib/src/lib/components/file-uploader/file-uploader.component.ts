@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { OutputFileDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 
 @Component({
   selector: 'lib-file-uploader',
@@ -9,69 +10,59 @@ export class FileUploaderComponent implements OnInit {
   @Input() maxFileSizeInMB: number = 5;
   @Input() allowedFileTypes: string = '.pdf,.doc,.docx,.txt';
 
-  @Input() showCancelButton:boolean =true;
-  @Input() showUploadButton:boolean =true;
+  @Input() showCancelButton: boolean = true;
+  @Input() showUploadButton: boolean = true;
 
-  @Input() showUploadProgressBar:boolean =true;
+  @Input() showUploadProgressBar: boolean = true;
 
-  @Input() showErrorMessage:boolean =true;
-  @Input() alllowMultipleFiles :boolean=true;
- 
-@Input() showDownloadButton:boolean =true;
+  @Input() showErrorMessage: boolean = true;
+  @Input() alllowMultipleFiles: boolean = true;
+  @Input() serviceTypeId =0;
+  
+  @Input() showDownloadButton: boolean = true;
 
-  @Output() _uploadedFilesEvent = new EventEmitter<any>();
+  @Output() _chooseFilesEvent = new EventEmitter<any>();
+  @Output() _downloadFilesEvent = new EventEmitter<any>();
+  @Output() _UploadFilesEvent = new EventEmitter<any>();
+
+  @Output() _removeFilesEvent = new EventEmitter<any>();
+
+
+  @Input() uploadedFiles :OutputFileDto[];
 
   constructor() { }
 
   ngOnInit() {
   }
   onFileSelect(event: any) {
-    const file = event.files[0];
+    
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-console.log(file);
-this._uploadedFilesEvent.emit(event);
+ 
+ 
+    this._chooseFilesEvent.emit(event);
   }
 
-  
+  onFileUpload(event: any) {
+    
+    // Do something with the selected file, e.g., emit an event, upload to the server, etc.
+ 
+ 
+    this._UploadFilesEvent.emit(event);
+  }
 
-downloadFile(file: any) {
-  // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-  console.log(file);
-}
+  downloadFile(event: any) {
+    // Do something with the selected file, e.g., emit an event, upload to the server, etc.
+   
+    this._downloadFilesEvent.emit(event);
 
-removeFile(file: any) {
-  // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-  console.log(file);
-}
+  }
 
+  removeFile(event: any) {
+     
 
-  // async uploadMultipleFiles() {
+    this._removeFilesEvent.emit(event);
+  }
 
-  //   if (ArrayExtensions.isEmpty(this._newfiles)) {
-  //     return;
-  //   }
-  //   (await this.fileService.uploadMultipleFile(this._newfiles, this.serviceTypeId)).subscribe(
-  //     (res: ServiceResponseArray<fileOutput>) => {
-  //       showSuccess(translations.uploadSuccess);
-  //       // this.objects = [];
-
-  //       res.data.forEach((file, index) => {
-
-
-  //         if (this.allowMultipleFiles) {
-
-
-  //           this.objects.push(file);
-
-  //         }
-  //         else {
-  //           this.objects[index][this.keys[index]] = res.data[index].id;
-  //         }
-  //       })
-  //     },
-  //     err => {
-  //       handleError<fileOutput>(err.error)
-  //     }
-  //   );
+ 
 
 }

@@ -2,10 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { AspNetUser } from '../../models/AspNetUser';
-import { ApiResponseOfOutputFileDto, FileExtraData, FileLibraryApplicationServiceServiceProxy, FileParameter, InputFileDto } from '../../services/services-proxies/service-proxies';
+import { ApiResponseOfOutputFileDto, ApplicationUserServiceServiceProxy, FileExtraData, FileLibraryApplicationServiceServiceProxy, FileParameter, InputApplicantDto, InputFileDto, OutputFileDto } from '../../services/services-proxies/service-proxies';
 import { FileInputDto } from '../../models/fileupload';
+import { RequestTypeEnum } from '../../models/RequestTypeEnum';
 
-
+import * as fileSaver from 'file-saver';
 
 
 @Component({
@@ -41,29 +42,87 @@ export class EndowmentApplicantEditComponent implements OnInit {
   alllowMultipleFiles: boolean = true;
 
 
+  uploadedFiles :OutputFileDto[] = [];
 
+ 
 
-
-
-  constructor(private fb: FormBuilder, private _serviceProxy: FileLibraryApplicationServiceServiceProxy) { }
-
+  constructor(private fb: FormBuilder, private _serviceProxyFileLibrary: FileLibraryApplicationServiceServiceProxy,
+    private _serviceProxyApplicant : ApplicationUserServiceServiceProxy
+    ) { }
+    _InputApplicantDto = new InputApplicantDto()
   ngOnInit() {
 
     this.initiateApplicantForm();
     this.initiateAttorneyForm();
 
   }
-  onFileSelect(event: any) {
+
+  get requestType() {
+    return RequestTypeEnum;
+  }
+
+  removeFile(file: any) {
+    // this.uploadedFiles = this.uploadedFiles.filter((f) => f !== file);
+    console.log('remove file:', file.name);
+
+  }
+
+
+
+  downloadFile(fileid: any) {
+    // debugger;
+    // const file = event.files[0];
+   
+ 
+
+    this._serviceProxyFileLibrary.downloadFileById("EndowmentAttachment",fileid).subscribe(
+      (response: ApiResponseOfOutputFileDto) => {
+        //convering base64 to blobpart
+        const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+          const byteCharacters = atob(b64Data);
+          const byteArrays = [];
+          for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+            const byteNumbers = new Array(slice.length);
+            for (let i = 0; i < slice.length; i++) {
+              byteNumbers[i] = slice.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
+            byteArrays.push(byteArray);
+          }
+
+          const blob = new Blob(byteArrays, { type: contentType });
+          return blob;
+        }
+
+        console.log(response.dto.fileData)
+        const blob = b64toBlob(response.dto.fileData, response.dto.contentType)
+        const file = new File([blob], response.dto.fileName, { type: response.dto.contentType });
+        fileSaver.saveAs(file);
+      })
+
+  }
+
+
+  private saveFile(data: Blob, fileName: string): void {
+    const file = new File([data], fileName, { type: data.type });
+    fileSaver.saveAs(file);
+  }
+
+  onFileUpload(event: any) {
  // Handle the file selection event from the PrimeNG FileUpload component
  const file = event.files[0];
  // Additional data (if needed)
  const entityName = 'EndowmentAttachment'; // Replace with the entity name you want to associate with the file
 
  // Call the service to upload the file
- this._serviceProxy.uploadFile(entityName, { data: file, fileName: file.name }, []).subscribe(
+ this._serviceProxyFileLibrary.uploadFile(entityName, { data: file, fileName: file.name }, []).subscribe(
    (response: ApiResponseOfOutputFileDto) => {
      // Handle the successful response here
+
+     this.uploadedFiles[0]=response.dto
      console.log('File upload successful:', response);
+this.showUploadButton=false;
      // Optionally, perform additional actions with the response data
    },
    (error: any) => {
@@ -105,6 +164,7 @@ export class EndowmentApplicantEditComponent implements OnInit {
       email: [this._applicantData.Email],
       nationalityName: [this._applicantData.NationalityName],
       isAlive: [this.isAlive],
+       
       mobileNumber: [this._applicantData.MobileNumber],
       applicantBirthDate: [this.applicantBirthDate],
       gender: [{ value: this._applicantData.Gender.toString(), disabled: true }],

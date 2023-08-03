@@ -1,11 +1,18 @@
 
 
-:host ::ng-deep .p-fileupload .p-fileupload-content {
+
+/* :host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
+  background: #028c6c !important;
+  color:white;
+  font-size: 20px;
+  font-weight: 600;
+} */
+/* :host ::ng-deep .p-fileupload .p-fileupload-content {
     background: #028c6c !important;
     color:white;
     font-size: 20px;
     font-weight: 600;
-}
+} */
 :host ::ng-deep .p-fileupload-content 
     .p-fileupload-row.ng-star-inserted img {
     width: 120px;

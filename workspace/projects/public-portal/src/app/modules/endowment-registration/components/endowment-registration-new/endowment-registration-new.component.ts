@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
+import { ApplicationUserServiceServiceProxy, EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
+import { EndowmentApplicantEditComponent } from '../../../shared/components/endowment-applicant-edit/endowment-applicant-edit.component';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -7,7 +9,10 @@ import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models
 })
 export class EndowmentRegistrationNewComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _serviceProxyApplicationUser:ApplicationUserServiceServiceProxy,private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
+  @ViewChild(EndowmentApplicantEditComponent, { static: false }) _applicantEditComponent!: EndowmentApplicantEditComponent;
+
+
 
   ngOnInit() {
     this.getLoggedInUserData();
@@ -17,6 +22,10 @@ export class EndowmentRegistrationNewComponent implements OnInit {
  _applicantData: AspNetUser = new AspNetUser();
 
   getLoggedInUserData(){
+
+
+// this._serviceProxy.getByUserName()
+
 
     this._applicantData.FirstNameAr="محمد"
     this._applicantData.SecondNameAr="سمير"
@@ -35,4 +44,54 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this._applicantData.Gender=0;
     
   }
+
+  InitiateRequest(){
+
+    debugger
+    if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
+      console.log(this._applicantEditComponent.applicantForm.value);
+
+
+
+  
+
+
+
+
+
+    }
+    else {
+
+      console.log(this._applicantEditComponent.applicantForm.value)}
+
+
+      this._serviceProxyEndowmentRegistraion.initiateEndowmentRegistrationRequest(this._applicantEditComponent.applicantform['isApplicantAsAgent'].value,this._applicantEditComponent.applicantForm.value).subscribe({
+
+        next:(response)=>{
+
+console.log(response);
+        },
+        error:(error)=>{
+
+          console.log(error);
+
+        },
+        
+        
+           
+        
+          
+        
+        
+          })
+
+
+    }
+
+
+
+
+
+  
+
 }
