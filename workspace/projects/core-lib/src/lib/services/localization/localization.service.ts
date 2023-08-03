@@ -7,7 +7,6 @@ import { AppCoreSubjectService } from '../app-core-subject.service';
   providedIn: 'root'
 })
 export class LocalizationService {
-
   currentLanguageData:any;
   appData: appCore = new appCore;
   constructor(private customLoader: appCoreLoader, private appCoreSubject: AppCoreSubjectService) {
@@ -16,7 +15,7 @@ export class LocalizationService {
     use(lang: string){
       let app = this.appCoreSubject.getAppCore();
       if(app.localization.languagesInfo.length == 0){
-         this.customLoader.load("https://localhost:7057/api/AppCoreConfigurationsService/GetAppCoreConfigurations", app).then((result:any)=>{
+         this.customLoader.load("https://localhost:7071/api/AppCoreConfigurationsService/GetAppCoreConfigurations", app).then((result:any)=>{
           this.appData = result;
           this.appCoreSubject.setAppCore(this.appData);
           app = this.appCoreSubject.getAppCore();

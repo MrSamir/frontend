@@ -7,6 +7,7 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 import { CreateWaqfInputDto } from '../../models/CreateWaqfInputDto';
 import { LookupService } from '../../models/lookup.service';
 import { LookupModel } from '../../models/LookupModel';
+import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 // import {WizardComponent} from "angular-archwizard";
 // import {NgForm} from "@angular/forms";
 // import {
@@ -34,15 +35,17 @@ import { LookupModel } from '../../models/LookupModel';
 export class EndowmentInfoEditComponent implements OnInit {
    @Input() public IsCreate: boolean=true;
    @Input() createWaqfInputDto: CreateWaqfInputDto;
+   @Input() InputEndowmentDto: InputEndowmentDto;
+   
 
    @Input()   cityLookup: LookupModel[] = [];
    @Input()  deedCitiesLookup: LookupModel[] = [];
  @Input() public wizard: WizardComponent;
   // @Input() map: MapModel = new MapModel() ;
-  // @Output() _createWaqfInputDto = new EventEmitter<CreateWaqfInputDto>();
-  // @Output() _editWaqfInputDto = new EventEmitter<EditWaqfInputDto>();
+   @Output() _createWaqfInputDto = new EventEmitter<CreateWaqfInputDto>();
+ 
    @Input() IsDeedDisabled :boolean=false;
-  // @Output() onNewWaqfRegistered = new EventEmitter<string>();
+  @Output() onNewWaqfRegistered = new EventEmitter<string>();
    @ViewChild(NgForm,{static:false}) form:NgForm;
 
 
@@ -73,50 +76,50 @@ private dateHelper: DateFormatterService,
                {}
 
   ngOnInit(): void {
-    //this.init();
+    this.init();
   }
 
-  // init() {
+  init() {
 
-  //   // if (!this.requestId || !!this.waqfInitialDate) {
-  //   //   return;
-  //   // }
+    // if (!this.requestId || !!this.waqfInitialDate) {
+    //   return;
+    // }
 
-  //   this.setDateLimits();
-  //   this.loadHints();
-  //   //this.lookupService.fetchWaqfTypeLookups();
-  //   //this.lookupService.fetchAwjuhElsarfLookups();
-  //   //this.lookupService.fetchRegionsLookups();
+    this.setDateLimits();
+   
+    this.lookupService.fetchWaqfTypeLookups();
+    this.lookupService.fetchAwjuhElsarfLookups();
+    this.lookupService.fetchRegionsLookups();
 
-  //  // this.lookupService.fetchIssuanceCourtLookups();
+    this.lookupService.fetchIssuanceCourtLookups();
 
-  //  if (this.createWaqfInputDto) {
+   if (this.createWaqfInputDto) {
 
 
-  //   if (!!this.createWaqfInputDto.waqfInitialDate) {
-  //     this.waqfInitialDate = hijriDateExtensions.parseHijriString(this.createWaqfInputDto.waqfInitialDate);
-  //   }
-  //   else {
-  //     this.createWaqfInputDto.waqfInitialDate = `${this.waqfInitialDate.year}/${this.waqfInitialDate.month}/${this.waqfInitialDate.day}`
-  //     this.createWaqfInputDto.acceptDonations = false;
-  //     this.createWaqfInputDto.acceptGiveaways = false;
-  //   }
+    if (!!this.createWaqfInputDto.waqfInitialDate) {
+      //this.waqfInitialDate = hijriDateExtensions.parseHijriString(this.createWaqfInputDto.waqfInitialDate);
+    }
+    else {
+      this.createWaqfInputDto.waqfInitialDate = `${this.waqfInitialDate.year}/${this.waqfInitialDate.month}/${this.waqfInitialDate.day}`
+      this.createWaqfInputDto.acceptDonations = false;
+      this.createWaqfInputDto.acceptGiveaways = false;
+    }
 
-  //   if (!!this.createWaqfInputDto.deedDate) {
-  //     this.deedDate = hijriDateExtensions.parseHijriString(this.createWaqfInputDto.deedDate);
-  //   }
+    if (!!this.createWaqfInputDto.deedDate) {
+      //this.deedDate = hijriDateExtensions.parseHijriString(this.createWaqfInputDto.deedDate);
+    }
 
-  //   else {
-  //     this.createWaqfInputDto.deedDate = `${this.deedDate.year}/${this.deedDate.month}/${this.deedDate.day}`
-  //   }
-  // }
+    else {
+      this.createWaqfInputDto.deedDate = `${this.deedDate.year}/${this.deedDate.month}/${this.deedDate.day}`
+    }
+  }
  
-  // }
+  }
 
-  // ngOnChanges() {
-  //   this.init();
+  ngOnChanges() {
+    this.init();
 
-  // }
+  }
 
   // onWaqfDateChange(date: NgbDateStruct) {
 

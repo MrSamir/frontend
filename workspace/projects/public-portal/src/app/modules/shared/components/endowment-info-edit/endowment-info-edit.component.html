@@ -1,36 +1,36 @@
-<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" *ngIf="!!createWaqfInputDto">
+<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" >
     <div class="aw-content">
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="form-group col">
-          <label class="col-form-label">{{'Module1.awqafService.EndowmentName'}}<span class="text-danger">*</span></label>
-          <input type="text" class="form-control" #waqfName="ngModel" name="waqfName"
-                 [(ngModel)]="createWaqfInputDto.waqfName" required>
-          <div *ngIf="waqfName.invalid && (waqfName.dirty || waqfName.touched)" class="">
-            <p *ngIf="waqfName.errors" class="text-danger pt-1 small">اسم الوقف مطلوب</p>
+          <label class="col-form-label">{{'Module1.awqafService.EndowmentName' | localize}}<span class="text-danger">*</span></label>
+          <input type="text" class="form-control" #endowmentName="ngModel" name="endowmentName"
+                 [(ngModel)]="InputEndowmentDto.endowmentName" required>
+          <div *ngIf="endowmentName.invalid && (endowmentName.dirty || endowmentName.touched)" class="">
+            <p *ngIf="endowmentName.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.EndowmentNameValidation' | localize}}</p>
           </div>
         </div>
         <div class="form-group col">
           <div class="d-flex">
-            <label class="col col-form-label">{{'Module1.awqafService.EndowmentType'}}<span class="text-danger">*</span></label>
+            <label class="col col-form-label">{{'Module1.awqafService.EndowmentType' | localize}}<span class="text-danger">*</span></label>
           
           </div>
-          <select class="custom-select" #waqfTypeId="ngModel" name="waqfTypeId" (change)="changewagafType($event)"
-                  [(ngModel)]=createWaqfInputDto.waqfTypeId required>
+          <select class="custom-select" #endowmentTypeId="ngModel" name="endowmentTypeId" (change)="changewagafType($event)"
+                  [(ngModel)]=InputEndowmentDto.endowmentTypeId required>
             <!-- <option *ngFor="let waqfTypes of lookupService.waqfTypes" value={{waqfTypes.value}}
               {{waqfTypes.name}}
             </option> -->
           </select>
-          <div *ngIf="waqfTypeId.invalid && (waqfTypeId.dirty || waqfTypeId.touched)" class="">
-            <p *ngIf="waqfTypeId.errors" class="text-danger pt-1 small">نوع الوقف مطلوب</p>
+          <div *ngIf="endowmentTypeId.invalid && (endowmentTypeId.dirty || endowmentTypeId.touched)" class="">
+            <p *ngIf="endowmentTypeId.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.EndowmentTypeValidation' | localize}}</p>
           </div>
         </div>
         <div class="form-group col">
-          <label class="col-form-label">{{'Module1.awqafService.EndowmentSpendingCategories'}}<span class="text-danger">*</span></label>
-          <p-multiSelect #awjuhElSarfIds="ngModel" display="chip" name="awjuhElSarfIds"
+          <label class="col-form-label">{{'Module1.awqafService.EndowmentSpendingCategories' | localize}}<span class="text-danger">*</span></label>
+          <p-multiSelect #spendingCategoriesIds="ngModel" display="chip" name="awjuhElSarfIds"
                          [options]="lookupService.awjuhElsarfs" optionLabel="name" optionValue="value"
-                         [(ngModel)]=createWaqfInputDto.awjuhElSarfIds required></p-multiSelect>
-          <div *ngIf="awjuhElSarfIds.invalid && (awjuhElSarfIds.dirty || awjuhElSarfIds.touched)" class="">
-            <p *ngIf="awjuhElSarfIds.errors" class="text-danger pt-1 small">أوجه الصرف مطلوب</p>
+                         [(ngModel)]=InputEndowmentDto.spendingCategoriesIds required></p-multiSelect>
+          <div *ngIf="spendingCategoriesIds.invalid && (spendingCategoriesIds.dirty || spendingCategoriesIds.touched)" class="">
+            <p *ngIf="spendingCategoriesIds.errors" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentSpendingCategoriesValidation' | localize}}</p>
           </div>
         </div>
   
@@ -59,23 +59,21 @@
                  placeholder="إجمالي الإيرادات المتحصلة من تشغيل واستثمار وتنمية الوقف"
                  [pattern]="ePatternValidation.pattern_number" [(ngModel)]="createWaqfInputDto.revenue" required>
           <div *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)" class="">
-            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">الإيرادات مطلوب</p>
-            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">الحقل يجب ان يكون ارقام</p>
+            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationRequired'}}</p>
+            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationPattern'}}</p>
           </div>
         </div>
   
         <div class="form-group col-12 m-0 ">
-          <label class="col-form-label font-weight-bold" >جمع التبرعات
-            {{'Module1.awqafService.EndowmentRevenue'}}
-          </label>
+          <label class="col-form-label font-weight-bold" > {{'Module1.awqafService.EndowmentAcceptDonations'}}</label>
         </div>
         <div class="form-group col">
-            <label class="col-form-label" >جمع التبرعات
+            <label class="col-form-label" > {{'Module1.awqafService.EndowmentAcceptDonations'}}
             </label>
             <p-inputSwitch [(ngModel)]="createWaqfInputDto.acceptDonations" name="acceptDonations"></p-inputSwitch>
         </div>
         <div class="form-group col">
-            <label class="col-form-label" >قبول الهبات
+            <label class="col-form-label" > {{'Module1.awqafService.EndowmentacceptGiveaways'}}
             </label>
             <p-inputSwitch [(ngModel)]="createWaqfInputDto.acceptGiveaways" name="acceptGiveaways"></p-inputSwitch>
         </div>
@@ -83,7 +81,9 @@
         <div class="form-group col-12"> </div>
         <!-- Section Title -->
         <div class="form-group col">
-          <label class="col-form-label">منطقة الوقف<span class="text-danger">*</span></label>
+          <label class="col-form-label">
+            {{'Module1.awqafService.EndowmentRegion'}}
+            <span class="text-danger">*</span></label>
           <select class="custom-select" #regionId="ngModel" name="regionId" [(ngModel)]=createWaqfInputDto.regionId
                   required (change)="getcityLookup(regionId.value, true)">
             <option [value]="null" disabled selected></option>
@@ -92,18 +92,18 @@
           </select>
   
           <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
-            <p *ngIf="regionId.errors" class="text-danger pt-1 small">منطقة الوقف مطلوب</p>
+            <p *ngIf="regionId.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.EndowmentRegionValidation'}}</p>
           </div>
         </div>
         <div class="form-group col">
-          <label class="col-form-label">مدينة الوقف<span class="text-danger">*</span></label>
+          <label class="col-form-label"> {{'Module1.awqafService.EndowmentCity'}} <span class="text-danger">*</span></label>
           <select class="custom-select" #cityId="ngModel" name="cityId" [(ngModel)]=createWaqfInputDto.cityId required>
             <option *ngFor="let city of cityLookup" value={{city.value}}>
               {{city.name}}</option>
           </select>
           <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
-            <p *ngIf="cityId.errors" class="text-danger pt-1 small">مدينة الوقف مطلوب</p>
-          </div>
+            <p *ngIf="cityId.errors" class="text-danger pt-1 small">     {{'Module1.awqafService.EndowmentCityValidation'}}</p>
+          </div> 
         </div>
 <!--   
         <div class="form-group col-12">
@@ -114,13 +114,13 @@
         </div> -->
   
         <div class="form-group col-12">
-          <label class="col-form-label">شرط الواقف</label>
+          <label class="col-form-label">  {{'Module1.awqafService.EndowmentCondation'}} </label>
           <textarea [rows]="5" cols="10" class="form-control" #condition="ngModel" name="condition"
                     [(ngModel)]="createWaqfInputDto.condition"
                     >
           </textarea>
           <div *ngIf="condition.invalid && (condition.dirty || condition.touched)" class="">
-            <p *ngIf="condition.errors" class="text-danger pt-1 small">شرط الوقف مطلوب</p>
+            <p *ngIf="condition.errors" class="text-danger pt-1 small">    {{'Module1.awqafService.EndowmentCondationValidation'}}   </p>
           </div>
         </div>
         <!-- Section Title -->
@@ -133,11 +133,15 @@
         </div>
   
         <div class="form-group col">
-          <label class="col-form-label">رقم صك الوقفية<span class="text-danger">*</span></label>
+          <label class="col-form-label">     
+            {{'Module1.awqafService.EndowmentdeedNumber'}}   
+            <span class="text-danger">*</span></label>
           <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="IsDeedDisabled"
                  [(ngModel)]="createWaqfInputDto.deedNumber" [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required>
           <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
-            <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">رقم صك الوقفية مطلوب</p>
+            <p *ngIf="deedNumber.errors" class="text-danger pt-1 small"> 
+              {{'Module1.awqafService.EndowmentdeedNumberValidation'}}  
+            </p>
           </div>
         </div>
   
@@ -155,7 +159,9 @@
         </div> -->
   
         <div class="form-group col">
-          <label class="col-form-label">منطقة إصدار الصك<span class="text-danger">*</span></label>
+          <label class="col-form-label">     
+            {{'Module1.awqafService.EndowmentdeedRegion'}}   
+            <span class="text-danger">*</span></label>
           <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="IsDeedDisabled"
                   [(ngModel)]=createWaqfInputDto.deedRegionId required
                   (change)="onNewDeedRegionSelected(deedRegionId.value, true)">
@@ -166,7 +172,9 @@
         </div>
   
         <div class="form-group col">
-          <label class="col-form-label">مدينة إصدار الصك<span class="text-danger">*</span></label>
+          <label class="col-form-label">     
+            {{'Module1.awqafService.EndowmentdeedCity'}}   
+            <span class="text-danger">*</span></label>
           <select class="custom-select" #deedCityId="ngModel" name="deedCityId" [(ngModel)]=createWaqfInputDto.deedCityId [disabled]="IsDeedDisabled"
                   required>
             <option *ngFor="let city of deedCitiesLookup" value={{city.value}}>
@@ -175,7 +183,9 @@
         </div>
   
         <div class="form-group col">
-          <label class="col-form-label">محكمة إصدار الصك<span class="text-danger">*</span></label>
+          <label class="col-form-label">
+            {{'Module1.awqafService.EndowmentdeedCourt'}}  
+            <span class="text-danger">*</span></label>
           <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId" [disabled]="IsDeedDisabled"
                   [(ngModel)]=createWaqfInputDto.issuanceCourtId required>
             <option *ngFor="let issuanceCourtItem of lookupService.issuanceCourts" value={{issuanceCourtItem.value}}>
@@ -185,7 +195,11 @@
   
         <div class="form-group col-12">
           <div class="d-flex">
-            <label class="col col-form-label">صك الوقفية<span class="text-danger">*</span></label>
+            <label class="col col-form-label"> 
+              
+              {{'Module1.awqafService.EndowmentdeedNumber'}}  
+
+              <span class="text-danger">*</span></label>
         
           </div>
   

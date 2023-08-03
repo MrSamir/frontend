@@ -30,7 +30,7 @@ EndowmentInfoEditComponent
  CommonModule,
     ReactiveFormsModule,
  CoreLibModule,SharecomponentModule,
-MultiSelectModule,FileUploadModule,ToastModule
+MultiSelectModule,FileUploadModule,ToastModule,
   ],
   exports: [
     
