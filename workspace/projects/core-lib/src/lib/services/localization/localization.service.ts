@@ -7,7 +7,8 @@ import { AppCoreSubjectService } from '../app-core-subject.service';
   providedIn: 'root'
 })
 export class LocalizationService {
-  currentLanguageData:any;
+
+  public static currentLanguageData:any;
   appData: appCore = new appCore;
   constructor(private customLoader: appCoreLoader, private appCoreSubject: AppCoreSubjectService) {
   }
@@ -28,14 +29,15 @@ export class LocalizationService {
           this.setLocalization(app, lang);
         }
 
-      return this.currentLanguageData
+      return LocalizationService.currentLanguageData
     }
 
     setLocalization(app: appCore, lang: any){
       let locals = app.localization;
       let currentLanguage = locals?.languagesInfo?.find(l=>l.name == lang)
-      this.currentLanguageData = JSON.parse(currentLanguage?.languageData || "{}");
-      console.log(this.currentLanguageData);
+      LocalizationService.currentLanguageData = JSON.parse(currentLanguage?.languageData || "{}");
+      console.log(LocalizationService.currentLanguageData);
     }
 
 }
+
