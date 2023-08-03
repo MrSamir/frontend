@@ -25,8 +25,7 @@ export class LocalizePipe implements PipeTransform {
       return '';
     }
 
-    let translatedValue = !this.localization.currentLanguageData ? undefined : this.localization.currentLanguageData[query];
-
+    let translatedValue = !LocalizationService.currentLanguageData ? undefined : LocalizationService.currentLanguageData[query];
     if (args) {
       for (const key in args) {
         if (args.hasOwnProperty(key)) {
