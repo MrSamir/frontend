@@ -1,10 +1,10 @@
 <div class="row row-cols-1 row-cols-md-2" >
     <div class="form-group col-12" >
       <div  *ngIf="!viewOnly" class="d-flex">
-        <label class="col col-form-label">{{'Module1.awqafService.AssetIntellectualTypeLabel' | localize}}  <span class="text-danger">*</span></label>
+        <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualTypeLabel' | localize}}  <span class="text-danger">*</span></label>
         <!-- <hint  [hintContent]="Typehint?.hintContentAr" [hintTitle]="Typehint?.hintTitleAr"></hint> -->
       </div>
-       <label [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetIntellectualTypeLabel' | localize}}  </label>
+       <label [hidden]="!viewOnly" class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualTypeLabel' | localize}}  </label>
       <input type="text" class="form-control" [minLength]="1" [maxLength]="250" [hidden]="viewOnly" #ipatType="ngModel"
       [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers"
         name="benefitType" [(ngModel)]="assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType" required>
@@ -12,13 +12,13 @@
         <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType}} </label>
   
       <div *ngIf="ipatType.invalid && (ipatType.dirty || ipatType.touched)" class="">
-        <p *ngIf="ipatType.errors?.['required']" class="text-danger pt-1 small"> {{'Module1.awqafService.AssetIntellectualRequiredValidationLabel' | localize}}</p>
-        <p *ngIf="ipatType.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.AssetIntellectualCharacterValidationLabel' | localize}} </p>
+        <p *ngIf="ipatType.errors?.['required']" class="text-danger pt-1 small"> {{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualRequiredValidationLabel' | localize}}</p>
+        <p *ngIf="ipatType.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualCharacterValidationLabel' | localize}} </p>
   
       </div>
     </div>
     <div class="form-group col-12">
-      <label class="col-form-label">{{'Module1.awqafService.AssetIntellectualDescLabel' | localize}} </label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualDescLabel' | localize}} </label>
       <textarea [rows]="5" cols="10" class="form-control" 
       [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers"
       #ipatDescription="ngModel" name="ipatDescription"  [(ngModel)]="assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription"  [hidden]="viewOnly">
@@ -26,12 +26,12 @@
       <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription}} </label>
       <div *ngIf="ipatDescription.invalid && (ipatDescription.dirty || ipatDescription.touched)" class="">
         
-        <p *ngIf="ipatDescription.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.AssetIntellectualCharacterValidationLabel' | localize}} </p>
+        <p *ngIf="ipatDescription.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualCharacterValidationLabel' | localize}} </p>
   
       </div>
     </div>
     <div class="form-group col" >
-      <label  class="col-form-label">{{'Module1.awqafService.AssetIntellectualAmountLabel' | localize}} </label>
+      <label  class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualAmountLabel' | localize}} </label>
   
       <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10" #ipatValue="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
@@ -43,24 +43,24 @@
         class="">
   
         <p *ngIf="ipatValue.errors?.['pattern']" class="text-danger pt-1 small">
-          {{'Module1.awqafService.AssetIntellectualNumberValidationLabel' | localize}}
+          {{'EndowmentModule.EndowmentRgistrationService.AssetIntellectualNumberValidationLabel' | localize}}
            </p>
       </div>
     </div>
     <div class="form-group col" >
-      <label class="col-form-label">{{'Module1.awqafService.IsDirectAssetBenefitLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.IsDirectAssetBenefitLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #isDirectedBenefit="ngModel" name="isDirectedBenefit" [(ngModel)]=assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
         [hidden]="viewOnly" required>
         <option [ngValue]=undefined ></option>
-        <option [ngValue]=true >{{'Module1.awqafService.yes' | localize}}</option>
-        <option [ngValue]=false >{{'Module1.awqafService.no' | localize}}</option>
+        <option [ngValue]=true >{{'EndowmentModule.EndowmentRgistrationService.yes' | localize}}</option>
+        <option [ngValue]=false >{{'EndowmentModule.EndowmentRgistrationService.no' | localize}}</option>
       </select>
       <label class="col-form-label font-weight-bold" *ngIf="assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit"
-        [hidden]="!viewOnly">&nbsp; {{'Module1.awqafService.yes' | localize}} </label>
+        [hidden]="!viewOnly">&nbsp; {{'EndowmentModule.EndowmentRgistrationService.yes' | localize}} </label>
         <label class="col-form-label font-weight-bold" *ngIf="!assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit"
-        [hidden]="!viewOnly">&nbsp; {{'Module1.awqafService.no' | localize}} </label>
+        [hidden]="!viewOnly">&nbsp; {{'EndowmentModule.EndowmentRgistrationService.no' | localize}} </label>
       <div *ngIf="isDirectedBenefit.invalid && (isDirectedBenefit.dirty || isDirectedBenefit.touched)" class="">
-        <p *ngIf="isDirectedBenefit.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.isDirectedBenefitSelectedLabel' | localize}}</p>
+        <p *ngIf="isDirectedBenefit.errors" class="text-danger pt-1 small"> {{'EndowmentModule.EndowmentRgistrationService.isDirectedBenefitSelectedLabel' | localize}}</p>
       </div>
     </div>
   </div>

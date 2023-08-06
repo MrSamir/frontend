@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
 import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
+//import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -42,7 +43,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   assetToEditIndex: number;
 
   lookupfliter:InputLookUpDto=new InputLookUpDto();
-  AssetTypeLookup: LookupDto[]=[];
+  AssetTypeLookup: LookupDto[]=[] ;
   AssetSizeLookup: LookupDto[]=[];
   RegionLookup: LookupDto[]=[];
   CityLookup: LookupDto[]=[];
@@ -157,7 +158,7 @@ console.log(response);
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetTypeLookup = data.dto.items;
+        this.AssetTypeLookup = data.dto.items!;
         console.log(data);
       });
 
@@ -168,7 +169,7 @@ console.log(response);
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetSizeLookup = data.dto.items;
+        this.AssetSizeLookup = data.dto.items!;
         console.log(data);
       });
     }
@@ -295,7 +296,7 @@ console.log(response);
     }).then((result) => {
       if (result.isConfirmed) {
         this.OneRequestAsset = new InputRemoveAssetDto();
-        this.OneRequestAsset.id = assetToDelete.requestId;
+        this.OneRequestAsset.id = assetToDelete.requestId!;
         this.OneRequestAsset.requestId = this.requestId;
 
         this._serviceProxyEndowmentRegistraion.deleteWaqfRequestAsset(
@@ -309,7 +310,7 @@ console.log(response);
             // showSuccess('تم حذف الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });
-          } else showError('تم حدوث خطأ');
+          } //else showError('تم حدوث خطأ');
         });
       }
     });

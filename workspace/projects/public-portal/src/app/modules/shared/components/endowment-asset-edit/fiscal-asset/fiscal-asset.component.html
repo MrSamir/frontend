@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-md-2" >
     <div class="form-group col" >
-      <label class="col-form-label">{{'Module1.awqafService.AssetFiscalClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId" [(ngModel)]=assetInfoModel.fiscalAsset.assetSubTypeId (change)="subTypeChanged()"
         [hidden]="viewOnly" required>
         <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
@@ -10,7 +10,7 @@
         [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.fiscalAsset.assetSubTypeId,assetSubTypes)}} </label>
   
       <div *ngIf="assetSubTypeId.invalid && (assetSubTypeId.dirty || assetSubTypeId.touched)" class="">
-        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'Module1.awqafService.AssetFiscalClassificationTypeRequiredValidationLabel' | localize}}</p>
+        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationTypeRequiredValidationLabel' | localize}}</p>
       </div>
     </div>
     <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
@@ -31,7 +31,7 @@
       </div>
     </div>
     <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
-      <label class="col-form-label">{{'Module1.awqafService.AssetFiscalinvestmentPortfolioNumberLabel' | localize}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberLabel' | localize}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="20" #investmentPortfolioNumber="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
       name="investmentPortfolioNumber" [(ngModel)]=assetInfoModel.fiscalAsset.investmentPortfolioNumber
@@ -40,10 +40,10 @@
     <div
       *ngIf="investmentPortfolioNumber.invalid && (investmentPortfolioNumber.dirty || investmentPortfolioNumber.touched)"
       class="">
-      <p *ngIf="investmentPortfolioNumber.errors?.['required']" class="text-danger pt-1 small">  {{'Module1.awqafService.AssetFiscalinvestmentPortfolioNumberRequired' | localize}}
+      <p *ngIf="investmentPortfolioNumber.errors?.['required']" class="text-danger pt-1 small">  {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberRequired' | localize}}
       </p>
       <p *ngIf="investmentPortfolioNumber.errors?.['pattern']" class="text-danger pt-1 small">
-        {{'Module1.awqafService.AssetFiscalinvestmentPortfolioNumberDigitalvalidation' | localize}}
+        {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberDigitalvalidation' | localize}}
          </p>
     </div>
   </div>
@@ -57,10 +57,10 @@
     <div
       *ngIf="currentAssetValue.invalid && (currentAssetValue.dirty || currentAssetValue.touched)"
       class="">
-      <p *ngIf="currentAssetValue.errors?.['required']" class="text-danger pt-1 small">  {{'Module1.awqafService.AssetFiscalRequiredValidationLabel' | localize}}
+      <p *ngIf="currentAssetValue.errors?.['required']" class="text-danger pt-1 small">  {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalRequiredValidationLabel' | localize}}
       </p>
       <p *ngIf="currentAssetValue.errors?.['pattern']" class="text-danger pt-1 small">
-        {{'Module1.awqafService.AssetFiscalNumberValidationLabel' | localize}}
+        {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalNumberValidationLabel' | localize}}
          </p>
     </div>
   </div>

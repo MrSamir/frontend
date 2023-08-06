@@ -3,7 +3,7 @@
   
       <!-- <label class="col-form-label"> المبلغ <span *ngIf="!viewOnly" class="text-danger">*</span>   </label> -->
   
-      <label [hidden]="viewOnly" class="col-form-label block">{{'Module1.awqafService.AssetMonterayAmount' | localize}} <span *ngIf="!viewOnly"
+      <label [hidden]="viewOnly" class="col-form-label block">{{'EndowmentModule.EndowmentRgistrationService.AssetMonterayAmount' | localize}} <span *ngIf="!viewOnly"
           class="text-danger">*</span></label>
   
       <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10"
@@ -14,15 +14,15 @@
       <label class="col-form-label font-weight-bold"
         [hidden]="!viewOnly">&nbsp;{{assetInfoModel.monetaryAsset.monetaryAssetAmount}} </label>
       <div *ngIf="monetaryAssetAmount.invalid && (monetaryAssetAmount.dirty || monetaryAssetAmount.touched)" class="">
-        <p *ngIf="monetaryAssetAmount.errors?.['required']" class="text-danger pt-1 small"> {{'Module1.awqafService.AssetMonterayRequiredValidationLabel' | localize}} 
+        <p *ngIf="monetaryAssetAmount.errors?.['required']" class="text-danger pt-1 small"> {{'EndowmentModule.EndowmentRgistrationService.AssetMonterayRequiredValidationLabel' | localize}} 
         </p>
         <p *ngIf="monetaryAssetAmount.errors?.['pattern']" class="text-danger pt-1 small">
-          {{'Module1.awqafService.AssetMonterayNumberValidationLabel' | localize}} 
+          {{'EndowmentModule.EndowmentRgistrationService.AssetMonterayNumberValidationLabel' | localize}} 
         </p>
       </div>
     </div>
     <div class="form-group col">
-      <label class="col-form-label block">{{'Module1.awqafService.AssetMonterayAmountGoalLabel' | localize}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label block">{{'EndowmentModule.EndowmentRgistrationService.AssetMonterayAmountGoalLabel' | localize}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId"
         [(ngModel)]=assetInfoModel.monetaryAsset.assetSubTypeId [hidden]="viewOnly" required>
         <option [value]="null" selected disabled></option>
@@ -34,7 +34,7 @@
         [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.monetaryAsset.assetSubTypeId,assetSubTypes)}} </label>
   
       <div *ngIf="assetSubTypeId.invalid && (assetSubTypeId.dirty || assetSubTypeId.touched)" class="">
-        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'Module1.awqafService.AssetMonteraySubTypeRequiredValidationLabel' | localize}} </p>
+        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetMonteraySubTypeRequiredValidationLabel' | localize}} </p>
       </div>
     </div>
   </div>

@@ -61,7 +61,7 @@ _lookupExtraData:LookupExtraData;
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.regionLookup = data.dto.items;
+        this.regionLookup = data.dto.items!;
         console.log(data);
       });
 
@@ -69,7 +69,7 @@ _lookupExtraData:LookupExtraData;
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.cityLookup = data.dto.items;
+        this.cityLookup = data.dto.items!;
         console.log(data);
       });
 
@@ -80,7 +80,7 @@ _lookupExtraData:LookupExtraData;
 
    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
     (data) => {
-      this.assetSubTypes=data.dto.items;
+      this.assetSubTypes=data.dto.items!;
       console.log(data);
     }  
   );
@@ -110,7 +110,7 @@ _lookupExtraData:LookupExtraData;
 
    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
     (data) => {
-      this.cityLookup=data.dto.items;
+      this.cityLookup=data.dto.items!;
       console.log(data);
     }  
   );
@@ -135,7 +135,7 @@ _lookupExtraData:LookupExtraData;
 
   ChangeCityLookup(value: any) {
     if (value == "null" || value == undefined) {
-      this.assetInfoModel.businessEntityAsset.cityId = undefined;
+      this.assetInfoModel.businessEntityAsset.cityId = -1;
     }
 
   }

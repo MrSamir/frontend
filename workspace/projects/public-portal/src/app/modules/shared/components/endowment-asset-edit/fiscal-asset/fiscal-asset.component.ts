@@ -48,7 +48,7 @@ constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServic
  
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
      (data) => {
-       this.assetSubTypes=data.dto.items;
+       this.assetSubTypes=data.dto.items!;
        console.log(data);
      }  
    );

@@ -34,12 +34,12 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
 
   @Input() waqfId: string | undefined;
   @Input() requestId: string;
-  @Input() Assets: OutputAssetDto[] = undefined;
+  @Input() Assets: OutputAssetDto[] = [];
 
   SelectedAssetToEdit: InputAssetDto;
   map: MapModel;
 
-  newAsset: InputAssetDto;
+  newAsset: InputAssetDto|undefined;
 
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   assetsSubTypeLookup:LookupDto[]=[];
@@ -128,7 +128,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     SelectedAssetToEdit.init(seerToEdit);
     this.newAsset = SelectedAssetToEdit;
     this.loadassetSubTypeforEdit(
-      this.Assets[assetToEditIndex].assetTypeId,
+      this.Assets[assetToEditIndex].assetTypeId!,
       content
     );
   }
@@ -149,7 +149,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetTypeLookup = data.dto.items;
+        this.AssetTypeLookup = data.dto.items!;
         console.log(data);
         this.loadAssetSize();
       
@@ -162,21 +162,21 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetSizeLookup = data.dto.items;
+        this.AssetSizeLookup = data.dto.items!;
         console.log(data);
         //this.loadassetSubType();
       });
   }
 
   public changeAssetType() {
-    this.newAsset.businessEntityAsset = undefined;
-    this.newAsset.realEstateAsset = undefined;
-    this.newAsset.fiscalAsset = undefined;
-    this.newAsset.movableAsset = undefined;
-    this.newAsset.monetaryAsset = undefined;
-    this.newAsset.particularBenefitAsset = undefined;
-    this.newAsset.intellectualPropertyAndTrademarkAsset = undefined;
-    this.newAsset.animalOrAgriculturalAsset = undefined;
+    // this.newAsset.businessEntityAsset = undefined;
+    // this.newAsset.realEstateAsset = undefined;
+    // this.newAsset.fiscalAsset = undefined;
+    // this.newAsset.movableAsset = undefined;
+    // this.newAsset.monetaryAsset = undefined;
+    // this.newAsset.particularBenefitAsset = undefined;
+    // this.newAsset.intellectualPropertyAndTrademarkAsset = undefined;
+    // this.newAsset.animalOrAgriculturalAsset = undefined;
 
 
     this.loadassetSubType();
@@ -193,7 +193,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.assetsSubTypeLookup = data.dto.items;
+        this.assetsSubTypeLookup = data.dto.items!;
         console.log(data);
       });
   }
@@ -205,7 +205,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.assetsSubTypeLookup = data.dto.items;
+        this.assetsSubTypeLookup = data.dto.items!;
         console.log(data);
       });
   }

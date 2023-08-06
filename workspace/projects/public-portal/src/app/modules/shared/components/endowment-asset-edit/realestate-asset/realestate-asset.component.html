@@ -1,6 +1,6 @@
 <div class="row row-cols-1 row-cols-md-2" >
     <div class="form-group col" >
-      <label class="col-form-label">{{'Module1.awqafService.RealeStateAssetClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RealeStateAssetClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId" [(ngModel)]=assetInfoModel.realEstateAsset.assetSubTypeId
         [hidden]="viewOnly" required>
         <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
@@ -10,26 +10,26 @@
         [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.assetSubTypeId,assetSubTypes)}} </label>
   
       <div *ngIf="assetSubTypeId.invalid && (assetSubTypeId.dirty || assetSubTypeId.touched)" class="">
-        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'Module1.awqafService.RequiredRealeStateAssetTypeValidationlabel' | localize}}</p>
+        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RequiredRealeStateAssetTypeValidationlabel' | localize}}</p>
       </div>
     </div>
     <div class="form-group col">
-      <label class="col-form-label">{{'Module1.awqafService.RealeStateRegion' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RealeStateRegion' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #regionId="ngModel" name="regionId" [(ngModel)]=assetInfoModel.realEstateAsset.regionId
         [hidden]="viewOnly" required (change)="getcityLookup(regionId.value)">
         <option [value]="null"  selected></option>
         <option *ngFor="let region of regionLookup" value={{region.id}}>
           {{region.name}}</option>
       </select>
-      <label class="col-form-label font-weight-bold"
-        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.regionId,regionLookup)}} </label>
+      <!-- <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.regionId,regionLookup)}} </label> -->
   
       <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
-        <p *ngIf="regionId.errors" class="text-danger pt-1 small">{{'Module1.awqafService.RequiredRealeStateAssetRegionValidationlabel' | localize}}</p>
+        <p *ngIf="regionId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RequiredRealeStateAssetRegionValidationlabel' | localize}}</p>
       </div>
     </div>
     <div class="form-group col" >
-      <label class="col-form-label">{{'Module1.awqafService.RealeStateCity' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RealeStateCity' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId" [(ngModel)]=assetInfoModel.realEstateAsset.cityId [hidden]="viewOnly"
         required>
         <option [value]="null"  selected></option>
@@ -39,16 +39,16 @@
       <label class="col-form-label font-weight-bold"
         [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.cityId,cityLookup)}} </label>
       <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
-        <p *ngIf="cityId.errors" class="text-danger pt-1 small">{{'Module1.awqafService.RealeStateAssetCityRequiredValidationlabel' | localize}}</p>
+        <p *ngIf="cityId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RealeStateAssetCityRequiredValidationlabel' | localize}}</p>
       </div>
     </div>
     <div class="form-group col" >
       <div  *ngIf="!viewOnly" class="d-flex">
-        <label class="col col-form-label">{{'Module1.awqafService.AssetEstimatedValueLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+        <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetEstimatedValueLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
         <!-- <hint  [hintContent]="estimatedValuehint?.hintContentAr"
           [hintTitle]="estimatedValuehint?.hintTitleAr"></hint> -->
       </div>
-      <label  [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetEstimatedValueLabel' | localize}}</label>
+      <label  [hidden]="!viewOnly" class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetEstimatedValueLabel' | localize}}</label>
   
       <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="14" #estimatedAmount="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
@@ -58,15 +58,15 @@
       <div
         *ngIf="estimatedAmount.invalid && (estimatedAmount.dirty || estimatedAmount.touched)"
         class="">
-        <p *ngIf="estimatedAmount.errors?.['required']" class="text-danger pt-1 small">   {{'Module1.awqafService.AssetEstimatedValueLabelRequiredValidationLabel' | localize}}
+        <p *ngIf="estimatedAmount.errors?.['required']" class="text-danger pt-1 small">   {{'EndowmentModule.EndowmentRgistrationService.AssetEstimatedValueLabelRequiredValidationLabel' | localize}}
         </p>
         <p *ngIf="estimatedAmount.errors?.['pattern']" class="text-danger pt-1 small">
-          {{'Module1.awqafService.AssetEstimatedValueLabelNumberValidationLabel' | localize}}
+          {{'EndowmentModule.EndowmentRgistrationService.AssetEstimatedValueLabelNumberValidationLabel' | localize}}
            </p>
       </div>
     </div>
     <div class="form-group col-12" >
-      <label class="col-form-label">{{'Module1.awqafService.RealeStateAssetLocation' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RealeStateAssetLocation' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <div class="col-sm-12 px-0">
         <!-- <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map> -->
       </div>
@@ -75,7 +75,7 @@
   
     <div class="form-group col-12" >
   
-        <label class="col-form-label">{{'Module1.awqafService.RealeStateAssetOwnershipDeed' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+        <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RealeStateAssetOwnershipDeed' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
   
          <input type="hidden" #ownershipDeedAttachementId name="ownershipDeedAttachementId" [(ngModel)]=assetInfoModel.realEstateAsset.ownershipDeedAttachementId required   >
       <div class="input-group mb-3 download p-2">

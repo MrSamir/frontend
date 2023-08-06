@@ -49,7 +49,7 @@ constructor(private lookupssrv:LookupApplicationServiceServiceProxy,private moda
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.regionLookup = data.dto.items;
+        this.regionLookup = data.dto.items!;
         console.log(data);
       });
 
@@ -57,7 +57,7 @@ constructor(private lookupssrv:LookupApplicationServiceServiceProxy,private moda
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.cityLookup = data.dto.items;
+        this.cityLookup = data.dto.items!;
         console.log(data);
       });
 
@@ -68,7 +68,7 @@ constructor(private lookupssrv:LookupApplicationServiceServiceProxy,private moda
 
    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
     (data) => {
-      this.assetSubTypes=data.dto.items;
+      this.assetSubTypes=data.dto.items!;
       console.log(data);
     }  
   );
@@ -88,7 +88,7 @@ getcityLookup(value: any) {
 
    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
     (data) => {
-      this.cityLookup=data.dto.items;
+      this.cityLookup=data.dto.items!;
       console.log(data);
     }  
   );
