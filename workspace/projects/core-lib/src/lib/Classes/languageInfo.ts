@@ -1,8 +1,15 @@
 
 export class languageInfo {
-  constructor() {
-  }
-  name: string | undefined;
-  languageData: string | undefined;
+  constructor() {}
+  name: string;
 
+  displayName: string;
+
+  icon: string;
+
+  isDefault: boolean;
+
+  isDisabled: boolean;
+
+  isRightToLeft: boolean;
 }

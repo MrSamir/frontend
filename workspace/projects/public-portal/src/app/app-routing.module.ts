@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LandingComponent } from './layout/landing/landing.component';
+import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
+import { API_BASE_URL } from './modules/shared/services/services-proxies/service-proxies';
+import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
   
 
 const routes: Routes = [
@@ -82,6 +85,15 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (appInitializer: AppInitializer) =>
+        appInitializer.loadAppConfig(),
+      deps: [AppInitializer],
+      multi: true,
+    }
+  ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

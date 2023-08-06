@@ -35,7 +35,6 @@ export class LandingComponent implements OnInit {
   }
 
   navigateToNestedTab(parentRoute: string, nestedRoute: string): void {
-    debugger
    this.router.navigateByUrl('employee/y')
    // this.router.navigate(['employee',parentRoute, nestedRoute]);
   }

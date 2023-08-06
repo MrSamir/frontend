@@ -3,21 +3,29 @@ import { languageInfo } from '../Classes/languageInfo';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CurrentLangaugeSubjectService {
+  constructor() {}
+  private currentLangaugeObj: BehaviorSubject<languageInfo> =
+    new BehaviorSubject<languageInfo>({
+      name: "",
 
-  constructor() { }
-  private currentLangaugeObj: BehaviorSubject<languageInfo> = new BehaviorSubject<languageInfo>({
+      displayName: "",
 
-    name :undefined,
-    languageData: undefined
-  });
+      icon: "",
 
-  public setCurrentLangauge(data:languageInfo){
+      isDefault: false,
+
+      isDisabled: false,
+
+      isRightToLeft: false,
+    });
+
+  public setCurrentLangauge(data: languageInfo) {
     this.currentLangaugeObj.next(data);
   }
-  public getCurrentLangauge(){
+  public getCurrentLangauge() {
     return this.currentLangaugeObj.getValue();
   }
 }
