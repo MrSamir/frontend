@@ -4,6 +4,7 @@
       <a  routerLink="/login" *ngIf="!isUserLoggedIn"  class="text-white">تسجيل الدخول</a>
       <!-- <a  routerLink="" *ngIf="!isUserLoggedIn" (click)="internalLogin()" class="text-white">تسجيل الدخول للموظفين</a> -->
       <a  routerLink="" *ngIf="isUserLoggedIn" (click)="logout()" class="text-white">تسجيل الخروج</a>
+      <lib-loacalization-base></lib-loacalization-base>
 <!--      <a href="javascript:void(0)" class="text-white">Eng</a>-->
     </div>
   </div>
