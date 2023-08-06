@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
-import { ApplicationUserServiceServiceProxy, EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { EndowmentApplicantEditComponent } from '../../../shared/components/endowment-applicant-edit/endowment-applicant-edit.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { EndowmentApplicantEditComponent } from '../../../shared/components/endo
 })
 export class EndowmentRegistrationNewComponent implements OnInit {
 
-  constructor(private _serviceProxyApplicationUser:ApplicationUserServiceServiceProxy,private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
+  constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
   @ViewChild(EndowmentApplicantEditComponent, { static: false }) _applicantEditComponent!: EndowmentApplicantEditComponent;
 
 
@@ -46,8 +46,6 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   }
 
   InitiateRequest(){
-
-    debugger
     if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
       console.log(this._applicantEditComponent.applicantForm.value);
 
@@ -63,7 +61,6 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     else {
 
       console.log(this._applicantEditComponent.applicantForm.value)}
-
 
       this._serviceProxyEndowmentRegistraion.initiateEndowmentRegistrationRequest(this._applicantEditComponent.applicantform['isApplicantAsAgent'].value,this._applicantEditComponent.applicantForm.value).subscribe({
 

@@ -10,17 +10,18 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   declarations: [],
   providers: [
     ServiceProxy.FileLibraryApplicationServiceServiceProxy,
-    ServiceProxy.ApplicationUserServiceServiceProxy,
-    ServiceProxy.EndowmentRegistrationServiceServiceProxy 
-  ]
+    ServiceProxy.EndowmentRegistrationServiceServiceProxy,
+    ServiceProxy.LookupApplicationServiceServiceProxy,
+    ServiceProxy.AccountServiceProxy,
+  ],
 })
 export class ServicesProxyModule {
-
   constructor(@Optional() @SkipSelf() parentModule: ServicesProxyModule) {
     // Import guard
     if (parentModule) {
-      throw new Error(`${parentModule} has already been loaded. Import Services module in the AppModule only.`);
+      throw new Error(
+        `${parentModule} has already been loaded. Import Services module in the AppModule only.`
+      );
     }
   }
-
 }

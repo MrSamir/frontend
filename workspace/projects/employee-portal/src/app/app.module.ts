@@ -18,7 +18,7 @@ import { AppconfigurationLoaderService } from 'projects/core-lib/src/lib/applica
 import { AppConfig } from './app-config';
 import { ToastModule } from 'primeng/toast';
 import { MessagesModule } from 'primeng/messages';
-import { AppMessageService } from 'projects/core-lib/src/lib/services/app-message.service';
+import { AppMessageService } from 'projects/core-lib/src/lib/services/message/app-message.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';

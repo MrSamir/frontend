@@ -1,43 +1,66 @@
 import { Injectable } from '@angular/core';
-import { appCore } from '../../Classes/appCore';
-import { appCoreLoader } from '../../loaders/appCoreLoader';
+import { UtilsService } from '../Utils/Utils.Service';
+import { CurrentLangaugeSubjectService } from '../current-langauge-subject.service';
 import { AppCoreSubjectService } from '../app-core-subject.service';
+import { AppInitializer } from '../../application-configuration-loader/appInitializer';
+import { currentCulture } from '../../Classes/currentCulture';
+import { appCore } from '../../Classes/appCore';
+import { AppConfigSubjectService } from '../appConfigSubjectService';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LocalizationService {
+  constructor(
+    private utilsService: UtilsService,
+    private CurrentLangauge: CurrentLangaugeSubjectService,
+    private AppCoreSubject: AppCoreSubjectService,
+    private appconfigSubject:AppConfigSubjectService
+  ) {}
 
-  public static currentLanguageData:any;
-  appData: appCore = new appCore;
-  constructor(private customLoader: appCoreLoader, private appCoreSubject: AppCoreSubjectService) {
+  changeLanguage(lang: string) {
+    var currentlang = this.CurrentLangauge.getCurrentLangauge();
+    var appcore = this.AppCoreSubject.getAppCore();
+    var selectedLang = appcore.localization.languages.filter(function (
+      value,
+      index
+    ) {
+      return value.name == lang;
+    })[0];
+    appcore.localization.currentLanguage = selectedLang;
+    appcore.localization.currentCulture.displayName = selectedLang.displayName;
+    appcore.localization.currentCulture.name = selectedLang.name;
+    var appConfig =this.appconfigSubject.getAppConfig();
+    this.utilsService.setCookieValue(
+      appConfig.langCookieName,
+      selectedLang.name
+    );
+    this.CurrentLangauge.setCurrentLangauge(selectedLang);
+    this.AppCoreSubject.setAppCore(appcore);
+  }
+  localize(Key: string, args?: any) {
+    if (!Key) {
+      return '';
+    }
+    const appCore = this.AppCoreSubject.getAppCore();
+    const culture = appCore.localization.currentLanguage.name;
+   
+    let translatedValue = !appCore.localization?.localizationDatas[culture][Key]
+      ? Key
+      : appCore.localization?.localizationDatas[culture][Key];
+    if (args) {
+      for (const key in args) {
+        if (args.hasOwnProperty(key)) {
+          translatedValue = !translatedValue
+            ? Key
+            : translatedValue.replace(new RegExp(`{{${key}}}`, 'g'), args[key]);
+        }
+      }
+    }
+
+    return translatedValue;
   }
 
-    use(lang: string){
-      let app = this.appCoreSubject.getAppCore();
-      if(app.localization.languagesInfo.length == 0){
-         this.customLoader.load("https://localhost:7071/api/AppCoreConfigurationsService/GetAppCoreConfigurations", app).then((result:any)=>{
-          this.appData = result;
-          this.appCoreSubject.setAppCore(this.appData);
-          app = this.appCoreSubject.getAppCore();
-          this.setLocalization(app, lang);
-        });
-
-      }
-      else
-        {
-          this.setLocalization(app, lang);
-        }
-
-      return LocalizationService.currentLanguageData
-    }
-
-    setLocalization(app: appCore, lang: any){
-      let locals = app.localization;
-      let currentLanguage = locals?.languagesInfo?.find(l=>l.name == lang)
-      LocalizationService.currentLanguageData = JSON.parse(currentLanguage?.languageData || "{}");
-      console.log(LocalizationService.currentLanguageData);
-    }
-
+  isCurrentCulture(name: string) {}
 }
 
