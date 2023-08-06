@@ -14,6 +14,6 @@ export class LoacalizationBaseComponent implements OnInit {
   }
 
   setLang(lang: string) {
-    this.service.use(lang);
+    this.service.changeLanguage(lang);
   }
 }

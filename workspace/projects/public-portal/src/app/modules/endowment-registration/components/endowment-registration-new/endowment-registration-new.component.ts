@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
 import { ApiException, EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupApplicationServiceServiceProxy, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
+//import { EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { EndowmentApplicantEditComponent } from '../../../shared/components/endowment-applicant-edit/endowment-applicant-edit.component';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
@@ -23,6 +24,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     private lookupssrv:LookupApplicationServiceServiceProxy,
     private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy
     ) { }
+  //constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
   @ViewChild(EndowmentApplicantEditComponent, { static: false }) _applicantEditComponent!: EndowmentApplicantEditComponent;
   @Input() viewOnly: boolean = false;
   @Input() @Output() request: any;
@@ -33,7 +35,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
 
   map: MapModel;
 
-  Assets: OutputAssetDto[] = undefined;
+  Assets: OutputAssetDto[] = [];
   newAsset: InputAssetDto;
   //requestId:string;
   cancelAsset: OutputAssetDto;
@@ -102,15 +104,12 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   }
 
   InitiateRequest(){
-
-    debugger
     if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
       console.log(this._applicantEditComponent.applicantForm.value);
     }
     else {
 
       console.log(this._applicantEditComponent.applicantForm.value)}
-
 
       this._serviceProxyEndowmentRegistraion.initiateEndowmentRegistrationRequest(this._applicantEditComponent.applicantform['isApplicantAsAgent'].value,this._applicantEditComponent.applicantForm.value).subscribe({
 
@@ -404,14 +403,15 @@ console.log(response);
   }
 
   changeAssetType() {
-    this.newAsset.businessEntityAsset = undefined;
-    this.newAsset.realEstateAsset = undefined;
-    this.newAsset.fiscalAsset = undefined;
-    this.newAsset.movableAsset = undefined;
-    this.newAsset.monetaryAsset = undefined;
-    this.newAsset.particularBenefitAsset = undefined;
-    this.newAsset.intellectualPropertyAndTrademarkAsset = undefined;
-    this.newAsset.animalOrAgriculturalAsset = undefined;
+    //this.newAsset=new newAsset();
+    // this.newAsset.businessEntityAsset = undefined;
+    // this.newAsset.realEstateAsset = undefined;
+    // this.newAsset.fiscalAsset = undefined;
+    // this.newAsset.movableAsset = undefined;
+    // this.newAsset.monetaryAsset = undefined;
+    // this.newAsset.particularBenefitAsset = undefined;
+    // this.newAsset.intellectualPropertyAndTrademarkAsset = undefined;
+    // this.newAsset.animalOrAgriculturalAsset = undefined;
   }
 
   loadAssetsBy() {

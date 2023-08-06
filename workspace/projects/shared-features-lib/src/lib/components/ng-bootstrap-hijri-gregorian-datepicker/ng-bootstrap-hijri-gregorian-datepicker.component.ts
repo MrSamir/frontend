@@ -84,16 +84,16 @@ console.log(hij);
     }
     this.SelectedDateChange.emit(this.SelectedDate!);
   }
-  getSelectedDate(): string | null {
+  getSelectedDate(): string | undefined {
     
-    let formattedDate =null;
+    let formattedDate ="";
     if (this.SelectedDate !== undefined) {
-        formattedDate = this.dateFormatterService.ToString(this.SelectedDate);
+        formattedDate = this.dateFormatterService.ToString(this.SelectedDate)!;
 
     }
 
     if (this.CalenderType == ngBootstrapDatePickerDateType.Hijri) {
-      return null;
+      return undefined;
       //momentHijri(formattedDate, 'iD/iM/iYYYY').locale('en').format();
     } else
      // return moment(formattedDate, 'D/M/YYYY').locale('en').format();
