@@ -9,7 +9,7 @@ import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
 import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
- 
+import {InputSwitchModule} from "primeng/inputswitch";
  
  
 import { FileUploadModule } from 'primeng/fileupload';
@@ -30,7 +30,7 @@ EndowmentInfoEditComponent
  CommonModule,
     ReactiveFormsModule,
  CoreLibModule,SharecomponentModule,
-MultiSelectModule,FileUploadModule,ToastModule,
+MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [
     

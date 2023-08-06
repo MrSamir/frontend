@@ -1,4 +1,4 @@
-import { EndowmentRegistrationServiceServiceProxy, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto } from './../../services/services-proxies/service-proxies';
+import { ApiException, EndowmentRegistrationServiceServiceProxy, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from './../../services/services-proxies/service-proxies';
 import {Component, Input,EventEmitter,Output, OnInit, ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -6,10 +6,12 @@ import { WizardComponent } from 'angular-archwizard';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
  
-import { LookupService } from '../../models/lookup.service';
-import { LookupModel } from '../../models/LookupModel';
+ 
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
+import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
+import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
+
 // import {WizardComponent} from "angular-archwizard";
 // import {NgForm} from "@angular/forms";
 // import {
@@ -34,11 +36,10 @@ import { hijriDateExtensions } from '../../models/hijri-date-extensions';
   templateUrl: './endowment-info-edit.component.html',
   styleUrls: ['./endowment-info-edit.component.css']
 })
-export class EndowmentInfoEditComponent implements OnInit {
+export class EndowmentInfoEditComponent  implements OnInit  {
    @Input() public IsCreate: boolean=true;
    @Input() InputEndowmentDto: InputEndowmentDto=new InputEndowmentDto();
-   @Input() cityLookup: LookupModel[] = [];
-   @Input() deedCitiesLookup: LookupModel[] = [];
+ 
    @Input() public wizard: WizardComponent;
    @Output() _InputEndowmentDto = new EventEmitter<InputEndowmentDto>();
    @Input() IsDeedDisabled :boolean=false;
@@ -48,7 +49,11 @@ export class EndowmentInfoEditComponent implements OnInit {
    lookupfliter:InputLookUpDto=new InputLookUpDto();
    spendingCategoriesLookup:LookupDto[]=[];
    EndowmentTypeLookup:LookupDto[]=[];
-    
+   RegioneLookup:LookupDto[]=[];
+CityLookup:LookupDto[]=[];
+IssuanceCourtsLookup:LookupDto[]=[];
+   
+   _lookupExtraData:   LookupExtraData=new LookupExtraData();
 
 
   // deedCitiesReverseMapLookup: ReverseLookupMap = new ReverseLookupMap([]);
@@ -65,11 +70,12 @@ export class EndowmentInfoEditComponent implements OnInit {
    oldDeedAttachmentId: string;
 
    constructor(
-    public lookupService: LookupService,
+ 
 private dateHelper: DateFormatterService,
            private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
            private lookupssrv:LookupApplicationServiceServiceProxy
-              )
+           
+              ) 
                {}
 
   ngOnInit(): void {
@@ -85,6 +91,7 @@ private dateHelper: DateFormatterService,
   (data) => {
     this.spendingCategoriesLookup=data.dto.items;
     console.log(data);
+    this.LoadEndowmentType();
   },   
 );
 
@@ -99,6 +106,60 @@ private dateHelper: DateFormatterService,
   (data) => {
     this.EndowmentTypeLookup=data.dto.items;
     console.log(data);
+    this.  LoadRegion();
+    
+  }   
+);
+
+  }
+
+
+  
+  LoadRegion()
+  {
+    this.lookupfliter.lookUpName="Region";
+    this.lookupfliter.filters=[];
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
+  (data) => {
+    this.RegioneLookup=data.dto.items;
+    console.log(data);
+    this.  LoadIssuanceCourt();
+  }   
+);
+
+  }
+
+
+  LoadCitiesByRegion(RegionId:number)
+  {
+    this._lookupExtraData.dataName="RegionId"
+    this._lookupExtraData.dataValue=RegionId.toString();
+    this.lookupfliter.lookUpName="City";
+    this.lookupfliter.filters=[this._lookupExtraData];
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
+  (data) => {
+    this.CityLookup=data.dto.items;
+    console.log(data);
+
+
+   
+    
+  }   
+);
+
+  }
+
+  
+  LoadIssuanceCourt()
+  {
+   
+    this.lookupfliter.lookUpName="IssuanceCourt";
+    this.lookupfliter.filters=[];
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
+  (data) => {
+    this.IssuanceCourtsLookup=data.dto.items;
+    console.log(data);
+    
   }   
 );
 
@@ -110,15 +171,13 @@ private dateHelper: DateFormatterService,
     // }
   
  this.LoadSpendingCategories();
- this.LoadEndowmentType();
+
 
     this.setDateLimits();
    
-    this.lookupService.fetchWaqfTypeLookups();
-    this.lookupService.fetchAwjuhElsarfLookups();
-    this.lookupService.fetchRegionsLookups();
+ 
 
-    this.lookupService.fetchIssuanceCourtLookups();
+ 
 
    if (this.InputEndowmentDto) {
 
@@ -191,30 +250,7 @@ private dateHelper: DateFormatterService,
   //     this.InputEndowmentDto.latitude = this.map.latitude;
   //   }
   // }
- 
-  getcityLookup(value: number, updateCity: boolean = false) {
-    // this.lookupService.getCityByRegionID(value).subscribe((res: LookupModel[]) => {
-    //   this.cityLookup = res;
-    //   this.citiLookupsReverseMap = new ReverseLookupMap(this.cityLookup);
-    //   if( updateCity ) {
-    //     this.InputEndowmentDto.cityId = res[0].value;
-    //   }
-    // });
-  }
-
-   onNewDeedRegionSelected(newDeedRegionId: number, updateCity: boolean = false) {
-  //   // this.lookupService.getCityByRegionID(newDeedRegionId).subscribe(
-  //   //   (cities: LookupModel[]) => {
-  //   //     this.deedCitiesLookup = cities;
-  //   //     this.deedCitiesReverseMapLookup.rebuild(this.deedCitiesLookup);
-  //   //     if( updateCity ) {
-  //   //       this.InputEndowmentDto.deedCityId = cities[0].value;
-  //   //     }
-  //   //   },
-  //   //   error => handleError<LookupModel[]>(error.error)
-  //   // );
-   }
-
+   
    changewagafType(event: any) {
    
    }
@@ -222,12 +258,7 @@ private dateHelper: DateFormatterService,
   // {
    
   // }
-
-  // mapNotSelectedYet() {
-  //   return !this.InputEndowmentDto.longitude ||
-  //     !this.InputEndowmentDto.latitude ||
-  //     !this.InputEndowmentDto.deedAttachmentId;
-  // }
+ 
 
    get navigationButtonsDisabled() {
 return;
@@ -243,20 +274,55 @@ return;
   }
 
    onNextBtnClicked() {
-  //   if (this.IsCreate) {
-  //     this._InputEndowmentDto.emit(this.InputEndowmentDto);
-  //     this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
-  //   }
-  //   else
-  //   {
-  //     this._editWaqfInputDto.emit(this.InputEndowmentDto);
-  //     this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
+    // if (this.IsCreate) {
+    //   this._InputEndowmentDto.emit(this.InputEndowmentDto);
+    //   this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
+    // }
+    // else
+    // {
+    //   this._editWaqfInputDto.emit(this.InputEndowmentDto);
+    //   this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
 
 
-  //   }
-
+    // }
+this.createOrEditWaqf();
  
-   }
+  }
+
+  createOrEditWaqf() {
+    debugger;
+    //this._editWaqfInputDto.requestId = this.requestId;
+    //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
+    this.InputEndowmentDto.deedNotes="";
+    this.InputEndowmentDto.endowmentDeedDateHijri="";
+    this.InputEndowmentDto.endowmentInitialDate="";
+    this.InputEndowmentDto.seerRules="";
+    this.InputEndowmentDto.endowmentDeedTypeName="";
+    this.InputEndowmentDto.endowmentDeedStatusName="";    
+    this.InputEndowmentDto.requestId=    "2106622f-f9fd-4bc3-874d-08db0a91fca1";  
+
+
+
+
+    
+    this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto)
+      .subscribe(
+      //   (res: ApiResponse) => {
+      //     this.onNewWaqfRegistered.emit(this.createWaqfInputDto.waqfTypeId.toString())
+      //     showSuccess(translations.operationSuccess, () => this.wizard.goToNextStep());
+      //   },
+      //   (err: ApiException) => handleServiceProxyError(err)
+      // );
+      (data) => {
+       
+ //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
+      
+         
+        showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
+         
+      }   
+    );
+  }
 
 
  

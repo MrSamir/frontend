@@ -55,29 +55,29 @@
   
         <div class="form-group col">
           <div class="d-flex">
-            <label class=" col  col-form-label">{{'Module1.awqafService.EndowmentRevenue'}}<span class="text-danger">*</span></label>
+            <label class=" col  col-form-label">{{'Module1.awqafService.EndowmentRevenue' | localize}}<span class="text-danger">*</span></label>
       
           </div>
-  <!-- pattern_number -->
-          <input type="number" class="form-control" #revenue="ngModel" name="revenue"
-                 placeholder="{{'Module1.awqafService.EndowmentRevenuePlaceHolder'}}"
-                 [pattern]="ePatternValidation.pattern_number" [(ngModel)]="InputEndowmentDto.endowmentRevenue" required>
+  <!-- pattern_number  [pattern]="ePatternValidation.pattern_number"-->
+          <input type="text" class="form-control" #revenue="ngModel" name="revenue"
+                 placeholder="{{'Module1.awqafService.EndowmentRevenuePlaceHolder' | localize}}"
+                 [(ngModel)]="InputEndowmentDto.endowmentRevenue" required>
           <div *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)" class="">
-            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationRequired'}}</p>
-            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationPattern'}}</p>
+            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationRequired' | localize}}</p>
+            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationPattern' | localize}}</p>
           </div>
         </div>
   
         <div class="form-group col-12 m-0 ">
-          <label class="col-form-label font-weight-bold" > {{'Module1.awqafService.EndowmentAcceptDonations'}}</label>
+          <label class="col-form-label font-weight-bold" > {{'Module1.awqafService.EndowmentAcceptDonations' | localize}}</label>
         </div>
         <div class="form-group col">
-            <label class="col-form-label" > {{'Module1.awqafService.EndowmentAcceptDonations'}}
+            <label class="col-form-label" > {{'Module1.awqafService.EndowmentAcceptDonations' | localize}}
             </label>
             <p-inputSwitch [(ngModel)]="InputEndowmentDto.acceptDonations" name="acceptDonations"></p-inputSwitch>
         </div>
         <div class="form-group col">
-            <label class="col-form-label" > {{'Module1.awqafService.EndowmentacceptGiveaways'}}
+            <label class="col-form-label" > {{'Module1.awqafService.EndowmentacceptGiveaways' | localize}}
             </label>
             <p-inputSwitch [(ngModel)]="InputEndowmentDto.acceptGiveaways" name="acceptGiveaways"></p-inputSwitch>
         </div>
@@ -118,13 +118,13 @@
         </div> -->
   
         <div class="form-group col-12">
-          <label class="col-form-label">  {{'Module1.awqafService.EndowmentCondation'}} </label>
+          <label class="col-form-label">  {{'Module1.awqafService.EndowmentCondation' | localize}} </label>
           <textarea [rows]="5" cols="10" class="form-control" #condition="ngModel" name="condition"
                     [(ngModel)]="InputEndowmentDto.endowmentConditions"
                     >
           </textarea>
           <div *ngIf="condition.invalid && (condition.dirty || condition.touched)" class="">
-            <p *ngIf="condition.errors" class="text-danger pt-1 small">    {{'Module1.awqafService.EndowmentCondationValidation'}}   </p>
+            <p *ngIf="condition.errors" class="text-danger pt-1 small">    {{'Module1.awqafService.EndowmentCondationValidation' | localize}}   </p>
           </div>
         </div>
         <!-- Section Title -->
@@ -132,19 +132,19 @@
         <div class="mt-4 col-12">
           <h3 class="text-awq-primary my-3">
             <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
-            معلومات الصك
+            {{'Module1.awqafService.EndowmentdeedInfo' | localize}} 
           </h3>
         </div>
   
         <div class="form-group col">
           <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedNumber'}}   
+            {{'Module1.awqafService.EndowmentdeedNumber' | localize}}   
             <span class="text-danger">*</span></label>
           <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="IsDeedDisabled"
                  [(ngModel)]="InputEndowmentDto.endowmentDeedNumber" [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required>
           <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
             <p *ngIf="deedNumber.errors" class="text-danger pt-1 small"> 
-              {{'Module1.awqafService.EndowmentdeedNumberValidation'}}  
+              {{'Module1.awqafService.EndowmentdeedNumberValidation' | localize}}  
             </p>
           </div>
         </div>
@@ -164,35 +164,35 @@
   
         <div class="form-group col">
           <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedRegion'}}   
+            {{'Module1.awqafService.EndowmentdeedRegion' | localize}}   
             <span class="text-danger">*</span></label>
           <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="IsDeedDisabled"
                   [(ngModel)]=InputEndowmentDto.endowmentDeedRegionId required
-                  (change)="onNewDeedRegionSelected(deedRegionId.value, true)">
+                  (change)="LoadCitiesByRegion(deedRegionId.value)">
             <option [value]="null" disabled selected></option>
-            <option *ngFor="let region of lookupService.regions" value={{region.value}}>
+            <option *ngFor="let region of RegioneLookup" value={{region.id}}>
               {{region.name}}</option>
           </select>
         </div>
   
         <div class="form-group col">
           <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedCity'}}   
+            {{'Module1.awqafService.EndowmentdeedCity' | localize}}   
             <span class="text-danger">*</span></label>
           <select class="custom-select" #deedCityId="ngModel" name="deedCityId" [(ngModel)]=InputEndowmentDto.endowmentDeedCityId [disabled]="IsDeedDisabled"
                   required>
-            <option *ngFor="let city of deedCitiesLookup" value={{city.value}}>
+            <option *ngFor="let city of CityLookup" value={{city.id}}>
               {{city.name}}</option>
           </select>
         </div>
   
         <div class="form-group col">
           <label class="col-form-label">
-            {{'Module1.awqafService.EndowmentdeedCourt'}}  
+            {{'Module1.awqafService.EndowmentdeedCourt' | localize}}  
             <span class="text-danger">*</span></label>
           <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId" [disabled]="IsDeedDisabled"
                   [(ngModel)]=InputEndowmentDto.issuanceCourtId required>
-            <option *ngFor="let issuanceCourtItem of lookupService.issuanceCourts" value={{issuanceCourtItem.value}}>
+            <option *ngFor="let issuanceCourtItem of IssuanceCourtsLookup" value={{issuanceCourtItem.id}}>
               {{issuanceCourtItem.name}}</option>
           </select>
         </div>
@@ -201,7 +201,7 @@
           <div class="d-flex">
             <label class="col col-form-label"> 
               
-              {{'Module1.awqafService.EndowmentdeedNumber'}}  
+              {{'Module1.awqafService.EndowmentdeedAttachement' | localize}}  
 
               <span class="text-danger">*</span></label>
         
@@ -227,10 +227,9 @@
   
     <div class="aw-btn">
       <div>
-        <!--      <button type="button" class="btn btn-outline-warning" [disabled]="navigationButtonsDisabled" (click)="onSaveDraftClicked()">حفظ ومتابعة لاحقا</button>-->
-        <button type="button" class="btn btn-outline-awq-secondary" [disabled]="navigationButtonsDisabled" (click)="onNextBtnClicked()">          {{'Module1.awqafService.ButtonNext'}}  </button>
+        <button type="button" class="btn btn-outline-awq-secondary" [disabled]="navigationButtonsDisabled" (click)="onNextBtnClicked()"> {{'Module1.awqafService.ButtonNext' | localize}}  </button>
       </div>
-      <button type="button" class="btn btn-outline-awq-secondary" [hidden]="!IsCreate" (click)="onBackBtnClicked()"> {{'Module1.awqafService.ButtonPreviouse'}}</button>
+      <button type="button" class="btn btn-outline-awq-secondary" [hidden]="!IsCreate" (click)="onBackBtnClicked()" awPreviousStep> {{'Module1.awqafService.ButtonPreviouse' | localize}}</button>
     </div>
   </form>
   
