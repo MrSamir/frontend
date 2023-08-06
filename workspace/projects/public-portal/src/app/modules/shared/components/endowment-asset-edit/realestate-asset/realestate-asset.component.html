@@ -3,7 +3,7 @@
       <label class="col-form-label">{{'Module1.awqafService.RealeStateAssetClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId" [(ngModel)]=assetInfoModel.realEstateAsset.assetSubTypeId
         [hidden]="viewOnly" required>
-        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.value}}>
+        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
           {{assetSubType.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"
@@ -18,7 +18,7 @@
       <select class="custom-select" #regionId="ngModel" name="regionId" [(ngModel)]=assetInfoModel.realEstateAsset.regionId
         [hidden]="viewOnly" required (change)="getcityLookup(regionId.value)">
         <option [value]="null"  selected></option>
-        <option *ngFor="let region of regionLookup" value={{region.value}}>
+        <option *ngFor="let region of regionLookup" value={{region.id}}>
           {{region.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"
@@ -33,7 +33,7 @@
       <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId" [(ngModel)]=assetInfoModel.realEstateAsset.cityId [hidden]="viewOnly"
         required>
         <option [value]="null"  selected></option>
-        <option *ngFor="let city of cityLookup" value={{city.value}}>
+        <option *ngFor="let city of cityLookup" value={{city.id}}>
           {{city.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"
@@ -45,8 +45,8 @@
     <div class="form-group col" >
       <div  *ngIf="!viewOnly" class="d-flex">
         <label class="col col-form-label">{{'Module1.awqafService.AssetEstimatedValueLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-        <hint  [hintContent]="estimatedValuehint?.hintContentAr"
-          [hintTitle]="estimatedValuehint?.hintTitleAr"></hint>
+        <!-- <hint  [hintContent]="estimatedValuehint?.hintContentAr"
+          [hintTitle]="estimatedValuehint?.hintTitleAr"></hint> -->
       </div>
       <label  [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetEstimatedValueLabel' | localize}}</label>
   
@@ -68,7 +68,7 @@
     <div class="form-group col-12" >
       <label class="col-form-label">{{'Module1.awqafService.RealeStateAssetLocation' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <div class="col-sm-12 px-0">
-        <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map>
+        <!-- <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map> -->
       </div>
   
     </div>
@@ -80,7 +80,7 @@
          <input type="hidden" #ownershipDeedAttachementId name="ownershipDeedAttachementId" [(ngModel)]=assetInfoModel.realEstateAsset.ownershipDeedAttachementId required   >
       <div class="input-group mb-3 download p-2">
         <div class="flex-grow-1" >
-          <file-uploader
+          <!-- <file-uploader
             [showDownloadButton]="true"
             [showDeleteButton]="!viewOnly"
             [allowedExtensions]="['.pdf' ]"
@@ -89,7 +89,7 @@
             [fileDisplayName]="' صك الملكية'"
             [serviceTypeId]="requestType.NewWaqf"
           >
-          </file-uploader>
+          </file-uploader> -->
         </div>
       </div>
     </div>

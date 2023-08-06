@@ -1,0 +1,39 @@
+
+
+
+/* :host ::ng-deep .p-fileupload .p-fileupload-buttonbar {
+  background: #028c6c !important;
+  color:white;
+  font-size: 20px;
+  font-weight: 600;
+} */
+/* :host ::ng-deep .p-fileupload .p-fileupload-content {
+    background: #028c6c !important;
+    color:white;
+    font-size: 20px;
+    font-weight: 600;
+} */
+:host ::ng-deep .p-fileupload-content 
+    .p-fileupload-row.ng-star-inserted img {
+    width: 120px;
+    height: 75px;
+}
+
+:host ::ng-deep .p-fileupload .p-fileupload-choose {
+    background-color: #007bff;
+    color: #fff;
+    border: 2px solid #007bff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Custom styles for the "Upload" button */
+  :host ::ng-deep .p-fileupload .p-fileupload-upload {
+    background-color: #28a745;
+    color: #fff;
+    border: 2px solid #28a745;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }

@@ -16,7 +16,7 @@
 
         <div class="aw-btn">
             <div>
-                <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
+                <button type="button" (click)="InitiateRequest()"  class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
 
             </div>
 
@@ -49,7 +49,8 @@
 
     <aw-wizard-step stepTitle="أصول الوقف" [navigationSymbol]="{ symbol: '3' }" stepId="2">
         <div class="aw-wrpper_content">
-            <app-endowment-assets-edit></app-endowment-assets-edit>
+            <!-- <app-endowment-assets-edit></app-endowment-assets-edit> -->
+            <app-endowment-shared-asset-edit></app-endowment-shared-asset-edit>
         </div>
 
 

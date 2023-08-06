@@ -632,6 +632,85 @@ export class FileLibraryApplicationServiceServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param entityName (optional) 
+     * @param contentType (optional) 
+     * @param fileName (optional) 
+     * @param fileData (optional) 
+     * @param fileExtraDatas (optional) 
+     * @return Success
+     */
+    uploadFileBytes(entityName: string | undefined, contentType: string | undefined, fileName: string | undefined, fileData: string | undefined, fileExtraDatas: FileExtraData[] | undefined): Observable<ApiResponseOfOutputFileDto> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/UploadFileBytes";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = new FormData();
+        if (entityName === null || entityName === undefined)
+            throw new Error("The parameter 'entityName' cannot be null.");
+        else
+            content_.append("entityName", entityName.toString());
+        if (contentType === null || contentType === undefined)
+            throw new Error("The parameter 'contentType' cannot be null.");
+        else
+            content_.append("contentType", contentType.toString());
+        if (fileName === null || fileName === undefined)
+            throw new Error("The parameter 'fileName' cannot be null.");
+        else
+            content_.append("fileName", fileName.toString());
+        if (fileData === null || fileData === undefined)
+            throw new Error("The parameter 'fileData' cannot be null.");
+        else
+            content_.append("fileData", fileData.toString());
+        if (fileExtraDatas === null || fileExtraDatas === undefined)
+            throw new Error("The parameter 'fileExtraDatas' cannot be null.");
+        else
+            fileExtraDatas.forEach(item_ => content_.append("fileExtraDatas", item_.toString()));
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processUploadFileBytes(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processUploadFileBytes(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputFileDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputFileDto>;
+        }));
+    }
+
+    protected processUploadFileBytes(response: HttpResponseBase): Observable<ApiResponseOfOutputFileDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputFileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -642,7 +721,7 @@ export class LookupApplicationServiceServiceProxy {
 
     constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "https://localhost:7071";
     }
 
     /**
@@ -1765,6 +1844,7 @@ export class InputAssetDto implements IInputAssetDto {
     particularBenefitAsset!: InputParticularBenefitAssetDto;
     realEstateAsset!: InputRealEstateAssetDto;
     waqfId!: string | undefined;
+    id!: string | undefined;
 
     constructor(data?: IInputAssetDto) {
         if (data) {
@@ -1790,6 +1870,7 @@ export class InputAssetDto implements IInputAssetDto {
             this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
             this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
             this.waqfId = _data["waqfId"];
+            this.id = _data["id"];
         }
     }
 
@@ -1815,6 +1896,7 @@ export class InputAssetDto implements IInputAssetDto {
         data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
         data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
         data["waqfId"] = this.waqfId;
+        data["id"] = this.id;
         return data;
     }
 }
@@ -1833,6 +1915,7 @@ export interface IInputAssetDto {
     particularBenefitAsset: InputParticularBenefitAssetDto;
     realEstateAsset: InputRealEstateAssetDto;
     waqfId: string | undefined;
+    id: string | undefined;
 }
 
 export class InputBusinessEntityAssetDto implements IInputBusinessEntityAssetDto {
@@ -2716,10 +2799,18 @@ export interface INotificationMessageDto {
 }
 
 export class OutputAssetDto implements IOutputAssetDto {
-    assetTypeId!: number;
-    assetSizeId!: number;
-    assetApproximatelyAmount!: number;
-    requestId!: string;
+    endowmentId!: string | undefined;
+    assetTypeId!: number | undefined;
+    assetSubTypeId!: number | undefined;
+    assetSizeId!: number | undefined;
+    assetApproximatelyAmount!: number | undefined;
+    assetSubTypeDescription!: string | undefined;
+    assetDescription!: string | undefined;
+    assetDeedNumber!: string | undefined;
+    assetIssuanceCourt!: string | undefined;
+    assetDeedDate!: DateTime | undefined;
+    assetDeedDateHijri!: string | undefined;
+    requestId!: string | undefined;
     animalOrAgriculturalAsset!: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset!: InputBusinessEntityAssetDto;
     fiscalAsset!: InputFiscalAssetDto;
@@ -2728,7 +2819,7 @@ export class OutputAssetDto implements IOutputAssetDto {
     monetaryAsset!: InputMonetaryAssetDto;
     particularBenefitAsset!: InputParticularBenefitAssetDto;
     realEstateAsset!: InputRealEstateAssetDto;
-    waqfId!: string | undefined;
+    id!: string | undefined;
 
     constructor(data?: IOutputAssetDto) {
         if (data) {
@@ -2741,9 +2832,17 @@ export class OutputAssetDto implements IOutputAssetDto {
 
     init(_data?: any) {
         if (_data) {
+            this.endowmentId = _data["endowmentId"];
             this.assetTypeId = _data["assetTypeId"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
             this.assetSizeId = _data["assetSizeId"];
             this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
+            this.assetSubTypeDescription = _data["assetSubTypeDescription"];
+            this.assetDescription = _data["assetDescription"];
+            this.assetDeedNumber = _data["assetDeedNumber"];
+            this.assetIssuanceCourt = _data["assetIssuanceCourt"];
+            this.assetDeedDate = _data["assetDeedDate"] ? DateTime.fromISO(_data["assetDeedDate"].toString()) : <any>undefined;
+            this.assetDeedDateHijri = _data["assetDeedDateHijri"];
             this.requestId = _data["requestId"];
             this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? InputAnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
             this.businessEntityAsset = _data["businessEntityAsset"] ? InputBusinessEntityAssetDto.fromJS(_data["businessEntityAsset"]) : <any>undefined;
@@ -2753,7 +2852,7 @@ export class OutputAssetDto implements IOutputAssetDto {
             this.monetaryAsset = _data["monetaryAsset"] ? InputMonetaryAssetDto.fromJS(_data["monetaryAsset"]) : <any>undefined;
             this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
             this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
-            this.waqfId = _data["waqfId"];
+            this.id = _data["id"];
         }
     }
 
@@ -2766,9 +2865,17 @@ export class OutputAssetDto implements IOutputAssetDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["endowmentId"] = this.endowmentId;
         data["assetTypeId"] = this.assetTypeId;
+        data["assetSubTypeId"] = this.assetSubTypeId;
         data["assetSizeId"] = this.assetSizeId;
         data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
+        data["assetSubTypeDescription"] = this.assetSubTypeDescription;
+        data["assetDescription"] = this.assetDescription;
+        data["assetDeedNumber"] = this.assetDeedNumber;
+        data["assetIssuanceCourt"] = this.assetIssuanceCourt;
+        data["assetDeedDate"] = this.assetDeedDate ? this.assetDeedDate.toString() : <any>undefined;
+        data["assetDeedDateHijri"] = this.assetDeedDateHijri;
         data["requestId"] = this.requestId;
         data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
         data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
@@ -2778,16 +2885,24 @@ export class OutputAssetDto implements IOutputAssetDto {
         data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
         data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
         data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
-        data["waqfId"] = this.waqfId;
+        data["id"] = this.id;
         return data;
     }
 }
 
 export interface IOutputAssetDto {
-    assetTypeId: number;
-    assetSizeId: number;
-    assetApproximatelyAmount: number;
-    requestId: string;
+    endowmentId: string | undefined;
+    assetTypeId: number | undefined;
+    assetSubTypeId: number | undefined;
+    assetSizeId: number | undefined;
+    assetApproximatelyAmount: number | undefined;
+    assetSubTypeDescription: string | undefined;
+    assetDescription: string | undefined;
+    assetDeedNumber: string | undefined;
+    assetIssuanceCourt: string | undefined;
+    assetDeedDate: DateTime | undefined;
+    assetDeedDateHijri: string | undefined;
+    requestId: string | undefined;
     animalOrAgriculturalAsset: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset: InputBusinessEntityAssetDto;
     fiscalAsset: InputFiscalAssetDto;
@@ -2796,7 +2911,7 @@ export interface IOutputAssetDto {
     monetaryAsset: InputMonetaryAssetDto;
     particularBenefitAsset: InputParticularBenefitAssetDto;
     realEstateAsset: InputRealEstateAssetDto;
-    waqfId: string | undefined;
+    id: string | undefined;
 }
 
 export class OutputFileDto implements IOutputFileDto {

@@ -2,8 +2,8 @@
     <div class="form-group col-12" >
       <div  *ngIf="!viewOnly" class="d-flex">
         <label class="col col-form-label">{{'Module1.awqafService.AssetMovableTypeLabel' | localize}}<span class="text-danger">*</span></label>
-        <hint  [hintContent]="movableTypehint?.hintContentAr"
-        [hintTitle]="movableTypehint?.hintTitleAr"></hint>
+        <!-- <hint  [hintContent]="movableTypehint?.hintContentAr"
+        [hintTitle]="movableTypehint?.hintTitleAr"></hint> -->
       </div>
        <label [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetMovableTypeLabel' | localize}}</label>
       <input type="text" class="form-control" [minLength]="1" [maxLength]="250"
@@ -36,8 +36,8 @@
     <div class="form-group col" >
       <div  *ngIf="!viewOnly" class="d-flex">
         <label class="col col-form-label"> {{'Module1.awqafService.AssetMovableOwnershipNumberLabel' | localize}}</label>
-        <hint  [hintContent]="movableAssetOwnershipNumberhint?.hintContentAr"
-          [hintTitle]="movableAssetOwnershipNumberhint?.hintTitleAr"></hint>
+        <!-- <hint  [hintContent]="movableAssetOwnershipNumberhint?.hintContentAr"
+          [hintTitle]="movableAssetOwnershipNumberhint?.hintTitleAr"></hint> -->
       </div>
       <label  [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetMovableOwnershipNumberLabel' | localize}} </label>
   
@@ -58,8 +58,8 @@
     <div class="form-group col" >
       <div  *ngIf="!viewOnly" class="d-flex">
         <label class="col col-form-label"> {{'Module1.awqafService.AssetMovableValueLabel' | localize}}   </label>
-        <hint  [hintContent]="movableValuehint?.hintContentAr"
-          [hintTitle]="movableValuehint?.hintTitleAr"></hint>
+        <!-- <hint  [hintContent]="movableValuehint?.hintContentAr"
+          [hintTitle]="movableValuehint?.hintTitleAr"></hint> -->
       </div>
       <label  [hidden]="!viewOnly" class="col-form-label">{{'Module1.awqafService.AssetMovableValueLabel' | localize}}</label>
   

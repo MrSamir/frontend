@@ -4,7 +4,7 @@
       <select class="custom-select" #regionId="ngModel" name="regionId" [(ngModel)]=assetInfoModel.animalOrAgriculturalAsset.regionId
         [hidden]="viewOnly" required (change)="getcityLookup(regionId.value)">
         <option [value]="null"  selected></option>
-        <option *ngFor="let region of regionLookup" value={{region.value}}>
+        <option *ngFor="let region of regionLookup" value={{region.id}}>
           {{region.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"
@@ -19,7 +19,7 @@
       <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId" [(ngModel)]=assetInfoModel.animalOrAgriculturalAsset.cityId [hidden]="viewOnly"
         required>
         <option [value]="null"  selected></option>
-        <option *ngFor="let city of cityLookup" value={{city.value}}>
+        <option *ngFor="let city of cityLookup" value={{city.id}}>
           {{city.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"

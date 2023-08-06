@@ -3,7 +3,7 @@
       <label class="col-form-label">{{'Module1.awqafService.AssetFiscalClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
       <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId" [(ngModel)]=assetInfoModel.fiscalAsset.assetSubTypeId (change)="subTypeChanged()"
         [hidden]="viewOnly" required>
-        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.value}}>
+        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
           {{assetSubType.name}}</option>
       </select>
       <label class="col-form-label font-weight-bold"
@@ -71,7 +71,7 @@
          <input type="hidden" #fiscalAssetAttachementId name="fiscalassetSelectedDocument" [(ngModel)]=assetInfoModel.fiscalAsset.fiscalAssetAttachementId required   >
       <div class="input-group mb-3 download p-2">
         <div class="flex-grow-1" >
-          <file-uploader
+          <!-- <file-uploader
             [showDownloadButton]="true"
             [showDeleteButton]="!viewOnly"
             [allowedExtensions]="['.pdf' ]"
@@ -80,7 +80,7 @@
             [fileDisplayName]="assetAttachementLable"
             [serviceTypeId]="requestType.NewWaqf"
           >
-          </file-uploader>
+          </file-uploader> -->
         </div>
       </div>
     </div>

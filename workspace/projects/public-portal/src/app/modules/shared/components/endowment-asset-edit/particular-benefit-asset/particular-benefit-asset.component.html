@@ -2,8 +2,7 @@
     <div class="form-group col-12" >
       <div  *ngIf="!viewOnly" class="d-flex">
         <label class="col col-form-label">{{'Module1.awqafService.AssetBenefitTypeLabel' | localize}}<span class="text-danger">*</span></label>
-        <hint  [hintContent]="Typehint?.hintContentAr"
-        [hintTitle]="Typehint?.hintTitleAr"></hint>
+        <!-- <hint  [hintContent]="Typehint?.hintContentAr" [hintTitle]="Typehint?.hintTitleAr"></hint> -->
       </div>
        <!-- <label [hidden]="!viewOnly" class="col-form-label">نوع المنقول</label> -->
       <input type="text" class="form-control" [minLength]="1" [maxLength]="250" [hidden]="viewOnly" #benefitType="ngModel"

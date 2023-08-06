@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-center my-6" *ngIf="!this.Assets || this.Assets?.length === 0">
   <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)"
     *ngIf="!viewOnly">
-    <svg-icon styleClass="fa-3x mr-3 mb-2 " icon="add-icon"></svg-icon>
+    <!-- <svg-icon styleClass="fa-3x mr-3 mb-2 " icon="add-icon"></svg-icon> -->
     <!-- <span>يجب إضافة أصل واحد على الأقل</span> -->
     <span>{{'Module1.awqafService.AssetAdditionConditionLabel' | localize}}</span>
   </a>
@@ -36,19 +36,19 @@
             <td class="text-center" scope="col" *ngIf="viewOnly">
               <button class="btn btn-sm btn-outline-awq-secondary rounded"
                 (click)="onViewTableCellClicked(addData, foundAsset.id, i)" [hidden]="!viewOnly">
-                <svg-icon icon="eye"></svg-icon>
+                <!-- <svg-icon icon="eye"></svg-icon> -->
               </button>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
               <button class="btn btn-sm btn-outline-awq-secondary rounded"
                 (click)="onEditTableCellClicked(addData, foundAsset.id, i)" *ngIf="!viewOnly">
-                <svg-icon icon="pencil"></svg-icon>
+                <!-- <svg-icon icon="pencil"></svg-icon> -->
               </button>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
               <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(foundAsset, i)"
                 *ngIf="!viewOnly">
-                <svg-icon icon="trash-alt"></svg-icon>
+                <!-- <svg-icon icon="trash-alt"></svg-icon> -->
               </button>
             </td>
           </tr>
@@ -60,7 +60,7 @@
   <div class="d-flex justify-content-end my-6">
     <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
       (click)="onAddNewAssetClicked(addData)" *ngIf="!viewOnly">
-      <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon>
+      <!-- <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon> -->
       <!-- <span>إضافة أصل آخر</span> -->
       <span>{{'Module1.awqafService.AddNewAssetLabel' | localize}}</span>
 
@@ -83,11 +83,12 @@
           <label class="col-form-label block">{{'Module1.awqafService.AssetTypeLabel' | localize}}<span class="text-danger">*</span></label>
           <select class="custom-select" [hidden]="viewOnly" #assetTypeId="ngModel" [disabled]="this.isEditRequested"
             (change)="changeAssetType()" name="assetTypeId" [(ngModel)]=newAsset.assetTypeId required>
-            <option [value]="null" selected></option>
-            <option *ngFor="let assetType of AssetTypeLookup" value={{assetType.value}}>{{assetType.name}}</option></select>
+            <!-- <option [value]="null" selected></option> -->
+            <option *ngFor="let assetType of AssetTypeLookup" value={{assetType.id}}> {{assetType.name}} </option>
+          </select>
 
-          <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetTypeId,AssetTypeLookup)}} </label>
+          <!-- <label class="col-form-label font-weight-bold"
+            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetTypeId,AssetTypeLookup)}} </label> -->
 
           <div *ngIf="assetTypeId.invalid && (assetTypeId.dirty || assetTypeId.touched)" class="">
             <!-- <p *ngIf="assetTypeId.errors" class="text-danger pt-1 small">نوع الأصل مطلوب</p> -->
@@ -101,45 +102,50 @@
         </div> -->
 
       </div>
-      <app-business-entity-asset #businessEntityAsset *ngIf="newAsset?.assetTypeId==1" [viewOnly]="viewOnly" 
-        [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]="newAsset.businessEntityAsset"
-        [assetInfoModel]="newAsset">
-      </app-business-entity-asset>
-      <app-realestate-asset #realEstateAsset *ngIf="newAsset?.assetTypeId==2" [viewOnly]="viewOnly"
+
+      <app-shared-business-entity-asset  #businessEntityAsset *ngIf="newAsset?.assetTypeId==1" [viewOnly]="viewOnly" 
+      [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]="newAsset.businessEntityAsset"
+      [assetInfoModel]="newAsset">
+
+      </app-shared-business-entity-asset>
+      <app-shared-realestate-asset #realEstateAsset *ngIf="newAsset?.assetTypeId==2" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]="newAsset.realEstateAsset"
-        [assetInfoModel]="newAsset"></app-realestate-asset>
-      <app-fiscal-asset #fiscalAsset *ngIf="newAsset?.assetTypeId==3" [viewOnly]="viewOnly"
+        [assetInfoModel]="newAsset"></app-shared-realestate-asset>
+      <app-shared-fiscal-asset #fiscalAsset *ngIf="newAsset?.assetTypeId==3" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.fiscalAsset
-        [assetInfoModel]="newAsset"></app-fiscal-asset>
-      <app-movable-asset #movableAsset *ngIf="newAsset?.assetTypeId==4" [viewOnly]="viewOnly"
+        [assetInfoModel]="newAsset"></app-shared-fiscal-asset>
+      <app-shared-movable-asset #movableAsset *ngIf="newAsset?.assetTypeId==4" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.movableAsset
-        [assetInfoModel]="newAsset"></app-movable-asset>
-      <app-monetary-asset #monetaryAsset *ngIf="newAsset?.assetTypeId==5" [assetSubTypes]="assetSubTypes" [viewOnly]="viewOnly"
+        [assetInfoModel]="newAsset"></app-shared-movable-asset>
+      <app-shared-monetary-asset #monetaryAsset *ngIf="newAsset?.assetTypeId==5" [assetSubTypes]="assetSubTypes" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.monetaryAsset
-        [assetInfoModel]="newAsset"></app-monetary-asset>
-      <app-animal-or-agricultural-asset #animalOrAgriculturalAsset *ngIf="newAsset?.assetTypeId==6"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.animalOrAgriculturalAsset
-        [assetInfoModel]="newAsset"></app-animal-or-agricultural-asset>
-      <app-particular-benefit-asset #particularBenefitAsset *ngIf="newAsset?.assetTypeId==7" [viewOnly]="viewOnly"
+        [assetInfoModel]="newAsset"></app-shared-monetary-asset>
+    
+    <app-shared-animal-or-agricultural-asset  #animalOrAgriculturalAsset *ngIf="newAsset?.assetTypeId==6"
+    [viewOnly]="viewOnly" [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.animalOrAgriculturalAsset
+    [assetInfoModel]="newAsset"></app-shared-animal-or-agricultural-asset>
+    
+       
+      <app-shared-particular-benefit-asset #particularBenefitAsset *ngIf="newAsset?.assetTypeId==7" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset?.assetTypeId" [(ngModel)]=newAsset.particularBenefitAsset
-        [assetInfoModel]="newAsset"></app-particular-benefit-asset>
-      <app-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset
+        [assetInfoModel]="newAsset"></app-shared-particular-benefit-asset>
+      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset
         *ngIf="newAsset?.assetTypeId==8" [viewOnly]="viewOnly" [AssetTypeId]="newAsset?.assetTypeId"
         [(ngModel)]=newAsset.intellectualPropertyAndTrademarkAsset
-        [assetInfoModel]="newAsset"></app-intellectual-property-and-trademark-asset>
+        [assetInfoModel]="newAsset"></app-shared-intellectual-property-and-trademark-asset>
     </div>
     <ng-container *ngIf="!isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-awq-secondary px-6"
-          [disabled]="assetForm.form?.invalid|| navigationButtonsDisabled" (click)="onAddBtnClicked()">
-          {{'Module1.awqafService.AddASubssetBtnLabel' | localize}}
-          <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon></button>
+          [disabled]="assetForm.form?.invalid" (click)="onAddBtnClicked()">
+          {{'Module1.awqafService.AddASubssetBtnLabel' | localize}}</button>
+          <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
       </div>
     </ng-container>
     <ng-container *ngIf="isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-warning px-6"
-          [disabled]="assetForm.form?.invalid|| navigationButtonsDisabled" (click)="onEditBtnClicked()">
+          [disabled]="assetForm.form?.invalid" (click)="onEditBtnClicked()">
           {{'Module1.awqafService.EditSubAssetBtnLabel' | localize}}
         </button>
         <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditAssetValid()"
