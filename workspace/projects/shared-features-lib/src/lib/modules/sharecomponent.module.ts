@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 
- 
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
@@ -18,20 +18,21 @@ import { TableModule } from 'primeng/table';
 import { FileUploaderComponent } from '../components/file-uploader/file-uploader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
- 
+import {PublicUserProfileComponent} from "../components/public-user-profile/public-user-profile.component";
+
 
 
 
 @NgModule({
   declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,FileUploaderComponent,
-    IDNumberWithValidationComponent],
+    IDNumberWithValidationComponent, PublicUserProfileComponent],
   imports: [
-    
+
     BreadcrumbModule,
     FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule,CommonModule,TableModule
   ],
   exports:[
-    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent
+    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent, PublicUserProfileComponent
   ],
 
   providers: [
@@ -39,6 +40,6 @@ import { CommonModule } from '@angular/common';
 		// { provide: NgbDatepickerI18n, useClass: IslamicI18n },
      DateFormatterService
   ],
-  
+
 })
 export class SharecomponentModule { }

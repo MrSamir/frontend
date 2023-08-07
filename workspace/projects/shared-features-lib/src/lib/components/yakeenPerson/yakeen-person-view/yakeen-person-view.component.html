@@ -1,32 +1,32 @@
-<div *ngIf="(citizen || alien) && person" class="yakeen-view">
-  <div class="row row-cols-1 row-cols-md-2">
-    <div class="form-group col">
-      <label class="col-form-label">نوع الهوية</label>
-      <label class="col-form-label font-weight-bold">{{selectedTypeName}}</label>
-    </div>
+<!--<div *ngIf="(citizen || alien) && person" class="yakeen-view">-->
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">نوع الهوية</label>-->
+<!--      <label class="col-form-label font-weight-bold">{{selectedTypeName}}</label>-->
+<!--    </div>-->
 
-    <div class="form-group col">
-      <label class="col-form-label">{{selectedTypeName}}</label>
-      <label class="col-form-label font-weight-bold">{{person.idNumber}}</label>
-    </div>
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{selectedTypeName}}</label>-->
+<!--      <label class="col-form-label font-weight-bold">{{person.idNumber}}</label>-->
+<!--    </div>-->
 
-    <div class="form-group col">
-      <label class="col-form-label">{{dateLabel}}</label>
-      <label class="col-form-label font-weight-bold">{{birthDate}}</label>
-    </div>
-  </div>
-  <yakeen-citizen-view  *ngIf="isCitizen" [citizenInfoResponse]="citizen"></yakeen-citizen-view>
-  <yakeen-alien-view *ngIf="!isCitizen" [alienInfo]="alien"></yakeen-alien-view>
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{dateLabel}}</label>-->
+<!--      <label class="col-form-label font-weight-bold">{{birthDate}}</label>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <yakeen-citizen-view  *ngIf="isCitizen" [citizenInfoResponse]="citizen"></yakeen-citizen-view>-->
+<!--  <yakeen-alien-view *ngIf="!isCitizen" [alienInfo]="alien"></yakeen-alien-view>-->
 
-  <div class="row row-cols-1 row-cols-md-2">
-    <div class="form-group col">
-      <label class="col-form-label">{{translations.mobileNumber}}</label>
-      <label class="col-form-label">{{person.mobileNumber}}</label>
-    </div>
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.mobileNumber}}</label>-->
+<!--      <label class="col-form-label">{{person.mobileNumber}}</label>-->
+<!--    </div>-->
 
-    <div class="form-group col">
-      <label class="col-form-label">{{translations.email}}</label>
-      <label class="col-form-label">{{person.email}}</label>
-    </div>
-  </div>
-</div>
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.email}}</label>-->
+<!--      <label class="col-form-label">{{person.email}}</label>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
