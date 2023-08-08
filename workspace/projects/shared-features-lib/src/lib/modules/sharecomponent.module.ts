@@ -19,27 +19,26 @@ import { FileUploaderComponent } from '../components/file-uploader/file-uploader
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import {PublicUserProfileComponent} from "../components/public-user-profile/public-user-profile.component";
+import { CoreLibModule } from "../../../../core-lib/src/lib/core-lib.module";
 
 
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,FileUploaderComponent,
-    IDNumberWithValidationComponent, PublicUserProfileComponent],
-  imports: [
-
-    BreadcrumbModule,
-    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule,CommonModule,TableModule
-  ],
-  exports:[
-    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent, PublicUserProfileComponent
-  ],
-
-  providers: [
-    // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
-		// { provide: NgbDatepickerI18n, useClass: IslamicI18n },
-     DateFormatterService
-  ],
-
+    declarations: [BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, HijriDatepickerComponent, FileUploaderComponent,
+        IDNumberWithValidationComponent, PublicUserProfileComponent],
+    exports: [
+        BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, IDNumberWithValidationComponent, FileUploaderComponent, PublicUserProfileComponent
+    ],
+    providers: [
+        // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
+        // { provide: NgbDatepickerI18n, useClass: IslamicI18n },
+        DateFormatterService
+    ],
+    imports: [
+        BreadcrumbModule,
+        FormsModule, NgbDatepickerModule, ReactiveFormsModule, FileUploadModule, ToastModule, CommonModule, TableModule,
+        CoreLibModule
+    ]
 })
 export class SharecomponentModule { }

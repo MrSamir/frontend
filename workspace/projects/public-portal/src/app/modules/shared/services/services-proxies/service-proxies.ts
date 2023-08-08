@@ -2363,13 +2363,10 @@ export interface IInputAnimalOrAgriculturalAssetDto {
 }
 
 export class InputApplicantDto implements IInputApplicantDto {
-    fullName!: string | undefined;
-    birthDate!: DateTime;
+    birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
     gender!: UserGender;
     idTypeId!: number | undefined;
-    regionId!: number | undefined;
-    cityId!: number | undefined;
     firstNameEn!: string | undefined;
     thirdNameEn!: string | undefined;
     secondNameEn!: string | undefined;
@@ -2378,17 +2375,6 @@ export class InputApplicantDto implements IInputApplicantDto {
     secondNameAr!: string | undefined;
     thirdNameAr!: string | undefined;
     lastNameAr!: string | undefined;
-    idExpiryDate!: string | undefined;
-    idIssueDate!: string | undefined;
-    idIssuePlace!: string | undefined;
-    placeOfBirth!: string | undefined;
-    iqamaExpiryDateGregorian!: DateTime | undefined;
-    iqamaIssueDateGregorian!: DateTime | undefined;
-    iqamaIssuePlaceCode!: string | undefined;
-    placeOfBirthCode!: string | undefined;
-    nationalityId!: number | undefined;
-    noIdentityReason!: number | undefined;
-    validatedByYaqeen!: boolean | undefined;
     isAlive!: boolean | undefined;
 
     constructor(data?: IInputApplicantDto) {
@@ -2402,13 +2388,10 @@ export class InputApplicantDto implements IInputApplicantDto {
 
     init(_data?: any) {
         if (_data) {
-            this.fullName = _data["fullName"];
             this.birthDate = _data["birthDate"] ? DateTime.fromISO(_data["birthDate"].toString()) : <any>undefined;
             this.birthDateHijri = _data["birthDateHijri"];
             this.gender = _data["gender"];
             this.idTypeId = _data["idTypeId"];
-            this.regionId = _data["regionId"];
-            this.cityId = _data["cityId"];
             this.firstNameEn = _data["firstNameEn"];
             this.thirdNameEn = _data["thirdNameEn"];
             this.secondNameEn = _data["secondNameEn"];
@@ -2417,17 +2400,6 @@ export class InputApplicantDto implements IInputApplicantDto {
             this.secondNameAr = _data["secondNameAr"];
             this.thirdNameAr = _data["thirdNameAr"];
             this.lastNameAr = _data["lastNameAr"];
-            this.idExpiryDate = _data["idExpiryDate"];
-            this.idIssueDate = _data["idIssueDate"];
-            this.idIssuePlace = _data["idIssuePlace"];
-            this.placeOfBirth = _data["placeOfBirth"];
-            this.iqamaExpiryDateGregorian = _data["iqamaExpiryDateGregorian"] ? DateTime.fromISO(_data["iqamaExpiryDateGregorian"].toString()) : <any>undefined;
-            this.iqamaIssueDateGregorian = _data["iqamaIssueDateGregorian"] ? DateTime.fromISO(_data["iqamaIssueDateGregorian"].toString()) : <any>undefined;
-            this.iqamaIssuePlaceCode = _data["iqamaIssuePlaceCode"];
-            this.placeOfBirthCode = _data["placeOfBirthCode"];
-            this.nationalityId = _data["nationalityId"];
-            this.noIdentityReason = _data["noIdentityReason"];
-            this.validatedByYaqeen = _data["validatedByYaqeen"];
             this.isAlive = _data["isAlive"];
         }
     }
@@ -2441,13 +2413,10 @@ export class InputApplicantDto implements IInputApplicantDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["fullName"] = this.fullName;
         data["birthDate"] = this.birthDate ? this.birthDate.toString() : <any>undefined;
         data["birthDateHijri"] = this.birthDateHijri;
         data["gender"] = this.gender;
         data["idTypeId"] = this.idTypeId;
-        data["regionId"] = this.regionId;
-        data["cityId"] = this.cityId;
         data["firstNameEn"] = this.firstNameEn;
         data["thirdNameEn"] = this.thirdNameEn;
         data["secondNameEn"] = this.secondNameEn;
@@ -2456,30 +2425,16 @@ export class InputApplicantDto implements IInputApplicantDto {
         data["secondNameAr"] = this.secondNameAr;
         data["thirdNameAr"] = this.thirdNameAr;
         data["lastNameAr"] = this.lastNameAr;
-        data["idExpiryDate"] = this.idExpiryDate;
-        data["idIssueDate"] = this.idIssueDate;
-        data["idIssuePlace"] = this.idIssuePlace;
-        data["placeOfBirth"] = this.placeOfBirth;
-        data["iqamaExpiryDateGregorian"] = this.iqamaExpiryDateGregorian ? this.iqamaExpiryDateGregorian.toString() : <any>undefined;
-        data["iqamaIssueDateGregorian"] = this.iqamaIssueDateGregorian ? this.iqamaIssueDateGregorian.toString() : <any>undefined;
-        data["iqamaIssuePlaceCode"] = this.iqamaIssuePlaceCode;
-        data["placeOfBirthCode"] = this.placeOfBirthCode;
-        data["nationalityId"] = this.nationalityId;
-        data["noIdentityReason"] = this.noIdentityReason;
-        data["validatedByYaqeen"] = this.validatedByYaqeen;
         data["isAlive"] = this.isAlive;
         return data;
     }
 }
 
 export interface IInputApplicantDto {
-    fullName: string | undefined;
-    birthDate: DateTime;
+    birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
     gender: UserGender;
     idTypeId: number | undefined;
-    regionId: number | undefined;
-    cityId: number | undefined;
     firstNameEn: string | undefined;
     thirdNameEn: string | undefined;
     secondNameEn: string | undefined;
@@ -2488,17 +2443,6 @@ export interface IInputApplicantDto {
     secondNameAr: string | undefined;
     thirdNameAr: string | undefined;
     lastNameAr: string | undefined;
-    idExpiryDate: string | undefined;
-    idIssueDate: string | undefined;
-    idIssuePlace: string | undefined;
-    placeOfBirth: string | undefined;
-    iqamaExpiryDateGregorian: DateTime | undefined;
-    iqamaIssueDateGregorian: DateTime | undefined;
-    iqamaIssuePlaceCode: string | undefined;
-    placeOfBirthCode: string | undefined;
-    nationalityId: number | undefined;
-    noIdentityReason: number | undefined;
-    validatedByYaqeen: boolean | undefined;
     isAlive: boolean | undefined;
 }
 
@@ -2516,6 +2460,7 @@ export class InputAssetDto implements IInputAssetDto {
     particularBenefitAsset!: InputParticularBenefitAssetDto;
     realEstateAsset!: InputRealEstateAssetDto;
     waqfId!: string | undefined;
+    id!: string | undefined;
 
     constructor(data?: IInputAssetDto) {
         if (data) {
@@ -2541,6 +2486,7 @@ export class InputAssetDto implements IInputAssetDto {
             this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
             this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
             this.waqfId = _data["waqfId"];
+            this.id = _data["id"];
         }
     }
 
@@ -2566,6 +2512,7 @@ export class InputAssetDto implements IInputAssetDto {
         data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
         data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
         data["waqfId"] = this.waqfId;
+        data["id"] = this.id;
         return data;
     }
 }
@@ -2584,6 +2531,7 @@ export interface IInputAssetDto {
     particularBenefitAsset: InputParticularBenefitAssetDto;
     realEstateAsset: InputRealEstateAssetDto;
     waqfId: string | undefined;
+    id: string | undefined;
 }
 
 export class InputBusinessEntityAssetDto implements IInputBusinessEntityAssetDto {
@@ -3670,6 +3618,8 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     idTypeId!: number | undefined;
     regionId!: number | undefined;
     cityId!: number | undefined;
+    fullName!: string | undefined;
+    userName!: string | undefined;
     firstNameEn!: string | undefined;
     thirdNameEn!: string | undefined;
     secondNameEn!: string | undefined;
@@ -3690,6 +3640,11 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     noIdentityReason!: number | undefined;
     validatedByYaqeen!: boolean | undefined;
     isAlive!: boolean | undefined;
+    type!: string | undefined;
+    email!: string | undefined;
+    emailConfirmed!: boolean | undefined;
+    phoneNumber!: string | undefined;
+    phoneNumberConfirmed!: boolean | undefined;
 
     constructor(data?: IOutputApplicationUserDto) {
         if (data) {
@@ -3709,6 +3664,8 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
             this.idTypeId = _data["idTypeId"];
             this.regionId = _data["regionId"];
             this.cityId = _data["cityId"];
+            this.fullName = _data["fullName"];
+            this.userName = _data["userName"];
             this.firstNameEn = _data["firstNameEn"];
             this.thirdNameEn = _data["thirdNameEn"];
             this.secondNameEn = _data["secondNameEn"];
@@ -3729,6 +3686,11 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
             this.noIdentityReason = _data["noIdentityReason"];
             this.validatedByYaqeen = _data["validatedByYaqeen"];
             this.isAlive = _data["isAlive"];
+            this.type = _data["type"];
+            this.email = _data["email"];
+            this.emailConfirmed = _data["emailConfirmed"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.phoneNumberConfirmed = _data["phoneNumberConfirmed"];
         }
     }
 
@@ -3748,6 +3710,8 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
         data["idTypeId"] = this.idTypeId;
         data["regionId"] = this.regionId;
         data["cityId"] = this.cityId;
+        data["fullName"] = this.fullName;
+        data["userName"] = this.userName;
         data["firstNameEn"] = this.firstNameEn;
         data["thirdNameEn"] = this.thirdNameEn;
         data["secondNameEn"] = this.secondNameEn;
@@ -3768,6 +3732,11 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
         data["noIdentityReason"] = this.noIdentityReason;
         data["validatedByYaqeen"] = this.validatedByYaqeen;
         data["isAlive"] = this.isAlive;
+        data["type"] = this.type;
+        data["email"] = this.email;
+        data["emailConfirmed"] = this.emailConfirmed;
+        data["phoneNumber"] = this.phoneNumber;
+        data["phoneNumberConfirmed"] = this.phoneNumberConfirmed;
         return data;
     }
 }
@@ -3780,6 +3749,8 @@ export interface IOutputApplicationUserDto {
     idTypeId: number | undefined;
     regionId: number | undefined;
     cityId: number | undefined;
+    fullName: string | undefined;
+    userName: string | undefined;
     firstNameEn: string | undefined;
     thirdNameEn: string | undefined;
     secondNameEn: string | undefined;
@@ -3800,13 +3771,26 @@ export interface IOutputApplicationUserDto {
     noIdentityReason: number | undefined;
     validatedByYaqeen: boolean | undefined;
     isAlive: boolean | undefined;
+    type: string | undefined;
+    email: string | undefined;
+    emailConfirmed: boolean | undefined;
+    phoneNumber: string | undefined;
+    phoneNumberConfirmed: boolean | undefined;
 }
 
 export class OutputAssetDto implements IOutputAssetDto {
-    assetTypeId!: number;
-    assetSizeId!: number;
-    assetApproximatelyAmount!: number;
-    requestId!: string;
+    endowmentId!: string | undefined;
+    assetTypeId!: number | undefined;
+    assetSubTypeId!: number | undefined;
+    assetSizeId!: number | undefined;
+    assetApproximatelyAmount!: number | undefined;
+    assetSubTypeDescription!: string | undefined;
+    assetDescription!: string | undefined;
+    assetDeedNumber!: string | undefined;
+    assetIssuanceCourt!: string | undefined;
+    assetDeedDate!: DateTime | undefined;
+    assetDeedDateHijri!: string | undefined;
+    requestId!: string | undefined;
     animalOrAgriculturalAsset!: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset!: InputBusinessEntityAssetDto;
     fiscalAsset!: InputFiscalAssetDto;
@@ -3815,7 +3799,7 @@ export class OutputAssetDto implements IOutputAssetDto {
     monetaryAsset!: InputMonetaryAssetDto;
     particularBenefitAsset!: InputParticularBenefitAssetDto;
     realEstateAsset!: InputRealEstateAssetDto;
-    waqfId!: string | undefined;
+    id!: string | undefined;
 
     constructor(data?: IOutputAssetDto) {
         if (data) {
@@ -3828,9 +3812,17 @@ export class OutputAssetDto implements IOutputAssetDto {
 
     init(_data?: any) {
         if (_data) {
+            this.endowmentId = _data["endowmentId"];
             this.assetTypeId = _data["assetTypeId"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
             this.assetSizeId = _data["assetSizeId"];
             this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
+            this.assetSubTypeDescription = _data["assetSubTypeDescription"];
+            this.assetDescription = _data["assetDescription"];
+            this.assetDeedNumber = _data["assetDeedNumber"];
+            this.assetIssuanceCourt = _data["assetIssuanceCourt"];
+            this.assetDeedDate = _data["assetDeedDate"] ? DateTime.fromISO(_data["assetDeedDate"].toString()) : <any>undefined;
+            this.assetDeedDateHijri = _data["assetDeedDateHijri"];
             this.requestId = _data["requestId"];
             this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? InputAnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
             this.businessEntityAsset = _data["businessEntityAsset"] ? InputBusinessEntityAssetDto.fromJS(_data["businessEntityAsset"]) : <any>undefined;
@@ -3840,7 +3832,7 @@ export class OutputAssetDto implements IOutputAssetDto {
             this.monetaryAsset = _data["monetaryAsset"] ? InputMonetaryAssetDto.fromJS(_data["monetaryAsset"]) : <any>undefined;
             this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
             this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
-            this.waqfId = _data["waqfId"];
+            this.id = _data["id"];
         }
     }
 
@@ -3853,9 +3845,17 @@ export class OutputAssetDto implements IOutputAssetDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["endowmentId"] = this.endowmentId;
         data["assetTypeId"] = this.assetTypeId;
+        data["assetSubTypeId"] = this.assetSubTypeId;
         data["assetSizeId"] = this.assetSizeId;
         data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
+        data["assetSubTypeDescription"] = this.assetSubTypeDescription;
+        data["assetDescription"] = this.assetDescription;
+        data["assetDeedNumber"] = this.assetDeedNumber;
+        data["assetIssuanceCourt"] = this.assetIssuanceCourt;
+        data["assetDeedDate"] = this.assetDeedDate ? this.assetDeedDate.toString() : <any>undefined;
+        data["assetDeedDateHijri"] = this.assetDeedDateHijri;
         data["requestId"] = this.requestId;
         data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
         data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
@@ -3865,16 +3865,24 @@ export class OutputAssetDto implements IOutputAssetDto {
         data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
         data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
         data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
-        data["waqfId"] = this.waqfId;
+        data["id"] = this.id;
         return data;
     }
 }
 
 export interface IOutputAssetDto {
-    assetTypeId: number;
-    assetSizeId: number;
-    assetApproximatelyAmount: number;
-    requestId: string;
+    endowmentId: string | undefined;
+    assetTypeId: number | undefined;
+    assetSubTypeId: number | undefined;
+    assetSizeId: number | undefined;
+    assetApproximatelyAmount: number | undefined;
+    assetSubTypeDescription: string | undefined;
+    assetDescription: string | undefined;
+    assetDeedNumber: string | undefined;
+    assetIssuanceCourt: string | undefined;
+    assetDeedDate: DateTime | undefined;
+    assetDeedDateHijri: string | undefined;
+    requestId: string | undefined;
     animalOrAgriculturalAsset: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset: InputBusinessEntityAssetDto;
     fiscalAsset: InputFiscalAssetDto;
@@ -3883,7 +3891,7 @@ export interface IOutputAssetDto {
     monetaryAsset: InputMonetaryAssetDto;
     particularBenefitAsset: InputParticularBenefitAssetDto;
     realEstateAsset: InputRealEstateAssetDto;
-    waqfId: string | undefined;
+    id: string | undefined;
 }
 
 export class OutputFileDto implements IOutputFileDto {

@@ -2,12 +2,13 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
   ApplicationUserServiceServiceProxy, InputLookUpDto,
-  LookupApplicationServiceServiceProxy, LookupExtraData, OutputApplicationUserDto
+  LookupApplicationServiceServiceProxy, LookupExtraData, OutputApplicationUserDto, UpdateUserCityRegionInputDto
 } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
+import { take } from 'rxjs';
 // import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 // import {AwqafValidators} from "@app/_shared/validators/AwqafValidators";
 // import {
@@ -42,9 +43,7 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 export class PublicUserProfileComponent implements OnInit {
 
   @Input() viewOnly: boolean = false;
-  // ePatternValidation: typeof EnumValidation = EnumValidation;
-  //
-  ePatternValidation = EnumValidation;
+  ePatternValidation: typeof EnumValidation = EnumValidation;
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   NationalityLookup:any=[];
   RegioneLookup:any=[];
@@ -56,54 +55,45 @@ export class PublicUserProfileComponent implements OnInit {
   //currentUserProfile: any;
   //
   // // confirm mobile vars
-  // confirmPhoneNumberForm: FormGroup;
+   confirmPhoneNumberForm: FormGroup;
   // @ViewChild('otpConfirmationForm') public otpConfirmationForm: NgForm;
   // otpVerificationResult: otpVerificationResult;
   // generatedOtpInfo: OtpVerificationOutputDto | null = null;
   // otpVerificationInput: PhoneOtpVerificationInputDto = new PhoneOtpVerificationInputDto();
   //
   // // confirm email vars
-  // confirmEmailForm: FormGroup;
+   confirmEmailForm: FormGroup;
   // emailUpdateResult: otpVerificationResult;
   // @ViewChild('updateEmailResultModal') public updateEmailResultModal: NgbModal;
   //
   // // User city and region
-  // udateUserLocationForm: FormGroup;
+   // udateUserLocationForm: FormGroup;
   // cityLookup: LookupModel[] = [];
   // citiLookupsReverseMap: ReverseLookupMap = new ReverseLookupMap([]);
   //
   constructor(
-    private readonly router: Router
-    , private readonly modalService: NgbModal
-    , private readonly formBuilder: FormBuilder
-    , private readonly userProfileProxyService: ApplicationUserServiceServiceProxy
+    private  router: Router
+    , private  modalService: NgbModal
+
+    , private  userProfileProxyService: ApplicationUserServiceServiceProxy
     //, private authenticationService: AuthenticationService
-    , public readonly lookupService: LookupApplicationServiceServiceProxy,) {
+    , public  lookupService: LookupApplicationServiceServiceProxy) {
   }
   //
   ngOnInit(): void {
     //this.currentUserProfile = true;
-    // this.initConfirmPhoneNumberForm();
-    // this.initUpdateEmailForm();
-    // this.initUpdateUserLocationForm();
-    this.LoadNationalities();
-     this.fetchCurrentUserProfile();
+    //  this.initConfirmPhoneNumberForm();
+    //  this.initUpdateEmailForm();
+    //  this.initUpdateUserLocationForm();
+    //this.LoadNationalities();
+    
     // this.lookupService.fetchRegionsLookups();
+    this.init();
   }
-  LoadSpendingCategories()
-  {
-    this.lookupfliter.lookUpName="SpendingCategory";
-    this.lookupfliter.filters=[];
-    this.lookupService.getAllLookups(this.lookupfliter).subscribe(
-      (data ) => {
-        this.spendingCategoriesLookup=data.dto.items;
-        console.log(data);
-        this.LoadEndowmentType();
-      },
-    );
-
+  init(){
+    //this.LoadRegion();
+    this.fetchCurrentUserProfile();
   }
-
 
   LoadNationalities()
   {
@@ -113,8 +103,6 @@ export class PublicUserProfileComponent implements OnInit {
       (data) => {
         this.NationalityLookup=data.dto.items;
         console.log(data);
-        this.  LoadRegion();
-
       }
     );
 
@@ -155,7 +143,25 @@ export class PublicUserProfileComponent implements OnInit {
 
   }
 
-
+  // initiateApplicantForm() {
+  //   this.applicantForm = this.fb.group({
+  //     isApplicantAsAgent: [false],
+  //     firstNameAr: [this._applicantData.FirstNameAr],
+  //     secondNameAr: [this._applicantData.SecondNameAr],
+  //     thirdNameAr: [this._applicantData.ThirdNameAr],
+  //     lastNameAr: [this._applicantData.LastNameAr],
+  //     idNumber: [this._applicantData.IdNumber],
+  //     email: [this._applicantData.Email],
+  //     nationalityName: [this._applicantData.NationalityName],
+  //     isAlive: [this.isAlive],
+  //
+  //     mobileNumber: [this._applicantData.MobileNumber],
+  //     applicantBirthDate: [this.applicantBirthDate],
+  //     gender: [
+  //       { value: this._applicantData.Gender.toString(), disabled: true },
+  //     ],
+  //   });
+  // }
 
   //
   // get confirmPhoneNumberFormRef() {
@@ -169,16 +175,16 @@ export class PublicUserProfileComponent implements OnInit {
   // get locationFormRef() {
   //   return this.udateUserLocationForm.controls;
   // }
-  //
+  // //
   // private initConfirmPhoneNumberForm() {
   //   this.confirmPhoneNumberForm = this.formBuilder.group({
-  //     phoneNumber: ['', Validators.compose([Validators.required, AwqafValidators.mobileNumber()])]
+  //     phoneNumber: ['', Validators.compose([Validators.required])]
   //   });
   // }
-  //
+  // //
   // private initUpdateEmailForm() {
   //   this.confirmEmailForm = this.formBuilder.group({
-  //     email: ['', Validators.compose([Validators.required, AwqafValidators.emailValidator()])]
+  //     email: ['', Validators.compose([Validators.required])]
   //   });
   // }
   //
@@ -326,26 +332,23 @@ export class PublicUserProfileComponent implements OnInit {
   //   this.modalService.dismissAll();
   // }
   //
-  // onRegionLookupCnaged(e: any) {
-  //   let regionIdVal = e.target.value;
-  //   if (!regionIdVal || regionIdVal == 'null' || regionIdVal == '') {
-  //     this.udateUserLocationForm.controls['regionId'].setValue(null);
-  //     this.udateUserLocationForm.controls['cityId'].setValue(null);
-  //     this.udateUserLocationForm.controls['cityId'].disable({onlySelf: true});
-  //     this.udateUserLocationForm.controls['cityId'].updateValueAndValidity();
-  //   } else {
-  //     this.udateUserLocationForm.controls['regionId'].setValue(regionIdVal);
-  //     this.udateUserLocationForm.controls['cityId'].setValue(null);
-  //     this.udateUserLocationForm.controls['cityId'].enable()
-  //     this.udateUserLocationForm.controls['cityId'].updateValueAndValidity();
-  //
-  //     this.lookupService.getCityByRegionID(e.target.value).subscribe((res: LookupModel[]) => {
-  //       this.cityLookup = res;
-  //       this.citiLookupsReverseMap.rebuild(this.cityLookup);
-  //     });
-  //   }
-  //
-  // }
+  onRegionLookupCnaged(e: any) {
+    let regionIdVal = e.target.value;
+    // if (!regionIdVal || regionIdVal == 'null' || regionIdVal == '') {
+    //   this.udateUserLocationForm.controls['regionId'].setValue(null);
+    //   this.udateUserLocationForm.controls['cityId'].setValue(null);
+    //   this.udateUserLocationForm.controls['cityId'].disable({onlySelf: true});
+    //   this.udateUserLocationForm.controls['cityId'].updateValueAndValidity();
+    // } else {
+    //   this.udateUserLocationForm.controls['regionId'].setValue(regionIdVal);
+    //   this.udateUserLocationForm.controls['cityId'].setValue(null);
+    //   this.udateUserLocationForm.controls['cityId'].enable()
+    //   this.udateUserLocationForm.controls['cityId'].updateValueAndValidity();
+    //
+    //   this.LoadCitiesByRegion(regionIdVal);
+    // }
+    this.LoadCitiesByRegion(regionIdVal);
+  }
   //
   // onCityLookupChanged(e: any) {
   //   this.udateUserLocationForm.get('cityId').setValue(e.target.value, {onlySelf: true});
@@ -379,52 +382,76 @@ export class PublicUserProfileComponent implements OnInit {
   // }
   //
   private fetchCurrentUserProfile() {
-    // this.userProfileProxyService.getUserProfile(this.authenticationService.currentLoggedInUser.userid).subscribe(response => {
-    //   if (response.isSuccess && response.data) {
-    //     this.currentUserProfile = response.data;
-    //     this.confirmPhoneNumberForm.controls.phoneNumber.setValue(this.currentUserProfile.phoneNumber);
-    //     this.confirmEmailForm.controls.email.setValue(this.currentUserProfile.email);
-    //     this.udateUserLocationForm.controls.regionId.setValue(this.currentUserProfile.regionId);
-    //
-    //     if(this.currentUserProfile.regionId && this.currentUserProfile.regionId > 0){
-    //       this.lookupService.getCityByRegionID(this.currentUserProfile.regionId).subscribe((res: LookupModel[]) => {
-    //         this.cityLookup = res;
-    //         this.citiLookupsReverseMap.rebuild(this.cityLookup);
-    //         this.udateUserLocationForm.controls.cityId.enable();
-    //         this.udateUserLocationForm.controls.cityId.setValue(this.currentUserProfile.cityId);
-    //         this.udateUserLocationForm.controls.cityId.updateValueAndValidity();
-    //       });
-    //     }
-    //   }
-    //});
+    this.userProfileProxyService.getUserProfile( "c06e6205-c7a9-422c-ba67-df7b8b4bc485").subscribe(response => {
+      if (response.isSuccess && response.dto) {
+        this.currentUserProfile = response.dto;
+        // this.confirmPhoneNumberForm.controls.phoneNumber.setValue(this.currentUserProfile.phoneNumber);
+        // this.confirmEmailForm.controls.email.setValue(this.currentUserProfile.email);
+        // this.udateUserLocationForm.controls.regionId.setValue(this.currentUserProfile.regionId);
+        //
+        // if(this.currentUserProfile.regionId && this.currentUserProfile.regionId > 0){
+        //   this.lookupService.getCityByRegionID(this.currentUserProfile.regionId).subscribe((res: LookupModel[]) => {
+        //     this.cityLookup = res;
+        //     this.citiLookupsReverseMap.rebuild(this.cityLookup);
+        //     this.udateUserLocationForm.controls.cityId.enable();
+        //     this.udateUserLocationForm.controls.cityId.setValue(this.currentUserProfile.cityId);
+        //     this.udateUserLocationForm.controls.cityId.updateValueAndValidity();
+        //   });
+        // }
+      }
+    });
   }
   //
   //
-  // onRegionAndCityUpdate() {
-  //   this.triggerFormValidation(this.udateUserLocationForm);
-  //   if (this.udateUserLocationForm.invalid)
-  //     return;
-  //
-  //   this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateRegionCityInputDto(
-  //     {
-  //       regionId: +this.udateUserLocationForm.get('regionId').value,
-  //       cityId: +this.udateUserLocationForm.get('cityId').value
-  //     })).pipe(take(1)).subscribe({
-  //     next: (result) => {
-  //
-  //       this.authenticationService.updateUserToken().subscribe((response) => {
-  //         showSuccess("تم حفظ البيانات بنجاح", () => {
-  //           this.modalService.dismissAll()
-  //         });
-  //       });
-  //     },
-  //     error: (error) => {
-  //       console.error("region / city update failed. ", error);
-  //     }
-  //   });
-  // }
-  //
-  // onEditButtonClick() {
-  //   this.router.navigate(['/public/my-profile'])
-  // }
+  onRegionAndCityUpdate() {
+    // this.triggerFormValidation(this.udateUserLocationForm);
+    // if (this.udateUserLocationForm.invalid)
+    //   return;
+    
+    // this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
+    //   {
+    //     regionId: this.currentUserProfile.regionId,
+        //cityId: this.currentUserProfile.cityId
+    //   })).pipe(take(1)).subscribe({
+    //   next: (result) => {
+    
+    //     // this.authenticationService.updateUserToken().subscribe((response) => {
+    //     //   showSuccess("تم حفظ البيانات بنجاح", () => {
+    //     //     this.modalService.dismissAll()
+    //     //   });
+    //     // });
+    //   },
+    //   error: (error) => {
+    //     console.error("region / city update failed. ", error);
+    //   }
+    // });
+
+
+
+    this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
+      {
+        regionId: 1,
+        cityId: 1
+      })).pipe(take(1)).subscribe({
+      next: (result) => {
+    
+        // this.authenticationService.updateUserToken().subscribe((response) => {
+        //   showSuccess("تم حفظ البيانات بنجاح", () => {
+        //     this.modalService.dismissAll()
+        //   });
+        // });
+        // showSuccess("تم حفظ البيانات بنجاح", () => {
+        //   this.modalService.dismissAll()
+        // });
+        console.log("suceess");
+      },
+      error: (error) => {
+        console.error("region / city update failed. ", error);
+      }
+    });
+  }
+
+  onEditButtonClick() {
+    this.router.navigate(['/public/my-profile'])
+  }
 }
