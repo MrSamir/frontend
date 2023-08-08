@@ -20,7 +20,6 @@ import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
-    ArchwizardModule,
     PublicPortalSharedModule 
 
 

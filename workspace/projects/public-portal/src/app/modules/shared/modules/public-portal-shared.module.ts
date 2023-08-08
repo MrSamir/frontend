@@ -48,7 +48,7 @@ import { SharecomponentModule } from 'projects/shared-features-lib/src/public-ap
     CommonModule,FormsModule,
     ReactiveFormsModule,
  CoreLibModule,SharecomponentModule,
-MultiSelectModule,FileUploadModule,ToastModule
+MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [
     EndowmentApplicantEditComponent,

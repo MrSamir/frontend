@@ -42,7 +42,7 @@ loadAppConfig(): () => Promise<boolean> {
           appconfig
         ).then((appconfig:appConfig) => {
            appconfig.appBaseHref= this.getBaseHref();
-           
+
            AppInitializer.ApiBaseUrl=appconfig.BaseApiUrl;
         this.ConfigSubject.setAppConfig(appconfig);
           this.loadBakcendUserConfig(()=>{
@@ -54,7 +54,7 @@ loadAppConfig(): () => Promise<boolean> {
 
  })}}
 
- private loadBakcendUserConfig(callback: () => void) :void 
+ private loadBakcendUserConfig(callback: () => void) :void
  {
     var appconfig=this.ConfigSubject.getAppConfig();
  if (!this.utilsService.getCookieValue(appconfig.langCookieName)) {
@@ -89,7 +89,7 @@ loadAppConfig(): () => Promise<boolean> {
         callback();
       });
 
- 
+
  }
   private getBaseHref(): string {
     const baseUrl = this._platformLocation.getBaseHrefFromDOM();
@@ -101,5 +101,5 @@ loadAppConfig(): () => Promise<boolean> {
   }
 
 
-  
+
 }

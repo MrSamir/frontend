@@ -1,7 +1,7 @@
 
 import { NgModule } from '@angular/core';
 
- 
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { BreadcrumbComponent } from '../components/breadcrumb/breadcrumb.component';
@@ -18,27 +18,27 @@ import { TableModule } from 'primeng/table';
 import { FileUploaderComponent } from '../components/file-uploader/file-uploader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
- 
+import {PublicUserProfileComponent} from "../components/public-user-profile/public-user-profile.component";
+import { CoreLibModule } from "../../../../core-lib/src/lib/core-lib.module";
+
 
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,FileUploaderComponent,
-    IDNumberWithValidationComponent],
-  imports: [
-    
-    BreadcrumbModule,
-    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule,CommonModule,TableModule
-  ],
-  exports:[
-    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent
-  ],
-
-  providers: [
-    // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
-		// { provide: NgbDatepickerI18n, useClass: IslamicI18n },
-     DateFormatterService
-  ],
-  
+    declarations: [BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, HijriDatepickerComponent, FileUploaderComponent,
+        IDNumberWithValidationComponent, PublicUserProfileComponent],
+    exports: [
+        BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, IDNumberWithValidationComponent, FileUploaderComponent, PublicUserProfileComponent
+    ],
+    providers: [
+        // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
+        // { provide: NgbDatepickerI18n, useClass: IslamicI18n },
+        DateFormatterService
+    ],
+    imports: [
+        BreadcrumbModule,
+        FormsModule, NgbDatepickerModule, ReactiveFormsModule, FileUploadModule, ToastModule, CommonModule, TableModule,
+        CoreLibModule
+    ]
 })
 export class SharecomponentModule { }
