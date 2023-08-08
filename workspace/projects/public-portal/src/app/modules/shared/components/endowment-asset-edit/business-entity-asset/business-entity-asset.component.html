@@ -1,0 +1,144 @@
+<div class="row row-cols-1 row-cols-md-2">
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessEntityName' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <input type="text" class="form-control" [minLength]="1" [maxLength]="250" [hidden]="viewOnly"
+      [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers" 
+        #businessEntityAsset_businessEntityName="ngModel" name="businessEntityAsset.businessEntityName"
+        [(ngModel)]="assetInfoModel.businessEntityAsset.businessEntityName" required>
+  
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{assetInfoModel.businessEntityAsset.businessEntityName}} </label>
+  
+      <div
+        *ngIf="businessEntityAsset_businessEntityName.invalid && (businessEntityAsset_businessEntityName.dirty || businessEntityAsset_businessEntityName.touched)"
+        class="">
+        <p *ngIf="businessEntityAsset_businessEntityName.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRequiredValidation' | localize}}</p>
+  
+            <p *ngIf="businessEntityAsset_businessEntityName.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessCharacterValidation' | localize}}</p>
+   
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId"
+        [(ngModel)]=assetInfoModel.businessEntityAsset.assetSubTypeId [hidden]="viewOnly" required>
+        <option [value]="null" selected disabled></option>
+        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
+          {{assetSubType.name}}</option>
+      </select>
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.businessEntityAsset.assetSubTypeId,assetSubTypes)}}
+      </label>
+  
+      <div *ngIf="assetSubTypeId.invalid && (assetSubTypeId.dirty || assetSubTypeId.touched)" class="">
+        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessSubTypeRequiredValidation' | localize}}</p>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRegion' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <select class="custom-select" #regionId="ngModel" name="regionId"
+        [(ngModel)]=assetInfoModel.businessEntityAsset.regionId [hidden]="viewOnly" required
+        (change)="getcityLookup(regionId.value)">
+        <option [value]="null" selected disabled></option>
+        <option *ngFor="let region of regionLookup" value={{region.id}}>
+          {{region.name}}</option>
+      </select>
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.businessEntityAsset.regionId,regionLookup)}} </label>
+  
+      <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
+        <p *ngIf="regionId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RequiredAssetBusinessRegionValidationlabel' | localize}}</p>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessCity' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <select class="custom-select" #cityId="ngModel" [disabled]="cityDisabled" name="cityId"
+        [(ngModel)]=assetInfoModel.businessEntityAsset.cityId [hidden]="viewOnly" required
+        (change)="ChangeCityLookup(cityId.value)">
+        <option [value]="null" selected disabled></option>
+        <option *ngFor="let city of cityLookup" value={{city.id}}>
+          {{city.name}}</option>
+      </select>
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.businessEntityAsset.cityId,cityLookup)}} </label>
+      <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
+        <p *ngIf="cityId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessCityRequiredValidationlabel' | localize}}</p>
+      </div>
+    </div>
+  
+    <div class="form-group col-12">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessLocation' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <div class="col-sm-12 px-0">
+        <!-- <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map> -->
+      </div>
+    </div>
+    <div class="form-group col">
+      <div *ngIf="!viewOnly" class="d-flex">
+        <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRegisterationDocNumber' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+        <!-- <hint [hintContent]="registrationDocumentNumberhint?.hintContentAr" [hintTitle]="registrationDocumentNumberhint?.hintTitleAr"></hint> -->
+      </div>
+      <label [hidden]="!viewOnly" class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRegisterationDocNumber' | localize}}</label>
+  
+      <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10"
+        #registrationDocumentNumber="ngModel"
+        onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
+        name="registrationDocumentNumber" [(ngModel)]=assetInfoModel.businessEntityAsset.registrationDocumentNumber
+        [pattern]="ePatternValidation.pattern_number" required>
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{assetInfoModel.businessEntityAsset.registrationDocumentNumber}} </label>
+      <div
+        *ngIf="registrationDocumentNumber.invalid && (registrationDocumentNumber.dirty || registrationDocumentNumber.touched)"
+        class="">
+        <p *ngIf="registrationDocumentNumber.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRegisterationDocRequiredValidation' | localize}}
+        </p>
+        <p *ngIf="registrationDocumentNumber.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinessRegisterationDocNumberValidation' | localize}}</p>
+      </div>
+    </div>
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinesswaqfResponserPortion' | localize}}</label>
+      <input type="text" class="form-control" [minLength]="1" [maxLength]="15" [hidden]="viewOnly"
+        #waqfResponserPortion="ngModel"
+        onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
+        name="waqfResponserPortion" [(ngModel)]=assetInfoModel.businessEntityAsset.waqfResponserPortion
+        [pattern]="ePatternValidation.pattern_decimal_values">
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{assetInfoModel.businessEntityAsset.waqfResponserPortion}} </label>
+      <div *ngIf="waqfResponserPortion.invalid && (waqfResponserPortion.dirty || waqfResponserPortion.touched)" class="">
+        <p *ngIf="waqfResponserPortion.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinesswaqfResponserPortionNumberValidation' | localize}}
+        </p>
+   
+    </div>
+  </div>
+    <div class="form-group col">
+      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBusinesswaqfPercentageFromAsset' | localize}}</label>
+      <input type="text" class="form-control" [minLength]="1" [maxLength]="5" [hidden]="viewOnly"
+        #waqfPercentageFromAsset="ngModel"
+        onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
+        name="waqfPercentageFromAsset" [(ngModel)]=assetInfoModel.businessEntityAsset.waqfPercentageFromAsset
+        [pattern]="ePatternValidation.pattern_percentage">
+      <label class="col-form-label font-weight-bold"
+        [hidden]="!viewOnly">&nbsp;{{assetInfoModel.businessEntityAsset.waqfPercentageFromAsset}} </label>
+      <div *ngIf="waqfPercentageFromAsset.invalid && (waqfPercentageFromAsset.dirty || waqfPercentageFromAsset.touched)"
+        class="">
+        <p *ngIf="waqfPercentageFromAsset.errors?.['pattern']" class="text-danger pt-1 small"> 
+          {{'EndowmentModule.EndowmentRgistrationService.AssetBusinesswaqfPercentageFromAssetRangeValidation' | localize}}
+        </p>
+      </div>
+    </div>
+    <div class="form-group col-12">
+  
+      <label class="col-form-label"> {{'EndowmentModule.EndowmentRgistrationService.AssetBusinesscommercialRegisterAttachment' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+  
+      <input type="hidden" #commercialRegisterAttachmentId name="commercialRegisterAttachmentId"
+        [(ngModel)]=assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId required>
+      <div class="input-group mb-3 download p-2">
+        <div class="flex-grow-1">
+          <!-- <file-uploader [showDownloadButton]="true" [showDeleteButton]="!viewOnly" [allowedExtensions]="['.pdf' ]"
+            [objects]="[assetInfoModel.businessEntityAsset]" [keys]="['commercialRegisterAttachmentId']"
+            [fileDisplayName]="'السجل التجاري'" [serviceTypeId]="requestType.NewWaqf">
+          </file-uploader> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
