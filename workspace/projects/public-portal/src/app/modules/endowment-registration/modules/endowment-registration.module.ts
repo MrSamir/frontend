@@ -6,22 +6,26 @@ import { EndowmentRegistrationNewComponent } from '../components/endowment-regis
  import { ArchwizardModule } from 'angular-archwizard';
 import { PublicPortalSharedModule } from '../../shared/modules/public-portal-shared.module';
 import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/lib/endowment-registration/modules/endowment-registration-shared.module';
- 
- 
+import { EndowmenInstantRegistrationEditComponent } from '../components/endowmen-instant-registration-edit/endowmen-instant-registration-edit.component';
+import { EndowmenInstantRegistrationInfoComponent } from '../components/endowmen-instant-registration-info/endowmen-instant-registration-info.component';
+ import {AccordionModule}    from 'primeng/accordion';
+ import {MultiSelectModule}    from 'primeng/multiselect';
+import { FormsModule } from '@angular/forms';
+import { CoreLibModule } from 'projects/core-lib/src/public-api';
 
 @NgModule({
   declarations: [
     EndowmentRegistrationStartServiceComponent,
     EndowmentRegistrationNewComponent,
-
-   
+    EndowmenInstantRegistrationEditComponent,
+    EndowmenInstantRegistrationInfoComponent
   ],
   imports: [
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
-    PublicPortalSharedModule 
-
+    PublicPortalSharedModule, 
+    AccordionModule,FormsModule,CoreLibModule,MultiSelectModule
 
   ],
   exports: [ /*RouterModule*/]

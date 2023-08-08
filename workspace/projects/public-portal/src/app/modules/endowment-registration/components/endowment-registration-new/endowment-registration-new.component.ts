@@ -10,7 +10,7 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
-import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 @Component({
@@ -124,12 +124,6 @@ console.log(response);
 
         },
         
-        
-           
-        
-          
-        
-        
           })
 
 
@@ -186,13 +180,13 @@ console.log(response);
             if (resAssetData.isSuccess) {
               this.loadAssetsBy();
               this.modalService.dismissAll();
-              showSuccess('تم إنشاء الاصل بنجاح',
-                () => {
-                  this.newAsset.id = resAssetData.dto.toString();
-                  let obj = { asset: resAssetData.dto }
-                  this.modalService.dismissAll();
-                }
-              )
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
               //this.setOldAttachmentIds();
             }
           }
@@ -213,9 +207,9 @@ console.log(response);
           let resp = data; //as ApiResponse<any>;
           if (resp.isSuccess) {
             this.loadAssetsBy();
-            showSuccess('تم تعديل الاصل بنجاح', () => {
-              this.modalService.dismissAll();
-            });
+            // showSuccess('تم تعديل الاصل بنجاح', () => {
+            //   this.modalService.dismissAll();
+            // });
             //this.setOldAttachmentIds();
           }
         },
@@ -241,13 +235,13 @@ console.log(response);
         if (data) {
           let resAssetData = data;
           if (resAssetData.isSuccess) {
-            showSuccess('تم إنشاء الاصل بنجاح', () => {
-              // console.log('res here: ', resAssetData);
-              // this.newAsset.id = resAssetData.data.toString();
-              // let obj = {asset: resAssetData.data}
-              this.modalService.dismissAll();
-              this.loadAssetsBy();
-            });
+            // showSuccess('تم إنشاء الاصل بنجاح', () => {
+            //   // console.log('res here: ', resAssetData);
+            //   // this.newAsset.id = resAssetData.data.toString();
+            //   // let obj = {asset: resAssetData.data}
+            //   this.modalService.dismissAll();
+            //   this.loadAssetsBy();
+            // });
           }
         }
       },
@@ -271,10 +265,10 @@ console.log(response);
       (data) => {
         let resp = data;
         if (resp.isSuccess) {
-          showSuccess('تم تعديل الاصل بنجاح', () => {
-            this.modalService.dismissAll();
-            this.loadAssetsBy();
-          });
+          // showSuccess('تم تعديل الاصل بنجاح', () => {
+          //   this.modalService.dismissAll();
+          //   this.loadAssetsBy();
+          // });
         }
       },
       (err: ApiException) => {
@@ -304,9 +298,9 @@ console.log(response);
         ).subscribe((result) => {
           if (result.isSuccess) {
             this.loadAssetsBy();
-            showSuccess('تم حذف الاصل بنجاح',()=> {
-              this.modalService.dismissAll();
-            });
+            // showSuccess('تم حذف الاصل بنجاح',()=> {
+            //   this.modalService.dismissAll();
+            // });
             // showSuccess('تم حذف الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });

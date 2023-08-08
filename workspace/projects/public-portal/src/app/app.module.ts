@@ -30,6 +30,7 @@ import { AppInitializer } from '../../../core-lib/src/lib/application-configurat
 import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+
 export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
     return ConfigSubject.getAppConfig().BaseApiUrl;
 };
@@ -39,7 +40,9 @@ export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    LandingComponent,
+    LandingComponent
+    
+    
   ],
   imports: [
     MultiSelectModule,

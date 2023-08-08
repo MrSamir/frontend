@@ -23,47 +23,42 @@ import { ToastModule } from 'primeng/toast';
 import { EndowmentApplicantEditComponent } from '../components/endowment-applicant-edit/endowment-applicant-edit.component';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
-
-
- 
- 
  
 
 @NgModule({
-  declarations: [ 
-    EndowmentApplicantEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    AnimalOrAgriculturalAssetComponent,
-    BusinessEntityAssetComponent,
-    FiscalAssetComponent,
-    IntellectualPropertyAndTrademarkAssetComponent,
-    MonetaryAssetComponent,
-    MovableAssetComponent,
-    ParticularBenefitAssetComponent,
-    RealestateAssetComponent
-  ],
-  imports: [
-
-    CommonModule,FormsModule,
-    ReactiveFormsModule,
- CoreLibModule,SharecomponentModule,
-MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
-  ],
-  exports: [
-    EndowmentApplicantEditComponent,
-    //EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    // AnimalOrAgriculturalAssetComponent,
-    // BusinessEntityAssetComponent,
-    // FiscalAssetComponent,
-    // IntellectualPropertyAndTrademarkAssetComponent,
-    // MonetaryAssetComponent,
-    // MovableAssetComponent,
-    // ParticularBenefitAssetComponent,
-    // RealestateAssetComponent
-
-  ]
+    declarations: [
+        EndowmentApplicantEditComponent,
+        EndowmentInfoEditComponent,
+        EndowmentSharedAssetEditComponent,
+        AnimalOrAgriculturalAssetComponent,
+        BusinessEntityAssetComponent,
+        FiscalAssetComponent,
+        IntellectualPropertyAndTrademarkAssetComponent,
+        MonetaryAssetComponent,
+        MovableAssetComponent,
+        ParticularBenefitAssetComponent,
+        RealestateAssetComponent
+    ],
+    exports: [
+        EndowmentApplicantEditComponent,
+        //EndowmentAssetsEditComponent,
+        EndowmentInfoEditComponent,
+        EndowmentSharedAssetEditComponent,
+        AnimalOrAgriculturalAssetComponent,
+        BusinessEntityAssetComponent,
+        FiscalAssetComponent,
+        IntellectualPropertyAndTrademarkAssetComponent,
+        MonetaryAssetComponent,
+        MovableAssetComponent,
+        ParticularBenefitAssetComponent,
+        RealestateAssetComponent
+    ],
+    imports: [
+        CommonModule, FormsModule,
+        ReactiveFormsModule,
+        CoreLibModule,
+        MultiSelectModule, FileUploadModule, ToastModule,
+        SharecomponentModule
+    ]
 })
 export class PublicPortalSharedModule { }
