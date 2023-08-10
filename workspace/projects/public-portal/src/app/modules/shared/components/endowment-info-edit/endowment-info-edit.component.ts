@@ -1,5 +1,5 @@
 import { ApiException, EndowmentRegistrationServiceServiceProxy, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from './../../services/services-proxies/service-proxies';
-import {Component, Input,EventEmitter,Output, OnInit, ViewChild} from '@angular/core';
+import {Component, Input,EventEmitter,Output, OnInit, ViewChild, Injector} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WizardComponent } from 'angular-archwizard';
@@ -10,7 +10,8 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
 import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
-import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
+// import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 // import {WizardComponent} from "angular-archwizard";
 // import {NgForm} from "@angular/forms";
@@ -36,7 +37,7 @@ import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.serv
   templateUrl: './endowment-info-edit.component.html',
   styleUrls: ['./endowment-info-edit.component.css']
 })
-export class EndowmentInfoEditComponent  implements OnInit  {
+export class EndowmentInfoEditComponent extends ComponentBase  implements OnInit  {
    @Input() public IsCreate: boolean=true;
    @Input() InputEndowmentDto: InputEndowmentDto=new InputEndowmentDto();
  
@@ -47,11 +48,11 @@ export class EndowmentInfoEditComponent  implements OnInit  {
    @ViewChild(NgForm,{static:false}) form:NgForm;
    ePatternValidation = EnumValidation;
    lookupfliter:InputLookUpDto=new InputLookUpDto();
-   spendingCategoriesLookup:LookupDto[]=[];
-   EndowmentTypeLookup:LookupDto[]=[];
-   RegioneLookup:LookupDto[]=[];
-CityLookup:LookupDto[]=[];
-IssuanceCourtsLookup:LookupDto[]=[];
+   spendingCategoriesLookup:LookupDto[] | undefined=[] ;
+   EndowmentTypeLookup:LookupDto[] | undefined=[];
+   RegioneLookup:LookupDto[] | undefined=[];
+CityLookup:LookupDto[] | undefined=[];
+IssuanceCourtsLookup:LookupDto[] | undefined=[];
    
    _lookupExtraData:   LookupExtraData=new LookupExtraData();
 
@@ -69,14 +70,17 @@ IssuanceCourtsLookup:LookupDto[]=[];
   endowmentDeedDate: NgbDateStruct;
    oldDeedAttachmentId: string;
 
-   constructor(
+   constructor(injector: Injector,
  
 private dateHelper: DateFormatterService,
            private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
            private lookupssrv:LookupApplicationServiceServiceProxy
            
               ) 
-               {}
+               {
+super(injector);
+
+               }
 
   ngOnInit(): void {
 
@@ -307,21 +311,21 @@ this.createOrEditWaqf();
     
     this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto)
       .subscribe(
-      //   (res: ApiResponse) => {
-      //     this.onNewWaqfRegistered.emit(this.createWaqfInputDto.waqfTypeId.toString())
-      //     showSuccess(translations.operationSuccess, () => this.wizard.goToNextStep());
-      //   },
-      //   (err: ApiException) => handleServiceProxyError(err)
-      // );
-      (data) => {
+        (res: any) => {
+          this.wizard.goToNextStep()
+         // showSuccess(res.message, () => );
+        },
+        //(err: ApiException) => handleServiceProxyError(err)
+      );
+//       (data) => {
        
- //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
+//  //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
       
          
-        showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
+//         showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
          
-      }   
-    );
+//       }   
+    //);
   }
 
 
