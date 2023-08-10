@@ -309,12 +309,12 @@ this.createOrEditWaqf();
 
 
 
-    // this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto).subscribe(
-    //     (res: any) => {
-    //       this.wizard.goToNextStep()
-    //      // showSuccess(res.message, () => );
-    //     }, 
-    //     )
+    this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto).subscribe(
+        (res: any) => {
+          this.wizard.goToNextStep()
+         // showSuccess(res.message, () => );
+        }, 
+        )
       
       }
 

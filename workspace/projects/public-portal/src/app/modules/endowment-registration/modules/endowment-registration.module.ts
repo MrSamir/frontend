@@ -23,7 +23,7 @@ import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
-    //PublicPortalSharedModule 
+    PublicPortalSharedModule 
 
 
   ],
