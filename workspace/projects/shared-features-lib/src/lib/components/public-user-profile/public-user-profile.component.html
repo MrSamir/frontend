@@ -1,0 +1,189 @@
+<!-- Confirm Mobile form -->
+<div>
+  <!--<div>-->
+  <div class="profile shadow-sm d-flex rounded-lg mt-6 px-5 py-5" *ngIf="currentUserProfile">
+
+    <img class="mr-5" src="assets/images/profile.svg" alt="">
+
+    <div class="flex-grow-1 row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      <div class="col" *ngIf="currentUserProfile.fullName">
+        <label class="col-form-label">{{'Common.FullName' | localize}}</label>
+        <span class="form-control-plaintext">{{currentUserProfile.fullName}}</span>
+      </div>
+      <div class="col" *ngIf="currentUserProfile.userName">
+        <label class="col-form-label">{{'Common.idNumber' | localize}}</label>
+        <span class="form-control-plaintext">{{currentUserProfile.userName}}</span>
+      </div>
+      <div class="col" *ngIf="currentUserProfile.birthDate">
+        <label class="col-form-label">{{'Common.dateOfBirth' | localize}}</label>
+        <span class="form-control-plaintext">{{currentUserProfile.birthDate.toJSDate() | date:'dd/MM/yyyy'}}</span>
+      </div>
+      <div class="col" *ngIf="currentUserProfile.gender">
+        <label class="col-form-label">{{'Common.gender' | localize}}</label>
+        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender == 1">{{'Common.Male'| localize}}</span>
+        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender != 1">{{'Common.Female'| localize}}</span>
+      </div>
+      <div class="col">
+        <label class="col-form-label">{{'Common.mobileNumber' | localize}}</label>
+        <span *ngIf="viewOnly" class="form-control-plaintext">{{currentUserProfile.phoneNumber}}</span>
+        <form *ngIf="!viewOnly" name="confirmPhoneNumberForm" class="form-inline">
+          <div class="form-group mb-2">
+            <input type="text" class="form-control" #phoneNumber="ngModel" name="phoneNumber"
+              [(ngModel)]="currentUserProfile.phoneNumber" [pattern]="ePatternValidation.pattern_ksa_mobile_number"
+              required placeholder="05xxxxxxxx | 9665xxxxxxxx" inputmode="numeric">
+            <ng-container>
+              <!-- <span class="badge badge-success mx-2 my-3 rounded-pill"
+                *ngIf="currentUserProfile.phoneNumberConfirmed">مؤكد</span> -->
+              <span class="badge badge-warning mx-2 my-3 rounded-pill">غير
+                مؤكد</span>
+            </ng-container>
+            <div *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)" class="">
+              <p *ngIf="phoneNumber.errors?.['required']" class="text-danger pt-1 small">
+                {{'Common.missingMobileNumber' | localize}}</p>
+              <p *ngIf="phoneNumber.errors?.['pattern']" class="text-danger pt-1 small">
+                {{'Common.invalidMobile' | localize}}</p>
+            </div>
+          </div>
+          <!-- <button type="submit" [disabled]="!confirmPhoneNumberForm.valid " class="btn btn-warning mb-2"
+                 (click)="showOtpVerificationPopup(otpConfirmationForm)">{{currentUserProfile &&
+        currentUserProfile.isPhoneConfirmed ? "تغيير رقم الجوال" : "تأكيد رقم الجوال"}}
+     </button> -->
+          <button type="submit" [disabled]="!confirmPhoneNumberForm.valid " class="btn btn-warning mb-2">تأكيد رقم
+            الجوال
+          </button>
+        </form>
+      </div>
+      <div class="col">
+        <label class="col-form-label">{{'Common.email' | localize}}</label>
+        <span *ngIf="viewOnly" class="form-control-plaintext">{{currentUserProfile.email}}</span>
+        <!-- confirm Email Form -->
+        <form *ngIf="!viewOnly" class="form-inline">
+          <div class="form-group mb-2">
+            <input type="text" class="form-control" #email="ngModel" name="email"
+              [(ngModel)]="currentUserProfile.email" [pattern]="ePatternValidation.pattern_email"
+              required placeholder="example@example.com">
+            <ng-container>
+              <!-- <span class="badge badge-success mx-2 my-3 rounded-pill"
+                               *ngIf="currentUserProfile.isEmailConfirmed">مؤكد</span> -->
+              <span class="badge badge-warning mx-2 my-3 rounded-pill">غير
+                مؤكد</span>
+            </ng-container>
+            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="">
+              <p *ngIf="email.errors?.['required']" class="text-danger pt-1 small">
+                {{'Common.missingEmail' | localize}}</p>
+              <p *ngIf="email.errors?.['pattern']" class="text-danger pt-1 small">
+                {{'Common.invalidEmail' | localize}}</p>
+            </div>
+          </div>
+          <!--          <button type="submit" [disabled]="!confirmEmailForm.valid " class="btn btn-warning mb-2"-->
+          <!--                  (click)="onEmailUpdate(updateEmailResultModal)">تأكيد البريد الألكتروني-->
+          <!--          </button>-->
+          <button type="submit" [disabled]="!confirmEmailForm.valid " class="btn btn-warning mb-2">تأكيد البريد
+            الألكتروني
+          </button>
+        </form>
+      </div>
+      <ng-container *ngIf="viewOnly">
+        <div class="col" *ngIf="currentUserProfile.regionId">
+          <label class="col-form-label">{{'Common.Region' | localize}}</label>
+          <span class="form-control-plaintext">{{RegioneLookup[currentUserProfile.regionId+1].name}}</span>
+        </div>
+        <div class="col" *ngIf="currentUserProfile.cityId">
+          <label class="col-form-label">{{'Common.City' | localize}}</label>
+          <span class="form-control-plaintext">{{CityLookup[currentUserProfile.cityId+1].name}}</span>
+        </div>
+      </ng-container>
+        <div class="col-12"  *ngIf="!viewOnly">
+          <!-- update user Region and city location -->
+          <form name="udateUserLocationForm" class="mt-3">
+            <div class="row">
+              <div class="form-group col">
+                <label class="col-form-label">{{'Common.Region' | localize}}<span class="text-danger">*</span></label>
+                <select class="custom-select" #RegionId="ngModel" name="RegionId"
+                        [(ngModel)]=currentUserProfile.regionId required
+                        (change)="LoadCitiesByRegion(RegionId.value)">
+                  <option [value]="null" disabled selected></option>
+                  <option *ngFor="let region of RegioneLookup" value={{region.id}}>
+                    {{region.name}}</option>
+                </select>
+              </div>
+
+              <div class="form-group col">
+                <label class="col-form-label">{{'Common.City' | localize}}<span class="text-danger">*</span></label>
+                <select class="custom-select" #CityId="ngModel" name="deedCityId" [(ngModel)]=currentUserProfile.cityId
+                        required>
+                  <option *ngFor="let city of CityLookup" value={{city.id}}>
+                    {{city.name}}</option>
+                </select>
+              </div>
+              <div class="form-group col ">
+                <button type="submit"  class="btn btn-warning mt-6"
+                  (click)="onRegionAndCityUpdate()">{{'Common.buttonUpdateUserProfile' | localize}}</button>
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+    </div>
+
+    <div *ngIf="viewOnly" class="d-flex justify-content-end align-items-start">
+      <button type="button" class="btn btn-warning mt-2" (click)="onEditButtonClick()">تعديل</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Mobile OTP Confimration Modal -->
+<!--<ng-template #otpConfirmationForm let-modal>-->
+<!--  <form name="form" #confirmOtpForm="ngForm">-->
+<!--    <div class="modal-header">-->
+<!--      <h2>التحقق من رقم الجوال</h2>-->
+<!--    </div>-->
+
+<!--    <div class="modal-body">-->
+<!--      <ng-container *ngIf="otpVerificationResult">-->
+<!--        <div *ngIf="otpVerificationResult.isSuccess" class="alert alert-success" role="alert">-->
+<!--          {{otpVerificationResult.message}}-->
+<!--        </div>-->
+<!--        <div *ngIf="!otpVerificationResult.isSuccess" class="alert alert-danger" role="alert">-->
+<!--          {{otpVerificationResult.message}}-->
+<!--        </div>-->
+<!--      </ng-container>-->
+
+<!--      <div *ngIf="!otpVerificationResult || !otpVerificationResult.isSuccess" class="row row-cols-1 row-cols-md-2">-->
+<!--        <div class="form-group col">-->
+<!--          <label class="col-form-label"> رمز التحقق <span class="text-danger">*</span></label>-->
+<!--          <input type="text" class="form-control" required [minLength]="1" [maxLength]="6" #otpCode="ngModel"-->
+<!--                 onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"-->
+<!--                 name="otpCode" [(ngModel)]=otpVerificationInput.code [pattern]="ePatternValidation.pattern_number">-->
+<!--          <div *ngIf="otpCode.invalid && (otpCode.dirty || otpCode.touched)" class="">-->
+<!--            <p *ngIf="otpCode.errors?.['required']" class="text-danger pt-1 small"> رمز التأكيد مطلوب </p>-->
+<!--            <p *ngIf="otpCode.errors?.['pattern']" class="text-danger pt-1 small">رمز التأكيد يجب أن يكون ارقام-->
+<!--              فقط</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <ng-container>-->
+<!--      <div class="modal-footer justify-content-center"-->
+<!--           *ngIf="!otpVerificationResult || !otpVerificationResult.isSuccess">-->
+<!--        <button type="button" class="btn btn-awq-secondary px-6" [disabled]="confirmOtpForm.form?.invalid"-->
+<!--                (click)="onConfirmPhoneNumberButtonClicked()">-->
+<!--          تحقق-->
+<!--        </button>-->
+<!--        <button type="button" class="btn btn-outline-awq-secondary px-6"-->
+<!--                (click)="onCancelConfirmPhoneNumberButtonClicked()">-->
+<!--          إلغاء-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div *ngIf="otpVerificationResult && otpVerificationResult.isSuccess" class="modal-footer justify-content-center">-->
+<!--        <button type="button" class="btn btn-outline-awq-secondary px-6"-->
+<!--                (click)="onCancelConfirmPhoneNumberButtonClicked()">-->
+<!--          إغلاق-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--  </form>-->
+<!--</ng-template>-->

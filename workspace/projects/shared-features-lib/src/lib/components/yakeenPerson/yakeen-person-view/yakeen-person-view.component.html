@@ -1,17 +1,17 @@
 <div *ngIf="(citizen || alien) && person" class="yakeen-view">
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
-      <label class="col-form-label">نوع الهوية</label>
+      <label class="col-form-label">{{'Common.IdType' | localize}}</label>
       <label class="col-form-label font-weight-bold">{{selectedTypeName}}</label>
     </div>
 
-    <div class="form-group col">
+    <div class="form-group col" *ngIf="person.idTypeId">
       <label class="col-form-label">{{selectedTypeName}}</label>
-      <label class="col-form-label font-weight-bold">{{person.idNumber}}</label>
+      <label class="col-form-label font-weight-bold">{{person.userName}}</label>
     </div>
 
     <div class="form-group col">
-      <label class="col-form-label">{{dateLabel}}</label>
+      <label class="col-form-label">{{'Common.dateOfBirth' | localize}}</label>
       <label class="col-form-label font-weight-bold">{{birthDate}}</label>
     </div>
   </div>
@@ -20,12 +20,12 @@
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
-      <label class="col-form-label">{{translations.mobileNumber}}</label>
-      <label class="col-form-label">{{person.mobileNumber}}</label>
+      <label class="col-form-label">{{'Common.mobileNumber' | localize}}</label>
+      <label class="col-form-label">{{person.phoneNumber}}</label>
     </div>
 
     <div class="form-group col">
-      <label class="col-form-label">{{translations.email}}</label>
+      <label class="col-form-label">{{'Common.email' | localize}}</label>
       <label class="col-form-label">{{person.email}}</label>
     </div>
   </div>

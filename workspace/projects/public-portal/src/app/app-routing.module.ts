@@ -5,7 +5,10 @@ import { LandingComponent } from './layout/landing/landing.component';
 import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
 import { API_BASE_URL } from './modules/shared/services/services-proxies/service-proxies';
 import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
-  
+import {
+  PublicUserProfileComponent
+} from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
+
 
 const routes: Routes = [
 
@@ -26,24 +29,24 @@ const routes: Routes = [
   },
 
   {
-    path: 'endowmentregistration', 
+    path: 'endowmentregistration',
     loadChildren: () => import('../app/modules/endowment-registration/modules/endowment-registration.module').then(m => m.EndowmentRegistrationModule),
      data: { title: 'تسجيل وقف' }
   },
 
- 
+
   // {
   //   path: 'usertask',
   //   component: PublicUserTaskComponent,
   //   data: { title: 'مهامي' },
   //   canActivate:[PublicActiveProfileGuard]
   // },
-  // {
-  //   path: 'my-profile',
-  //   component: MyProfileComponent,
-  //   data: { title: 'الملف الشخصي' },
-  //   canActivate:[AuthGuard]
-  // },
+  {
+    path: 'public-user-profile',
+    component: PublicUserProfileComponent,
+    data: { title: 'الملف الشخصي' },
+    //canActivate:[AuthGuard]
+  },
   // {
   //   path: 'confirm-email/:userId/:confirmationCode',
   //   component: EmailConfirmationComponent,
@@ -80,7 +83,7 @@ const routes: Routes = [
 //     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
 //   },
 
-  
+
 ];
 
 @NgModule({

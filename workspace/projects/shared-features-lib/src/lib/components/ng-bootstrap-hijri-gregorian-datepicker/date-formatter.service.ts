@@ -6,47 +6,47 @@ import * as momentjs from 'moment';
 const moment = momentjs;
 
 
- 
- 
 
 
 
- 
 
- 
 
- 
- 
+
+
+
+
+
+
 
 @Injectable()
 export class DateFormatterService {
- 
+
 
   hijriformat= new Intl.DateTimeFormat('en-SA-u-ca-islamic-umalqura',{calendar: 'islamic-umalqura', year: 'numeric', month: '2-digit', day: '2-digit' });
 
   georgianformat= new Intl.DateTimeFormat('en-US',{timeZone: "UTC", year: 'numeric', month: '2-digit', day: '2-digit' });
   constructor(private parserFormatter: NgbDateParserFormatter) {
-   
-   
+
+
    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     var date = new Date();
     var ngbDateStruct = { day: date.getUTCDay(), month: date.getUTCMonth(), year: date.getUTCFullYear()};
-    
+
    //console.log(this.ToHijri(ngbDateStruct));
-    
+
  /////////////////////////////////////////////////////////////////////////////////////////////
- 
+
        const dateStr = this.hijriformat.format(new Date()).toString();
        const momentDate= dateStr.split('/');
        const day = momentDate[1]; // refer to days
-       const month = +momentDate[0] ; // refer to month 
+       const month = +momentDate[0] ; // refer to month
        const year = momentDate[2].split(' ')[0]; //refer to year
        const nghijDate =  new NgbDate(+year, month, +day);
        var ngbDateStruct = { day: nghijDate.day, month: nghijDate.month, year: nghijDate.year};
-        
+
        console.log(this.ToGregorian(ngbDateStruct));
-   
+
        console.log(this.GetTodayGregorian());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +88,7 @@ export class DateFormatterService {
         const dateStr = this.ToString(date);
         const momentDate= this.hijriformat.format(new Date(dateStr)).split('/');
         const day = momentDate[1]; // refer to days
-        const month = +momentDate[0] ; // refer to month 
+        const month = +momentDate[0] ; // refer to month
         const year = momentDate[2].split(' ')[0]; //refer to year
         const ngDate =  new NgbDate(+year, month, +day);
         return ngDate;
@@ -107,14 +107,14 @@ export class DateFormatterService {
         year: "numeric",
       }).split('/');
       const day = momentDate[1]; // refer to days
-      const month = +momentDate[0] ; // refer to month 
+      const month = +momentDate[0] ; // refer to month
       const year = momentDate[2].split(' ')[0]; //refer to year
-  
+
       const ngDate =  new NgbDate(+year, +month, +day);
- 
+
       return ngDate;
   }
-   
+
 
 
     // GetTodayHijri(): NgbDateStruct {

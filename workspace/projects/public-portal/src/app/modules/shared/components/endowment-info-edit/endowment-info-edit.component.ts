@@ -5,8 +5,8 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WizardComponent } from 'angular-archwizard';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
- 
- 
+
+
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
 import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
@@ -23,14 +23,14 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 // import {EnumValidation} from "@app/enum/EnumValidation";
 // import {LookupModel} from "@app/model/LookupModel";
 // import {LookupService, ReverseLookupMap} from "@app/services/lookup/lookup.service";
- 
+
 // import {MapModel} from "@app/_shared/map/map.model";
 // import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
- 
+
 // import {handleError, handleServiceProxyError, showSuccess} from "@app/services/alert/alert.service";
 //  import { ServiceRequestTypeEnum } from '@app/enum/requestType.enum';
 
- 
+
 
 @Component({
   selector: 'app-endowment-info-edit',
@@ -40,7 +40,7 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 export class EndowmentInfoEditComponent extends ComponentBase  implements OnInit  {
    @Input() public IsCreate: boolean=true;
    @Input() InputEndowmentDto: InputEndowmentDto=new InputEndowmentDto();
- 
+
    @Input() public wizard: WizardComponent;
    @Output() _InputEndowmentDto = new EventEmitter<InputEndowmentDto>();
    @Input() IsDeedDisabled :boolean=false;
@@ -92,11 +92,11 @@ super(injector);
     this.lookupfliter.lookUpName="SpendingCategory";
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-  (data) => {
+  (data ) => {
     this.spendingCategoriesLookup=data.dto.items;
     console.log(data);
     this.LoadEndowmentType();
-  },   
+  },
 );
 
   }
@@ -111,14 +111,14 @@ super(injector);
     this.EndowmentTypeLookup=data.dto.items;
     console.log(data);
     this.  LoadRegion();
-    
-  }   
+
+  }
 );
 
   }
 
 
-  
+
   LoadRegion()
   {
     this.lookupfliter.lookUpName="Region";
@@ -128,7 +128,7 @@ super(injector);
     this.RegioneLookup=data.dto.items;
     console.log(data);
     this.  LoadIssuanceCourt();
-  }   
+  }
 );
 
   }
@@ -146,25 +146,25 @@ super(injector);
     console.log(data);
 
 
-   
-    
-  }   
+
+
+  }
 );
 
   }
 
-  
+
   LoadIssuanceCourt()
   {
-   
+
     this.lookupfliter.lookUpName="IssuanceCourt";
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data) => {
     this.IssuanceCourtsLookup=data.dto.items;
     console.log(data);
-    
-  }   
+
+  }
 );
 
   }
@@ -173,15 +173,15 @@ super(injector);
     // if (!this.requestId || !!this.endowmentInitialDate) {
     //   return;
     // }
-  
+
  this.LoadSpendingCategories();
 
 
     this.setDateLimits();
-   
- 
 
- 
+
+
+
 
    if (this.InputEndowmentDto) {
 
@@ -203,7 +203,7 @@ super(injector);
      // this.InputEndowmentDto.endowmentDeedDate = `${this.endowmentDeedDate.year}/${this.endowmentDeedDate.month}/${this.endowmentDeedDate.day}`
     }
   }
- 
+
   }
 
   ngOnChanges() {
@@ -254,15 +254,15 @@ super(injector);
   //     this.InputEndowmentDto.latitude = this.map.latitude;
   //   }
   // }
-   
+
    changewagafType(event: any) {
-   
+
    }
   // loadHints()
   // {
-   
+
   // }
- 
+
 
    get navigationButtonsDisabled() {
 return;
@@ -290,7 +290,7 @@ return;
 
     // }
 this.createOrEditWaqf();
- 
+
   }
 
   createOrEditWaqf() {
@@ -302,33 +302,23 @@ this.createOrEditWaqf();
     this.InputEndowmentDto.endowmentInitialDate="";
     this.InputEndowmentDto.seerRules="";
     this.InputEndowmentDto.endowmentDeedTypeName="";
-    this.InputEndowmentDto.endowmentDeedStatusName="";    
-    this.InputEndowmentDto.requestId=    "2106622f-f9fd-4bc3-874d-08db0a91fca1";  
+    this.InputEndowmentDto.endowmentDeedStatusName="";
+    this.InputEndowmentDto.requestId=    "2106622f-f9fd-4bc3-874d-08db0a91fca1";
 
 
 
 
-    
-    this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto)
-      .subscribe(
-        (res: any) => {
-          this.wizard.goToNextStep()
-         // showSuccess(res.message, () => );
-        },
-        //(err: ApiException) => handleServiceProxyError(err)
-      );
-//       (data) => {
-       
-//  //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
+
+    // this.registerWaqfServiceProxy.createEndowment(this.InputEndowmentDto).subscribe(
+    //     (res: any) => {
+    //       this.wizard.goToNextStep()
+    //      // showSuccess(res.message, () => );
+    //     }, 
+    //     )
       
-         
-//         showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
-         
-//       }   
-    //);
-  }
+      }
 
 
- 
+
 
 }

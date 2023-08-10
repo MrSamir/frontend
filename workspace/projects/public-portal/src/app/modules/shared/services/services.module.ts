@@ -1,6 +1,6 @@
 import * as ServiceProxy from './services-proxies/service-proxies';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
- 
+
 
 
 @NgModule({
@@ -13,6 +13,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
     ServiceProxy.EndowmentRegistrationServiceServiceProxy,
     ServiceProxy.LookupApplicationServiceServiceProxy,
     ServiceProxy.AccountServiceProxy,
+    ServiceProxy.ApplicationUserServiceServiceProxy,
   ],
 })
 export class ServicesProxyModule {
