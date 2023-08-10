@@ -86,11 +86,11 @@
       <ng-container *ngIf="viewOnly">
         <div class="col" *ngIf="currentUserProfile.regionId">
           <label class="col-form-label">{{'Common.Region' | localize}}</label>
-          <span class="form-control-plaintext">{{RegioneLookup[currentUserProfile.regionId].name}}</span>
+          <span class="form-control-plaintext">{{RegioneLookup[currentUserProfile.regionId+1].name}}</span>
         </div>
         <div class="col" *ngIf="currentUserProfile.cityId">
           <label class="col-form-label">{{'Common.City' | localize}}</label>
-          <span class="form-control-plaintext">{{CityLookup[currentUserProfile.cityId].name}}</span>
+          <span class="form-control-plaintext">{{CityLookup[currentUserProfile.cityId+1].name}}</span>
         </div>
       </ng-container>
         <div class="col-12"  *ngIf="!viewOnly">

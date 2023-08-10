@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {
+  ApiResponse, ApiResponseOfOutputApplicationUserDto,
   ApplicationUserServiceServiceProxy, InputLookUpDto,
   LookupApplicationServiceServiceProxy, LookupExtraData, OutputApplicationUserDto, UpdateUserCityRegionInputDto
 } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
@@ -86,7 +87,7 @@ export class PublicUserProfileComponent implements OnInit {
     //  this.initUpdateEmailForm();
     //  this.initUpdateUserLocationForm();
     //this.LoadNationalities();
-    
+
     // this.lookupService.fetchRegionsLookups();
     this.init();
   }
@@ -407,14 +408,14 @@ export class PublicUserProfileComponent implements OnInit {
     // this.triggerFormValidation(this.udateUserLocationForm);
     // if (this.udateUserLocationForm.invalid)
     //   return;
-    
+
     // this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
     //   {
     //     regionId: this.currentUserProfile.regionId,
         //cityId: this.currentUserProfile.cityId
     //   })).pipe(take(1)).subscribe({
     //   next: (result) => {
-    
+
     //     // this.authenticationService.updateUserToken().subscribe((response) => {
     //     //   showSuccess("تم حفظ البيانات بنجاح", () => {
     //     //     this.modalService.dismissAll()
@@ -433,8 +434,8 @@ export class PublicUserProfileComponent implements OnInit {
         regionId: 1,
         cityId: 1
       })).pipe(take(1)).subscribe({
-      next: (result) => {
-    
+      next: (result: ApiResponseOfOutputApplicationUserDto) => {
+
         // this.authenticationService.updateUserToken().subscribe((response) => {
         //   showSuccess("تم حفظ البيانات بنجاح", () => {
         //     this.modalService.dismissAll()

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 
 
- 
+
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,14 +23,15 @@ import { ToastModule } from 'primeng/toast';
 import { EndowmentApplicantEditComponent } from '../components/endowment-applicant-edit/endowment-applicant-edit.component';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+import {InputSwitchModule} from "primeng/inputswitch";
 
 
- 
- 
- 
+
+
+
 
 @NgModule({
-  declarations: [ 
+  declarations: [
     EndowmentApplicantEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSharedAssetEditComponent,
