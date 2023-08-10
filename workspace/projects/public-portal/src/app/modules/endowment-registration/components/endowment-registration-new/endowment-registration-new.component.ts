@@ -77,7 +77,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.loadAssetsBy();
   }
 
-  
+
  _applicantData: AspNetUser = new AspNetUser();
 
   getLoggedInUserData(){
@@ -101,7 +101,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this._applicantData.MobileNumber="2088755802"
     this._applicantData.Email="m.eldesouky.c@awqaf.gov.sa"
     this._applicantData.Gender=0;
-    
+
   }
 
   InitiateRequest(){
@@ -141,7 +141,7 @@ console.log(response);
       this.newAsset.requestId = this.requestId;
       // this.newAsset.isDirectlyBenefited = true;
       await this.loadAssetType();
-  
+
       await this.loadAssetSize();
       this.isEditRequested = false;
       this.modalService.open(content, { size: 'lg', backdrop: 'static' });
@@ -170,7 +170,7 @@ console.log(response);
 
     onAddBtnClicked() {
       //this.setIsAttachmentChanged();
-  
+
       this._serviceProxyEndowmentRegistraion.createWaqfRequestAsset(
         this.newAsset
       ).subscribe(
@@ -180,6 +180,13 @@ console.log(response);
             if (resAssetData.isSuccess) {
               this.loadAssetsBy();
               this.modalService.dismissAll();
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
               // showSuccess('تم إنشاء الاصل بنجاح',
               //   () => {
               //     this.newAsset.id = resAssetData.dto.toString();
@@ -210,6 +217,9 @@ console.log(response);
             // showSuccess('تم تعديل الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });
+            // showSuccess('تم تعديل الاصل بنجاح', () => {
+            //   this.modalService.dismissAll();
+            // });
             //this.setOldAttachmentIds();
           }
         },
@@ -217,7 +227,7 @@ console.log(response);
           handleError(err);
         }
       );
-  
+
       this.modalService.dismissAll();
     }
 
@@ -265,6 +275,10 @@ console.log(response);
       (data) => {
         let resp = data;
         if (resp.isSuccess) {
+          // showSuccess('تم تعديل الاصل بنجاح', () => {
+          //   this.modalService.dismissAll();
+          //   this.loadAssetsBy();
+          // });
           // showSuccess('تم تعديل الاصل بنجاح', () => {
           //   this.modalService.dismissAll();
           //   this.loadAssetsBy();
