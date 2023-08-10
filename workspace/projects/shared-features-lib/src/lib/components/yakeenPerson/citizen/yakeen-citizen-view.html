@@ -26,8 +26,8 @@
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.gender' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender == 1">{{'Common.Male'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender != 1">{{'Common.Female'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender == '1'">{{'Common.Male'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender != '1'">{{'Common.Female'| localize}}</span>
     </div>
   </div>
 

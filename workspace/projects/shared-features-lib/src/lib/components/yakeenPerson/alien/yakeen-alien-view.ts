@@ -6,6 +6,7 @@ import {
   AlienInfoResponse, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupExtraData
 } from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
 import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
+import {cibUber} from "@coreui/icons";
 
 @Component({
   selector: 'yakeen-alien-view',
@@ -25,9 +26,11 @@ export class YakeenAlienViewComponent implements OnInit {
     // this case happens when the input param [alienInfo] is being passed as input, not as a response from GetCitizenInfo() API.
 
     if(this.alienInfo.awqafNatinaityId && !this.alienInfo.nationalityNameAr){
-      this.NationalityLookup();
+      this.LoadNationalities(this.alienInfo.awqafNatinaityId);
+      if (this.NationalityLookup != undefined){
       var natInfo = this.NationalityLookup.filter(item => item.id === this.alienInfo.awqafNatinaityId)[0];
       this.alienInfo.nationalityNameAr = natInfo ? natInfo.name : '';
+      }
     }
 
 

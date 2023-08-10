@@ -26,14 +26,21 @@ import {CoreLibModule} from "../../../../core-lib/src/lib/core-lib.module";
 import {YakeenAlienViewComponent} from "../components/yakeenPerson/alien/yakeen-alien-view";
 import {YakeenCitizenViewComponent} from "../components/yakeenPerson/citizen/yakeen-citizen-view";
 import {YakeenPersonComponent} from "../components/yakeenPerson/yakeen-person.component";
+import {ValidationMessagesComponent} from "../components/validation-messages/validation-messages.component";
+import {YakeenPersonViewComponent} from "../components/yakeenPerson/yakeen-person-view/yakeen-person-view.component";
+import {EditHafezaComponent} from "../components/Hafeza/edit-hafeza/edit-hafeza.component";
+import {CreateHafezaComponent} from "../components/Hafeza/create-hafeza/create-hafeza.component";
+import {ViewHafezaComponent} from "../components/Hafeza/view-hafeza/view-hafeza.component";
 
 
 @NgModule({
   declarations: [BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, HijriDatepickerComponent, FileUploaderComponent,
-    IDNumberWithValidationComponent, PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent],
+    IDNumberWithValidationComponent, PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent,
+    ValidationMessagesComponent, YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent],
   exports: [
     BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, IDNumberWithValidationComponent, FileUploaderComponent,
-    PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent
+    PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent, ValidationMessagesComponent
+    ,YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent
   ],
   providers: [
     // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },

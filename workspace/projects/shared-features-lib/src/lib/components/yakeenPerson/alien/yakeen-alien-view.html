@@ -26,20 +26,20 @@
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.gender' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="alienInfo.gender == 1">{{'Common.Male'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="alienInfo.gender != 1">{{'Common.Female'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo.gender == '1'">{{'Common.Male'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo.gender != '1'">{{'Common.Female'| localize}}</span>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idIssueDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaIssueDateG | date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaIssueDateG?.toJSDate()| date:'dd/MM/yyyy'}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idExpiryDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaExpiryDateG | date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaExpiryDateG?.toJSDate() | date:'dd/MM/yyyy'}}</label>
     </div>
   </div>
 
