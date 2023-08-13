@@ -7,39 +7,39 @@
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.SecondName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.fatherName}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.fatherName}}</label>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.ThirdName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.grandFatherName}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.grandFatherName}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.LastName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.familyName}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.familyName}}</label>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.gender' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender == '1'">{{'Common.Male'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.gender != '1'">{{'Common.Female'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse?.gender == '1'">{{'Common.Male'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse?.gender != '1'">{{'Common.Female'| localize}}</span>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idIssueDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.idIssueDate | date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.idIssueDate | date:'dd/MM/yyyy'}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idExpiryDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.idExpiryDate | date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.idExpiryDate | date:'dd/MM/yyyy'}}</label>
     </div>
   </div>
 
@@ -51,17 +51,17 @@
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idIssuePlace' | localize}}</label>
-      <label class="col-form-label font-weight-bold">&nbsp;{{citizenInfoResponse.idIssuePlace}}</label>
+      <label class="col-form-label font-weight-bold">&nbsp;{{citizenInfoResponse?.idIssuePlace}}</label>
     </div>
 
     <div class="form-group col" *ngIf="false">
       <label class="col-form-label">{{'Common.placeOfBirth' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{citizenInfoResponse.placeOfBirth}}</label>
+      <label class="col-form-label font-weight-bold">{{citizenInfoResponse?.placeOfBirth}}</label>
     </div>
     <div class="form-group col">
       <label class="col-form-label">{{'Common.lifeStatus' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.lifeStatus == 0">{{'Common.alive'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="citizenInfoResponse.lifeStatus != 1">{{'Common.dead'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse?.lifeStatus == 0">{{'Common.alive'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="citizenInfoResponse?.lifeStatus == 1">{{'Common.dead'| localize}}</span>
     </div>
   </div>
   <!--  <div class="row row-cols-1 row-cols-md-2" *ngIf="citizenInfoResponse.noIdentityReason!==undefined">-->

@@ -2,67 +2,67 @@
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.FirstName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.firstName}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.firstName}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.SecondName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.secondName}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.secondName}}</label>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.ThirdName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.thirdName}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.thirdName}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.LastName' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.lastName}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.lastName}}</label>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.gender' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="alienInfo.gender == '1'">{{'Common.Male'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="alienInfo.gender != '1'">{{'Common.Female'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo?.gender == '0'">{{'Common.Male'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo?.gender == '1'">{{'Common.Female'| localize}}</span>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idIssueDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaIssueDateG?.toJSDate()| date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.iqamaIssueDateG?.toJSDate()| date:'dd/MM/yyyy'}}</label>
     </div>
 
     <div class="form-group col">
       <label class="col-form-label">{{'Common.idExpiryDate' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.iqamaExpiryDateG?.toJSDate() | date:'dd/MM/yyyy'}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.iqamaExpiryDateG?.toJSDate() | date:'dd/MM/yyyy'}}</label>
     </div>
   </div>
 
   <div class="row row-cols-1 row-cols-md-2">
-    <div class="form-group col">
+    <div class="form-group col" *ngIf="alienInfo.nationalityNameAr != undefined">
       <label class="col-form-label">{{'Common.nationality' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.nationalityNameAr}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.nationalityNameAr}}</label>
     </div>
 
     <div class="form-group col" *ngIf="false">
       <label class="col-form-label">{{'Common.placeOfBirth' | localize}}</label>
-      <label class="col-form-label font-weight-bold">{{alienInfo.placeOfBirthAr}}</label>
+      <label class="col-form-label font-weight-bold">{{alienInfo?.placeOfBirthAr}}</label>
     </div>
     <div class="form-group col">
       <label class="col-form-label">{{'Common.lifeStatus' | localize}}</label>
-      <span class="form-control-plaintext" *ngIf="alienInfo.lifeStatus == 0">{{'Common.alive'| localize}}</span>
-      <span class="form-control-plaintext" *ngIf="alienInfo.lifeStatus != 1">{{'Common.dead'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo?.lifeStatus == 0">{{'Common.alive'| localize}}</span>
+      <span class="form-control-plaintext" *ngIf="alienInfo?.lifeStatus == 1">{{'Common.dead'| localize}}</span>
     </div>
   </div>
-<!--  <div class="row row-cols-1 row-cols-md-2" *ngIf="alienInfo.noIdentityReason!==undefined">-->
-<!--    <div class="form-group col">-->
-<!--      <label class="col-form-label">{{'Common.NoIdentityReason' | localize}}</label>-->
-<!--      <label class="col-form-label font-weight-bold">{{alienInfo.noIdentityReason}}</label>-->
-<!--    </div>-->
-<!--  </div>-->
+ <!-- <div class="row row-cols-1 row-cols-md-2" *ngIf="alienInfo.noIdentityReason!==undefined">
+   <div class="form-group col">
+     <label class="col-form-label">{{'Common.NoIdentityReason' | localize}}</label>
+     <label class="col-form-label font-weight-bold">{{alienInfo.noIdentityReason}}</label>
+   </div>
+  </div>  -->
 </div>
