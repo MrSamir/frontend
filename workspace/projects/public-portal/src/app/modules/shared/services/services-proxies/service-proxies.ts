@@ -377,6 +377,62 @@ export class ApplicationUserServiceServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    ensureYaqeenPersonalInfo(body: InputApplicationUserDto | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+        let url_ = this.baseUrl + "/api/ApplicationUserService/EnsureYaqeenPersonalInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEnsureYaqeenPersonalInfo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEnsureYaqeenPersonalInfo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputApplicationUserDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputApplicationUserDto>;
+        }));
+    }
+
+    protected processEnsureYaqeenPersonalInfo(response: HttpResponseBase): Observable<ApiResponseOfOutputApplicationUserDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputApplicationUserDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -425,62 +481,6 @@ export class EndowmentRegistrationServiceServiceProxy {
     }
 
     protected processCreateEndowment(response: HttpResponseBase): Observable<ApiResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    createWaqfRequestAsset(body: InputAssetDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateWaqfRequestAsset";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processCreateWaqfRequestAsset(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processCreateWaqfRequestAsset(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
-        }));
-    }
-
-    protected processCreateWaqfRequestAsset(response: HttpResponseBase): Observable<ApiResponse> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -564,11 +564,67 @@ export class EndowmentRegistrationServiceServiceProxy {
     }
 
     /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getEndowmentDataByRequestId(requestId: string | undefined): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentDataByRequestId?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEndowmentDataByRequestId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEndowmentDataByRequestId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndowmentDetailsDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndowmentDetailsDto>;
+        }));
+    }
+
+    protected processGetEndowmentDataByRequestId(response: HttpResponseBase): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputEndowmentDetailsDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
-    editWaqfAssetRequest(body: InputAssetDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditWaqfAssetRequest";
+    updateEndowmentRegistrationRequest(body: InputEndowmentRegistrationRequestDto | undefined): Observable<boolean> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/UpdateEndowmentRegistrationRequest";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -584,20 +640,20 @@ export class EndowmentRegistrationServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processEditWaqfAssetRequest(response_);
+            return this.processUpdateEndowmentRegistrationRequest(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processEditWaqfAssetRequest(response_ as any);
+                    return this.processUpdateEndowmentRegistrationRequest(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                    return _observableThrow(e) as any as Observable<boolean>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
+                return _observableThrow(response_) as any as Observable<boolean>;
         }));
     }
 
-    protected processEditWaqfAssetRequest(response: HttpResponseBase): Observable<ApiResponse> {
+    protected processUpdateEndowmentRegistrationRequest(response: HttpResponseBase): Observable<boolean> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -608,7 +664,8 @@ export class EndowmentRegistrationServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
+                result200 = resultData200 !== undefined ? resultData200 : <any>null;
+    
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -714,6 +771,118 @@ export class EndowmentRegistrationServiceServiceProxy {
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             return _observableOf(null as any);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    editWaqfAssetRequest(body: InputAssetDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditWaqfAssetRequest";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditWaqfAssetRequest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditWaqfAssetRequest(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processEditWaqfAssetRequest(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createWaqfRequestAsset(body: InputAssetDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateWaqfRequestAsset";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateWaqfRequestAsset(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateWaqfRequestAsset(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processCreateWaqfRequestAsset(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -902,69 +1071,6 @@ export class EndowmentRegistrationServiceServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getBeneficiartiesInformationByReqId(requestId: string | undefined): Observable<OutputBeneficiaryDto[]> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetBeneficiartiesInformationByReqId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
-            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetBeneficiartiesInformationByReqId(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetBeneficiartiesInformationByReqId(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputBeneficiaryDto[]>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<OutputBeneficiaryDto[]>;
-        }));
-    }
-
-    protected processGetBeneficiartiesInformationByReqId(response: HttpResponseBase): Observable<OutputBeneficiaryDto[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(OutputBeneficiaryDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param requestId (optional) 
-     * @return Success
-     */
     getSeersInformationByReqId(requestId: string | undefined): Observable<OutputSeerDto[]> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetSeersInformationByReqId?";
         if (requestId === null)
@@ -1025,10 +1131,353 @@ export class EndowmentRegistrationServiceServiceProxy {
     }
 
     /**
+     * @param body (optional) 
+     * @return Success
+     */
+    addSeer(body: AddSeerInputDto | undefined): Observable<ApiResponseOfAddSeerOutputDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddSeer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddSeer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddSeer(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfAddSeerOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfAddSeerOutputDto>;
+        }));
+    }
+
+    protected processAddSeer(response: HttpResponseBase): Observable<ApiResponseOfAddSeerOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfAddSeerOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    removeSeer(body: RemoveSeerInputDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/RemoveSeer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRemoveSeer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRemoveSeer(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processRemoveSeer(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    editSeer(body: EditSeerInputDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditSeer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditSeer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditSeer(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processEditSeer(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    addBeneficiary(body: AddBeneficiaryInputDto | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddBeneficiary";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAddBeneficiary(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAddBeneficiary(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfAddBeneficiaryOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfAddBeneficiaryOutputDto>;
+        }));
+    }
+
+    protected processAddBeneficiary(response: HttpResponseBase): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfAddBeneficiaryOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param requestId (optional) 
      * @return Success
      */
-    getEndowersInformationByReqId(requestId: string | undefined): Observable<OutputEndowmerDto[]> {
+    getBeneficiartiesInformationByReqId(requestId: string | undefined): Observable<OutputBeneficiaryDto[]> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetBeneficiartiesInformationByReqId?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetBeneficiartiesInformationByReqId(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetBeneficiartiesInformationByReqId(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<OutputBeneficiaryDto[]>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<OutputBeneficiaryDto[]>;
+        }));
+    }
+
+    protected processGetBeneficiartiesInformationByReqId(response: HttpResponseBase): Observable<OutputBeneficiaryDto[]> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(OutputBeneficiaryDto.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    removeBeneficiary(body: RemoveBeneficiaryInputDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/RemoveBeneficiary";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processRemoveBeneficiary(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processRemoveBeneficiary(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processRemoveBeneficiary(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getEndowersInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowersInformationByReqId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
@@ -1051,14 +1500,14 @@ export class EndowmentRegistrationServiceServiceProxy {
                 try {
                     return this.processGetEndowersInformationByReqId(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputEndowmerDto[]>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<OutputEndowmerDto[]>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto>;
         }));
     }
 
-    protected processGetEndowersInformationByReqId(response: HttpResponseBase): Observable<OutputEndowmerDto[]> {
+    protected processGetEndowersInformationByReqId(response: HttpResponseBase): Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1069,70 +1518,7 @@ export class EndowmentRegistrationServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200!.push(OutputEndowmerDto.fromJS(item));
-            }
-            else {
-                result200 = <any>null;
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param requestId (optional) 
-     * @return Success
-     */
-    getEndowmentDataByRequestId(requestId: string | undefined): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentDataByRequestId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
-            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetEndowmentDataByRequestId(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetEndowmentDataByRequestId(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndowmentDetailsDto>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndowmentDetailsDto>;
-        }));
-    }
-
-    protected processGetEndowmentDataByRequestId(response: HttpResponseBase): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponseOfOutputEndowmentDetailsDto.fromJS(resultData200);
+            result200 = ApiResponseOfPagedResultDtoOfOutputEndowmerDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1147,8 +1533,8 @@ export class EndowmentRegistrationServiceServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    updateEndowmentRegistrationRequest(body: InputEndowmentRegistrationRequestDto | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/UpdateEndowmentRegistrationRequest";
+    addEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1164,20 +1550,20 @@ export class EndowmentRegistrationServiceServiceProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processUpdateEndowmentRegistrationRequest(response_);
+            return this.processAddEndowmer(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    return this.processUpdateEndowmentRegistrationRequest(response_ as any);
+                    return this.processAddEndowmer(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<boolean>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndowmerDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<boolean>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndowmerDto>;
         }));
     }
 
-    protected processUpdateEndowmentRegistrationRequest(response: HttpResponseBase): Observable<boolean> {
+    protected processAddEndowmer(response: HttpResponseBase): Observable<ApiResponseOfOutputEndowmerDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1188,8 +1574,119 @@ export class EndowmentRegistrationServiceServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = ApiResponseOfOutputEndowmerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    editEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditEndowmer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processEditEndowmer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processEditEndowmer(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndowmerDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndowmerDto>;
+        }));
+    }
+
+    protected processEditEndowmer(response: HttpResponseBase): Observable<ApiResponseOfOutputEndowmerDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputEndowmerDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    deleteEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/DeleteEndowmer";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteEndowmer(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteEndowmer(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processDeleteEndowmer(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1648,6 +2145,74 @@ export class LookupApplicationServiceServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ApiResponseOfLookupDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
+export class MOJApplicationServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    attorneyInquiry(body: AttorneyInquiryInput | undefined): Observable<ApiResponseOfAttorneyInquiryOutput> {
+        let url_ = this.baseUrl + "/api/MOJApplicationService/AttorneyInquiry";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAttorneyInquiry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAttorneyInquiry(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
+        }));
+    }
+
+    protected processAttorneyInquiry(response: HttpResponseBase): Observable<ApiResponseOfAttorneyInquiryOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfAttorneyInquiryOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -2136,6 +2701,426 @@ export class WeatherForecastServiceProxy {
     }
 }
 
+@Injectable()
+export class YaqeenApplicationServiceServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getAlienInfo(body: GetAlienInfoInputDto | undefined): Observable<ApiResponseOfAlienInfoResponse> {
+        let url_ = this.baseUrl + "/api/YaqeenApplicationService/GetAlienInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAlienInfo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAlienInfo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfAlienInfoResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfAlienInfoResponse>;
+        }));
+    }
+
+    protected processGetAlienInfo(response: HttpResponseBase): Observable<ApiResponseOfAlienInfoResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfAlienInfoResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    getCitizenInfo(body: GetCitizenInfoInputDto | undefined): Observable<ApiResponseOfCitizenInfoResponse> {
+        let url_ = this.baseUrl + "/api/YaqeenApplicationService/GetCitizenInfo";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCitizenInfo(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCitizenInfo(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfCitizenInfoResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfCitizenInfoResponse>;
+        }));
+    }
+
+    protected processGetCitizenInfo(response: HttpResponseBase): Observable<ApiResponseOfCitizenInfoResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfCitizenInfoResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
+    requestId!: string;
+    createBeneficiaryDto!: CreateBeneficiaryDto;
+    applicationUserId!: string | undefined;
+
+    constructor(data?: IAddBeneficiaryInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.createBeneficiaryDto = _data["createBeneficiaryDto"] ? CreateBeneficiaryDto.fromJS(_data["createBeneficiaryDto"]) : <any>undefined;
+            this.applicationUserId = _data["applicationUserId"];
+        }
+    }
+
+    static fromJS(data: any): AddBeneficiaryInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddBeneficiaryInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["createBeneficiaryDto"] = this.createBeneficiaryDto ? this.createBeneficiaryDto.toJSON() : <any>undefined;
+        data["applicationUserId"] = this.applicationUserId;
+        return data;
+    }
+}
+
+export interface IAddBeneficiaryInputDto {
+    requestId: string;
+    createBeneficiaryDto: CreateBeneficiaryDto;
+    applicationUserId: string | undefined;
+}
+
+export class AddBeneficiaryOutputDto implements IAddBeneficiaryOutputDto {
+    personId!: string;
+    beneficiaryId!: string;
+
+    constructor(data?: IAddBeneficiaryOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.personId = _data["personId"];
+            this.beneficiaryId = _data["beneficiaryId"];
+        }
+    }
+
+    static fromJS(data: any): AddBeneficiaryOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddBeneficiaryOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["personId"] = this.personId;
+        data["beneficiaryId"] = this.beneficiaryId;
+        return data;
+    }
+}
+
+export interface IAddBeneficiaryOutputDto {
+    personId: string;
+    beneficiaryId: string;
+}
+
+export class AddSeerInputDto implements IAddSeerInputDto {
+    requestId!: string;
+    createSeerInputDto!: CreateSeerInputDto;
+    applicationUserId!: string | undefined;
+    seerPerson!: OutputApplicationUserDto;
+
+    constructor(data?: IAddSeerInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.createSeerInputDto = _data["createSeerInputDto"] ? CreateSeerInputDto.fromJS(_data["createSeerInputDto"]) : <any>undefined;
+            this.applicationUserId = _data["applicationUserId"];
+            this.seerPerson = _data["seerPerson"] ? OutputApplicationUserDto.fromJS(_data["seerPerson"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AddSeerInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddSeerInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["createSeerInputDto"] = this.createSeerInputDto ? this.createSeerInputDto.toJSON() : <any>undefined;
+        data["applicationUserId"] = this.applicationUserId;
+        data["seerPerson"] = this.seerPerson ? this.seerPerson.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IAddSeerInputDto {
+    requestId: string;
+    createSeerInputDto: CreateSeerInputDto;
+    applicationUserId: string | undefined;
+    seerPerson: OutputApplicationUserDto;
+}
+
+export class AddSeerOutputDto implements IAddSeerOutputDto {
+    personId!: string;
+    seerId!: string;
+
+    constructor(data?: IAddSeerOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.personId = _data["personId"];
+            this.seerId = _data["seerId"];
+        }
+    }
+
+    static fromJS(data: any): AddSeerOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddSeerOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["personId"] = this.personId;
+        data["seerId"] = this.seerId;
+        return data;
+    }
+}
+
+export interface IAddSeerOutputDto {
+    personId: string;
+    seerId: string;
+}
+
+export class AlienInfoResponse implements IAlienInfoResponse {
+    dateOfBirthG!: DateTime | undefined;
+    englishFirstName!: string | undefined;
+    englishLastName!: string | undefined;
+    englishSecondName!: string | undefined;
+    englishThirdName!: string | undefined;
+    firstName!: string | undefined;
+    gender!: string | undefined;
+    iqamaExpiryDateG!: DateTime | undefined;
+    iqamaIssueDateG!: DateTime | undefined;
+    iqamaIssuePlaceCode!: number | undefined;
+    iqamaVersionNumber!: number | undefined;
+    lastName!: string | undefined;
+    logId!: number | undefined;
+    placeOfBirthCode!: number | undefined;
+    placeOfBirthAr!: string | undefined;
+    placeOfBirthEn!: string | undefined;
+    secondName!: string | undefined;
+    thirdName!: string | undefined;
+    nationalityCode!: string | undefined;
+    nationalityNameAr!: string | undefined;
+    nationalityNameEn!: string | undefined;
+    lifeStatus!: number | undefined;
+    awqafNatinaityId!: number;
+
+    constructor(data?: IAlienInfoResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dateOfBirthG = _data["dateOfBirthG"] ? DateTime.fromISO(_data["dateOfBirthG"].toString()) : <any>undefined;
+            this.englishFirstName = _data["englishFirstName"];
+            this.englishLastName = _data["englishLastName"];
+            this.englishSecondName = _data["englishSecondName"];
+            this.englishThirdName = _data["englishThirdName"];
+            this.firstName = _data["firstName"];
+            this.gender = _data["gender"];
+            this.iqamaExpiryDateG = _data["iqamaExpiryDateG"] ? DateTime.fromISO(_data["iqamaExpiryDateG"].toString()) : <any>undefined;
+            this.iqamaIssueDateG = _data["iqamaIssueDateG"] ? DateTime.fromISO(_data["iqamaIssueDateG"].toString()) : <any>undefined;
+            this.iqamaIssuePlaceCode = _data["iqamaIssuePlaceCode"];
+            this.iqamaVersionNumber = _data["iqamaVersionNumber"];
+            this.lastName = _data["lastName"];
+            this.logId = _data["logId"];
+            this.placeOfBirthCode = _data["placeOfBirthCode"];
+            this.placeOfBirthAr = _data["placeOfBirthAr"];
+            this.placeOfBirthEn = _data["placeOfBirthEn"];
+            this.secondName = _data["secondName"];
+            this.thirdName = _data["thirdName"];
+            this.nationalityCode = _data["nationalityCode"];
+            this.nationalityNameAr = _data["nationalityNameAr"];
+            this.nationalityNameEn = _data["nationalityNameEn"];
+            this.lifeStatus = _data["lifeStatus"];
+            this.awqafNatinaityId = _data["awqafNatinaityId"];
+        }
+    }
+
+    static fromJS(data: any): AlienInfoResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new AlienInfoResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateOfBirthG"] = this.dateOfBirthG ? this.dateOfBirthG.toString() : <any>undefined;
+        data["englishFirstName"] = this.englishFirstName;
+        data["englishLastName"] = this.englishLastName;
+        data["englishSecondName"] = this.englishSecondName;
+        data["englishThirdName"] = this.englishThirdName;
+        data["firstName"] = this.firstName;
+        data["gender"] = this.gender;
+        data["iqamaExpiryDateG"] = this.iqamaExpiryDateG ? this.iqamaExpiryDateG.toString() : <any>undefined;
+        data["iqamaIssueDateG"] = this.iqamaIssueDateG ? this.iqamaIssueDateG.toString() : <any>undefined;
+        data["iqamaIssuePlaceCode"] = this.iqamaIssuePlaceCode;
+        data["iqamaVersionNumber"] = this.iqamaVersionNumber;
+        data["lastName"] = this.lastName;
+        data["logId"] = this.logId;
+        data["placeOfBirthCode"] = this.placeOfBirthCode;
+        data["placeOfBirthAr"] = this.placeOfBirthAr;
+        data["placeOfBirthEn"] = this.placeOfBirthEn;
+        data["secondName"] = this.secondName;
+        data["thirdName"] = this.thirdName;
+        data["nationalityCode"] = this.nationalityCode;
+        data["nationalityNameAr"] = this.nationalityNameAr;
+        data["nationalityNameEn"] = this.nationalityNameEn;
+        data["lifeStatus"] = this.lifeStatus;
+        data["awqafNatinaityId"] = this.awqafNatinaityId;
+        return data;
+    }
+}
+
+export interface IAlienInfoResponse {
+    dateOfBirthG: DateTime | undefined;
+    englishFirstName: string | undefined;
+    englishLastName: string | undefined;
+    englishSecondName: string | undefined;
+    englishThirdName: string | undefined;
+    firstName: string | undefined;
+    gender: string | undefined;
+    iqamaExpiryDateG: DateTime | undefined;
+    iqamaIssueDateG: DateTime | undefined;
+    iqamaIssuePlaceCode: number | undefined;
+    iqamaVersionNumber: number | undefined;
+    lastName: string | undefined;
+    logId: number | undefined;
+    placeOfBirthCode: number | undefined;
+    placeOfBirthAr: string | undefined;
+    placeOfBirthEn: string | undefined;
+    secondName: string | undefined;
+    thirdName: string | undefined;
+    nationalityCode: string | undefined;
+    nationalityNameAr: string | undefined;
+    nationalityNameEn: string | undefined;
+    lifeStatus: number | undefined;
+    awqafNatinaityId: number;
+}
+
 export class AnimalOrAgriculturalAssetData implements IAnimalOrAgriculturalAssetData {
     regionId!: number | undefined;
     cityId!: number | undefined;
@@ -2256,6 +3241,286 @@ export class ApiResponse implements IApiResponse {
 export interface IApiResponse {
     isSuccess: boolean;
     dto: any | undefined;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfAddBeneficiaryOutputDto implements IApiResponseOfAddBeneficiaryOutputDto {
+    isSuccess!: boolean;
+    dto!: AddBeneficiaryOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfAddBeneficiaryOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? AddBeneficiaryOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfAddBeneficiaryOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfAddBeneficiaryOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfAddBeneficiaryOutputDto {
+    isSuccess: boolean;
+    dto: AddBeneficiaryOutputDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfAddSeerOutputDto implements IApiResponseOfAddSeerOutputDto {
+    isSuccess!: boolean;
+    dto!: AddSeerOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfAddSeerOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? AddSeerOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfAddSeerOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfAddSeerOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfAddSeerOutputDto {
+    isSuccess: boolean;
+    dto: AddSeerOutputDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfAlienInfoResponse implements IApiResponseOfAlienInfoResponse {
+    isSuccess!: boolean;
+    dto!: AlienInfoResponse;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfAlienInfoResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? AlienInfoResponse.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfAlienInfoResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfAlienInfoResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfAlienInfoResponse {
+    isSuccess: boolean;
+    dto: AlienInfoResponse;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfAttorneyInquiryOutput implements IApiResponseOfAttorneyInquiryOutput {
+    isSuccess!: boolean;
+    dto!: AttorneyInquiryOutput;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfAttorneyInquiryOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? AttorneyInquiryOutput.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfAttorneyInquiryOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfAttorneyInquiryOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfAttorneyInquiryOutput {
+    isSuccess: boolean;
+    dto: AttorneyInquiryOutput;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfCitizenInfoResponse implements IApiResponseOfCitizenInfoResponse {
+    isSuccess!: boolean;
+    dto!: CitizenInfoResponse;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfCitizenInfoResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? CitizenInfoResponse.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfCitizenInfoResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfCitizenInfoResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfCitizenInfoResponse {
+    isSuccess: boolean;
+    dto: CitizenInfoResponse;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -2484,6 +3749,62 @@ export interface IApiResponseOfOutputEndowmentDetailsDto {
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
+export class ApiResponseOfOutputEndowmerDto implements IApiResponseOfOutputEndowmerDto {
+    isSuccess!: boolean;
+    dto!: OutputEndowmerDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfOutputEndowmerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? OutputEndowmerDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfOutputEndowmerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfOutputEndowmerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfOutputEndowmerDto {
+    isSuccess: boolean;
+    dto: OutputEndowmerDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
 export class ApiResponseOfOutputFileDto implements IApiResponseOfOutputFileDto {
     isSuccess!: boolean;
     dto!: OutputFileDto;
@@ -2592,6 +3913,62 @@ export class ApiResponseOfPagedResultDtoOfLookupDto implements IApiResponseOfPag
 export interface IApiResponseOfPagedResultDtoOfLookupDto {
     isSuccess: boolean;
     dto: PagedResultDtoOfLookupDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfPagedResultDtoOfOutputEndowmerDto implements IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
+    isSuccess!: boolean;
+    dto!: PagedResultDtoOfOutputEndowmerDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfPagedResultDtoOfOutputEndowmerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? PagedResultDtoOfOutputEndowmerDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfPagedResultDtoOfOutputEndowmerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfPagedResultDtoOfOutputEndowmerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
+    isSuccess: boolean;
+    dto: PagedResultDtoOfOutputEndowmerDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -3144,6 +4521,102 @@ export interface IApplicationUser {
     accessFailedCount: number;
 }
 
+export class AttorneyInquiryInput implements IAttorneyInquiryInput {
+    code!: string | undefined;
+    identityNumber!: string | undefined;
+
+    constructor(data?: IAttorneyInquiryInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.code = _data["code"];
+            this.identityNumber = _data["identityNumber"];
+        }
+    }
+
+    static fromJS(data: any): AttorneyInquiryInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttorneyInquiryInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
+        data["identityNumber"] = this.identityNumber;
+        return data;
+    }
+}
+
+export interface IAttorneyInquiryInput {
+    code: string | undefined;
+    identityNumber: string | undefined;
+}
+
+export class AttorneyInquiryOutput implements IAttorneyInquiryOutput {
+    statusId!: string | undefined;
+    statusName!: string | undefined;
+    issueDateHijri!: string | undefined;
+    issueDateGreg!: DateTime | undefined;
+    endDateHijri!: string | undefined;
+    endDateGreg!: DateTime | undefined;
+
+    constructor(data?: IAttorneyInquiryOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.statusId = _data["statusId"];
+            this.statusName = _data["statusName"];
+            this.issueDateHijri = _data["issueDateHijri"];
+            this.issueDateGreg = _data["issueDateGreg"] ? DateTime.fromISO(_data["issueDateGreg"].toString()) : <any>undefined;
+            this.endDateHijri = _data["endDateHijri"];
+            this.endDateGreg = _data["endDateGreg"] ? DateTime.fromISO(_data["endDateGreg"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): AttorneyInquiryOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new AttorneyInquiryOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statusId"] = this.statusId;
+        data["statusName"] = this.statusName;
+        data["issueDateHijri"] = this.issueDateHijri;
+        data["issueDateGreg"] = this.issueDateGreg ? this.issueDateGreg.toString() : <any>undefined;
+        data["endDateHijri"] = this.endDateHijri;
+        data["endDateGreg"] = this.endDateGreg ? this.endDateGreg.toString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IAttorneyInquiryOutput {
+    statusId: string | undefined;
+    statusName: string | undefined;
+    issueDateHijri: string | undefined;
+    issueDateGreg: DateTime | undefined;
+    endDateHijri: string | undefined;
+    endDateGreg: DateTime | undefined;
+}
+
 export class BusinessEntityAssetData implements IBusinessEntityAssetData {
     businessEntityName!: string | undefined;
     regionId!: number | undefined;
@@ -3472,6 +4945,114 @@ export interface ICertificateType {
     id: number;
 }
 
+export class CitizenInfoResponse implements ICitizenInfoResponse {
+    dateOfBirthH!: string | undefined;
+    englishFirstName!: string | undefined;
+    englishLastName!: string | undefined;
+    englishSecondName!: string | undefined;
+    englishThirdName!: string | undefined;
+    familyName!: string | undefined;
+    fatherName!: string | undefined;
+    firstName!: string | undefined;
+    gender!: string | undefined;
+    grandFatherName!: string | undefined;
+    idExpiryDate!: string | undefined;
+    idIssueDate!: string | undefined;
+    idIssuePlace!: string | undefined;
+    idVersionNumber!: number | undefined;
+    logId!: number | undefined;
+    placeOfBirth!: string | undefined;
+    nationalityCode!: number;
+    nationalityId!: number;
+    lifeStatus!: number;
+
+    constructor(data?: ICitizenInfoResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.dateOfBirthH = _data["dateOfBirthH"];
+            this.englishFirstName = _data["englishFirstName"];
+            this.englishLastName = _data["englishLastName"];
+            this.englishSecondName = _data["englishSecondName"];
+            this.englishThirdName = _data["englishThirdName"];
+            this.familyName = _data["familyName"];
+            this.fatherName = _data["fatherName"];
+            this.firstName = _data["firstName"];
+            this.gender = _data["gender"];
+            this.grandFatherName = _data["grandFatherName"];
+            this.idExpiryDate = _data["idExpiryDate"];
+            this.idIssueDate = _data["idIssueDate"];
+            this.idIssuePlace = _data["idIssuePlace"];
+            this.idVersionNumber = _data["idVersionNumber"];
+            this.logId = _data["logId"];
+            this.placeOfBirth = _data["placeOfBirth"];
+            this.nationalityCode = _data["nationalityCode"];
+            this.nationalityId = _data["nationalityId"];
+            this.lifeStatus = _data["lifeStatus"];
+        }
+    }
+
+    static fromJS(data: any): CitizenInfoResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new CitizenInfoResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["dateOfBirthH"] = this.dateOfBirthH;
+        data["englishFirstName"] = this.englishFirstName;
+        data["englishLastName"] = this.englishLastName;
+        data["englishSecondName"] = this.englishSecondName;
+        data["englishThirdName"] = this.englishThirdName;
+        data["familyName"] = this.familyName;
+        data["fatherName"] = this.fatherName;
+        data["firstName"] = this.firstName;
+        data["gender"] = this.gender;
+        data["grandFatherName"] = this.grandFatherName;
+        data["idExpiryDate"] = this.idExpiryDate;
+        data["idIssueDate"] = this.idIssueDate;
+        data["idIssuePlace"] = this.idIssuePlace;
+        data["idVersionNumber"] = this.idVersionNumber;
+        data["logId"] = this.logId;
+        data["placeOfBirth"] = this.placeOfBirth;
+        data["nationalityCode"] = this.nationalityCode;
+        data["nationalityId"] = this.nationalityId;
+        data["lifeStatus"] = this.lifeStatus;
+        return data;
+    }
+}
+
+export interface ICitizenInfoResponse {
+    dateOfBirthH: string | undefined;
+    englishFirstName: string | undefined;
+    englishLastName: string | undefined;
+    englishSecondName: string | undefined;
+    englishThirdName: string | undefined;
+    familyName: string | undefined;
+    fatherName: string | undefined;
+    firstName: string | undefined;
+    gender: string | undefined;
+    grandFatherName: string | undefined;
+    idExpiryDate: string | undefined;
+    idIssueDate: string | undefined;
+    idIssuePlace: string | undefined;
+    idVersionNumber: number | undefined;
+    logId: number | undefined;
+    placeOfBirth: string | undefined;
+    nationalityCode: number;
+    nationalityId: number;
+    lifeStatus: number;
+}
+
 export class City implements ICity {
     hrsdCode!: number;
     regionId!: number;
@@ -3550,6 +5131,202 @@ export interface ICity {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: number;
+}
+
+export class CreateBeneficiaryDto implements ICreateBeneficiaryDto {
+    beneficiaryId!: string | undefined;
+    endowmentId!: string | undefined;
+    beneficiaryName!: string | undefined;
+    spendingCategoryId!: number | undefined;
+    isBeneficiaryInsideKsa!: boolean | undefined;
+
+    constructor(data?: ICreateBeneficiaryDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.beneficiaryId = _data["beneficiaryId"];
+            this.endowmentId = _data["endowmentId"];
+            this.beneficiaryName = _data["beneficiaryName"];
+            this.spendingCategoryId = _data["spendingCategoryId"];
+            this.isBeneficiaryInsideKsa = _data["isBeneficiaryInsideKsa"];
+        }
+    }
+
+    static fromJS(data: any): CreateBeneficiaryDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateBeneficiaryDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["beneficiaryId"] = this.beneficiaryId;
+        data["endowmentId"] = this.endowmentId;
+        data["beneficiaryName"] = this.beneficiaryName;
+        data["spendingCategoryId"] = this.spendingCategoryId;
+        data["isBeneficiaryInsideKsa"] = this.isBeneficiaryInsideKsa;
+        return data;
+    }
+}
+
+export interface ICreateBeneficiaryDto {
+    beneficiaryId: string | undefined;
+    endowmentId: string | undefined;
+    beneficiaryName: string | undefined;
+    spendingCategoryId: number | undefined;
+    isBeneficiaryInsideKsa: boolean | undefined;
+}
+
+export class CreateSeerInputDto implements ICreateSeerInputDto {
+    seerId!: string | undefined;
+    endowmentId!: string | undefined;
+    seerTypeId!: number | undefined;
+    prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
+    seenDeedId!: string | undefined;
+    seedDeedAttachmentId!: string | undefined;
+    commercialNumber!: string | undefined;
+    educationLevelId!: number | undefined;
+    educationLevelCertificateAttachmentId!: string | undefined;
+    experienceYearId!: number | undefined;
+    startingDate!: DateTime | undefined;
+    endDate!: DateTime | undefined;
+    endSeerReasonTypeId!: number | undefined;
+    endowmentPartiesTypeId!: number | undefined;
+    id!: string;
+
+    constructor(data?: ICreateSeerInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.seerId = _data["seerId"];
+            this.endowmentId = _data["endowmentId"];
+            this.seerTypeId = _data["seerTypeId"];
+            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
+            this.seenDeedId = _data["seenDeedId"];
+            this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
+            this.commercialNumber = _data["commercialNumber"];
+            this.educationLevelId = _data["educationLevelId"];
+            this.educationLevelCertificateAttachmentId = _data["educationLevelCertificateAttachmentId"];
+            this.experienceYearId = _data["experienceYearId"];
+            this.startingDate = _data["startingDate"] ? DateTime.fromISO(_data["startingDate"].toString()) : <any>undefined;
+            this.endDate = _data["endDate"] ? DateTime.fromISO(_data["endDate"].toString()) : <any>undefined;
+            this.endSeerReasonTypeId = _data["endSeerReasonTypeId"];
+            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): CreateSeerInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateSeerInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["seerId"] = this.seerId;
+        data["endowmentId"] = this.endowmentId;
+        data["seerTypeId"] = this.seerTypeId;
+        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
+        data["seenDeedId"] = this.seenDeedId;
+        data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
+        data["commercialNumber"] = this.commercialNumber;
+        data["educationLevelId"] = this.educationLevelId;
+        data["educationLevelCertificateAttachmentId"] = this.educationLevelCertificateAttachmentId;
+        data["experienceYearId"] = this.experienceYearId;
+        data["startingDate"] = this.startingDate ? this.startingDate.toString() : <any>undefined;
+        data["endDate"] = this.endDate ? this.endDate.toString() : <any>undefined;
+        data["endSeerReasonTypeId"] = this.endSeerReasonTypeId;
+        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ICreateSeerInputDto {
+    seerId: string | undefined;
+    endowmentId: string | undefined;
+    seerTypeId: number | undefined;
+    prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
+    seenDeedId: string | undefined;
+    seedDeedAttachmentId: string | undefined;
+    commercialNumber: string | undefined;
+    educationLevelId: number | undefined;
+    educationLevelCertificateAttachmentId: string | undefined;
+    experienceYearId: number | undefined;
+    startingDate: DateTime | undefined;
+    endDate: DateTime | undefined;
+    endSeerReasonTypeId: number | undefined;
+    endowmentPartiesTypeId: number | undefined;
+    id: string;
+}
+
+export class EditSeerInputDto implements IEditSeerInputDto {
+    requestId!: string;
+    createSeerInputDto!: CreateSeerInputDto;
+    applicationUserId!: string | undefined;
+    seerPerson!: OutputApplicationUserDto;
+
+    constructor(data?: IEditSeerInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.createSeerInputDto = _data["createSeerInputDto"] ? CreateSeerInputDto.fromJS(_data["createSeerInputDto"]) : <any>undefined;
+            this.applicationUserId = _data["applicationUserId"];
+            this.seerPerson = _data["seerPerson"] ? OutputApplicationUserDto.fromJS(_data["seerPerson"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): EditSeerInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EditSeerInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["createSeerInputDto"] = this.createSeerInputDto ? this.createSeerInputDto.toJSON() : <any>undefined;
+        data["applicationUserId"] = this.applicationUserId;
+        data["seerPerson"] = this.seerPerson ? this.seerPerson.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IEditSeerInputDto {
+    requestId: string;
+    createSeerInputDto: CreateSeerInputDto;
+    applicationUserId: string | undefined;
+    seerPerson: OutputApplicationUserDto;
 }
 
 export class EducationLevel implements IEducationLevel {
@@ -4589,6 +6366,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
     endowmentId!: string;
     seerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -4623,6 +6401,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
             this.endowmentId = _data["endowmentId"];
             this.seerTypeId = _data["seerTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -4657,6 +6436,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
         data["endowmentId"] = this.endowmentId;
         data["seerTypeId"] = this.seerTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -4684,6 +6464,7 @@ export interface IEndowmentSeerData {
     endowmentId: string;
     seerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -4714,6 +6495,7 @@ export class EndowmerData implements IEndowmerData {
     creationDate!: DateTime;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
+    isMainApplicant!: boolean;
     endowmentPartiesTypeId!: number | undefined;
 
     constructor(data?: IEndowmerData) {
@@ -4736,6 +6518,7 @@ export class EndowmerData implements IEndowmerData {
             this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
             this.updatedBy = _data["updatedBy"];
             this.lastUpdate = _data["lastUpdate"] ? DateTime.fromISO(_data["lastUpdate"].toString()) : <any>undefined;
+            this.isMainApplicant = _data["isMainApplicant"];
             this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
         }
     }
@@ -4758,6 +6541,7 @@ export class EndowmerData implements IEndowmerData {
         data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
         data["updatedBy"] = this.updatedBy;
         data["lastUpdate"] = this.lastUpdate ? this.lastUpdate.toString() : <any>undefined;
+        data["isMainApplicant"] = this.isMainApplicant;
         data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
         return data;
     }
@@ -4773,6 +6557,7 @@ export interface IEndowmerData {
     creationDate: DateTime;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
+    isMainApplicant: boolean;
     endowmentPartiesTypeId: number | undefined;
 }
 
@@ -4946,6 +6731,86 @@ export interface IFiscalAssetData {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: string;
+}
+
+export class GetAlienInfoInputDto implements IGetAlienInfoInputDto {
+    iqama!: string | undefined;
+    dateOfBirth!: string | undefined;
+
+    constructor(data?: IGetAlienInfoInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.iqama = _data["iqama"];
+            this.dateOfBirth = _data["dateOfBirth"];
+        }
+    }
+
+    static fromJS(data: any): GetAlienInfoInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetAlienInfoInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["iqama"] = this.iqama;
+        data["dateOfBirth"] = this.dateOfBirth;
+        return data;
+    }
+}
+
+export interface IGetAlienInfoInputDto {
+    iqama: string | undefined;
+    dateOfBirth: string | undefined;
+}
+
+export class GetCitizenInfoInputDto implements IGetCitizenInfoInputDto {
+    nin!: string | undefined;
+    dateOfBirth!: string | undefined;
+
+    constructor(data?: IGetCitizenInfoInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.nin = _data["nin"];
+            this.dateOfBirth = _data["dateOfBirth"];
+        }
+    }
+
+    static fromJS(data: any): GetCitizenInfoInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetCitizenInfoInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["nin"] = this.nin;
+        data["dateOfBirth"] = this.dateOfBirth;
+        return data;
+    }
+}
+
+export interface IGetCitizenInfoInputDto {
+    nin: string | undefined;
+    dateOfBirth: string | undefined;
 }
 
 export class IdType implements IIdType {
@@ -5146,6 +7011,174 @@ export interface IInputApplicantDto {
     thirdNameAr: string | undefined;
     lastNameAr: string | undefined;
     isAlive: boolean | undefined;
+}
+
+export class InputApplicationUserDto implements IInputApplicationUserDto {
+    id!: string | undefined;
+    birthDate!: DateTime | undefined;
+    birthDateHijri!: string | undefined;
+    gender!: UserGender;
+    idTypeId!: number | undefined;
+    regionId!: number | undefined;
+    cityId!: number | undefined;
+    fullName!: string | undefined;
+    userName!: string | undefined;
+    firstNameEn!: string | undefined;
+    thirdNameEn!: string | undefined;
+    secondNameEn!: string | undefined;
+    lastNameEn!: string | undefined;
+    firstNameAr!: string | undefined;
+    secondNameAr!: string | undefined;
+    thirdNameAr!: string | undefined;
+    lastNameAr!: string | undefined;
+    idExpiryDate!: string | undefined;
+    idIssueDate!: string | undefined;
+    idIssuePlace!: string | undefined;
+    placeOfBirth!: string | undefined;
+    iqamaExpiryDateGregorian!: DateTime | undefined;
+    iqamaIssueDateGregorian!: DateTime | undefined;
+    iqamaIssuePlaceCode!: string | undefined;
+    placeOfBirthCode!: string | undefined;
+    nationalityId!: number | undefined;
+    noIdentityReason!: number | undefined;
+    validatedByYaqeen!: boolean | undefined;
+    isAlive!: boolean | undefined;
+    type!: string | undefined;
+    email!: string | undefined;
+    emailConfirmed!: boolean | undefined;
+    phoneNumber!: string | undefined;
+    phoneNumberConfirmed!: boolean | undefined;
+
+    constructor(data?: IInputApplicationUserDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.birthDate = _data["birthDate"] ? DateTime.fromISO(_data["birthDate"].toString()) : <any>undefined;
+            this.birthDateHijri = _data["birthDateHijri"];
+            this.gender = _data["gender"];
+            this.idTypeId = _data["idTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.fullName = _data["fullName"];
+            this.userName = _data["userName"];
+            this.firstNameEn = _data["firstNameEn"];
+            this.thirdNameEn = _data["thirdNameEn"];
+            this.secondNameEn = _data["secondNameEn"];
+            this.lastNameEn = _data["lastNameEn"];
+            this.firstNameAr = _data["firstNameAr"];
+            this.secondNameAr = _data["secondNameAr"];
+            this.thirdNameAr = _data["thirdNameAr"];
+            this.lastNameAr = _data["lastNameAr"];
+            this.idExpiryDate = _data["idExpiryDate"];
+            this.idIssueDate = _data["idIssueDate"];
+            this.idIssuePlace = _data["idIssuePlace"];
+            this.placeOfBirth = _data["placeOfBirth"];
+            this.iqamaExpiryDateGregorian = _data["iqamaExpiryDateGregorian"] ? DateTime.fromISO(_data["iqamaExpiryDateGregorian"].toString()) : <any>undefined;
+            this.iqamaIssueDateGregorian = _data["iqamaIssueDateGregorian"] ? DateTime.fromISO(_data["iqamaIssueDateGregorian"].toString()) : <any>undefined;
+            this.iqamaIssuePlaceCode = _data["iqamaIssuePlaceCode"];
+            this.placeOfBirthCode = _data["placeOfBirthCode"];
+            this.nationalityId = _data["nationalityId"];
+            this.noIdentityReason = _data["noIdentityReason"];
+            this.validatedByYaqeen = _data["validatedByYaqeen"];
+            this.isAlive = _data["isAlive"];
+            this.type = _data["type"];
+            this.email = _data["email"];
+            this.emailConfirmed = _data["emailConfirmed"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.phoneNumberConfirmed = _data["phoneNumberConfirmed"];
+        }
+    }
+
+    static fromJS(data: any): InputApplicationUserDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputApplicationUserDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["birthDate"] = this.birthDate ? this.birthDate.toString() : <any>undefined;
+        data["birthDateHijri"] = this.birthDateHijri;
+        data["gender"] = this.gender;
+        data["idTypeId"] = this.idTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["fullName"] = this.fullName;
+        data["userName"] = this.userName;
+        data["firstNameEn"] = this.firstNameEn;
+        data["thirdNameEn"] = this.thirdNameEn;
+        data["secondNameEn"] = this.secondNameEn;
+        data["lastNameEn"] = this.lastNameEn;
+        data["firstNameAr"] = this.firstNameAr;
+        data["secondNameAr"] = this.secondNameAr;
+        data["thirdNameAr"] = this.thirdNameAr;
+        data["lastNameAr"] = this.lastNameAr;
+        data["idExpiryDate"] = this.idExpiryDate;
+        data["idIssueDate"] = this.idIssueDate;
+        data["idIssuePlace"] = this.idIssuePlace;
+        data["placeOfBirth"] = this.placeOfBirth;
+        data["iqamaExpiryDateGregorian"] = this.iqamaExpiryDateGregorian ? this.iqamaExpiryDateGregorian.toString() : <any>undefined;
+        data["iqamaIssueDateGregorian"] = this.iqamaIssueDateGregorian ? this.iqamaIssueDateGregorian.toString() : <any>undefined;
+        data["iqamaIssuePlaceCode"] = this.iqamaIssuePlaceCode;
+        data["placeOfBirthCode"] = this.placeOfBirthCode;
+        data["nationalityId"] = this.nationalityId;
+        data["noIdentityReason"] = this.noIdentityReason;
+        data["validatedByYaqeen"] = this.validatedByYaqeen;
+        data["isAlive"] = this.isAlive;
+        data["type"] = this.type;
+        data["email"] = this.email;
+        data["emailConfirmed"] = this.emailConfirmed;
+        data["phoneNumber"] = this.phoneNumber;
+        data["phoneNumberConfirmed"] = this.phoneNumberConfirmed;
+        return data;
+    }
+}
+
+export interface IInputApplicationUserDto {
+    id: string | undefined;
+    birthDate: DateTime | undefined;
+    birthDateHijri: string | undefined;
+    gender: UserGender;
+    idTypeId: number | undefined;
+    regionId: number | undefined;
+    cityId: number | undefined;
+    fullName: string | undefined;
+    userName: string | undefined;
+    firstNameEn: string | undefined;
+    thirdNameEn: string | undefined;
+    secondNameEn: string | undefined;
+    lastNameEn: string | undefined;
+    firstNameAr: string | undefined;
+    secondNameAr: string | undefined;
+    thirdNameAr: string | undefined;
+    lastNameAr: string | undefined;
+    idExpiryDate: string | undefined;
+    idIssueDate: string | undefined;
+    idIssuePlace: string | undefined;
+    placeOfBirth: string | undefined;
+    iqamaExpiryDateGregorian: DateTime | undefined;
+    iqamaIssueDateGregorian: DateTime | undefined;
+    iqamaIssuePlaceCode: string | undefined;
+    placeOfBirthCode: string | undefined;
+    nationalityId: number | undefined;
+    noIdentityReason: number | undefined;
+    validatedByYaqeen: boolean | undefined;
+    isAlive: boolean | undefined;
+    type: string | undefined;
+    email: string | undefined;
+    emailConfirmed: boolean | undefined;
+    phoneNumber: string | undefined;
+    phoneNumberConfirmed: boolean | undefined;
 }
 
 export class InputAssetDto implements IInputAssetDto {
@@ -5530,6 +7563,70 @@ export interface IInputEndowmentRegistrationRequestDto {
     seersData: EndowmentSeerData[] | undefined;
     beneficiariesData: EndowmentBeneficiaryData[] | undefined;
     id: string;
+}
+
+export class InputEndowmerDto implements IInputEndowmerDto {
+    requestId!: string;
+    endowmerId!: string | undefined;
+    endowmentId!: string;
+    endowmerTypeId!: number | undefined;
+    prestigiousAttributeTypeId!: number | undefined;
+    commercialNumber!: string | undefined;
+    endowmentPartiesTypeId!: number | undefined;
+    endowmerPerson!: InputApplicationUserDto;
+
+    constructor(data?: IInputEndowmerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.endowmerId = _data["endowmerId"];
+            this.endowmentId = _data["endowmentId"];
+            this.endowmerTypeId = _data["endowmerTypeId"];
+            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.commercialNumber = _data["commercialNumber"];
+            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+            this.endowmerPerson = _data["endowmerPerson"] ? InputApplicationUserDto.fromJS(_data["endowmerPerson"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): InputEndowmerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputEndowmerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["endowmerId"] = this.endowmerId;
+        data["endowmentId"] = this.endowmentId;
+        data["endowmerTypeId"] = this.endowmerTypeId;
+        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["commercialNumber"] = this.commercialNumber;
+        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        data["endowmerPerson"] = this.endowmerPerson ? this.endowmerPerson.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IInputEndowmerDto {
+    requestId: string;
+    endowmerId: string | undefined;
+    endowmentId: string;
+    endowmerTypeId: number | undefined;
+    prestigiousAttributeTypeId: number | undefined;
+    commercialNumber: string | undefined;
+    endowmentPartiesTypeId: number | undefined;
+    endowmerPerson: InputApplicationUserDto;
 }
 
 export class InputFileDto implements IInputFileDto {
@@ -7215,6 +9312,7 @@ export class OutputEndowmerDto implements IOutputEndowmerDto {
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
     endowmentPartiesTypeId!: number | undefined;
+    isMainApplicant!: boolean;
     endowmerPerson!: OutputApplicationUserDto;
 
     constructor(data?: IOutputEndowmerDto) {
@@ -7234,6 +9332,7 @@ export class OutputEndowmerDto implements IOutputEndowmerDto {
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
             this.commercialNumber = _data["commercialNumber"];
             this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+            this.isMainApplicant = _data["isMainApplicant"];
             this.endowmerPerson = _data["endowmerPerson"] ? OutputApplicationUserDto.fromJS(_data["endowmerPerson"]) : <any>undefined;
         }
     }
@@ -7253,6 +9352,7 @@ export class OutputEndowmerDto implements IOutputEndowmerDto {
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
         data["commercialNumber"] = this.commercialNumber;
         data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        data["isMainApplicant"] = this.isMainApplicant;
         data["endowmerPerson"] = this.endowmerPerson ? this.endowmerPerson.toJSON() : <any>undefined;
         return data;
     }
@@ -7265,6 +9365,7 @@ export interface IOutputEndowmerDto {
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
     endowmentPartiesTypeId: number | undefined;
+    isMainApplicant: boolean;
     endowmerPerson: OutputApplicationUserDto;
 }
 
@@ -7337,6 +9438,7 @@ export class OutputSeerDto implements IOutputSeerDto {
     endowmentId!: string | undefined;
     seerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -7365,6 +9467,7 @@ export class OutputSeerDto implements IOutputSeerDto {
             this.endowmentId = _data["endowmentId"];
             this.seerTypeId = _data["seerTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -7393,6 +9496,7 @@ export class OutputSeerDto implements IOutputSeerDto {
         data["endowmentId"] = this.endowmentId;
         data["seerTypeId"] = this.seerTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -7414,6 +9518,7 @@ export interface IOutputSeerDto {
     endowmentId: string | undefined;
     seerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -7474,6 +9579,54 @@ export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
 export interface IPagedResultDtoOfLookupDto {
     totalCount: number;
     items: LookupDto[] | undefined;
+}
+
+export class PagedResultDtoOfOutputEndowmerDto implements IPagedResultDtoOfOutputEndowmerDto {
+    totalCount!: number;
+    items!: OutputEndowmerDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfOutputEndowmerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(OutputEndowmerDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfOutputEndowmerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfOutputEndowmerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfOutputEndowmerDto {
+    totalCount: number;
+    items: OutputEndowmerDto[] | undefined;
 }
 
 export class ParticularBenefitAssetData implements IParticularBenefitAssetData {
@@ -7762,6 +9915,86 @@ export interface IRegion {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: number;
+}
+
+export class RemoveBeneficiaryInputDto implements IRemoveBeneficiaryInputDto {
+    beneficiaryId!: string;
+    requestId!: string;
+
+    constructor(data?: IRemoveBeneficiaryInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.beneficiaryId = _data["beneficiaryId"];
+            this.requestId = _data["requestId"];
+        }
+    }
+
+    static fromJS(data: any): RemoveBeneficiaryInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RemoveBeneficiaryInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["beneficiaryId"] = this.beneficiaryId;
+        data["requestId"] = this.requestId;
+        return data;
+    }
+}
+
+export interface IRemoveBeneficiaryInputDto {
+    beneficiaryId: string;
+    requestId: string;
+}
+
+export class RemoveSeerInputDto implements IRemoveSeerInputDto {
+    seerId!: string;
+    requestId!: string;
+
+    constructor(data?: IRemoveSeerInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.seerId = _data["seerId"];
+            this.requestId = _data["requestId"];
+        }
+    }
+
+    static fromJS(data: any): RemoveSeerInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RemoveSeerInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["seerId"] = this.seerId;
+        data["requestId"] = this.requestId;
+        return data;
+    }
+}
+
+export interface IRemoveSeerInputDto {
+    seerId: string;
+    requestId: string;
 }
 
 export class Request implements IRequest {

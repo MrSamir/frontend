@@ -12,20 +12,21 @@ import { EndowmenInstantRegistrationInfoComponent } from '../components/endowmen
  import {MultiSelectModule}    from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
+import { SeerStepComponent } from '../components/endowment-registration-new/seer-step/seer-step.component';
 
 @NgModule({
   declarations: [
     EndowmentRegistrationStartServiceComponent,
     EndowmentRegistrationNewComponent,
     EndowmenInstantRegistrationEditComponent,
-    EndowmenInstantRegistrationInfoComponent
+    EndowmenInstantRegistrationInfoComponent,SeerStepComponent
   ],
   imports: [
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
     PublicPortalSharedModule, 
-    AccordionModule,FormsModule,CoreLibModule,MultiSelectModule
+    AccordionModule,FormsModule,CoreLibModule,MultiSelectModule,SeerStepComponent
 
   ],
   exports: [ /*RouterModule*/]

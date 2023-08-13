@@ -29,6 +29,9 @@ import { API_BASE_URL } from './modules/shared/services/services-proxies/service
 import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
 import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EndowmentSeerEditComponent } from './modules/shared/components/endowment-seer-edit/endowment-seer-edit.component';
+import { EndowmentBeneficiaryEditComponent } from './modules/shared/components/endowment-seer-edit/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
+//import { SeerStepComponent } from './modules/endowment-registration/components/endowment-registration-new/seer-step/seer-step.component';
 
 
 export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
@@ -40,7 +43,10 @@ export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    LandingComponent
+    LandingComponent,
+    EndowmentSeerEditComponent,
+    EndowmentBeneficiaryEditComponent,
+    //SeerStepComponent
     
     
   ],
