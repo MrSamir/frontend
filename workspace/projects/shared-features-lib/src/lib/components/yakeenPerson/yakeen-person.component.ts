@@ -1,7 +1,7 @@
-import { DateConvertTo } from './../ng-bootstrap-hijri-gregorian-datepicker/Pipes/dateConverter/date-converter.pipe';
 import {
   Component,
   EventEmitter,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {
   AlienInfoResponse,
-  ApiResponse,
   ApiResponseOfAlienInfoResponse,
   ApiResponseOfCitizenInfoResponse,
   ApiResponseOfOutputApplicationUserDto,
@@ -20,12 +19,13 @@ import {
   InputApplicationUserDto,
   InputLookUpDto,
   LookupApplicationServiceServiceProxy,
+  LookupDto,
   OutputApplicationUserDto,
   YaqeenApplicationServiceServiceProxy,
 } from '../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ngBootstrapDatePickerDateType } from '../ng-bootstrap-hijri-gregorian-datepicker/Const';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from '../IDNumberWithValidation/EnumValidation';
@@ -37,59 +37,45 @@ import {
   isElementInvalid,
   isElementMissed,
   isElementTooShort,
-  isElementTouched
+  isElementTouched,
 } from 'projects/core-lib/src/lib/Validators/validation-queries';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 @Component({
   selector: 'yakeen-person',
   templateUrl: './yakeen-person.component.html',
 })
-export class YakeenPersonComponent implements OnInit, OnDestroy {
-  @Output() OnNewCitizenValidated = new EventEmitter<{
-    citizenInfo: CitizenInfoResponse | null;
-    idType: number | null;
-    idNumber: string | null;
-    person: InputApplicationUserDto | null;
-    isValid: boolean | false;
-  }>();
-  @Output() OnNewAlienValidated = new EventEmitter<{
-    alienInfo: AlienInfoResponse | null;
-    idType: number | null;
-    idNumber: string | null;
-    person: InputApplicationUserDto | null;
-    isValid: boolean | false;
-  }>();
+export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDestroy {
+  @Output() OnNewCitizenValidated = new EventEmitter<{ citizenInfo: CitizenInfoResponse, idType: number, userName: string, person: InputApplicationUserDto, isValid: boolean }>();
+    @Output() OnNewAlienValidated = new EventEmitter<{ alienInfo: AlienInfoResponse, idType: number, userName: string, person: InputApplicationUserDto, isValid: boolean }>();
+  
   @Output() OnNewPersonAvailable = new EventEmitter<{
-    idType: number | null;
-    idNumber: string | null;
-    person: InputApplicationUserDto | null;
+    idType: number;
+    userName: string;
+    person: InputApplicationUserDto;
   }>();
   // @Output() OnNewHafezaValidated = new EventEmitter<{hafeza:AddHafezaInputDto, isValid:boolean}>();
   // @Output() OnEditHafezaValidated = new EventEmitter<{editHafeza:EditHafezaInputDto, isValid:boolean}>();
-  @Input() isOutsideKSA: boolean;
-  @Input() initialData: {
-    citizen: CitizenInfoResponse;
-    alien: AlienInfoResponse;
-    person: InputApplicationUserDto;
-    //,hafeza:HafezaInfoResponse
-  };
+  @Input() initialData: { citizen: CitizenInfoResponse | undefined, alien: AlienInfoResponse | undefined, person: InputApplicationUserDto | undefined};
   @Input() fromSeer: boolean = false;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
-  IdTypeLookup: any = [];
+  IdTypeLookup: LookupDto[] = [];
   myselectedDateType: ngBootstrapDatePickerDateType =
     ngBootstrapDatePickerDateType.Hijri;
-  //birthdateLable: string = "تاريخ الميلاد (هجري)";
+  birthdateLable: string = this.l("Common.dateOfBirthHijri");
   constructor(
     private formBuilder: FormBuilder,
     private dateHelper: DateFormatterService,
     private lookupService: LookupApplicationServiceServiceProxy,
     private yakeenValidationService: YaqeenApplicationServiceServiceProxy,
-    private PersonalInformationServiceProxy: ApplicationUserServiceServiceProxy
-  ) {}
+    private PersonalInformationServiceProxy: ApplicationUserServiceServiceProxy,
+    injector: Injector
+  ) {
+    super(injector);
+  }
 
-  newPerson: InputApplicationUserDto = new InputApplicationUserDto(); // When we finish yakeen validation we ask the system for the person if found through his IdNumber
-  newCreatedYakeenPerson: InputApplicationUserDto =
-    new InputApplicationUserDto();
+  newPerson: InputApplicationUserDto | undefined; // When we finish yakeen validation we ask the system for the person if found through his IdNumber
+  newCreatedYakeenPerson: InputApplicationUserDto | undefined
   mobileEditAllowed = true;
   emailEditAllowed = true;
 
@@ -120,11 +106,11 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
         this.newCreatedYakeenPerson = fetchedPerson.dto;
 
         this.OnNewCitizenValidated.emit({
-          citizenInfo: this.citizenInfoResponse,
+          citizenInfo: this.citizenInfoResponse?? new CitizenInfoResponse(),
           idType: this.personForm.value.selectedTypeId
             ? parseInt(this.personForm.value.selectedTypeId)
             : 0,
-          idNumber: this.personForm.value.saudiNationalId ?? null,
+          userName: this.personForm.value.saudiNationalId ?? '',
           person: this.newCreatedYakeenPerson,
           isValid: this.isVaild,
         });
@@ -154,11 +140,11 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
       YaqeenPersonInfo
     ).subscribe((fetchedPerson: ApiResponseOfOutputApplicationUserDto) => {
       this.OnNewAlienValidated.emit({
-        alienInfo: this.alienInfoResponse,
+        alienInfo: this.alienInfoResponse?? new AlienInfoResponse(),
         idType: this.personForm.value.selectedTypeId
           ? parseInt(this.personForm.value.selectedTypeId)
           : 0,
-        idNumber: this.personForm.value.iqamaId?.toString() ?? null,
+        userName: this.personForm.value.iqamaId?.toString() ?? '',
         person: fetchedPerson.dto,
         isValid: this.isVaild,
       });
@@ -180,18 +166,17 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
       (!!this.initialData.alien || !!this.initialData.citizen)
     ) {
       this.personForm.controls.selectedTypeId.setValue(
-        this.initialData.person.idTypeId?.toString() ?? null
+        this.initialData.person.idTypeId?.toString() ?? ''
       );
       this.personForm.controls.iqamaId.setValue(
-        this.initialData.person.userName ?? null
+        this.initialData.person?.userName ?? ''
       );
       this.personForm.controls.saudiNationalId.setValue(
-        this.initialData.person.userName ?? null
+        this.initialData.person?.userName ?? ''
       );
       this.personDateString = !!this.initialData.person.birthDate
         ? this.initialData.person.birthDate.toString()
         : this.initialData.person.birthDateHijri;
-
       this.citizenInfoResponse = this.initialData.citizen;
       this.alienInfoResponse = this.initialData.alien;
       this.onPersonFetched(this.initialData.person);
@@ -203,20 +188,20 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   }
 
   // Whether it gets fetched from url hit or passed from the parent
-  onPersonFetched(fetchedPerson: OutputApplicationUserDto) {
+  onPersonFetched(fetchedPerson: InputApplicationUserDto | undefined) {
     this.newPerson = fetchedPerson;
     this.mobileEditAllowed =
       !!this.newPerson &&
-      (!this.newPerson.phoneNumber || !this.newPerson.phoneNumberConfirmed);
+      (!this.newPerson?.phoneNumber || !this.newPerson?.phoneNumberConfirmed);
     this.emailEditAllowed =
       !!this.newPerson &&
-      (!this.newPerson.email || !this.newPerson.emailConfirmed);
+      (!this.newPerson?.email || !this.newPerson?.emailConfirmed);
     if (!!this.newPerson) {
       this.personAppendixForm.controls.mobileNumber.setValue(
-        this.newPerson.phoneNumber ?? ''
+        this.newPerson?.phoneNumber ?? ''
       );
-      this.personAppendixForm.controls.email.setValue(
-        this.newPerson.email ?? ''
+      this.personAppendixForm.controls?.email.setValue(
+        this.newPerson?.email ?? ''
       );
     }
     this.newPerson = fetchedPerson;
@@ -225,8 +210,8 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   reason: string = '';
   personDate: NgbDateStruct;
   personDateString: string | undefined;
-  citizenInfoResponse: CitizenInfoResponse;
-  alienInfoResponse: AlienInfoResponse;
+  alienInfoResponse: AlienInfoResponse | undefined;
+  citizenInfoResponse: CitizenInfoResponse | undefined ;
 
   // idTypeLables = [
   //     'هوية وطنية',
@@ -235,11 +220,11 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   //     'لا يوجد'
   // ];
 
-  patterns = [
-    EnumValidation.pattern_nationalId,
-    EnumValidation.pattern_iqama,
-    EnumValidation.pattern_number_attribute_validation,
-  ];
+  // patterns = [
+  //   EnumValidation.pattern_nationalId,
+  //   EnumValidation.pattern_iqama,
+  //   EnumValidation.pattern_number_attribute_validation,
+  // ];
 
   personForm = this.formBuilder.group({
     selectedTypeId: ['', [Validators.required]],
@@ -272,16 +257,20 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
       '',
       [Validators.pattern(EnumValidation.pattern_ksa_mobile_number)],
     ],
-    email: ['', [Validators.required, Validators.email]],
+    email: [
+      '',
+      [Validators.required, Validators.pattern(EnumValidation.pattern_email)],
+    ],
   });
 
   mobileNumberValidationItems: ValidationItem[] = [
-    { message: "رقم الجوال غير صحيح", flag: isElementInvalid.bind(this, this.personAppendixForm, 'mobileNumber') }
+    { message: this.l("Common.missingMobileNumber"), flag: isElementMissed.bind(this, this.personAppendixForm, 'mobileNumber') },
+    { message: this.l("Common.invalidMobile"), flag: isElementInvalid.bind(this, this.personAppendixForm, 'mobileNumber') }
   ];
 
   emailValidationItems: ValidationItem[] = [
-    {message: "البريد الالكتروني مطلوب", flag: isElementMissed.bind(this, this.personAppendixForm, 'email')},
-    { message: "البريد الالكتروني غير صحيح", flag: isElementInvalid.bind(this, this.personAppendixForm, 'email') }
+    {message: this.l("Common.missingEmail"), flag: isElementMissed.bind(this, this.personAppendixForm, 'email')},
+    { message: this.l("Common.invalidEmail"), flag: isElementInvalid.bind(this, this.personAppendixForm, 'email') }
   ];
 
   performAppendixFormSubscription: Subscription;
@@ -294,33 +283,53 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
     //   if (this.personForm.value.selectedTypeId > 3) {
     //     return undefined;
     // }
-    return this.IdTypeLookup[this.personForm.value.selectedTypeId ?? 0 + 1]
-      .name;
+    let name: string | undefined;
+    if (
+      this.IdTypeLookup.length > 0 &&
+      this.personForm.value.selectedTypeId != undefined
+    ) {
+
+      name =
+        this.IdTypeLookup[(parseInt(this.personForm.value.selectedTypeId) - 1)]?.name;
+    }
+    return name;
   }
 
-  LoadIdTypes() {
-    this.lookupfliter.lookUpName = 'IdTypes';
-    this.lookupfliter.filters = [];
-    this.lookupService.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.IdTypeLookup = data.dto.items;
-      console.log(data);
-      this.personForm.controls.birthdate.enable();
-      this.personForm.controls.iqamaId.enable();
-      this.personForm.controls.saudiNationalId.enable();
-      this.initFormFromInitialData();
-    });
+  InitiateForm() {
+    this.personForm.controls.birthdate.enable();
+    this.personForm.controls.iqamaId.enable();
+    this.personForm.controls.saudiNationalId.enable();
   }
 
   ngOnInit(): void {
-    this.setDateLimits();
-    this.LoadIdTypes();
-    this.subscribeToChanges();
+    this.lookupfliter.lookUpName = 'IdType';
+    this.lookupfliter.filters = [];
+    this.lookupService
+      .getAllLookups(this.lookupfliter)
+      .subscribe((data) => {
+        this.setLookupIdTypes(data);
+        this.personForm.controls.birthdate.enable();
+            this.personForm.controls.iqamaId.enable();
+            this.personForm.controls.saudiNationalId.enable();
+            this.initFormFromInitialData();
+        console.log(data);
+      });
+      if (this.initialData.citizen){
+        this.citizenInfoResponse = this.initialData.citizen;
+      }
+      if (this.initialData.alien){
+        this.alienInfoResponse = this.initialData.alien;
+      }
+      this.subscribeToChanges();
+  }
+  setLookupIdTypes(data: any) {
+    this.IdTypeLookup = data.dto.items!;
   }
 
   subscribeToChanges() {
     this.performAppendixFormSubscription =
       this.personAppendixForm.valueChanges.subscribe((values) => {
-        if (this.personAppendixForm.valid) {
+        if (this.personAppendixForm.valid && this.newPerson != undefined) {
           this.newPerson.email =
             this.personAppendixForm.value.email ?? undefined;
           this.newPerson.phoneNumber =
@@ -329,7 +338,7 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
             idType: this.personForm.value.selectedTypeId
               ? parseInt(this.personForm.value.selectedTypeId)
               : 0,
-            idNumber: this.newPerson?.userName ?? null,
+            userName: this.newPerson?.userName ?? '',
             person: this.newPerson,
           });
         }
@@ -341,10 +350,6 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
       this.performAppendixFormSubscription.unsubscribe();
     }
   }
-
-  // get IdTypes() {
-  //   return this.isOutsideKSA ? this.lookupService.outsideKSAIdTypeLookups : !this.fromSeer? this.lookupService.insideKSAIdTypeLookups: this.lookupService.insideKSAIdTypeLookups.filter(c=>c.value!=IdType.NONE_OF_THE_ABOVE&&c.value!=IdType.OTHER);
-  // }
 
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
@@ -380,12 +385,18 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
 
   get isInvalid() {
     if (this.personForm.value.selectedTypeId === '1') {
-      return this.isElementInvalid('saudiNationalId') ||
+      return (
+        this.isElementInvalid('saudiNationalId') ||
         !this.personDateString ||
-        this.isElementBlank('saudiNationalId');
+        this.isElementBlank('saudiNationalId')
+      );
     }
     if (this.personForm.value.selectedTypeId === '2') {
-      return this.isElementInvalid('iqamaId') || !this.personDateString || this.isElementBlank('iqamaId');
+      return (
+        this.isElementInvalid('iqamaId') ||
+        !this.personDateString ||
+        this.isElementBlank('iqamaId')
+      );
     }
     return true;
   }
@@ -408,7 +419,7 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   validateCitizen(): CitizenInfoResponse {
     var citizen: CitizenInfoResponse = new CitizenInfoResponse();
     var citizenInfo = new GetCitizenInfoInputDto();
-    citizenInfo.nin = this.personForm.value.saudiNationalId?? undefined;
+    citizenInfo.nin = this.personForm.value.saudiNationalId ?? undefined;
     citizenInfo.dateOfBirth = this.personDateString;
     this.yakeenValidationService
       .getCitizenInfo(citizenInfo)
@@ -421,7 +432,7 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   validateAlien(): AlienInfoResponse {
     var alien: AlienInfoResponse = new AlienInfoResponse();
     var alienInfo = new GetAlienInfoInputDto();
-    alienInfo.iqama = this.personForm.value.iqamaId?? undefined;
+    alienInfo.iqama = this.personForm.value.iqamaId ?? undefined;
     alienInfo.dateOfBirth = this.personDateString;
     this.yakeenValidationService
       .getAlienInfo(alienInfo)
@@ -432,70 +443,85 @@ export class YakeenPersonComponent implements OnInit, OnDestroy {
   }
 
   saudiNationalIdValidationItems: ValidationItem[] = [
-      { message: "رقم الهوية الوطنية مطلوب", flag: isElementMissed.bind(this, this.personForm, 'saudiNationalId') },
-      {
-          message: "رقم الهوية الوطنية يجب أن يحتوي على عشر أرقام",
-          flag: isElementTooShort.bind(this, this.personForm, "saudiNationalId")
-      },
-      { message: "رقم الهوية الوطنية يجب يبدأ بالرقم 1", flag: this.saudiNationalIdNoStartWithOne.bind(this) }
+    {
+      message: this.l("Common.NationalIdNumberRequired"),
+      flag: isElementMissed.bind(this, this.personForm, 'saudiNationalId'),
+    },
+    {
+      message: this.l("Common.NationalIdNumberLengthValidation"),
+      flag: isElementTooShort.bind(this, this.personForm, 'saudiNationalId'),
+    },
+    {
+      message: this.l("Common.NationalIdNumberStartsWithOne"),
+      flag: this.saudiNationalIdNoStartWithOne.bind(this),
+    },
   ];
 
   iqamaIdValidationItems: ValidationItem[] = [
-      { message: "رقم الإقامة مطلوب", flag: isElementMissed.bind(this, this.personForm, 'iqamaId') },
-      { message: "رقم الإقامة يجب أن يحتوي على عشر أرقام", flag: isElementTooShort.bind(this, this.personForm, "iqamaId") },
-      { message: "رقم الإقامة يجب أن يبدأ بالرقم 2", flag: this.iqamaIdNoStartWithTwo.bind(this) }
+    {
+      message: this.l("Common.IqamaNumberRequired"),
+      flag: isElementMissed.bind(this, this.personForm, 'iqamaId'),
+    },
+    {
+      message: this.l("Common.IqamaNumberLengthValidation"),
+      flag: isElementTooShort.bind(this, this.personForm, 'iqamaId'),
+    },
+    {
+      message: this.l("Common.IqamaNumberStartsWithTwo"),
+      flag: this.iqamaIdNoStartWithTwo.bind(this),
+    },
   ];
 
   DateValidationItems: ValidationItem[] = [
     {
-      message: "التاريخ  مطلوب",
-      flag: isElementMissed.bind(this, this.personForm, 'birthdate')
+      message: this.l("Common.BirthDateRequired"),
+      flag: isElementMissed.bind(this, this.personForm, 'birthdate'),
     },
-    {message: "الصيغة المدخلة غير صحيحة", flag: this.invalidDate.bind(this)}
+    { message: this.l("Common.BirthDateInvalid"), flag: this.invalidDate.bind(this) },
   ];
 
-    isElementInvalid( elementName: string) {
-        return isElementInvalid(this.personForm, elementName);
-    }
+  isElementInvalid(elementName: string) {
+    return isElementInvalid(this.personForm, elementName);
+  }
 
-    isElementInvalidAnyForm(form: FormGroup, elementName: string) {
-      return isElementInvalid(form, elementName);
-    }
+  isElementInvalidAnyForm(form: FormGroup, elementName: string) {
+    return isElementInvalid(form, elementName);
+  }
 
-    isElementBlank(elementName: string) {
-        return isElementBlank(this.personForm, elementName);
-    }
+  isElementBlank(elementName: string) {
+    return isElementBlank(this.personForm, elementName);
+  }
 
-    isElementTouched(elementName: string) {
-        return isElementTouched(this.personForm, elementName);
-    }
+  isElementTouched(elementName: string) {
+    return isElementTouched(this.personForm, elementName);
+  }
 
-    saudiNationalIdNoStartWithOne() {
-        let element = this.personForm.controls['saudiNationalId'];
-        return element.touched && element.errors?.['invalidSaudiNationalId'];
-    }
+  saudiNationalIdNoStartWithOne() {
+    let element = this.personForm.controls['saudiNationalId'];
+    return element.touched && element.errors?.['invalidSaudiNationalId'];
+  }
 
-    iqamaIdNoStartWithTwo() {
-        let element = this.personForm.controls['iqamaId'];
-        return element.touched && element.errors?.['invalidIqamaId'];
-    }
+  iqamaIdNoStartWithTwo() {
+    let element = this.personForm.controls['iqamaId'];
+    return element.touched && element.errors?.['invalidIqamaId'];
+  }
 
   invalidDate() {
     let element = this.personForm.controls['birthdate'];
     return element.touched && element.errors?.['invalidDate'];
   }
 
-    get fetchedFromYakeenAlready() {
-        return !!this.citizenInfoResponse || !!this.alienInfoResponse;// ||!!this.initialData.hafeza;
-    }
+  get fetchedFromYakeenAlready() {
+    return !(this.citizenInfoResponse == undefined && this.alienInfoResponse == undefined );
+  }
 
   changeIdType() {
     if (this.personForm.value.selectedTypeId == '1') {
       this.myselectedDateType = ngBootstrapDatePickerDateType.Hijri;
-      //this.birthdateLable = "تاريخ الميلاد (هجري)";
+      this.birthdateLable = this.l("Common.dateOfBirthHijri");
     } else {
       this.myselectedDateType = ngBootstrapDatePickerDateType.Gregorian;
-      //this.birthdateLable = "تاريخ الميلاد (ميلادي)";
+      this.birthdateLable = this.l("Common.dateOfBirthGregorian");
     }
     this.setDateLimits();
   }

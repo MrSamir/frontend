@@ -14,7 +14,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
     ServiceProxy.LookupApplicationServiceServiceProxy,
     ServiceProxy.AccountServiceProxy,
     ServiceProxy.ApplicationUserServiceServiceProxy,
-    ServiceProxy.YaqeenApplicationServiceServiceProxy
+    ServiceProxy.YaqeenApplicationServiceServiceProxy,
   ],
 })
 export class ServicesProxyModule {

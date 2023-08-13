@@ -48,7 +48,6 @@ export class AppMessageService {
   }
 
   private _showMessage(key: string, message: MessageModel) {
-    //debugger;
     let basemessage = message as Message;
     basemessage.key = key;
     this.messageService.add(basemessage);
@@ -105,4 +104,3 @@ export class AppMessageService {
     });
   }
 }
- 
