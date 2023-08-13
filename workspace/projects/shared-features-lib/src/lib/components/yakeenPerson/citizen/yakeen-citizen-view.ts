@@ -10,7 +10,7 @@ import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
   templateUrl: './yakeen-citizen-view.html'
 })
 export class YakeenCitizenViewComponent implements OnInit {
-  @Input() citizenInfoResponse: CitizenInfoResponse;
+  @Input() citizenInfoResponse: CitizenInfoResponse | undefined;
 
   ngOnInit(): void {
     // check if NationlaityId has value AND no name, then this case require a manual mapping

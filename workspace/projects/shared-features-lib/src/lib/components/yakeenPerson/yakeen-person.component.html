@@ -1,72 +1,61 @@
 <form [formGroup]="personForm">
   <div class="row row-cols-1 row-cols-md-2">
-    <div class="form-group col" *ngIf="!isOutsideKSA">
+    <div class="form-group col">
       <label class="col-form-label">{{'Common.IdType' | localize}}<span class="text-danger">*</span></label>
-      <select class="custom-select" name="idTypeId" (change)="changeIdType()" *ngIf="!fetchedFromYakeenAlready"
-              formControlName="selectedTypeId"
-              [attr.disabled]="IdTypeLookup.length===1 ? true : null">
-        <option [selected]="IdTypeLookup.length===1" *ngFor="let idType of IdTypeLookup" value={{idType.value}}>
-          {{idType.name}}</option>
+      <select class="custom-select" name="idTypeId" (change)="changeIdType()" id="idTypeId"
+        *ngIf="!fetchedFromYakeenAlready && IdTypeLookup.length> 0"
+        formControlName="selectedTypeId"
+        [disabled]="IdTypeLookup.length===1 || IdTypeLookup == null">
+        <option [selected]="IdTypeLookup.length===1" *ngFor="let idType of IdTypeLookup" value={{idType.id}}>
+          {{idType?.name | localize}}</option>
       </select>
       <input *ngIf="fetchedFromYakeenAlready" type="text" class="form-control" [value]="selectedTypeName" disabled>
     </div>
 
     <div class="form-group col" *ngIf="!!selectedTypeName && this.personForm.value.selectedTypeId==='1'">
       <label class="col-form-label">{{selectedTypeName}}<span class="text-danger">*</span></label>
-      <input type="text" class="form-control"
-             formControlName="saudiNationalId"
-             (beforeinput)="beforeInput($event)"
-             minlength="10"
-             maxlength="10" [class.is-invalid]="isElementInvalid('saudiNationalId')">
-       <app-validation-messages [ValidationItems]="saudiNationalIdValidationItems"></app-validation-messages>
+      <input type="text" class="form-control" formControlName="saudiNationalId" (beforeinput)="beforeInput($event)"
+        minlength="10" maxlength="10" [class.is-invalid]="isElementInvalid('saudiNationalId')">
+      <app-validation-messages [ValidationItems]="saudiNationalIdValidationItems"></app-validation-messages>
     </div>
 
     <div class="form-group col" *ngIf="!!selectedTypeName && this.personForm.value.selectedTypeId==='2'">
       <label class="col-form-label">{{selectedTypeName}}<span class="text-danger">*</span></label>
-      <input type="text" class="form-control"
-             formControlName="iqamaId"
-             (beforeinput)="beforeInput($event)"
-             minlength="10"
-             maxlength="10" [class.is-invalid]="isElementInvalid('iqamaId')">
-       <app-validation-messages [ValidationItems]="iqamaIdValidationItems"></app-validation-messages>
+      <input type="text" class="form-control" formControlName="iqamaId" (beforeinput)="beforeInput($event)"
+        minlength="10" maxlength="10" [class.is-invalid]="isElementInvalid('iqamaId')">
+      <app-validation-messages [ValidationItems]="iqamaIdValidationItems"></app-validation-messages>
     </div>
 
 
 
     <div [formGroup]="personForm" class="form-group col"
-         *ngIf="this.personForm.value.selectedTypeId==='1' || this.personForm.value.selectedTypeId==='2'">
-         <label class="col-form-label">{{'Common.dateOfBirth' | localize}}</label>
-      <app-ng-bootstrap-hijri-gregorian-datepicker
-        [IsRequired]=true
-        [min]="min"
-        [max]="maxToday"
-        [(SelectedDate)]="personDate"
-        [CalenderType]="myselectedDateType"
-        (SelectedDateChange)="onPersonDateChange($event)"
-        [IsDisabled]="fetchedFromYakeenAlready"
-      ></app-ng-bootstrap-hijri-gregorian-datepicker>
-      <input class="form-control" type="hidden" [value]="personDateString"
-             formControlName="birthdate" [class.is-invalid]="isElementInvalid('birthdate')">
-       <app-validation-messages [ValidationItems]="DateValidationItems"></app-validation-messages>
+      *ngIf="this.personForm.value.selectedTypeId==='1' || this.personForm.value.selectedTypeId==='2'">
+      <app-ng-bootstrap-hijri-gregorian-datepicker [Label]="birthdateLable" [IsRequired]=true [min]="min" [max]="maxToday"
+        [(SelectedDate)]="personDate" [CalenderType]="myselectedDateType"
+        (SelectedDateChange)="onPersonDateChange($event)" [IsDisabled]="fetchedFromYakeenAlready">
+        </app-ng-bootstrap-hijri-gregorian-datepicker>
+        <!-- <input class="form-control" type="hidden" [value]="personDateString" formControlName="birthdate"
+          [class.is-invalid]="isElementInvalid('birthdate')"> -->
+        <app-validation-messages [ValidationItems]="DateValidationItems"></app-validation-messages>
     </div>
     <div class="form-group col-12" *ngIf="this.personForm.value.selectedTypeId==='1' ||
                                           this.personForm.value.selectedTypeId==='2' ||
                                           this.personForm.value.selectedTypeId==='3'">
       <div class="aw-btn my-2" *ngIf="personForm.value.selectedTypeId !=='3'">
         <button type="button" class="btn btn-awq-secondary px-6" (click)="onValidateBtnClicked()"
-                [disabled]="fetchedFromYakeenAlready">
-                <!-- isInvalid -->
-                {{'Common.ValidateButton' | localize}}        </button>
+          [disabled]=" isInvalid || fetchedFromYakeenAlready">
+          <!-- isInvalid -->
+          {{'Common.ValidateButton' | localize}} </button>
       </div>
     </div>
   </div>
 </form>
 
-<div *ngIf="!!citizenInfoResponse">
+<div *ngIf="citizenInfoResponse != undefined">
   <yakeen-citizen-view [citizenInfoResponse]="citizenInfoResponse"></yakeen-citizen-view>
 </div>
 
-<div *ngIf="!!alienInfoResponse">
+<div *ngIf="alienInfoResponse != undefined">
   <yakeen-alien-view [alienInfo]="alienInfoResponse"></yakeen-alien-view>
 </div>
 
@@ -80,31 +69,20 @@
 
 
 
-<form [formGroup]="personAppendixForm" *ngIf="fetchedFromYakeenAlready && !!newPerson">
+<form [formGroup]="personAppendixForm" *ngIf="fetchedFromYakeenAlready && newPerson">
   <div class="row row-cols-1 row-cols-md-2">
 
     <div class="form-group col">
-        <label class="col-form-label">{{'Common.mobileNumber' | localize}}<span class="text-danger">*</span></label>
-        <input
-               class="form-control"
-               type="text"
-               formControlName="mobileNumber"
-               placeholder="05xxxxxxxx | 9665xxxxxxxx"
-               inputmode="numeric"
-               [readOnly]="!mobileEditAllowed"
-               [class.is-invalid]="isElementInvalidAnyForm(personAppendixForm,'mobileNumber')"
-        >
-        <app-validation-messages [ValidationItems]="mobileNumberValidationItems"></app-validation-messages>
+      <label class="col-form-label">{{'Common.mobileNumber' | localize}}<span class="text-danger">*</span></label>
+      <input class="form-control" type="text" formControlName="mobileNumber" placeholder="05xxxxxxxx | 9665xxxxxxxx"
+        inputmode="numeric" [readOnly]="!mobileEditAllowed"
+        [class.is-invalid]="isElementInvalidAnyForm(personAppendixForm,'mobileNumber')">
+      <app-validation-messages [ValidationItems]="mobileNumberValidationItems"></app-validation-messages>
     </div>
-
     <div class="form-group col">
       <label class="col-form-label">{{'Common.email' | localize}}<span class="text-danger">*</span></label>
-      <input type="text"
-             class="form-control"
-             formControlName="email"
-             [class.is-invalid]="isElementInvalidAnyForm(personAppendixForm, 'email')"
-             [readOnly]="!emailEditAllowed"
-      >
+      <input type="text" class="form-control" formControlName="email"
+        [class.is-invalid]="isElementInvalidAnyForm(personAppendixForm, 'email')" [readOnly]="!emailEditAllowed">
       <app-validation-messages [ValidationItems]="emailValidationItems"></app-validation-messages>
     </div>
   </div>
