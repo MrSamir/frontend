@@ -31,16 +31,17 @@ import {YakeenPersonViewComponent} from "../components/yakeenPerson/yakeen-perso
 import {EditHafezaComponent} from "../components/Hafeza/edit-hafeza/edit-hafeza.component";
 import {CreateHafezaComponent} from "../components/Hafeza/create-hafeza/create-hafeza.component";
 import {ViewHafezaComponent} from "../components/Hafeza/view-hafeza/view-hafeza.component";
+import { EmailConfirmationComponent } from '../components/email-confirmation/email-confirmation.component';
 
 
 @NgModule({
   declarations: [BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, HijriDatepickerComponent, FileUploaderComponent,
     IDNumberWithValidationComponent, PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent,
-    ValidationMessagesComponent, YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent],
+    ValidationMessagesComponent, YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent],
   exports: [
     BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, IDNumberWithValidationComponent, FileUploaderComponent,
     PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent, ValidationMessagesComponent
-    ,YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent
+    ,YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent
   ],
   providers: [
     // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
