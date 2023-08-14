@@ -65,11 +65,11 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     },
     // 3: (person: OutputApplicationUserDto) => {
     //   this.alienToView = AlienUtilities.fromPerson(person);
-    //   this.newHafeza = HafezaUtilities.fromPerson(person);
+    //   //this.newHafeza = HafezaUtilities.fromPerson(person);
     // },
     // 4: (person: OutputApplicationUserDto) => {
     //   this.alienToView = AlienUtilities.fromPerson(person);
-    //   this.newHafeza = HafezaUtilities.fromPerson(person);
+    //   //this.newHafeza = HafezaUtilities.fromPerson(person);
     // }
   }
 
@@ -151,7 +151,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   CheckDublicateItemInList(idNumber: string | undefined ) {
     if(idNumber != undefined)
     {
-      let itemindex = this.owners.findIndex(item => item.endowmerPerson.userName === idNumber);
+      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === idNumber);
       if (itemindex !== -1) {
         this.modalService.dismissAll();
         let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:idNumber });
@@ -165,7 +165,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
 
   addToWaqifList() {
 
-    let duplicated = this.CheckDublicateItemInList(this.addOwnerInputDto.endowmerPerson.userName);
+    let duplicated = this.CheckDublicateItemInList(this.addOwnerInputDto?.endowmerPerson?.userName);
     if(duplicated)return;
 
     // if(this.isAddHafezaValid){
@@ -424,12 +424,14 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
   // }
 
   onNewPersonAvailable(event: {idType: number, userName: string, person: InputApplicationUserDto}) {
-
+debugger;
     this.newPerson = event.person;
-    this.addOwnerInputDto.init(this.newPerson);
+    this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
+    this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
     this.addOwnerInputDto.requestId = this.requestId;
     this.addOwnerInputDto.endowmerId = this.newPerson.id;
-
+    this.addOwnerInputDto.endowmentId = this.waqfId;
+    
     if( this.activeCrudOperation === CrudOperation.Update) {
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
