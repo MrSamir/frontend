@@ -1,0 +1,5 @@
+@import "mixins";
+
+@include font-face("Elm-font", "../fonts/URWDINArabicRegular/URWDINArabicRegular");
+@include font-face("Elm-font", "../fonts/URWDINArabicMedium/URWDINArabicMedium", 500);
+@include font-face("Elm-font", "../fonts/URWDINArabicBold/URWDINArabicBold", bold);

@@ -1,5 +1,5 @@
  
-import { ErrorHandler, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 
 import { LoacalizationBaseComponent } from './loacalization-base/loacalization-base.component';
 import { LocalizationService } from './services/localization/localization.service';
@@ -16,6 +16,10 @@ import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ValidationMessagesComponent } from './components/validationMessages/validationMessages.component';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { HintComponent } from './components/hint/hint.component';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   declarations: [
@@ -23,6 +27,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     LocalizePipe,
     SpinnerComponent,
     MessageAndspinnerComponent,
+    ValidationMessagesComponent,
+    HintComponent,
   ],
   imports: [
     CommonModule,
@@ -30,12 +36,16 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     MessagesModule,
     ToastModule,
     ConfirmDialogModule,
+    OverlayPanelModule,
+    PanelModule
   ],
   exports: [
     LocalizePipe,
     LoacalizationBaseComponent,
     SpinnerComponent,
     MessageAndspinnerComponent,
+    ValidationMessagesComponent,
+    HintComponent
   ],
   providers: [
     {
@@ -56,7 +66,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     HttpClient,
     appCoreLoader,
     LocalizationService,
-    
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
 export class CoreLibModule {}

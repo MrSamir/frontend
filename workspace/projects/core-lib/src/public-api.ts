@@ -12,5 +12,5 @@ export * from './lib/services/message/app-message.service';
 export * from './lib/core-lib.module';
 export * from './lib/services/loading.service';
 export * from './lib/loacalization-base/loacalization-base.component'
-export * from  './lib/ReactiveFromHelpers/AppFormControl';
+
 

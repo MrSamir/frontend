@@ -1,0 +1,26 @@
+@import "variables";
+@import "mixins.scss";
+
+/* =============================================================================
+    bootstrap
+================================================================================*/
+$input-border-color: #CBDDD6;
+$input-border-width: 2px;
+
+@import "bootstrap";
+@import "rtl";
+/* =============================================================================
+    Fortawesome
+================================================================================*/
+/* $fa-font-path: "~@fortawesome/fontawesome-pro/webfonts";
+.fa,
+.far,
+.fal {
+    font-family: 'Font Awesome 5 Pro';
+    font-weight: 400;
+}
+
+@import "fontawesome";
+@import "~@fortawesome/fontawesome-pro/scss/light.scss"; */
+
+/*..............................................................................*/

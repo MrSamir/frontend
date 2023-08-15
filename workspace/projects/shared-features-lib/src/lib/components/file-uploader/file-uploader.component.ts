@@ -1,68 +1,73 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { OutputFileDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 
 @Component({
   selector: 'lib-file-uploader',
   templateUrl: './file-uploader.component.html',
-  styleUrls: ['./file-uploader.component.css']
+  styleUrls: ['./file-uploader.component.css'],
 })
-export class FileUploaderComponent implements OnInit {
+export class FileUploaderComponent extends ComponentBase implements OnInit {
+  @Input() name: string;
+  @Input() fileLabel: string = 'Attachement';
+  @Input() showDisclaimer: Boolean = true;
+  @Input() ExtraDisclaimer: string[]=[];
   @Input() maxFileSizeInMB: number = 5;
-  @Input() allowedFileTypes: string = '.pdf,.doc,.docx,.txt';
-
-  @Input() showCancelButton: boolean = true;
-  @Input() showUploadButton: boolean = true;
-
+  @Input() allowedFileTypes: string = '.pdf,.doc,.docx,.txt,.png';
   @Input() showUploadProgressBar: boolean = true;
-
   @Input() showErrorMessage: boolean = true;
-  @Input() alllowMultipleFiles: boolean = true;
-  @Input() serviceTypeId =0;
-  
+  @Input() MultipleFiles: boolean = false;
   @Input() showDownloadButton: boolean = true;
-
-  @Output() _chooseFilesEvent = new EventEmitter<any>();
-  @Output() _downloadFilesEvent = new EventEmitter<any>();
-  @Output() _UploadFilesEvent = new EventEmitter<any>();
-
-  @Output() _removeFilesEvent = new EventEmitter<any>();
-
-
-  @Input() uploadedFiles :OutputFileDto[];
-
-  constructor() { }
+  @Input() ChooseLabel: string = 'Choose';
+  @Input() uploadLabel: string = 'Upload';
+  CancelLabel:string
+  @Output() OnSelectFile = new EventEmitter<any>();
+  @Output() OnUploadFile = new EventEmitter<any>();
+  fileSizeIntext: string;
+  invalidFileSizeMessageSummary: string;
+  invalidFileSizeMessageDetail: string;
+  invalidFileTypeMessageSummary: string;
+  invalidFileTypeMessageDetail: string;
+  invalidFileLimitMessageSummary: string;
+  invalidFileLimitMessageDetail: string;
+  constructor(injector: Injector) {
+    super(injector);
+  }
 
   ngOnInit() {
+    debugger;
+    this.fileSizeIntext = this.Util.formatBytes(
+      this.maxFileSizeInMB * 1024 * 1024
+    );
+    this.invalidFileSizeMessageDetail = this.l('Common.FileSizeNotAllowed');
+    this.invalidFileSizeMessageSummary = this.l(
+      'Common.invalidFileSizeMessageSummary'
+    );
+    this.invalidFileTypeMessageSummary = this.l(
+      'Common.invalidFileTypeMessageSummary'
+    );
+    this.invalidFileTypeMessageDetail = this.l(
+      'Common.invalidFileTypeMessageDetail'
+    );
+    this.invalidFileLimitMessageSummary = this.l(
+      'Common.invalidFileLimitMessageSummary'
+    );
+    this.invalidFileLimitMessageDetail = this.l(
+      'Common.invalidFileLimitMessageDetail'
+    );
+    this.CancelLabel = this.l('Common.cancel');
+    this.ChooseLabel = this.l('Common.Choose', this.fileLabel);
+    this.uploadLabel = this.l('Common.Upload');
   }
   onFileSelect(event: any) {
-    
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
- 
- 
-    this._chooseFilesEvent.emit(event);
+
+    this.OnSelectFile.emit(event);
   }
 
   onFileUpload(event: any) {
-    
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
- 
- 
-    this._UploadFilesEvent.emit(event);
+
+    this.OnUploadFile.emit(event);
   }
-
-  downloadFile(event: any) {
-    // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-   
-    this._downloadFilesEvent.emit(event);
-
-  }
-
-  removeFile(event: any) {
-     
-
-    this._removeFilesEvent.emit(event);
-  }
-
- 
-
 }

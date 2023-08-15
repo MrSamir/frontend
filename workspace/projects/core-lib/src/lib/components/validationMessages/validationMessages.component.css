@@ -1,0 +1,9 @@
+.validationmessage {
+    background: #ffe7e6;
+    border: solid #ff5757;
+    border-width: 0px;
+    color: #ff5757;
+    padding: 0.75rem 0.75rem;
+    margin: 0;
+    border-radius: 6px;
+}

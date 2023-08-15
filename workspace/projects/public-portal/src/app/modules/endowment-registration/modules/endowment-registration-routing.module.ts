@@ -5,15 +5,26 @@ import { EndowmentRegistrationStartServiceComponent } from '../components/endowm
  
 
 
-const routes: Routes = [ 
-  { path: '', component: EndowmentRegistrationStartServiceComponent,data: { title: 'خدمة تسجيل وقف' ,breadcrumb:'خدمة تسجيل وقف' } },
-
+const routes: Routes = [
+  {
+    path: '',
+    component: EndowmentRegistrationStartServiceComponent,
+    data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
+  },
 
   // {path: 'wizard', component: EndowmentRegistrationNewComponent, canActivate:[PublicActiveProfileGuard]},
-  {path: 'endowmentregistration/new', component: EndowmentRegistrationNewComponent,data: { title: 'خدمة تسجيل وقف' ,breadcrumb:'خدمة تسجيل وقف' },title:'خدمة تسجيل وقف'},
-
-  
- 
+  {
+    path: 'registrationform/:requestId/:pahseId',
+    component: EndowmentRegistrationNewComponent,
+    data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
+    title: 'خدمة تسجيل وقف',
+  },
+  {
+    path: 'registrationform',
+    component: EndowmentRegistrationNewComponent,
+    data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
+    title: 'خدمة تسجيل وقف',
+  },
 ];
 
 @NgModule({

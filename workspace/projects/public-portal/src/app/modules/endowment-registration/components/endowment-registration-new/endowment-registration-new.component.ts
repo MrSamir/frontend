@@ -1,52 +1,37 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
-import { EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
-import { EndowmentApplicantEditComponent } from '../../../shared/components/endowment-applicant-edit/endowment-applicant-edit.component';
+
+import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-endowment-registration-new',
-  templateUrl: './endowment-registration-new.component.html'
+  templateUrl: './endowment-registration-new.component.html',
 })
 export class EndowmentRegistrationNewComponent implements OnInit {
-
-  constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
-  @ViewChild(EndowmentApplicantEditComponent, { static: false }) _applicantEditComponent!: EndowmentApplicantEditComponent;
-
-
+  isEditMode = false;
+  requestId: string;
+  phaseId:number;
+  constructor(
+    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
+    private activeroute: ActivatedRoute
+  ) {}
+  
 
   ngOnInit() {
-    this.getLoggedInUserData();
+    this.checkisEditMode();
+  }
+  checkisEditMode() {
+    this.requestId = this.activeroute.snapshot.params['requestId'];
+    this.phaseId = parseInt(this.activeroute.snapshot.params['phaseId']);
+    if(this.requestId!=undefined)
+    this.isEditMode=true
   }
 
   
- _applicantData: AspNetUser = new AspNetUser();
 
-  getLoggedInUserData(){
-
-
-// this._serviceProxy.getByUserName()
-
-
-    this._applicantData.FirstNameAr="محمد"
-    this._applicantData.SecondNameAr="سمير"
-    this._applicantData.ThirdNameAr="محمد"
-    this._applicantData.LastNameAr="محمد"
-    this._applicantData.IdNumber="2088755802"
-    this._applicantData.BirthDateGregorian=new Date(Date.parse("01/08/1984"));
-
-
-    this._applicantData.NationalityName="مصري"
-
-
-    this._applicantData.IsAlive=true;
-    this._applicantData.MobileNumber="2088755802"
-    this._applicantData.Email="m.eldesouky.c@awqaf.gov.sa"
-    this._applicantData.Gender=0;
-    
-  }
-
-  InitiateRequest(){
-    if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
+  InitiateRequest() {
+    /*     if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
       console.log(this._applicantEditComponent.applicantForm.value);
 
 
@@ -81,14 +66,6 @@ console.log(response);
         
         
           })
-
-
-    }
-
-
-
-
-
-  
-
+ */
+  }
 }

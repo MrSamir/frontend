@@ -1,54 +1,53 @@
 <!-- <div class="card flex justify-content-center"> -->
-<div class="card flex  justify-content-center">
 
-  <p-toast></p-toast>
-  <p-fileUpload name="file" [customUpload]="true" [maxFileSize]="maxFileSizeInMB * 1024 * 1024"
-    [showCancelButton]="showCancelButton" [multiple]="alllowMultipleFiles" [showUploadButton]="showUploadButton"
-    (onSelect)="onFileSelect($event)" mode="advanced" [accept]="allowedFileTypes" uploadStyleClass="btn btn-awq-primary"
-    cancelStyleClass="btn btn-awq-primary" chooseStyleClass="btn btn-awq-primary">
-
-
-
-
-
-<!-- 
-    <ng-template pTemplate="toolbar">
-
-    </ng-template> -->
-    <ng-template let-file pTemplate="file">
-
-
-
-
-      <p-table [value]="uploadedFiles" [tableStyle]="{ 'min-width': '50rem' }">
-        <!-- <ng-template pTemplate="header">
-          <tr>
-            <th>الصك</th>
-
-            <th> </th>
-          </tr>
-        </ng-template> -->
-        <ng-template pTemplate="body" let-file>
-          <tr>
-
-
-
-            <td style="align-items:flex-end;">
-
-
-
-
-              <a href="javascript:void(0);" (click)="downloadFile(file.id)">{{ file.fileName }}</a>
-            </td>
-
-            <td> </td>
-          </tr>
-        </ng-template>
-      </p-table>
-
+<div>
+  <label class="col-form-label">{{fileLabel}}</label>
+  <p-fileUpload 
+  [name]="name" 
+  [customUpload]="true" 
+  [auto]="false"
+  [maxFileSize]="maxFileSizeInMB * 1024 * 1024"
+  [showCancelButton]="true"
+  [multiple]="MultipleFiles"
+  [showUploadButton]="true"
+  (onSelect)="onFileSelect($event)"
+   mode="advanced" 
+    [accept]="allowedFileTypes"
+     [invalidFileSizeMessageSummary]="invalidFileSizeMessageSummary"
+     [invalidFileSizeMessageDetail]="invalidFileSizeMessageDetail"
+     [invalidFileSizeMessageSummary]="invalidFileSizeMessageSummary"
+     [invalidFileTypeMessageDetail]="invalidFileTypeMessageDetail"
+     [invalidFileLimitMessageSummary]="invalidFileLimitMessageSummary"
+     [invalidFileLimitMessageDetail]="invalidFileLimitMessageDetail"
+     [chooseLabel]="ChooseLabel"
+     [uploadLabel]="uploadLabel"
+     [cancelLabel]="CancelLabel"
+     >
+    <ng-template pTemplate="content" let-files>
+      
+      
     </ng-template>
-
   </p-fileUpload>
-
+  <p-messages *ngIf="showDisclaimer" severity="info">
+    <ng-template pTemplate>
+      <i class="pi pi-info-circle mr-2 hintinfoIcon mirror-effect"></i>
+      <div class="ml-2">
+        <ul>
+        <li>
+          {{l('Common.FileMaxAllowedSize',fileSizeIntext)}}
+        </li>
+        <li>
+          {{l('Common.FileAllowedExtentions',allowedFileTypes)}}
+        </li>
+        <li *ngFor="let item of ExtraDisclaimer">
+          {{item}}
+        </li>
+        </ul>
+      </div>
+    </ng-template>
+  </p-messages>
 
 </div>
+
+<!--
+</li> -->

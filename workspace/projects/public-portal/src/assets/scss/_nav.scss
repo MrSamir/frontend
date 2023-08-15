@@ -1,0 +1,85 @@
+.nav-tabs {
+    border-bottom-color: transparent;
+    justify-content: center;
+    @include my(4);
+  
+    .nav-link {
+      @include px(6);
+      @include py(3);
+      font-weight: bold;
+      background-color: #E4E7E2;
+      color: rgba(0, 0, 0, 0.5);
+
+      &.active {
+        background-color: $awq-secondary;
+        color: #fff;
+      }
+    }
+  
+    .nav-item {
+
+        &:first-child{
+            a{
+                border-top-right-radius: 50rem;
+                border-bottom-right-radius: 50rem;
+            }
+        }
+        &:last-child{
+            a{
+                border-top-left-radius: 50rem;
+                border-bottom-left-radius: 50rem;
+            }
+        }
+    }
+
+  }
+
+
+
+  .accordion{
+  
+    .accordion-item{
+        margin-bottom: 1rem;
+    }
+    .accordion-button{
+        border: 0;
+        border: 1px solid #DBEBE5;
+        display: block;
+        width: 100%;
+        text-align: start;
+        @include p(3);
+        background-color: #fff;
+        margin-bottom: 10px;
+        position: relative;
+
+        &:not(.collapsed){
+            background-color: #DBEBE5;
+        }
+
+        &::after{
+            content: '';
+            background-image: url(../images/svg-icons/chevron-down.svg);
+            background-repeat: no-repeat;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 1rem;
+            top: 1.2rem;
+            transform: scaleY(-1); 
+        }
+
+        &.collapsed::after{
+            
+                transform: scaleY(1); 
+            
+        }
+
+    }
+
+    .accordion-body{
+        background-color: #f9f9f9;
+        margin-top: -10px;
+        padding: 1rem;
+    }
+  
+  }

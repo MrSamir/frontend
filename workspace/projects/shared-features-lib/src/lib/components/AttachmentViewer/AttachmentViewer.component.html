@@ -1,0 +1,34 @@
+<div>
+<label *ngIf="AttachmenetLabel" class="col-form-label">{{AttachmenetLabel}}</label>
+<div class="view-box">
+<ng-container *ngFor="let Attachment of Attachements">
+  <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{ $implicit: Attachment }"></ng-container>
+</ng-container>
+</div>
+<ng-template #itemTemplate let-item>
+  <div class="attachementViewer-raw">
+    <div  class="attachment-col"  ><label> {{ item.fileName }} </label></div>
+    <div class="attachment-col">
+      <button class="btn btn-awq-primary" (click)="ViewAttachment(item)" *ngIf="item.ContentType.startsWith('image/') || item.ContentType.endsWith('/pdf')"><i class="pi pi-eye mr-1"></i>{{ViewButtonLabel}}</button>
+    </div >
+    <div class="attachment-col">
+  <button *ngIf="ShowDownloadButton" class="btn btn-outline-awq-secondary" (click)="DownLoadAttachment(item)" ><i class="pi pi-arrow-down"></i> {{DownloadButtonLabel}}</button>
+    </div>
+    <div class="attachment-col">
+  <button *ngIf="showDeleteButton" class="btn btn-outline-danger" (click)="deleteAttachment(item)"><i class="pi pi-times"></i> {{DeleteButtonLabel}}</button>
+    </div>
+  </div>
+</ng-template>
+</div>
+<ng-template #imageViewer>
+<p-galleria [value]="images"  [(visible)]="imageViewerVisable" [responsiveOptions]="responsiveOptions"
+  [containerStyle]="{ 'max-width': '850px' }" [numVisible]="7" [circular]="true" [fullScreen]="true"
+  [showItemNavigators]="true" [showThumbnails]="false">
+  <ng-template pTemplate="item" let-item>
+    <img [src]="item" style="width: 100%; display: block;" />
+  </ng-template>
+</p-galleria>
+</ng-template>
+<!--  
+  TODO: Create attachement view create images,video and pdf files.
+-->

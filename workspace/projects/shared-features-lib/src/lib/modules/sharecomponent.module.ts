@@ -18,27 +18,43 @@ import { TableModule } from 'primeng/table';
 import { FileUploaderComponent } from '../components/file-uploader/file-uploader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
- 
+import { AttachmentViewerComponent } from '../components/AttachmentViewer/AttachmentViewer.component';
+ import { GalleriaModule } from 'primeng/galleria';
 
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent ,NgBootstrapHijriGregorianDatepickerComponent,HijriDatepickerComponent,FileUploaderComponent,
-    IDNumberWithValidationComponent],
-  imports: [
-    
-    BreadcrumbModule,
-    FormsModule,NgbDatepickerModule   ,ReactiveFormsModule,FileUploadModule,ToastModule,CommonModule,TableModule
+  declarations: [
+    BreadcrumbComponent,
+    NgBootstrapHijriGregorianDatepickerComponent,
+    HijriDatepickerComponent,
+    FileUploaderComponent,
+    IDNumberWithValidationComponent,
+    AttachmentViewerComponent,
   ],
-  exports:[
-    BreadcrumbComponent,NgBootstrapHijriGregorianDatepickerComponent,IDNumberWithValidationComponent,FileUploaderComponent
+  imports: [
+    BreadcrumbModule,
+    FormsModule,
+    NgbDatepickerModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    ToastModule,
+    CommonModule,
+    TableModule,
+    GalleriaModule,
+  ],
+  exports: [
+    BreadcrumbComponent,
+    NgBootstrapHijriGregorianDatepickerComponent,
+    IDNumberWithValidationComponent,
+    FileUploaderComponent,
+    AttachmentViewerComponent,
   ],
 
   providers: [
     // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
-		// { provide: NgbDatepickerI18n, useClass: IslamicI18n },
-     DateFormatterService
+    // { provide: NgbDatepickerI18n, useClass: IslamicI18n },
+    DateFormatterService,
   ],
-  
 })
-export class SharecomponentModule { }
+export class SharecomponentModule {}

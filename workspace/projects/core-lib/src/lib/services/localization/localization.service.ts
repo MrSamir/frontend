@@ -48,14 +48,19 @@ export class LocalizationService {
     let translatedValue = !appCore.localization?.localizationDatas[culture][Key]
       ? Key
       : appCore.localization?.localizationDatas[culture][Key];
-    if (args) {
-      for (const key in args) {
-        if (args.hasOwnProperty(key)) {
+    if (args &&args.length>0) {
+
+     translatedValue= this.utilsService.formatString(translatedValue,args);
+   /*    for (const index in args) {
+        if (args.hasOwnProperty(index)) {
           translatedValue = !translatedValue
             ? Key
-            : translatedValue.replace(new RegExp(`{{${key}}}`, 'g'), args[key]);
+            : translatedValue.replace(
+                new RegExp(`{{${index}}}`, 'g'),
+                args[index]
+              );
         }
-      }
+      } */
     }
 
     return translatedValue;

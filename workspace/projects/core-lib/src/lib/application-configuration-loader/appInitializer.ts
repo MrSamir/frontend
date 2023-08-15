@@ -21,8 +21,7 @@ import { appConfig } from '../Classes/appConfig';
   providedIn: 'root',
 })
 export class AppInitializer {
-  static ApiBaseUrl:string;
-  constructor(
+    constructor(
     private _injector: Injector,
     private _platformLocation: PlatformLocation,
     private _httpClient: HttpClient,
@@ -41,10 +40,9 @@ loadAppConfig(): () => Promise<boolean> {
           '../assets/Config/AppConfig.json',
           appconfig
         ).then((appconfig:appConfig) => {
+          
            appconfig.appBaseHref= this.getBaseHref();
-           
-           AppInitializer.ApiBaseUrl=appconfig.BaseApiUrl;
-        this.ConfigSubject.setAppConfig(appconfig);
+                   this.ConfigSubject.setAppConfig(appconfig);
           this.loadBakcendUserConfig(()=>{
             resolve(true);
           })
@@ -56,6 +54,7 @@ loadAppConfig(): () => Promise<boolean> {
 
  private loadBakcendUserConfig(callback: () => void) :void 
  {
+  
     var appconfig=this.ConfigSubject.getAppConfig();
  if (!this.utilsService.getCookieValue(appconfig.langCookieName)) {
       this.utilsService.setCookieValue(appconfig.langCookieName, 'ar');
@@ -78,7 +77,7 @@ loadAppConfig(): () => Promise<boolean> {
     let app = this.appCoreSubject.getAppCore();
     this._httpClient
       .get<any>(
-        `${appconfig.BaseApiUrl}/api/AppCoreConfigurationsService/GetAppCoreConfigurations`,
+        `${appconfig.baseApiUrl}/api/AppCoreConfigurationsService/GetAppCoreConfigurations`,
         {
           headers: requestHeaders,
         }
