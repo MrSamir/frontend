@@ -20,8 +20,8 @@
       </div>
       <div class="col" *ngIf="currentUserProfile.gender">
         <label class="col-form-label">{{'Common.gender' | localize}}</label>
-        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender == 1">{{'Common.Male'| localize}}</span>
-        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender != 1">{{'Common.Female'| localize}}</span>
+        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender != 1">{{'Common.Male'| localize}}</span>
+        <span class="form-control-plaintext" *ngIf="currentUserProfile.gender == 1">{{'Common.Female'| localize}}</span>
       </div>
       <div class="col">
         <label class="col-form-label">{{'Common.mobileNumber' | localize}}</label>
