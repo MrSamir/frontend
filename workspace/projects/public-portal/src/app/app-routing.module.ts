@@ -8,6 +8,7 @@ import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appC
 import {
   PublicUserProfileComponent
 } from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
+import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
 
 
 const routes: Routes = [
@@ -47,12 +48,12 @@ const routes: Routes = [
     data: { title: 'الملف الشخصي' },
     //canActivate:[AuthGuard]
   },
-  // {
-  //   path: 'confirm-email/:userId/:confirmationCode',
-  //   component: EmailConfirmationComponent,
-  //   data: { title: 'تفعيل البريد الألكتروني' },
-  //   canActivate:[]
-  // },
+  {
+    path: 'confirm-email/:userId/:confirmationCode',
+    component: EmailConfirmationComponent,
+    data: { title: 'تفعيل البريد الألكتروني' },
+    canActivate:[]
+  },
   // {
   //   path: 'dashboard',
   //   component: HomePageComponent,
