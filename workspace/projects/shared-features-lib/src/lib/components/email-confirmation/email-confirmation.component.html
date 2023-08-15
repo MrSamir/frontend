@@ -1,0 +1,16 @@
+<div *ngIf="confirmationResult && confirmationResult.isSuccess" class="alert alert-success" role="alert">
+    تم تفعيل البريد الألكتروني بنجاح
+  </div>
+  <ng-container *ngIf="confirmationResult && !confirmationResult.isSuccess">
+    <div *ngIf="confirmationResult.errorData[0].code !== 'EmailAlreadyConfirmed'" class="alert alert-danger" role="alert">
+      رابط التفعيل منتهي الصلاحية أو غير صحيح
+    </div>
+    <div *ngIf="confirmationResult.errorData[0].code == 'EmailAlreadyConfirmed'" class="alert alert-info" role="alert">
+      البريد الألكتروني مفعل من قبل
+    </div>
+  
+  </ng-container>
+  
+  <button type="submit" class="btn btn-primary mb-2" (click)="onNavigateToHomePage()">الصفحة الرئيسية
+  </button>
+  

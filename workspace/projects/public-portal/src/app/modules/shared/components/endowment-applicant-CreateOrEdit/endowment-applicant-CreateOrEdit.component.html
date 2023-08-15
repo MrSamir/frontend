@@ -66,7 +66,7 @@
           </ng-template>
           <ng-template #showfirstNameArInput>
             <input type="text" class="form-control" #applicantUser_firstNameAr="ngModel"
-              [(ngModel)]="applicantUser.firstNameAr" [ngModelOptions]="{standalone: true}" required>
+              [(ngModel)]="requestInfo.applicant.firstNameAr" [ngModelOptions]="{standalone: true}" required>
           </ng-template>
         </div>
         <div class="form-group col">
@@ -149,13 +149,13 @@
             <div class="d-flex">
               <div class="mr-3">
                 <p-radioButton name="gender" [value]="0" #application_gender="ngModel"
-                  [(ngModel)]="applicantUser.gender" inputId="male"
+                  [(ngModel)]="requestInfo.applicant.gender" inputId="male"
                   [ngModelOptions]="{standalone: true}"></p-radioButton>
                 <label class="ml-2 mb-1">{{'Common.Male' | localize}}</label>
               </div>
               <div>
                 <p-radioButton name="gender" [value]="1" #application_gender="ngModel"
-                  [(ngModel)]="applicantUser.gender" inputId="female"
+                  [(ngModel)]="requestInfo.applicant.gender" inputId="female"
                   [ngModelOptions]="{standalone: true}"></p-radioButton>
                 <label class="ml-2 mb-1">{{'Common.Female' | localize}}</label>
 
@@ -259,7 +259,7 @@
           <ng-template #ShowemailInput>
             <div>
               <input type="text" class="form-control" name="email" #applicantUser_email="ngModel"
-                [(ngModel)]="applicantUser.email" [ngModelOptions]="{standalone: true}" required
+                [(ngModel)]="requestInfo.applicant.email" [ngModelOptions]="{standalone: true}" required
                 pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$">
               <app-validationMessages relatedControlName="email" [control]="applicantUser_email" [validationMessages]='[
                                   {ruleName:"required",ruleMessage:l("Common.Required",l("Common.email"))},

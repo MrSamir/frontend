@@ -6,28 +6,28 @@ import Swal, {SweetAlertIcon} from "sweetalert2";
 var defaultConfirmButtonText = 'متابعة';
 var defaultRetryButtonText = 'إعادة المحاولة';
 
-export function showSuccess(message: string, onOkPressed: () => void = undefined) {
-  confirm(message, onOkPressed, undefined, 'success');
-}
+// export function showSuccess(message: string, onOkPressed: () => void = undefined) {
+//   confirm(message, onOkPressed, undefined, 'success');
+// }
 
-export function showError(errorMessage: string, onOkPressed: () => void = undefined) {
-  confirm(errorMessage, onOkPressed, undefined, 'error', defaultRetryButtonText);
-}
+// export function showError(errorMessage: string, onOkPressed: () => void = undefined) {
+//   confirm(errorMessage, onOkPressed, undefined, 'error', defaultRetryButtonText);
+// }
 
-export function areyousure(onOkPressed: () => void, onCancelPressed: () => void = undefined) {
-  // confirm(translations.assure, onOkPressed, onCancelPressed, 'question', translations.yes, translations.no);
-}
+// export function areyousure(onOkPressed: () => void, onCancelPressed: () => void = undefined) {
+//   // confirm(translations.assure, onOkPressed, onCancelPressed, 'question', translations.yes, translations.no);
+// }
 
-export function question(message: string, onOkPressed: () => void) {
-  confirm(message, onOkPressed, undefined, 'question');
-}
+// export function question(message: string, onOkPressed: () => void) {
+//   confirm(message, onOkPressed, undefined, 'question');
+// }
 
 export function confirm(message: string,
                         onOkPressed: () => void,
                         onCancelPressed: () => void,
                         icon: SweetAlertIcon,
                         confirmButtonText: string | undefined = undefined,
-                        cancelButtonText: string = undefined,
+                        cancelButtonText: string ,
                         showConfirmButton: boolean = true) {
   Swal.fire( {
     title: message,
@@ -59,7 +59,7 @@ export function confirmWithContent(title: string, message: string,
   onCancelPressed: () => void,
   icon: SweetAlertIcon,
   confirmButtonText: string | undefined = undefined,
-  cancelButtonText: string = undefined,
+  cancelButtonText: string ,
   showConfirmButton: boolean = true) {
 Swal.fire( {
 title: title,
@@ -102,6 +102,6 @@ export function handleError<T>(serviceResponse) {
   if( !serviceResponse.isSuccess ) {
     var errorData = serviceResponse.errorData;
     var firstError = errorData[0];
-    showError(firstError.message);
+   // showError(firstError.message);
   }
 }

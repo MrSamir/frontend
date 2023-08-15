@@ -270,7 +270,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    generatePhoneNumberOtp(body: PhoneOtpGenerationInputDto | undefined): Observable<ApiResponseOfPhoneOtpGenerationOutputDto> {
+    generatePhoneNumberOtp(body: PhoneOtpGenerationInputDto | undefined): Observable<ApiResponseOfOtpGenerationOutputDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/GeneratePhoneNumberOtp";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -293,14 +293,14 @@ export class ApplicationUserServiceProxy {
                 try {
                     return this.processGeneratePhoneNumberOtp(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponseOfPhoneOtpGenerationOutputDto>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOtpGenerationOutputDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResponseOfPhoneOtpGenerationOutputDto>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOtpGenerationOutputDto>;
         }));
     }
 
-    protected processGeneratePhoneNumberOtp(response: HttpResponseBase): Observable<ApiResponseOfPhoneOtpGenerationOutputDto> {
+    protected processGeneratePhoneNumberOtp(response: HttpResponseBase): Observable<ApiResponseOfOtpGenerationOutputDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -311,7 +311,175 @@ export class ApplicationUserServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponseOfPhoneOtpGenerationOutputDto.fromJS(resultData200);
+            result200 = ApiResponseOfOtpGenerationOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    verifyPhoneNumberOtp(body: PhoneOtpVerificationInputDto | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+        let url_ = this.baseUrl + "/api/ApplicationUserService/VerifyPhoneNumberOtp";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processVerifyPhoneNumberOtp(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processVerifyPhoneNumberOtp(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputApplicationUserDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputApplicationUserDto>;
+        }));
+    }
+
+    protected processVerifyPhoneNumberOtp(response: HttpResponseBase): Observable<ApiResponseOfOutputApplicationUserDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputApplicationUserDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    sendEmailToVerifyUserEmailAddress(body: EmailOtpGenerationInputDto | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
+        let url_ = this.baseUrl + "/api/ApplicationUserService/SendEmailToVerifyUserEmailAddress";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSendEmailToVerifyUserEmailAddress(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSendEmailToVerifyUserEmailAddress(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOtpVerificationOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOtpVerificationOutputDto>;
+        }));
+    }
+
+    protected processSendEmailToVerifyUserEmailAddress(response: HttpResponseBase): Observable<ApiResponseOfOtpVerificationOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOtpVerificationOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    confirmUserEmail(body: ConfirmUserEmailInputDto | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
+        let url_ = this.baseUrl + "/api/ApplicationUserService/ConfirmUserEmail";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processConfirmUserEmail(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processConfirmUserEmail(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOtpVerificationOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOtpVerificationOutputDto>;
+        }));
+    }
+
+    protected processConfirmUserEmail(response: HttpResponseBase): Observable<ApiResponseOfOtpVerificationOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOtpVerificationOutputDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -481,67 +649,6 @@ export class EndowmentRegistrationServiceProxy {
     }
 
     protected processCreateEndowment(response: HttpResponseBase): Observable<ApiResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param isApplicantAgent (optional) 
-     * @param body (optional) 
-     * @return Success
-     */
-    initiateEndowmentRegistrationRequest(isApplicantAgent: boolean | undefined, body: InputApplicantDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/InitiateEndowmentRegistrationRequest?";
-        if (isApplicantAgent === null)
-            throw new Error("The parameter 'isApplicantAgent' cannot be null.");
-        else if (isApplicantAgent !== undefined)
-            url_ += "isApplicantAgent=" + encodeURIComponent("" + isApplicantAgent) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInitiateEndowmentRegistrationRequest(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processInitiateEndowmentRegistrationRequest(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
-        }));
-    }
-
-    protected processInitiateEndowmentRegistrationRequest(response: HttpResponseBase): Observable<ApiResponse> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -2885,6 +2992,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
     requestId!: string;
     createBeneficiaryDto!: CreateBeneficiaryDto;
     applicationUserId!: string | undefined;
+    beneficiaryPerson!: InputApplicationUserDto;
 
     constructor(data?: IAddBeneficiaryInputDto) {
         if (data) {
@@ -2900,6 +3008,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
             this.requestId = _data["requestId"];
             this.createBeneficiaryDto = _data["createBeneficiaryDto"] ? CreateBeneficiaryDto.fromJS(_data["createBeneficiaryDto"]) : <any>undefined;
             this.applicationUserId = _data["applicationUserId"];
+            this.beneficiaryPerson = _data["beneficiaryPerson"] ? InputApplicationUserDto.fromJS(_data["beneficiaryPerson"]) : <any>undefined;
         }
     }
 
@@ -2915,6 +3024,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
         data["requestId"] = this.requestId;
         data["createBeneficiaryDto"] = this.createBeneficiaryDto ? this.createBeneficiaryDto.toJSON() : <any>undefined;
         data["applicationUserId"] = this.applicationUserId;
+        data["beneficiaryPerson"] = this.beneficiaryPerson ? this.beneficiaryPerson.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2923,6 +3033,7 @@ export interface IAddBeneficiaryInputDto {
     requestId: string;
     createBeneficiaryDto: CreateBeneficiaryDto;
     applicationUserId: string | undefined;
+    beneficiaryPerson: InputApplicationUserDto;
 }
 
 export class AddBeneficiaryOutputDto implements IAddBeneficiaryOutputDto {
@@ -3637,6 +3748,118 @@ export interface IApiResponseOfLookupDto {
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
+export class ApiResponseOfOtpGenerationOutputDto implements IApiResponseOfOtpGenerationOutputDto {
+    isSuccess!: boolean;
+    dto!: OtpGenerationOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfOtpGenerationOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? OtpGenerationOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfOtpGenerationOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfOtpGenerationOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfOtpGenerationOutputDto {
+    isSuccess: boolean;
+    dto: OtpGenerationOutputDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfOtpVerificationOutputDto implements IApiResponseOfOtpVerificationOutputDto {
+    isSuccess!: boolean;
+    dto!: OtpVerificationOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfOtpVerificationOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? OtpVerificationOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfOtpVerificationOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfOtpVerificationOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfOtpVerificationOutputDto {
+    isSuccess: boolean;
+    dto: OtpVerificationOutputDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
 export class ApiResponseOfOutputApplicationUserDto implements IApiResponseOfOutputApplicationUserDto {
     isSuccess!: boolean;
     dto!: OutputApplicationUserDto;
@@ -4081,62 +4304,6 @@ export class ApiResponseOfPagedResultDtoOfOutputEndowmerDto implements IApiRespo
 export interface IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
     isSuccess: boolean;
     dto: PagedResultDtoOfOutputEndowmerDto;
-    message: string | undefined;
-    validationResultMessages: ValidationResultMessage[] | undefined;
-}
-
-export class ApiResponseOfPhoneOtpGenerationOutputDto implements IApiResponseOfPhoneOtpGenerationOutputDto {
-    isSuccess!: boolean;
-    dto!: PhoneOtpGenerationOutputDto;
-    message!: string | undefined;
-    validationResultMessages!: ValidationResultMessage[] | undefined;
-
-    constructor(data?: IApiResponseOfPhoneOtpGenerationOutputDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.isSuccess = _data["isSuccess"];
-            this.dto = _data["dto"] ? PhoneOtpGenerationOutputDto.fromJS(_data["dto"]) : <any>undefined;
-            this.message = _data["message"];
-            if (Array.isArray(_data["validationResultMessages"])) {
-                this.validationResultMessages = [] as any;
-                for (let item of _data["validationResultMessages"])
-                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ApiResponseOfPhoneOtpGenerationOutputDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ApiResponseOfPhoneOtpGenerationOutputDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["isSuccess"] = this.isSuccess;
-        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
-        data["message"] = this.message;
-        if (Array.isArray(this.validationResultMessages)) {
-            data["validationResultMessages"] = [];
-            for (let item of this.validationResultMessages)
-                data["validationResultMessages"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface IApiResponseOfPhoneOtpGenerationOutputDto {
-    isSuccess: boolean;
-    dto: PhoneOtpGenerationOutputDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -5301,6 +5468,50 @@ export interface ICity {
     id: number;
 }
 
+export class ConfirmUserEmailInputDto implements IConfirmUserEmailInputDto {
+    id!: number;
+    code!: string | undefined;
+    userId!: string | undefined;
+
+    constructor(data?: IConfirmUserEmailInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.code = _data["code"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): ConfirmUserEmailInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ConfirmUserEmailInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["code"] = this.code;
+        data["userId"] = this.userId;
+        return data;
+    }
+}
+
+export interface IConfirmUserEmailInputDto {
+    id: number;
+    code: string | undefined;
+    userId: string | undefined;
+}
+
 export class CreateBeneficiaryDto implements ICreateBeneficiaryDto {
     beneficiaryId!: string | undefined;
     endowmentId!: string | undefined;
@@ -5358,6 +5569,7 @@ export class CreateSeerInputDto implements ICreateSeerInputDto {
     endowmentId!: string | undefined;
     seerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -5385,6 +5597,7 @@ export class CreateSeerInputDto implements ICreateSeerInputDto {
             this.endowmentId = _data["endowmentId"];
             this.seerTypeId = _data["seerTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -5412,6 +5625,7 @@ export class CreateSeerInputDto implements ICreateSeerInputDto {
         data["endowmentId"] = this.endowmentId;
         data["seerTypeId"] = this.seerTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -5432,6 +5646,7 @@ export interface ICreateSeerInputDto {
     endowmentId: string | undefined;
     seerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -5563,6 +5778,46 @@ export interface IEducationLevel {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: number;
+}
+
+export class EmailOtpGenerationInputDto implements IEmailOtpGenerationInputDto {
+    email!: string;
+    userId!: string | undefined;
+
+    constructor(data?: IEmailOtpGenerationInputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.email = _data["email"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): EmailOtpGenerationInputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EmailOtpGenerationInputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["email"] = this.email;
+        data["userId"] = this.userId;
+        return data;
+    }
+}
+
+export interface IEmailOtpGenerationInputDto {
+    email: string;
+    userId: string | undefined;
 }
 
 export class EndowmentAgentData implements IEndowmentAgentData {
@@ -6530,6 +6785,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
     endowmentId!: string;
     seerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -6564,6 +6820,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
             this.endowmentId = _data["endowmentId"];
             this.seerTypeId = _data["seerTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -6598,6 +6855,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
         data["endowmentId"] = this.endowmentId;
         data["seerTypeId"] = this.seerTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -6625,6 +6883,7 @@ export interface IEndowmentSeerData {
     endowmentId: string;
     seerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -7900,7 +8159,7 @@ export interface IInputEndowmentRegistrationRequestDto {
 export class InputEndowmerDto implements IInputEndowmerDto {
     requestId!: string;
     endowmerId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     endowmerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
@@ -7953,7 +8212,7 @@ export class InputEndowmerDto implements IInputEndowmerDto {
 export interface IInputEndowmerDto {
     requestId: string;
     endowmerId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     endowmerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
@@ -9229,6 +9488,106 @@ export interface INotificationMessageDto {
     id: string;
 }
 
+export class OtpGenerationOutputDto implements IOtpGenerationOutputDto {
+    code!: string | undefined;
+    url!: string | undefined;
+    hash!: string | undefined;
+    expireDate!: DateTime;
+    validityMinutes!: number;
+
+    constructor(data?: IOtpGenerationOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.code = _data["code"];
+            this.url = _data["url"];
+            this.hash = _data["hash"];
+            this.expireDate = _data["expireDate"] ? DateTime.fromISO(_data["expireDate"].toString()) : <any>undefined;
+            this.validityMinutes = _data["validityMinutes"];
+        }
+    }
+
+    static fromJS(data: any): OtpGenerationOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OtpGenerationOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["code"] = this.code;
+        data["url"] = this.url;
+        data["hash"] = this.hash;
+        data["expireDate"] = this.expireDate ? this.expireDate.toString() : <any>undefined;
+        data["validityMinutes"] = this.validityMinutes;
+        return data;
+    }
+}
+
+export interface IOtpGenerationOutputDto {
+    code: string | undefined;
+    url: string | undefined;
+    hash: string | undefined;
+    expireDate: DateTime;
+    validityMinutes: number;
+}
+
+export class OtpVerificationOutputDto implements IOtpVerificationOutputDto {
+    id!: number;
+    hash!: string | undefined;
+    expireDate!: DateTime;
+    validityMinutes!: number;
+
+    constructor(data?: IOtpVerificationOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.hash = _data["hash"];
+            this.expireDate = _data["expireDate"] ? DateTime.fromISO(_data["expireDate"].toString()) : <any>undefined;
+            this.validityMinutes = _data["validityMinutes"];
+        }
+    }
+
+    static fromJS(data: any): OtpVerificationOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OtpVerificationOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["hash"] = this.hash;
+        data["expireDate"] = this.expireDate ? this.expireDate.toString() : <any>undefined;
+        data["validityMinutes"] = this.validityMinutes;
+        return data;
+    }
+}
+
+export interface IOtpVerificationOutputDto {
+    id: number;
+    hash: string | undefined;
+    expireDate: DateTime;
+    validityMinutes: number;
+}
+
 export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     id!: string | undefined;
     idNumber!: string | undefined;
@@ -9878,6 +10237,7 @@ export class OutputSeerDto implements IOutputSeerDto {
     endowmentId!: string | undefined;
     seerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
+    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -9906,6 +10266,7 @@ export class OutputSeerDto implements IOutputSeerDto {
             this.endowmentId = _data["endowmentId"];
             this.seerTypeId = _data["seerTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -9934,6 +10295,7 @@ export class OutputSeerDto implements IOutputSeerDto {
         data["endowmentId"] = this.endowmentId;
         data["seerTypeId"] = this.seerTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -9955,6 +10317,7 @@ export interface IOutputSeerDto {
     endowmentId: string | undefined;
     seerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
+    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -10126,6 +10489,7 @@ export interface IParticularBenefitAssetData {
 }
 
 export class PhoneOtpGenerationInputDto implements IPhoneOtpGenerationInputDto {
+    userId!: string | undefined;
     phoneNumber!: string | undefined;
 
     constructor(data?: IPhoneOtpGenerationInputDto) {
@@ -10139,6 +10503,7 @@ export class PhoneOtpGenerationInputDto implements IPhoneOtpGenerationInputDto {
 
     init(_data?: any) {
         if (_data) {
+            this.userId = _data["userId"];
             this.phoneNumber = _data["phoneNumber"];
         }
     }
@@ -10152,22 +10517,24 @@ export class PhoneOtpGenerationInputDto implements IPhoneOtpGenerationInputDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["userId"] = this.userId;
         data["phoneNumber"] = this.phoneNumber;
         return data;
     }
 }
 
 export interface IPhoneOtpGenerationInputDto {
+    userId: string | undefined;
     phoneNumber: string | undefined;
 }
 
-export class PhoneOtpGenerationOutputDto implements IPhoneOtpGenerationOutputDto {
-    id!: number;
+export class PhoneOtpVerificationInputDto implements IPhoneOtpVerificationInputDto {
+    phoneNumber!: string | undefined;
     code!: string | undefined;
-    expireDate!: DateTime;
-    validityMinutes!: number;
+    hash!: string | undefined;
+    userId!: string | undefined;
 
-    constructor(data?: IPhoneOtpGenerationOutputDto) {
+    constructor(data?: IPhoneOtpVerificationInputDto) {
         if (data) {
             for (var property in data) {
                 if (data.hasOwnProperty(property))
@@ -10178,35 +10545,35 @@ export class PhoneOtpGenerationOutputDto implements IPhoneOtpGenerationOutputDto
 
     init(_data?: any) {
         if (_data) {
-            this.id = _data["id"];
+            this.phoneNumber = _data["phoneNumber"];
             this.code = _data["code"];
-            this.expireDate = _data["expireDate"] ? DateTime.fromISO(_data["expireDate"].toString()) : <any>undefined;
-            this.validityMinutes = _data["validityMinutes"];
+            this.hash = _data["hash"];
+            this.userId = _data["userId"];
         }
     }
 
-    static fromJS(data: any): PhoneOtpGenerationOutputDto {
+    static fromJS(data: any): PhoneOtpVerificationInputDto {
         data = typeof data === 'object' ? data : {};
-        let result = new PhoneOtpGenerationOutputDto();
+        let result = new PhoneOtpVerificationInputDto();
         result.init(data);
         return result;
     }
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
+        data["phoneNumber"] = this.phoneNumber;
         data["code"] = this.code;
-        data["expireDate"] = this.expireDate ? this.expireDate.toString() : <any>undefined;
-        data["validityMinutes"] = this.validityMinutes;
+        data["hash"] = this.hash;
+        data["userId"] = this.userId;
         return data;
     }
 }
 
-export interface IPhoneOtpGenerationOutputDto {
-    id: number;
+export interface IPhoneOtpVerificationInputDto {
+    phoneNumber: string | undefined;
     code: string | undefined;
-    expireDate: DateTime;
-    validityMinutes: number;
+    hash: string | undefined;
+    userId: string | undefined;
 }
 
 export class RealEstateAssetData implements IRealEstateAssetData {
@@ -10778,7 +11145,7 @@ export interface IRequestType {
 }
 
 export class SentNotificationMessagesDto implements ISentNotificationMessagesDto {
-    notificationMessageDtos!: NotificationMessageDto[] | undefined;
+    notificationMessageDto!: NotificationMessageDto;
     id!: string;
 
     constructor(data?: ISentNotificationMessagesDto) {
@@ -10792,11 +11159,7 @@ export class SentNotificationMessagesDto implements ISentNotificationMessagesDto
 
     init(_data?: any) {
         if (_data) {
-            if (Array.isArray(_data["notificationMessageDtos"])) {
-                this.notificationMessageDtos = [] as any;
-                for (let item of _data["notificationMessageDtos"])
-                    this.notificationMessageDtos!.push(NotificationMessageDto.fromJS(item));
-            }
+            this.notificationMessageDto = _data["notificationMessageDto"] ? NotificationMessageDto.fromJS(_data["notificationMessageDto"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -10810,18 +11173,14 @@ export class SentNotificationMessagesDto implements ISentNotificationMessagesDto
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        if (Array.isArray(this.notificationMessageDtos)) {
-            data["notificationMessageDtos"] = [];
-            for (let item of this.notificationMessageDtos)
-                data["notificationMessageDtos"].push(item.toJSON());
-        }
+        data["notificationMessageDto"] = this.notificationMessageDto ? this.notificationMessageDto.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data;
     }
 }
 
 export interface ISentNotificationMessagesDto {
-    notificationMessageDtos: NotificationMessageDto[] | undefined;
+    notificationMessageDto: NotificationMessageDto;
     id: string;
 }
 

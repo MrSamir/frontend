@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { PlatformLocation, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 //import * as moment from 'moment-timezone';
-import { filter as _filter, merge as _merge } from 'lodash-es';
+//import { filter as _filter, merge as _merge } from 'lodash-es';
 import { appCoreLoader } from 'projects/core-lib/src/lib/loaders/appCoreLoader';
 import { AppSessionService } from 'projects/core-lib/src/lib/services/app-session.service';
 import { AppCoreSubjectService } from 'projects/core-lib/src/lib/services/app-core-subject.service';
@@ -52,7 +52,7 @@ loadAppConfig(): () => Promise<boolean> {
 
  })}}
 
- private loadBakcendUserConfig(callback: () => void) :void 
+ private loadBakcendUserConfig(callback: () => void) :void
  {
   
     var appconfig=this.ConfigSubject.getAppConfig();
@@ -88,7 +88,7 @@ loadAppConfig(): () => Promise<boolean> {
         callback();
       });
 
- 
+
  }
   private getBaseHref(): string {
     const baseUrl = this._platformLocation.getBaseHrefFromDOM();
@@ -100,5 +100,5 @@ loadAppConfig(): () => Promise<boolean> {
   }
 
 
-  
+
 }

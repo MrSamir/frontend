@@ -1,39 +1,20 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { CitizenInfoResponse } from "@app/dto/yakeen/citizenInfoResponse";
-import { translations } from "@app/model/translations";
-import {lifeStatusMap} from "@app/model/users/personalInformation.model";
+
+import {
+  CitizenInfoResponse, InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData
+} from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
+import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
 
 @Component({
   selector: 'yakeen-citizen-view',
   templateUrl: './yakeen-citizen-view.html'
 })
-export class YakeenCitizenView implements OnInit {
-  @Input() citizenInfoResponse: CitizenInfoResponse;
-  constructor() {
-  }
-
-  yakeenGender = {
-    'M': 'ذكر',
-    'F': 'أنثى',
-    '0': 'ذكر',
-    '1': 'أنثى'
-  }
-
-  get lifeStatus() {
-    switch (this.citizenInfoResponse.lifeStatus) {
-      case lifeStatusMap.Alive:
-        return  translations.alive;
-      case lifeStatusMap.Dead:
-        return translations.dead;
-      default:
-        return translations.unknownLifeStatus
-    }
-  }
-
-  get translations() {
-    return translations;
-  }
+export class YakeenCitizenViewComponent implements OnInit {
+  @Input() citizenInfoResponse: CitizenInfoResponse | undefined;
 
   ngOnInit(): void {
+    // check if NationlaityId has value AND no name, then this case require a manual mapping
+    // this case happens when the input param [citizenInfoResponse] is being passed as input, not as a response from GetCitizenInfo() API.
+
   }
 }

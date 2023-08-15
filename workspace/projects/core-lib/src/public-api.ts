@@ -11,6 +11,7 @@ export * from './lib/services/Utils/Utils.Service';
 export * from './lib/services/message/app-message.service';
 export * from './lib/core-lib.module';
 export * from './lib/services/loading.service';
+export * from './lib/enums/EnumValidation';
 export * from './lib/loacalization-base/loacalization-base.component'
 
 

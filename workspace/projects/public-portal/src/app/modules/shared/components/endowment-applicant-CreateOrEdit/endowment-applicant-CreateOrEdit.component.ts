@@ -95,6 +95,7 @@ export class EndowmentApplicantCreateOrEditComponent
      5- update if edit.
     
  */
+debugger;
 
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
@@ -114,7 +115,7 @@ export class EndowmentApplicantCreateOrEditComponent
     this.LoadLookups('ExperienceYear', (lookups) => {
       this.experienceYears = lookups;
     });
-    if (this.RequestId == undefined) {
+    if (this.RequestId == undefined ||this.RequestId=="") {
       this.loadCurrentUser();
     } else {
       this.isEditMode = true;
@@ -122,6 +123,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   loadCurrentUser() {
     this._applicationUserService.getCurrentUser().subscribe((result) => {
+      debugger;
       this.applicantUser = result.dto;
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);

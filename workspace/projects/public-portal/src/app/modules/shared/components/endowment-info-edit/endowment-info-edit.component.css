@@ -1,0 +1,26 @@
+.aw-content .col-form-label{
+    display: block;
+  }
+  /* .calendar-alt .icon{
+      display: none;
+  } */
+  
+  :host ::ng-deep .p-multiselect {
+    min-width: 15rem;
+    background-size: 8px 10px;
+    border: 2px #CBDDD6 solid;
+    border-radius: 6px;
+    width: 100%;
+    height: 38px;
+  
+    .p-multiselect-token {
+      font-size: 13px;
+      padding: 0.15rem 0.5rem;
+    }
+  
+    .p-multiselect-token-icon {
+      margin-right: 0.25rem;
+      margin-left: 0!important;
+    }
+  }
+  
