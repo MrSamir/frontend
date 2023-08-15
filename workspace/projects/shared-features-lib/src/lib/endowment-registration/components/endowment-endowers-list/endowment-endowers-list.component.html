@@ -1,3 +1,139 @@
-<p>
-  endowment-endowers-list works!
-</p>
+<form name="form" #waqifListForm="ngForm">
+
+  <div class="d-flex justify-content-center my-6" *ngIf="!viewOnly && !hasOwners" >
+    <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewWaqif(addData)">
+<!--      <svg-icon styleClass="fa-3x mr-2 mb-2 " icon="add-user"></svg-icon>-->
+      <span>{{'EndowmentModule.EndowmentRgistrationService.ButtonAddEnowmersDetails' | localize}}</span>
+    </a>
+  </div>
+
+  <div class="table-responsive mt-2" *ngIf="hasOwners">
+    <table class="table table-striped table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <td class="text-center" scope="col">#</td>
+        <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.EnodwomerName' | localize}}</td>
+        <td class="text-center" scope="col">{{'Common.idNumber' | localize}}</td>
+        <td class="text-center" scope="col">{{'Common.mobileNumber' | localize}}</td>
+        <td class="text-center" scope="col" *ngIf="viewOnly">{{'Common.ReviewLabel' | localize}}</td>
+        <td class="text-center" scope="col" *ngIf="!viewOnly">{{'Common.EditLabel' | localize}}</td>
+        <td class="text-center" scope="col" *ngIf="!viewOnly">{{'Common.DeleteLabel' | localize}}</td>
+      </tr>
+      </thead>
+      <!--   ==============    if the have result ============== -->
+      <tbody>
+      <tr *ngFor="let owner of owners; let i = index">
+        <td class="text-center" scope="col">
+          {{i + 1}}
+        </td>
+        <td class="text-center" scope="col">
+          {{owner?.endowmerPerson?.fullName}}
+        </td>
+        <td class="text-center" scope="col">
+          {{owner?.endowmerPerson?.userName}}
+        </td>
+        <td class="text-center" scope="col">
+          {{owner?.endowmerPerson?.phoneNumber}}
+        </td>
+        <td class="text-center" scope="col" *ngIf="viewOnly">
+          <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewWaqif(addData, i)">
+<!--            <svg-icon icon="eye" ></svg-icon>-->
+{{'Common.ReviewLabel' | localize}}
+          </a>
+        </td>
+        <td class="text-center" scope="col" *ngIf="!viewOnly">
+          <a class="btn btn-sm btn-outline-awq-secondary rounded"  (click)="editWaqif(addData, i)">
+            {{'Common.EditLabel' | localize}}
+<!--            <svg-icon icon="pencil"></svg-icon>-->
+          </a>
+        </td>
+        <td class="text-center" scope="col" *ngIf="!viewOnly">
+          <a class="btn btn-sm btn-outline-danger rounded" [ngClass]="overlay(i)" (click)="deleteOwner(owner.endowmerId, i)" *ngIf="!viewOnly">
+<!--            <svg-icon icon="trash-alt"></svg-icon>-->
+{{'Common.DeleteLabel' | localize}}
+          </a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-end my-6" *ngIf="hasOwners && !viewOnly">
+    <button class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm" (click)="onAddNewWaqif(addData)">
+<!--      <svg-icon styleClass="h1 mr-2" icon="add-user"></svg-icon>-->
+      <span>{{'EndowmentModule.EndowmentRgistrationService.ButtonAddAnotherEndowmer' | localize}}</span>
+    </button>
+  </div>
+
+  <ng-template #addData let-modal>
+    <div class="modal-header">
+      <h2>{{'EndowmentModule.EndowmentRgistrationService.ownerDataTitle' | localize}}</h2>
+    </div>
+    <div class="modal-body">
+      <yakeen-person *ngIf="isUpdateMode || isCreateMode"
+                     (OnNewPersonAvailable)="onNewPersonAvailable($event)"
+                     (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
+                     (OnNewAlienValidated)="onNewAlienAvailable($event)"
+                     [initialData]="{alien: newAlien, citizen: newCitizen, person: newPerson}">
+
+<!--        (OnNewHafezaValidated)="onNewHafezaAvailable($event)"-->
+<!--        (OnEditHafezaValidated)="onEditHafezaAvailable($event)"-->
+      </yakeen-person>
+
+      <yakeen-person-view *ngIf="viewOnly"
+                          [isHafeza]="isHafeza"
+                          [isCitizen]="isCitizen"
+                          [citizen]="citizenToView"
+                          [alien]="alienToView" [person]="requestedOwnerPerson" [IdTypeLookup]="IdTypeLookup"></yakeen-person-view>
+
+
+
+      <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady">
+        <div class="form-group col">
+          <div class="d-flex">
+            <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.ownerType' | localize}}<span *ngIf="!viewOnly"
+                                                                              class="text-danger">*</span></label>
+<!--            <hint [hintContent]="ownertypehint?.hintContentAr" [hintTitle]="ownertypehint?.hintTitleAr"></hint>-->
+          </div>
+          <select class="custom-select" #ownerTypeId="ngModel" name="ownerTypeId"
+                  [(ngModel)]="addOwnerInputDto.endowmentPartiesTypeId"
+                  (change)="changeOwner($event)" [hidden]="viewOnly">
+            <option [value]="null" disabled selected></option>
+            <option *ngFor="let ownerType of PartiesTypesLookup" [value]="ownerType.id"
+                    [attr.data-hintkey]="ownerType.hint">
+              {{ownerType?.name}}
+            </option>
+          </select>
+         <label class="col-form-label font-weight-bold" [hidden]="!viewOnly" *ngIf="PartiesTypesLookup && addOwnerInputDto.endowmentPartiesTypeId">&nbsp; {{PartiesTypesLookup[addOwnerInputDto.endowmentPartiesTypeId != undefined ? addOwnerInputDto.endowmentPartiesTypeId + 1 : 0]?.name}} </label>
+          <div *ngIf="ownerTypeId.invalid && (ownerTypeId.dirty || ownerTypeId.touched)" class="">
+            <p *ngIf="ownerTypeId.errors?.['required']"
+               class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.ownerTypeRequired' | localize}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-container   *ngIf="isCreateMode&&!viewOnly">
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-awq-secondary px-6" (click)="addToWaqifList()"  [disabled]="(waqifListForm.form?.invalid||addOwnerInputDto=== undefined || addOwnerInputDto.endowmentPartiesTypeId===undefined)&&!isAddHafezaValid" (click)="addToWaqifList()">
+          {{'Common.AddLabel' | localize}}
+<!--          <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon></button>-->
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="isUpdateMode">
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-warning px-6" [disabled]="waqifListForm.form?.invalid" (click)="onEditBtnClicked()">
+          {{'Common.EditLabel' | localize}}
+                </button>
+        <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditWaqifValid()" (click)="onCancelBtnClicked()">
+          {{'Common.CancelLabel' | localize}}
+        </button>
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <div class="aw-btn">
+    <button type="button" class="btn btn-awq-secondary"  (click)="onNextClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+    <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
+  </div>
+</form>

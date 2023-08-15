@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
-import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
+ 
  
 
 import { HttpClient } from '@angular/common/http';
@@ -24,6 +24,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
+import { SharecomponentModule } from 'projects/shared-features-lib/src/lib/modules/sharecomponent.module';
  
  
 

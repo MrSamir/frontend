@@ -16,7 +16,6 @@ export class MojServiceRequestComponent implements OnInit {
     this.createForm();
   }
   check() {
-    debugger;
     if (this.attorneyInquiryFormGroup.valid) {
       this.showResult.emit(true);
     }

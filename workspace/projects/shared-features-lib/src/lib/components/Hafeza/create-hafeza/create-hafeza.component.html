@@ -1,0 +1,213 @@
+<!--<p>create-hafeza works!</p>-->
+<!--<form [formGroup]="hafezaForm" (submit)="onNewHafeza()">-->
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col" *ngIf="isHafeza">-->
+<!--      <label class="col-form-label">رقم حفيظة النفوس<span class="text-danger">*</span></label>-->
+<!--      <input type="text" class="form-control"-->
+<!--             (beforeinput)="beforeInput($event)"-->
+<!--             name="nationalId"-->
+<!--             maxlength="5"-->
+<!--             [class.is-invalid]="isElementInvalid('nationalId')"-->
+<!--             formControlName="nationalId">-->
+<!--      <app-validation-messages [ValidationItems]="nationalIdValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.firstName}}</label><span class="text-danger">*</span>-->
+<!--      <input class="form-control"-->
+<!--             [class.is-invalid]="isElementInvalid('firstName')"-->
+<!--             name="firstName"-->
+<!--             formControlName="firstName" type="text">-->
+<!--      <app-validation-messages [ValidationItems]="firstNameValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.secondName}}</label><span class="text-danger">*</span>-->
+<!--      <input class="form-control"-->
+<!--             [class.is-invalid]="isElementInvalid('secondName')"-->
+<!--             name="secondName"-->
+<!--             formControlName="secondName" type="text">-->
+<!--      <app-validation-messages [ValidationItems]="secondNameValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.thirdName}}</label>-->
+<!--      <input class="form-control"-->
+<!--             name="thirdName"-->
+<!--             formControlName="thirdName" type="text">-->
+<!--    </div>-->
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.fourthName}}</label>-->
+<!--      <input class="form-control"-->
+<!--             name="fourthName"-->
+<!--             formControlName="fourthName" type="text">-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.nationality}}</label><span class="text-danger">*</span>-->
+<!--      <select class="custom-select"  formControlName="nationality">-->
+<!--        <option *ngFor="let nationality of nationalities" value={{nationality.value}}>-->
+<!--          {{nationality.name}}-->
+<!--        </option>-->
+<!--      </select>-->
+<!--      <app-validation-messages [ValidationItems]="nationalityValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+<!--    <div class="form-group col">-->
+<!--      <ng-bootstrap-hijri-gregorian-datepicker-->
+<!--        Label="تاريخ الميلاد (هجرى)"-->
+<!--        [IsRequired]=true-->
+<!--        [min]="minDate"-->
+<!--        [max]="maxDate"-->
+<!--        [(SelectedDate)]="selectedDate"-->
+<!--        (SelectedDateChange)="onDateChange($event)"-->
+<!--      ></ng-bootstrap-hijri-gregorian-datepicker>-->
+<!--      <app-validation-messages [ValidationItems]="gregorianDateValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+
+<!--    <div class="form-group col">-->
+<!--      <ng-bootstrap-hijri-gregorian-datepicker-->
+<!--        Label="تاريخ إصدار الإقامة (هجرى)"-->
+<!--        [min]="minDate"-->
+<!--        [max]="maxDate"-->
+<!--        [(SelectedDate)]="selectedDateIdIssueDate"-->
+<!--        (SelectedDateChange)="onDateChangeIdIssueDate($event)"-->
+<!--      ></ng-bootstrap-hijri-gregorian-datepicker>-->
+<!--    </div>-->
+
+<!--    <div class="form-group col">-->
+<!--      <ng-bootstrap-hijri-gregorian-datepicker-->
+<!--        Label="تاريخ إنتهاء الإقامة (هجرى)"-->
+<!--        [min]="minDateExpiry"-->
+<!--        [max]="maxDateExpiry"-->
+<!--        [(SelectedDate)]="selectedDateIdExpiryDate"-->
+<!--        (SelectedDateChange)="onDateChangeIdExpiryDate($event)"-->
+<!--      ></ng-bootstrap-hijri-gregorian-datepicker>-->
+<!--    </div>-->
+
+<!--  </div>-->
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.mobileNumber}}</label>-->
+<!--      <input formControlName="mobileNumber" class="form-control" type="text"-->
+<!--             [class.is-invalid]="isElementInvalidAnyForm(hafezaForm,'mobileNumber')"-->
+<!--             placeholder="05xxxxxxxx | 9665xxxxxxxx"-->
+<!--             inputmode="numeric"-->
+<!--             (beforeinput)="beforeInput($event)" name="hafezaForm"-->
+<!--      >-->
+<!--      <app-validation-messages [ValidationItems]="mobileNumberValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+<!--    <div class="form-group col">-->
+<!--      <label class="form-label" >{{translations.gender}}</label><span class="text-danger">*</span>-->
+<!--      <div class="custom-control custom-radio custom-control-inline"  >-->
+<!--        <input type="radio" [id]="hafezaFormGender['M']"-->
+<!--               class="form-check-input" value="0" formControlName="gender">-->
+<!--        <label  [for]="hafezaFormGender['M']">-->
+<!--          {{hafezaFormGender['M']}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="custom-control custom-radio custom-control-inline">-->
+<!--        <input [id]="hafezaFormGender['F']" type="radio" value="1"-->
+<!--               class="form-check-input" formControlName="gender">-->
+<!--        <label  [for]="hafezaFormGender['F']">-->
+<!--          {{hafezaFormGender['F']}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <app-validation-messages [ValidationItems]="genderValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col">-->
+<!--      <div class="d-flex">-->
+<!--        <label class="col col-form-label">{{translations.ownerType}}<span class="text-danger">*</span></label>-->
+<!--      </div>-->
+<!--      <select class="custom-select"  name="ownerTypeId" formControlName="ownerTypeId"-->
+<!--              (change)="changeOwner($event)" >-->
+<!--        <option [value]="null" disabled selected></option>-->
+<!--        <option *ngFor="let ownerType of lookupService.ownerTypes" [value]="ownerType.value"-->
+<!--                [attr.data-hintkey]="ownerType.hintKey">-->
+<!--          {{ownerType.name}}-->
+<!--        </option>-->
+<!--      </select>-->
+<!--      <app-validation-messages [ValidationItems]="ownerTypeIdValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+<!--    <div class="form-group col">-->
+<!--      <label class="col-form-label">{{translations.email}}</label>-->
+<!--      <input type="text"-->
+<!--             class="form-control"-->
+<!--             formControlName="email"-->
+<!--             [class.is-invalid]="isElementInvalidAnyForm(hafezaForm, 'email')"-->
+<!--      >-->
+<!--      <app-validation-messages [ValidationItems]="emailValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+
+
+
+<!--    <div class="form-group col">-->
+<!--      <label class="form-label" >{{translations.lifeStatus}}</label><span class="text-danger">*</span>-->
+<!--      <div class="custom-control custom-radio custom-control-inline"  >-->
+<!--        <input type="radio" [id]="lifeStatusFormGender[0]"-->
+<!--               class="form-check-input" value="0" formControlName="lifeStatus">-->
+<!--        <label  [for]="lifeStatusFormGender[0]">-->
+<!--          {{lifeStatusFormGender[0]}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <div class="custom-control custom-radio custom-control-inline">-->
+<!--        <input [id]="lifeStatusFormGender[1]" type="radio" value="1"-->
+<!--               class="form-check-input" formControlName="lifeStatus">-->
+<!--        <label  [for]="lifeStatusFormGender[1]">-->
+<!--          {{lifeStatusFormGender[1]}}-->
+<!--        </label>-->
+<!--      </div>-->
+<!--      <app-validation-messages [ValidationItems]="lifeStatusValidationItems"></app-validation-messages>-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+
+<!--  <div class="row row-cols-1 row-cols-md-2">-->
+<!--    <div class="form-group col-12" *ngIf="!isHafeza">-->
+<!--      <label class="col-form-label">السبب<span class="text-danger">*</span></label>-->
+<!--      <textarea [rows]="5" cols="10" class="form-control" formControlName="reason">-->
+<!--      </textarea>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+
+<!--</form>-->

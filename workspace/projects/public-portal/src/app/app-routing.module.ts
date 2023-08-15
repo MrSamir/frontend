@@ -5,6 +5,10 @@ import { LandingComponent } from './layout/landing/landing.component';
 import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
 import { API_BASE_URL } from './modules/shared/services/services-proxies/service-proxies';
 import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
+import {
+  PublicUserProfileComponent
+} from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
+import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
 
 
 const routes: Routes = [
@@ -41,18 +45,18 @@ const routes: Routes = [
   //   data: { title: 'مهامي' },
   //   canActivate:[PublicActiveProfileGuard]
   // },
-  // {
-  //   path: 'my-profile',
-  //   component: MyProfileComponent,
-  //   data: { title: 'الملف الشخصي' },
-  //   canActivate:[AuthGuard]
-  // },
-  // {
-  //   path: 'confirm-email/:userId/:confirmationCode',
-  //   component: EmailConfirmationComponent,
-  //   data: { title: 'تفعيل البريد الألكتروني' },
-  //   canActivate:[]
-  // },
+  {
+    path: 'public-user-profile',
+    component: PublicUserProfileComponent,
+    data: { title: 'الملف الشخصي' },
+    //canActivate:[AuthGuard]
+  },
+  {
+    path: 'confirm-email/:userId/:confirmationCode',
+    component: EmailConfirmationComponent,
+    data: { title: 'تفعيل البريد الألكتروني' },
+    canActivate:[]
+  },
   // {
   //   path: 'dashboard',
   //   component: HomePageComponent,

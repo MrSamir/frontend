@@ -33,7 +33,7 @@ createForm(){
 }
 
   check() {
-debugger;
+
     if (this.identityTypeFormGroup.valid){
       this.showResult.emit(true);
     }
@@ -48,7 +48,6 @@ debugger;
 
     const identityType = this.identityTypeFormGroup.controls['identityType'].value;
     this.citizen = identityType === 'citizen';
-  debugger;
     // Clear validators based on the radio button selection
     if (this.citizen) {
       this.identityTypeFormGroup.controls['dob'].clearValidators();
