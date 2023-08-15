@@ -1,17 +1,17 @@
-import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { Component, Injector, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountServiceProxy, RequestApplicationServiceServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
-import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 import { LazyLoadEvent } from 'primeng/api';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { AccountServiceProxy, RequestApplicationServiceServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { FormBuilder } from '@angular/forms';
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 @Component({
-  selector: 'app-my-requests',
-  templateUrl: './my-requests.component.html',
-  styleUrls: ['./my-requests.component.css']
+  selector: 'app-my-tasks',
+  templateUrl: './my-tasks.component.html',
+  styleUrls: ['./my-tasks.component.css']
 })
-export class MyRequestsComponent extends ComponentBase implements OnInit {
+export class MyTasksComponent extends ComponentBase implements OnInit {
   primengTableHelper: PrimengTableHelper;
 
   constructor(
@@ -29,10 +29,12 @@ export class MyRequestsComponent extends ComponentBase implements OnInit {
   }
 
 
-  loadMyRequests(event?: LazyLoadEvent) {
+
+
+  loadMyTasks(event?: LazyLoadEvent) {
     this.primengTableHelper.showLoadingIndicator();
     debugger
-    this.requestApplicationServiceServiceProxy.getMyRequests("RequestNumber", event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
+    this.requestApplicationServiceServiceProxy.getMyTasks("RequestNumber", event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
       res => {
         debugger
         this.primengTableHelper.records = res.dto.items as RequestOutputDto[];
@@ -42,7 +44,4 @@ export class MyRequestsComponent extends ComponentBase implements OnInit {
     );
     this.primengTableHelper.hideLoadingIndicator();
   }
-
-
-
 }

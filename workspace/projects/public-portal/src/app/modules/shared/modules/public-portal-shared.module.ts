@@ -22,7 +22,6 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { EndowmentApplicantEditComponent } from '../components/endowment-applicant-edit/endowment-applicant-edit.component';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
-import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
 import {InputSwitchModule} from "primeng/inputswitch";
 
 
@@ -48,7 +47,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
 
     CommonModule,FormsModule,
     ReactiveFormsModule,
- CoreLibModule,SharecomponentModule,
+ CoreLibModule,
 MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [

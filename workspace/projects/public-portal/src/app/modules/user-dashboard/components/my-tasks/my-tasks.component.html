@@ -3,7 +3,7 @@
     <p-table class="table table-striped table-hover" #dt [value]="primengTableHelper.records" [lazy]="true"
         [totalRecords]="primengTableHelper.totalRecordsCount" [loading]="primengTableHelper.isLoading"
         [rows]="primengTableHelper.defaultRecordsCountPerPage" [paginator]="true"
-        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage" (onLazyLoad)="loadMyRequests($event)"
+        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage" (onLazyLoad)="loadMyTasks($event)"
         [responsive]="primengTableHelper.isResponsive" [showCurrentPageReport]="true"
         [currentPageReportTemplate]="' عدد السطور'+ primengTableHelper.totalRecordsCount.toString()"
         [resizableColumns]="primengTableHelper.resizableColumns">

@@ -35,8 +35,8 @@ const routes: Routes = [
     data: { title: 'تسجيل وقف' }
   },
   {
-    path: 'userprofile',
-    loadChildren: () => import('../app/modules/user-dashboard/modules/user-profile.module').then(m => m.UserProfileModule),
+    path: 'userdashboard',
+    loadChildren: () => import('./modules/user-dashboard/modules/user-dashboard.module').then(m => m.UserDashBoardModule),
     data: { title: 'مهامي' }
   },
   // {

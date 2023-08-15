@@ -38,7 +38,7 @@ export class LoginComponent extends ComponentBase implements OnInit {
         debugger;
         this.Util.setCookieValue(
           this.config.getAppConfig().TokenCookieName,
-          result.token!
+          result.dto.accessToken!
         );
         this.redirectToLandingPage();
       });
