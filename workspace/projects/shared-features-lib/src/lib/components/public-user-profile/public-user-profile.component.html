@@ -10,9 +10,9 @@
         <label class="col-form-label">{{'Common.FullName' | localize}}</label>
         <span class="form-control-plaintext">{{currentUserProfile.fullName}}</span>
       </div>
-      <div class="col" *ngIf="currentUserProfile.userName">
+      <div class="col" *ngIf="currentUserProfile?.userName">
         <label class="col-form-label">{{'Common.idNumber' | localize}}</label>
-        <span class="form-control-plaintext">{{currentUserProfile.userName}}</span>
+        <span class="form-control-plaintext">{{currentUserProfile?.userName}}</span>
       </div>
       <div class="col" *ngIf="currentUserProfile.birthDate">
         <label class="col-form-label">{{'Common.dateOfBirth' | localize}}</label>

@@ -27,13 +27,13 @@
           {{i + 1}}
         </td>
         <td class="text-center" scope="col">
-          {{owner.endowmerPerson.fullName}}
+          {{owner?.endowmerPerson?.fullName}}
         </td>
         <td class="text-center" scope="col">
-          {{owner.endowmerPerson.userName}}
+          {{owner?.endowmerPerson?.userName}}
         </td>
         <td class="text-center" scope="col">
-          {{owner.endowmerPerson.phoneNumber}}
+          {{owner?.endowmerPerson?.phoneNumber}}
         </td>
         <td class="text-center" scope="col" *ngIf="viewOnly">
           <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewWaqif(addData, i)">
@@ -114,7 +114,7 @@
     </div>
     <ng-container   *ngIf="isCreateMode&&!viewOnly">
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-awq-secondary px-6"   [disabled]="(waqifListForm.form?.invalid||addOwnerInputDto=== undefined || addOwnerInputDto.endowmentPartiesTypeId===undefined)&&!isAddHafezaValid" (click)="addToWaqifList()">
+        <button type="button" class="btn btn-awq-secondary px-6" (click)="addToWaqifList()"  [disabled]="(waqifListForm.form?.invalid||addOwnerInputDto=== undefined || addOwnerInputDto.endowmentPartiesTypeId===undefined)&&!isAddHafezaValid" (click)="addToWaqifList()">
           {{'Common.AddLabel' | localize}}
 <!--          <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon></button>-->
         </button>
