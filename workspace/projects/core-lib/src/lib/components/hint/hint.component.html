@@ -1,0 +1,13 @@
+<p-overlayPanel #op>
+  <ng-template pTemplate="content">
+    <div class="hint">
+      <div class="hintHeader">
+        <i class="pi pi-info-circle mr-2 hintinfoIcon mirror-effect"></i>
+       <div class="d-flex justify-content-center"> {{hint.hintHeader}}</div>
+      </div>
+      <div class="hintBody" [innerHTML]="hint.hintBody">
+      </div>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+<i class="hintbtnIcon mirror-effect mt-2 pi pi-question-circle" (click)="op.toggle($event)"></i>

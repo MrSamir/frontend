@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputFiscalAssetDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputFiscalAssetDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { LookupModel } from '../../../models/LookupModel';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
@@ -25,8 +25,8 @@ ePatternValidation: typeof EnumValidation = EnumValidation;
 currentassetvalueLabel:string='القيمة الحالية للأصل';
 assetAttachementLable: string='الأصل';
 numberOfshareLable:string;
-constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
-  private lookupssrv:LookupApplicationServiceServiceProxy,/*private utilityService:UtilityService*/) {
+constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+  private lookupssrv:LookupApplicationServiceProxy,/*private utilityService:UtilityService*/) {
   //this.resolveLookup = this.utilityService.resolveLookup;
  }
 

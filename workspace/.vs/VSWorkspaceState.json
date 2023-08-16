@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\projects",
+    "\\projects\\public-portal",
+    "\\projects\\public-portal\\src",
+    "\\projects\\public-portal\\src\\app",
+    "\\projects\\public-portal\\src\\app\\modules",
+    "\\projects\\public-portal\\src\\app\\modules\\endowment-registration",
+    "\\projects\\public-portal\\src\\app\\modules\\endowment-registration\\components",
+    "\\projects\\public-portal\\src\\app\\modules\\shared",
+    "\\projects\\public-portal\\src\\app\\modules\\shared\\components",
+    "\\projects\\public-portal\\src\\app\\modules\\shared\\components\\endowment-applicant-CreateOrEdit"
+  ],
+  "SelectedNode": "\\projects\\public-portal\\src\\app\\modules\\shared\\components\\endowment-applicant-CreateOrEdit\\endowment-applicant-CreateOrEdit.component.ts",
+  "PreviewInSolutionExplorer": false
+}

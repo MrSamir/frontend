@@ -9,11 +9,16 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
   ],
   declarations: [],
   providers: [
-    ServiceProxy.FileLibraryApplicationServiceServiceProxy,
-    ServiceProxy.EndowmentRegistrationServiceServiceProxy,
-    ServiceProxy.LookupApplicationServiceServiceProxy,
-    ServiceProxy.AccountServiceProxy,
-    ServiceProxy.ApplicationUserServiceServiceProxy,
+    ServiceProxy.FileLibraryApplicationServiceProxy,
+    ServiceProxy.EndowmentRegistrationServiceProxy,
+    ServiceProxy.LookupApplicationServiceProxy,
+    ServiceProxy.AccountProxy,
+    ServiceProxy.ApplicationUserServiceProxy,
+    ServiceProxy.FileLibraryApplicationServiceProxy,
+    ServiceProxy.EndowmentRegistrationServiceProxy,
+    ServiceProxy.AccountProxy,
+    ServiceProxy.YaqeenApplicationServiceProxy,
+    ServiceProxy.MOJApplicationServiceProxy
   ],
 })
 export class ServicesProxyModule {

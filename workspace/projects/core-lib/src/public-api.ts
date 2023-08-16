@@ -13,5 +13,5 @@ export * from './lib/core-lib.module';
 export * from './lib/services/loading.service';
 export * from './lib/enums/EnumValidation';
 export * from './lib/loacalization-base/loacalization-base.component'
-export * from  './lib/ReactiveFromHelpers/AppFormControl';
+
 

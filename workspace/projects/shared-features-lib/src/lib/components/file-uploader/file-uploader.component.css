@@ -13,7 +13,7 @@
     font-size: 20px;
     font-weight: 600;
 } */
-:host ::ng-deep .p-fileupload-content 
+/* :host ::ng-deep .p-fileupload-content 
     .p-fileupload-row.ng-star-inserted img {
     width: 120px;
     height: 75px;
@@ -29,11 +29,11 @@
   }
   
   /* Custom styles for the "Upload" button */
-  :host ::ng-deep .p-fileupload .p-fileupload-upload {
+  /*:host ::ng-deep .p-fileupload .p-fileupload-upload {
     background-color: #28a745;
     color: #fff;
     border: 2px solid #28a745;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
-  }
+  } */

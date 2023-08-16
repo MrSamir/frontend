@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputIntellectualPropertyAndTrademarkAssetDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputIntellectualPropertyAndTrademarkAssetDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { LookupModel } from '../../../models/LookupModel';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,8 +22,8 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit  {
   _lookupExtraData:LookupExtraData;
 
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy,) {
+  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,private modalService: NgbModal,
+    private lookupssrv:LookupApplicationServiceProxy,) {
 
   }
 

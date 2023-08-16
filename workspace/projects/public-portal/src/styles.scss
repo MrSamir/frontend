@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "primeicons/primeicons.css";
+/* Theme fonts*/
+@font-face {
+  font-family: 'URW DIN Arabic';
+  src: url('assets/fonts/URWDINArabicRegular/URWDINArabic-Regular.eot');
+  src: url('assets/fonts/URWDINArabicRegular/URWDINArabic-Regular.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/URWDINArabicRegular/URWDINArabic-Regular.woff') format('woff'),
+  url('assets/fonts/URWDINArabicRegular/URWDINArabic-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'URW DIN Arabic';
+  src: url('assets/fonts/URWDINArabicMedium/URWDINArabic-Medium.eot');
+  src: url('assets/fonts/URWDINArabicMedium/URWDINArabic-Medium.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/URWDINArabicMedium/URWDINArabic-Medium.woff') format('woff'),
+  url('assets/fonts/URWDINArabicMedium/URWDINArabic-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'URW DIN Arabic';
+  src: url('assets/fonts/URWDINArabicBold/URWDINArabic-Bold.eot');
+  src: url('assets/fonts/URWDINArabicBold/URWDINArabic-Bold.eot?#iefix') format('embedded-opentype'),
+  url('assets/fonts/URWDINArabicBold/URWDINArabic-Bold.woff') format('woff'),
+  url('assets/fonts/URWDINArabicBold/URWDINArabic-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+
+/* @import 'assets/scss/sub/variables';
+@import 'assets/scss/sub/mixins';
+@import 'assets/scss/bootstrap/bootstrap';
+@import 'assets/scss/sub/animation';
+@import 'assets/scss/sub/rtl'; */
+
+/* @import 'assets/scss/sub/loading';
+@import 'assets/scss/sub/responsive';
+@import 'assets/scss/sub/components';
+@import 'assets/scss/sub/hamburger-icon'; */
+
+/* @import 'assets/scss/sub/custom-style'; */

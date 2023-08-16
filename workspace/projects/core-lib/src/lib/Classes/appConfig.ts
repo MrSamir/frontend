@@ -1,6 +1,7 @@
 export class appConfig {
-    BaseApiUrl: string;
+    baseApiUrl: string;
     appBaseHref: string;
     langCookieName: string;
-    TokenCookieName:string
+    tokenCookieName:string;
+    refreshTokenName:string;
 }

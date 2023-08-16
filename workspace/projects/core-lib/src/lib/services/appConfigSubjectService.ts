@@ -10,10 +10,11 @@ export class AppConfigSubjectService{
   
   private appConfigObj: BehaviorSubject<appConfig> =
     new BehaviorSubject<appConfig>({
-      BaseApiUrl: "",
+      baseApiUrl: "",
       appBaseHref: "",
       langCookieName: "",
-      TokenCookieName:""
+      tokenCookieName:"",
+    refreshTokenName:""
     });
 
   public setAppConfig(data: appConfig) {

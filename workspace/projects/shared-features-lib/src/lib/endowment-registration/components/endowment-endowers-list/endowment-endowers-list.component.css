@@ -1,0 +1,12 @@
+.aw-content .col-form-label{
+  display: block;
+}
+/* .calendar-alt .icon{
+    display: none;
+} */
+
+.disabledIcon {
+  color: grey;
+  border-color: grey;
+  pointer-events: none;
+}

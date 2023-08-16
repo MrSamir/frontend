@@ -4,7 +4,14 @@ import { LoadingService } from '../../services/loading.service';
 import { LocalizationService } from '../../services/localization/localization.service';
 import { UtilsService } from '../../services/Utils/Utils.Service';
 import { AppConfigSubjectService } from '../../services/appConfigSubjectService';
+import { EnumValidation } from '../../enums/EnumValidation';
 
+export enum ComponentState
+{
+  New=1,
+  Edit=2
+  
+}
 export abstract class ComponentBase  {
   localization: LocalizationService;
   loading: LoadingService;
@@ -29,6 +36,10 @@ export abstract class ComponentBase  {
   hideLoding() {
     if(this.loading.isLoading)
     this.loading.hide();
+  }
+  get EnumValidation()
+  {
+    return EnumValidation;
   }
   
 }

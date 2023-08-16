@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from "@angular/core";
 // import {lifeStatusMap} from "@app/model/users/personalInformation.model";
 // import {NationalityHelperService} from "@app/services/lookup/NationalityHelper.service";
 import {
-  AlienInfoResponse, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupExtraData
+  AlienInfoResponse, InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData
 } from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
 import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
 import {cibUber} from "@coreui/icons";
@@ -13,24 +13,20 @@ import {cibUber} from "@coreui/icons";
   templateUrl: './yakeen-alien-view.html'
 })
 export class YakeenAlienViewComponent implements OnInit {
-  @Input() alienInfo: AlienInfoResponse;
+  @Input() alienInfo: AlienInfoResponse | undefined;
   ePatternValidation: typeof EnumValidation = EnumValidation;
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   NationalityLookup:any=[];
   _lookupExtraData:   LookupExtraData=new LookupExtraData();
-  constructor(public  lookupService: LookupApplicationServiceServiceProxy) {
+  constructor(public  lookupService: LookupApplicationServiceProxy) {
   }
 
   ngOnInit(): void {
     // check if NationlaityId has value AND no name, then this case require a manual mapping
     // this case happens when the input param [alienInfo] is being passed as input, not as a response from GetCitizenInfo() API.
-
-    if(this.alienInfo.awqafNatinaityId && !this.alienInfo.nationalityNameAr){
+    if(this.alienInfo?.awqafNatinaityId != undefined && this.alienInfo.nationalityNameAr == undefined){
       this.LoadNationalities(this.alienInfo.awqafNatinaityId);
-      if (this.NationalityLookup != undefined){
-      var natInfo = this.NationalityLookup.filter(item => item.id === this.alienInfo.awqafNatinaityId)[0];
-      this.alienInfo.nationalityNameAr = natInfo ? natInfo.name : '';
-      }
+      
     }
 
 
@@ -45,6 +41,10 @@ export class YakeenAlienViewComponent implements OnInit {
     this.lookupService.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
         this.NationalityLookup=data.dto.items;
+        if (this.NationalityLookup != undefined && this.alienInfo){
+          var natInfo = this.NationalityLookup.filter(item => item.id === this.alienInfo?.awqafNatinaityId)[0];
+          this.alienInfo.nationalityNameAr = natInfo ? natInfo?.name : '';
+          }
         console.log(data);
       }
     );

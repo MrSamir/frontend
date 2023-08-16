@@ -1,4 +1,4 @@
-import { ApiException, EndowmentRegistrationServiceServiceProxy, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from './../../services/services-proxies/service-proxies';
+import { ApiException, EndowmentRegistrationServiceProxy, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from './../../services/services-proxies/service-proxies';
 import {Component, Input,EventEmitter,Output, OnInit, ViewChild, Injector} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -52,8 +52,8 @@ IssuanceCourtsLookup:LookupDto[] | undefined =[];
    constructor(injector: Injector,
  
 private dateHelper: DateFormatterService,
-           private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
-           private lookupssrv:LookupApplicationServiceServiceProxy
+           private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+           private lookupssrv:LookupApplicationServiceProxy
            
               ) 
                {
@@ -162,10 +162,10 @@ super(injector);
 
 
 
-   if (this.InputEndowmentDto) {
+   /* if (this.InputEndowmentDto) {
 
-
-    if (!!this.InputEndowmentDto.endowmentInitialDate) {
+    debugger;
+    if (!!this.InputEndowmentDto?.endowmentInitialDate) {
        this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
     }
     else {
@@ -181,7 +181,7 @@ super(injector);
     else {
      // this.InputEndowmentDto.endowmentDeedDate = `${this.endowmentDeedDate.year}/${this.endowmentDeedDate.month}/${this.endowmentDeedDate.day}`
     }
-  }
+  } */
 
   }
 
