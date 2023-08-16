@@ -10,26 +10,7 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
 import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
-// import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
-
-// import {WizardComponent} from "angular-archwizard";
-// import {NgForm} from "@angular/forms";
-// import {
-//   InputEndowmentDto,
-//   EditWaqfInputDto,
-//   RegisterWaqfRequestServiceProxy, ServiceResponseOfCreateWaqfOutputDto,ServiceResponseOfGetRegisterWaqfDataByIdOutputDto
-// } from "@app/services/services-proxies/service-proxies";
-// import {EnumValidation} from "@app/enum/EnumValidation";
-// import {LookupModel} from "@app/model/LookupModel";
-// import {LookupService, ReverseLookupMap} from "@app/services/lookup/lookup.service";
-
-// import {MapModel} from "@app/_shared/map/map.model";
-// import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
-
-// import {handleError, handleServiceProxyError, showSuccess} from "@app/services/alert/alert.service";
-//  import { ServiceRequestTypeEnum } from '@app/enum/requestType.enum';
-
 
 
 @Component({
@@ -49,15 +30,13 @@ export class EndowmentInfoEditComponent extends ComponentBase  implements OnInit
    ePatternValidation = EnumValidation;
    lookupfliter:InputLookUpDto=new InputLookUpDto();
    spendingCategoriesLookup:LookupDto[] | undefined=[] ;
-   EndowmentTypeLookup:LookupDto[] | undefined=[];
-   RegioneLookup:LookupDto[] | undefined=[];
-CityLookup:LookupDto[] | undefined=[];
-IssuanceCourtsLookup:LookupDto[] | undefined=[];
+   EndowmentTypeLookup:LookupDto[] | undefined =[];
+   RegioneLookup:LookupDto[] | undefined =[];
+CityLookup:LookupDto[] | undefined =[];
+IssuanceCourtsLookup:LookupDto[] | undefined =[];
    
    _lookupExtraData:   LookupExtraData=new LookupExtraData();
 
-
-  // deedCitiesReverseMapLookup: ReverseLookupMap = new ReverseLookupMap([]);
 
 
 

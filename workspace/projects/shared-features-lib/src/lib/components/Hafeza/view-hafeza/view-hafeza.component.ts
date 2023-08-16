@@ -17,6 +17,7 @@ export class ViewHafezaComponent implements OnInit {
   }
   private _minDate: NgbDateStruct ;
   maxDate: NgbDateStruct ;
+  
   selectedDate:NgbDateStruct = { year: 1399, month: 2, day: 2 };
   constructor(
     private dateHelper: DateFormatterService,
