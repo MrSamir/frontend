@@ -149,7 +149,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetTypeLookup = data.dto.items!;
+        this.AssetTypeLookup = data.dto!.items!;
         console.log(data);
         this.loadAssetSize();
       
@@ -162,7 +162,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.AssetSizeLookup = data.dto.items!;
+        this.AssetSizeLookup = data.dto!.items!;
         console.log(data);
         //this.loadassetSubType();
       });
@@ -193,7 +193,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.assetsSubTypeLookup = data.dto.items!;
+        this.assetsSubTypeLookup = data.dto!.items!;
         console.log(data);
       });
   }
@@ -205,7 +205,7 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.assetsSubTypeLookup = data.dto.items!;
+        this.assetsSubTypeLookup = data.dto!.items!;
         console.log(data);
       });
   }

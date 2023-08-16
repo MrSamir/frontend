@@ -16,7 +16,7 @@ export class FiscalAssetComponent {
   @Input() viewOnly:boolean;
   //assetSubTypes:LookupModel[];
 
-  assetSubTypes:LookupDto[]=[];
+  assetSubTypes:LookupDto[] | undefined=[];
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   _lookupExtraData:LookupExtraData;
 
@@ -48,7 +48,7 @@ constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
  
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
      (data) => {
-       this.assetSubTypes=data.dto.items!;
+       this.assetSubTypes=data.dto!.items;
        console.log(data);
      }  
    );
@@ -56,11 +56,11 @@ constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
 
   subTypeChanged(){
 
-    if(this.assetInfoModel.fiscalAsset.assetSubTypeId>=10 &&  this.assetInfoModel.fiscalAsset.assetSubTypeId<13){
+    if(this.assetInfoModel.fiscalAsset!.assetSubTypeId>=10 &&  this.assetInfoModel.fiscalAsset!.assetSubTypeId<13){
 
-    this.currentassetvalueLabel='القيمة الحالية ل{0}'.replace('{0}', this.resolveLookup(this.assetInfoModel.fiscalAsset.assetSubTypeId,this.assetSubTypes));
-    this.numberOfshareLable='عدد ال{0}'.replace('{0}', this.resolveLookup(this.assetInfoModel.fiscalAsset.assetSubTypeId,this.assetSubTypes));
-    this.assetAttachementLable=' ال{0}'.replace('{0}',this.resolveLookup(this.assetInfoModel.fiscalAsset.assetSubTypeId,this.assetSubTypes));
+    this.currentassetvalueLabel='القيمة الحالية ل{0}'.replace('{0}', this.resolveLookup(this.assetInfoModel.fiscalAsset!.assetSubTypeId,this.assetSubTypes));
+    this.numberOfshareLable='عدد ال{0}'.replace('{0}', this.resolveLookup(this.assetInfoModel.fiscalAsset!.assetSubTypeId,this.assetSubTypes));
+    this.assetAttachementLable=' ال{0}'.replace('{0}',this.resolveLookup(this.assetInfoModel.fiscalAsset!.assetSubTypeId,this.assetSubTypes));
     }
     else
     {
