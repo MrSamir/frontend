@@ -33,10 +33,8 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
   loadMyTasks(event?: LazyLoadEvent) {
     this.primengTableHelper.showLoadingIndicator();
-    debugger
     this.requestApplicationServiceServiceProxy.getMyTasks("RequestNumber", event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
       res => {
-        debugger
         this.primengTableHelper.records = res.dto.items as RequestOutputDto[];
         this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
 

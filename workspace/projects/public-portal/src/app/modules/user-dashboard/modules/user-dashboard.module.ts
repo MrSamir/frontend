@@ -8,16 +8,18 @@ import { FormsModule } from "@angular/forms";
 import { CoreLibModule } from "projects/core-lib/src/public-api";
 import { CommonModule } from "@angular/common";
 import { MyTasksComponent } from "../components/my-tasks/my-tasks.component";
+import { NgbAccordionModule, NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { UserDashboardComponent } from "../components/user-dashboard/user-dashboard.component";
 
 
 @NgModule({
-    declarations: [MyRequestsComponent, MyTasksComponent],
+    declarations: [MyRequestsComponent, MyTasksComponent, UserDashboardComponent],
     imports: [
         PublicPortalSharedModule,
         UserDashBoardRoutingModule,
         TableModule,
         FormsModule, CommonModule, TableModule,
-        CoreLibModule
+        CoreLibModule, NgbModule
     ],
     exports: [MyRequestsComponent]
 })
