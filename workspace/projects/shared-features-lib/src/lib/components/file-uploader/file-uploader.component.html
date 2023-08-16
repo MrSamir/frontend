@@ -11,6 +11,7 @@
   [multiple]="MultipleFiles"
   [showUploadButton]="true"
   (onSelect)="onFileSelect($event)"
+  (uploadHandler)="onFileUpload($event)"
    mode="advanced" 
     [accept]="allowedFileTypes"
      [invalidFileSizeMessageSummary]="invalidFileSizeMessageSummary"
@@ -23,10 +24,7 @@
      [uploadLabel]="uploadLabel"
      [cancelLabel]="CancelLabel"
      >
-    <ng-template pTemplate="content" let-files>
-      
-      
-    </ng-template>
+
   </p-fileUpload>
   <p-messages *ngIf="showDisclaimer" severity="info">
     <ng-template pTemplate>

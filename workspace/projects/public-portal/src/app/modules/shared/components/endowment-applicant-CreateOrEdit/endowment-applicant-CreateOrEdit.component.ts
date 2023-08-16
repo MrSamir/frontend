@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, Component, Injector, Input, NO_ERRORS_SCHEMA, O
 import {
   ApiResponseOfOutputFileDto,
     ApplicationUserServiceProxy,
+    AttorneyInquiryInput,
     EndowmentRegistrationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputApplicantAgentDto,
@@ -9,9 +10,11 @@ import {
   InputApplicantEndowmerDto,
   InputApplicantSeerDto,
   InputEndwomentRegistraionRequestApplicantDto,
+  InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
+  MOJApplicationServiceProxy,
   OutputApplicationUserDto,
   OutputFileDto,
 } from '../../services/services-proxies/service-proxies';
@@ -21,6 +24,8 @@ import { fn } from 'moment';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
+import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
@@ -66,14 +71,18 @@ export class EndowmentApplicantCreateOrEditComponent
 
   uploadedFiles: OutputFileDto[] = [];
   seerDeadAttachemt: AttachementItem;
+  agentDeedAttachment: AttachementItem;
   seerDeedFile: File;
   AgentDeed: File;
+  FileUploadentityName = 'EndowmentAttachment';
   constructor(
     injecter: Injector,
     private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
-    private _serviceProxyApplicant: EndowmentRegistrationServiceProxy,
+    private _endowmentRegistrationService: EndowmentRegistrationServiceProxy,
     private _lookupService: LookupApplicationServiceProxy,
-    private _applicationUserService: ApplicationUserServiceProxy
+    private _applicationUserService: ApplicationUserServiceProxy,
+    private _MojServiceProxy: MOJApplicationServiceProxy,
+    private activatedroute:ActivatedRoute
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
@@ -84,18 +93,29 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.LoadForm();
   }
-
+  onNextBtnClicked(form:NgForm)
+  {
+    if(form.valid)
+    {
+      this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
+      .subscribe((result)=>{
+        if(result.isSuccess)
+        {
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: '',
+            detail: result.message!,
+            severity: MessageSeverity.Success,
+          });
+          this.activatedroute.
+        }
+      })
+    }
+  }
   //#region FromAndLookupLoad
   LoadForm() {
-    /*TODO: 
-     1-check if new request or edit.
-     2-load CurrentUser if new
-     3-load ApplicantInormation from applicant table. if edit
-     4- save if new
-     5- update if edit.
-    
- */
-debugger;
+
 
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
@@ -115,11 +135,52 @@ debugger;
     this.LoadLookups('ExperienceYear', (lookups) => {
       this.experienceYears = lookups;
     });
-    if (this.RequestId == undefined ||this.RequestId=="") {
+    if (this.RequestId == undefined || this.RequestId == '') {
       this.loadCurrentUser();
     } else {
       this.isEditMode = true;
     }
+  }
+  loadrequest() {
+    this._endowmentRegistrationService
+      .getEndowmentRegistrationApplicant(this.RequestId)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          this.requestInfo.init(result.dto);
+          if (
+            result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
+            result.dto.applicantSeer.seedDeedAttachmentId != ''
+          ) {
+            this.getFileById(
+              result.dto.applicantSeer.seedDeedAttachmentId,
+              (fileDto) => {
+                this.seerDeadAttachemt = {
+                  id: fileDto.id,
+                  fileName: fileDto.fileName!,
+                  fileData: fileDto.fileData!,
+                  ContentType: fileDto.contentType!,
+                };
+              }
+            );
+          }
+          if (
+            result.dto.applicantAgent.representativeAttachmentId != undefined &&
+            result.dto.applicantAgent.representativeAttachmentId != ''
+          ) {
+            this.getFileById(
+              result.dto.applicantAgent.representativeAttachmentId,
+              (fileDto) => {
+                this.agentDeedAttachment = {
+                  id: fileDto.id,
+                  fileName: fileDto.fileName!,
+                  fileData: fileDto.fileData!,
+                  ContentType: fileDto.contentType!,
+                };
+              }
+            );
+          }
+        }
+      });
   }
   loadCurrentUser() {
     this._applicationUserService.getCurrentUser().subscribe((result) => {
@@ -182,7 +243,7 @@ debugger;
       }) == -1
     ) {
       this.isEndwowmer = false;
-      this.requestInfo.applicantEndowmer=new InputApplicantEndowmerDto();
+      this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
     }
     //check isSeer checked
     if (
@@ -191,7 +252,7 @@ debugger;
       }) == -1
     ) {
       this.isSeer = false;
-      this.requestInfo.applicantSeer=new InputApplicantSeerDto();
+      this.requestInfo.applicantSeer = new InputApplicantSeerDto();
     }
     //check isAgent checked
     if (
@@ -200,14 +261,14 @@ debugger;
       }) == -1
     ) {
       this.isAgent = false;
-      this.requestInfo.applicantAgent=new InputApplicantAgentDto();
+      this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     }
 
     if (this.isEndwowmer && this.isAgent) {
       this.selectedTypes = this.selectedTypes.filter((value, index) => {
         return value.id != 3;
       });
-      this.message.showMessage(MessageTypeEnum.message, {
+      this.message.showMessage(MessageTypeEnum.toast, {
         severity: MessageSeverity.Warning,
         message: '',
         closable: true,
@@ -217,7 +278,13 @@ debugger;
         summary: '',
         enableService: true,
       });
+      return;
     }
+    this.requestInfo.applicantTypes = (event.checked as LookupDto[])
+      .map((value, index) => {
+        return value.id;
+      })
+      .join(',');
   }
 
   selectEndowmerType(event: any) {
@@ -244,49 +311,158 @@ debugger;
         hintBody: Seerype?.hint!,
       };
   }
-  removeFile(file: any) {
-    debugger;
-    // this.uploadedFiles = this.uploadedFiles.filter((f) => f !== file);
-    console.log('remove file:', file.name);
-  }
   seerDeedFileSelect(event: any) {
     this.seerDeedFile = event.files[0];
   }
 
   SeerDeedFileUpload(event: any) {
-    // Handle the file selection event from the PrimeNG FileUpload component
-    const file = event.files[0];
-    // Additional data (if needed)
-    const entityName = 'EndowmentAttachment'; // Replace with the entity name you want to associate with the file
+    this.UploadFile(event.files[0], (response) => {
+      this.seerDeadAttachemt = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.seerDeedFile = null!;
+      this.requestInfo.applicantSeer.seedDeedAttachmentId = response.id;
+    });
+  }
+  SeerDeedremoveFile(event: AttachementItem) {
+    this.removeFile(event, (result) => {
+      this.requestInfo.applicantSeer.seedDeedAttachmentId = undefined!;
+      this.seerDeadAttachemt = undefined!;
+    });
+  }
 
-    // Call the service to upload the file
+  UploadFile(file: File, callback: (response: OutputFileDto) => void) {
     this._serviceProxyFileLibrary
-      .uploadFile(entityName, { data: file, fileName: file.name }, [])
+      .uploadFile(
+        this.FileUploadentityName,
+        { data: file, fileName: file.name },
+        []
+      )
       .subscribe(
         (response: ApiResponseOfOutputFileDto) => {
           // Handle the successful response here
 
-          this.uploadedFiles[0] = response.dto;
-          console.log('File upload successful:', response);
-          this.showUploadButton = false;
+          if (response.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: this.l('Common.SuccesUploadMessge'),
+              severity: MessageSeverity.Success,
+            });
+            callback(response.dto);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: response.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
           // Optionally, perform additional actions with the response data
         },
         (error: any) => {
           // Handle the error response here
-          console.error('File upload failed:', error);
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: this.l('Common.Upload'),
+            detail: this.l('Common.ErrorInFileUpload'),
+            severity: MessageSeverity.Error,
+          });
+          this.Util.error(error);
           // Optionally, perform error handling
         }
       );
   }
-  agentDeedFileSelect(event) {}
-  agentDeedFileUpload(event)
-  {
-
+  removeFile(
+    event: AttachementItem,
+    callback: (item: AttachementItem) => void
+  ) {
+    let input = new InputFileDto();
+    input.entityName = this.FileUploadentityName;
+    input.id = event.id;
+    input.filters = [];
+    this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
+      if (result.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Success,
+        });
+        callback(event);
+      } else {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Error,
+        });
+      }
+    });
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    this._serviceProxyFileLibrary
+      .downloadFileById(this.FileUploadentityName, id)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
   }
 
-  fetchAgentDetails() {}
-
-  isDeedFound() {
-    return true;
+  agentDeedFileSelect(event) {
+    this.AgentDeed = event.files[0];
+  }
+  agentDeedFileUpload(event) {
+    this.UploadFile(event.files[0], (response) => {
+      this.agentDeedAttachment = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.AgentDeed = null!;
+      this.requestInfo.applicantAgent.representativeAttachmentId = response.id;
+    });
+  }
+  removeAgentDeedFile(event: AttachementItem) {
+    this.removeFile(event, (result) => {
+      this.requestInfo.applicantAgent.representativeAttachmentId = undefined!;
+      this.agentDeedAttachment = undefined!;
+    });
+  }
+  fetchAgentDetails() {
+    let inqury = new AttorneyInquiryInput();
+    inqury.code = this.requestInfo.applicantAgent.representativeNumber;
+    inqury.identityNumber = this.requestInfo.applicant.idNumber;
+    this._MojServiceProxy.attorneyInquiry(inqury).subscribe((result) => {
+      if (result.isSuccess) {
+        this.requestInfo.applicantAgent.statusId = result.dto.statusId;
+        this.requestInfo.applicantAgent.statusName = result.dto.statusName;
+        this.requestInfo.applicantAgent.endDateGreg = result.dto.endDateGreg!;
+        this.requestInfo.applicantAgent.endDateHijri = result.dto.endDateHijri;
+        this.requestInfo.applicantAgent.issueDateGreg =
+          result.dto.issueDateGreg!;
+        this.requestInfo.applicantAgent.issueDateHijri =
+          result.dto.issueDateHijri;
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.AgentAttorneySuccess'
+          ),
+          severity: MessageSeverity.Success,
+        });
+      }
+    });
   }
 }

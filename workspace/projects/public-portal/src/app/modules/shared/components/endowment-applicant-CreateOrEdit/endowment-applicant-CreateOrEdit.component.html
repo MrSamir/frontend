@@ -11,29 +11,24 @@
 
       <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.ApplicantType'|localize}}<span
           class="text-danger">*</span> : </label>
-      <ng-container *ngIf="requestInfo?.applicantTypes;then showapplicantTypesLabel;else showapplicantTypesInput; ">
 
-      </ng-container>
-      <ng-template #showapplicantTypesLabel>
 
-      </ng-template>
-      <ng-template #showapplicantTypesInput>
-        <div class="form-group col form-inline">
 
-          <div *ngFor="let item of applicantTypes">
-            <p-checkbox name="applicantTypeGroup" [value]="item" [label]="item.name!"
-              (onChange)="ApplicantTypeSelected($event)" [(ngModel)]="selectedTypes"
-              [ngModelOptions]="{standalone: true}" [inputId]="item.id.toString()"></p-checkbox>
-          </div>
+      <div class="form-group col form-inline">
+
+        <div *ngFor="let item of applicantTypes">
+          <p-checkbox name="applicantTypeGroup" [value]="item" [label]="item.name!"
+            (onChange)="ApplicantTypeSelected($event)" [(ngModel)]="selectedTypes" [ngModelOptions]="{standalone: true}"
+            [inputId]="item.id.toString()"></p-checkbox>
         </div>
-        <input type="text" hidden [(ngModel)]="requestInfo.applicantTypes" #requestInfo_applicantTypes="ngModel"
-          name="selectedTypes" />
-        <app-validationMessages relatedControlName="selectedTypes" [control]="requestInfo_applicantTypes"
-          [validationMessages]='[
+      </div>
+      <input type="text" hidden [(ngModel)]="requestInfo.applicantTypes" #requestInfo_applicantTypes="ngModel"
+        name="selectedTypes" />
+      <app-validationMessages relatedControlName="selectedTypes" [control]="requestInfo_applicantTypes"
+        [validationMessages]='[
                                                                                                                 {ruleName:"required",ruleMessage:l("EndowmentModule.EndowmentRgistrationService.atLeastOneApplicantType")},
                                                                                                                 ]'>
-        </app-validationMessages>
-      </ng-template>
+      </app-validationMessages>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="form-group col">
@@ -344,36 +339,36 @@
     <ng-template #ShowSeerPanel>
       <p-panel [header]="'EndowmentModule.EndowmentRgistrationService.SeeringInformationHeader'|localize">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-        <div class="form-group col">
-          <label class="col col-form-label">{{ 'EndowmentModule.EndowmentRgistrationService.EducationLevel' | localize
-            }}</label>
-          <p-dropdown [required]="true" [options]="educationLevels" [showClear]="true" name="EducationLevel"
-            #requestInfo_applicantSeer_educationLevelId="ngModel" [(ngModel)]="requestInfo.applicantSeer.educationLevelId"
-            optionLabel="name" optionValue="id"
-            [placeholder]="l('Common.Choose',l('EndowmentModule.EndowmentRgistrationService.EducationLevel'))"></p-dropdown>
-          <app-validationMessages relatedControlName="EducationLevel" [control]="requestInfo_applicantSeer_educationLevelId"
-            [validationMessages]='[
+          <div class="form-group col">
+            <label class="col col-form-label">{{ 'EndowmentModule.EndowmentRgistrationService.EducationLevel' | localize
+              }}</label>
+            <p-dropdown [required]="true" [options]="educationLevels" [showClear]="true" name="EducationLevel"
+              #requestInfo_applicantSeer_educationLevelId="ngModel"
+              [(ngModel)]="requestInfo.applicantSeer.educationLevelId" optionLabel="name" optionValue="id"
+              [placeholder]="l('Common.Choose',l('EndowmentModule.EndowmentRgistrationService.EducationLevel'))"></p-dropdown>
+            <app-validationMessages relatedControlName="EducationLevel"
+              [control]="requestInfo_applicantSeer_educationLevelId" [validationMessages]='[
             {ruleName:"required",ruleMessage:l("Common.Required",l("EndowmentModule.EndowmentRgistrationService.EducationLevel"))}
             ]'>
-          </app-validationMessages>
-        </div>
-        <div class="form-group col">
-          <label class="col col-form-label">{{ 'EndowmentModule.EndowmentRgistrationService.SeerexperienceYears' | localize
-            }}</label>
-          <p-dropdown [required]="true" [options]="experienceYears" [showClear]="true" name="experienceYear"
-            #requestInfo_applicantSeer_experienceYearId="ngModel" [(ngModel)]="requestInfo.applicantSeer.experienceYearId"
-            optionLabel="name" optionValue="id"
-            [placeholder]="l('Common.Choose',l('EndowmentModule.EndowmentRgistrationService.EducationLevel'))"></p-dropdown>
-          <app-validationMessages relatedControlName="experienceYear" [control]="requestInfo_applicantSeer_experienceYearId"
-            [validationMessages]='[
+            </app-validationMessages>
+          </div>
+          <div class="form-group col">
+            <label class="col col-form-label">{{ 'EndowmentModule.EndowmentRgistrationService.SeerexperienceYears' |
+              localize
+              }}</label>
+            <p-dropdown [required]="true" [options]="experienceYears" [showClear]="true" name="experienceYear"
+              #requestInfo_applicantSeer_experienceYearId="ngModel"
+              [(ngModel)]="requestInfo.applicantSeer.experienceYearId" optionLabel="name" optionValue="id"
+              [placeholder]="l('Common.Choose',l('EndowmentModule.EndowmentRgistrationService.SeerexperienceYears'))"></p-dropdown>
+            <app-validationMessages relatedControlName="experienceYear"
+              [control]="requestInfo_applicantSeer_experienceYearId" [validationMessages]='[
                     {ruleName:"required",ruleMessage:l("Common.Required",l("EndowmentModule.EndowmentRgistrationService.SeerexperienceYears"))}
                     ]'>
-          </app-validationMessages>
-        </div>
+            </app-validationMessages>
+          </div>
           <div class="form-group col">
             <div class="d-flex">
-              <label
-                class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerType'|localize}}<span
+              <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerType'|localize}}<span
                   class="text-danger">*</span> : </label>
               <app-hint [hint]="seerTypeHint">
 
@@ -421,29 +416,28 @@
             </app-validationMessages>
           </div>
           <div *ngIf="!requestInfo.applicantSeer.seedDeedAttachmentId" class="form-group col-12">
-            <lib-file-uploader
-             [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.seenDeed')"
-             [showDisclaimer]="true"
-               (OnSelectFile)="seerDeedFileSelect($event)"
+            <lib-file-uploader name="seerDeed" [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.seenDeed')"
+              [showDisclaimer]="true" [MultipleFiles]="true" (OnSelectFile)="seerDeedFileSelect($event)"
               (OnUploadFile)="SeerDeedFileUpload($event)"></lib-file-uploader>
-                      <input type="text" hidden [(ngModel)]="requestInfo.applicantSeer.seedDeedAttachmentId"
-                        #requestInfo_applicantSeer_seedDeedAttachmentId="ngModel" required name="seedDeedAttachmentId" />
-                      <app-validationMessages relatedControlName="seedDeedAttachmentId"
-                        [control]="requestInfo_applicantSeer_seedDeedAttachmentId" [validationMessages]='[
+            <input type="text" hidden [(ngModel)]="requestInfo.applicantSeer.seedDeedAttachmentId"
+              #requestInfo_applicantSeer_seedDeedAttachmentId="ngModel" required name="seedDeedAttachmentId" />
+            <app-validationMessages relatedControlName="seedDeedAttachmentId"
+              [control]="requestInfo_applicantSeer_seedDeedAttachmentId"
+              [validationMessages]='[
                                                                      {ruleName:"required",ruleMessage:l("Common.Required",l("EndowmentModule.EndowmentRgistrationService.seenDeed"))},
                                                                                                                           ]'>
-                      </app-validationMessages>
-            </div>
-              <div *ngIf="requestInfo.applicantSeer.seedDeedAttachmentId" class="form-group col-12">
-                <app-AttachmentViewer *ngIf="seerDeadAttachemt" (OnAttachementRemove)="removeFile($event)"
-                  [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
-              </div>
+            </app-validationMessages>
+          </div>
+          <div *ngIf="requestInfo.applicantSeer.seedDeedAttachmentId" class="form-group col-12">
+            <app-AttachmentViewer *ngIf="seerDeadAttachemt" (OnAttachementRemove)="SeerDeedremoveFile($event)"
+              [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
+          </div>
 
         </div>
       </p-panel>
     </ng-template>
     <ng-template #ShowAgentPanel>
-        <!--  requestInfo.applicantAgent
+      <!--  requestInfo.applicantAgent
           representativeNumber!: string | undefined;
     representativeAttachmentId!: string;
     statusId!: string | undefined;
@@ -453,55 +447,57 @@
     endDateHijri!: string | undefined;
     endDateGreg!: DateTime;
         -->
-        <p-panel [header]="'EndowmentModule.EndowmentRgistrationService.AttorneyHeaderInfo'|localize">
-          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-            <div class="form-group col">
-              <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AttorneyNumber'|localize}}<span
-                  class="text-danger">*</span> : </label>
-              <input type="text" class="form-control" #requestInfo_applicantAgent_representativeNumber="ngModel"
-                name="representativeNumber" maxlength="20" [(ngModel)]="requestInfo.applicantAgent.representativeNumber"
-                [pattern]="EnumValidation.pattern_number" required>
-              <app-validationMessages relatedControlName="representativeNumber"
-                [control]="requestInfo_applicantAgent_representativeNumber" [validationMessages]='[
+      <p-panel [header]="'EndowmentModule.EndowmentRgistrationService.AttorneyHeaderInfo'|localize">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+          <div class="form-group col">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AttorneyNumber'|localize}}<span
+                class="text-danger">*</span> : </label>
+            <input type="text" class="form-control" #requestInfo_applicantAgent_representativeNumber="ngModel"
+              name="representativeNumber" maxlength="20" [(ngModel)]="requestInfo.applicantAgent.representativeNumber"
+              [pattern]="EnumValidation.pattern_number" required>
+            <app-validationMessages relatedControlName="representativeNumber"
+              [control]="requestInfo_applicantAgent_representativeNumber" [validationMessages]='[
                                        {ruleName:"required",ruleMessage:l("Common.Required",l("EndowmentModule.EndowmentRgistrationService.AttorneyNumber"))},
                                        {ruleName:"pattern",ruleMessage:l("EndowmentModule.EndowmentRgistrationService.agentError")},             
                                                                                             ]'>
-              </app-validationMessages>
-            </div>
-            <div class="form-group col">
-              <button type="button"
-                [disabled]="!requestInfo.applicantAgent.representativeNumber &&requestInfo_applicantAgent_representativeNumber.invalid"
-                class="btn btn-awq-secondary mt-6" (click)="fetchAgentDetails()">تحقق</button>
-            </div>
-            <div *ngIf="!requestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
-              <lib-file-uploader [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.agencyDeed')" [showDisclaimer]="true"
-                (OnSelectFile)="agentDeedFileSelect($event)" (OnUploadFile)="agentDeedFileUpload($event)"></lib-file-uploader>
-          <input type="text" hidden [(ngModel)]="requestInfo.applicantAgent.representativeAttachmentId"
-            #requestInfo_applicantAgent_representativeAttachmentId="ngModel" required name="representativeAttachmentId" />
-          <app-validationMessages relatedControlName="representativeAttachmentId"
-            [control]="requestInfo_applicantAgent_representativeNumber" [validationMessages]='[
+            </app-validationMessages>
+          </div>
+          <div class="form-group col">
+            <button type="button"
+              [disabled]="!requestInfo.applicantAgent.representativeNumber &&requestInfo_applicantAgent_representativeNumber.invalid"
+              class="btn btn-awq-secondary mt-6" (click)="fetchAgentDetails()">{{'Common.ValidateButton'|localize}}</button>
+          </div>
+          <div *ngIf="!requestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
+            <lib-file-uploader [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.agencyDeed')"
+              [showDisclaimer]="true" (OnSelectFile)="agentDeedFileSelect($event)"
+              (OnUploadFile)="agentDeedFileUpload($event)"></lib-file-uploader>
+            <input type="text" hidden [(ngModel)]="requestInfo.applicantAgent.representativeAttachmentId"
+              #requestInfo_applicantAgent_representativeAttachmentId="ngModel" required
+              name="representativeAttachmentId" />
+            <app-validationMessages relatedControlName="representativeAttachmentId"
+              [control]="requestInfo_applicantAgent_representativeNumber" [validationMessages]='[
                                                          {ruleName:"required",ruleMessage:l("Common.Required",l("EndowmentModule.EndowmentRgistrationService.agencyDeed"))},
                                                                                                               ]'>
-          </app-validationMessages>
-            </div>
-            <div *ngIf="requestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
-              <app-AttachmentViewer *ngIf="seerDeadAttachemt" (OnAttachementRemove)="removeFile($event)"
-                [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
-            </div>
-            <div *ngIf="requestInfo?.applicantAgent?.statusName" class="form-group col">
-              <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.agencyStatus'|localize }}:</label>
-              <label class="col-form-label"><strong>{{requestInfo?.applicantAgent?.statusName}}</strong></label>
-            </div>
-            <div *ngIf="requestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
-              <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.startOfAgency'|localize }}:</label>
-              <label class="col-form-label"><strong>{{requestInfo?.applicantAgent?.issueDateHijri}}</strong></label>
-            </div>
-            <div *ngIf="requestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
-              <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.endOfAgency'|localize }}:</label>
-              <label class="col-form-label"><strong>{{requestInfo?.applicantAgent?.endDateHijri}}</strong></label>
-            </div>
+            </app-validationMessages>
           </div>
-        </p-panel>
+          <div *ngIf="requestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
+            <app-AttachmentViewer *ngIf="agentDeedAttachment" (OnAttachementRemove)="removeAgentDeedFile($event)"
+              [Attachements]="[agentDeedAttachment]"></app-AttachmentViewer>
+          </div>
+          <div *ngIf="requestInfo?.applicantAgent?.statusName" class="form-group col">
+            <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.agencyStatus'|localize }}:</label>
+            <label class="col-form-label"><strong>{{requestInfo.applicantAgent.statusName}}</strong></label>
+          </div>
+          <div *ngIf="requestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
+            <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.startOfAgency'|localize }}:</label>
+            <label class="col-form-label"><strong>{{requestInfo.applicantAgent.issueDateHijri}}</strong></label>
+          </div>
+          <div *ngIf="requestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
+            <label for="">{{ 'EndowmentModule.EndowmentRgistrationService.endOfAgency'|localize }}:</label>
+            <label class="col-form-label"><strong>{{requestInfo.applicantAgent.endDateHijri}}</strong></label>
+          </div>
+        </div>
+      </p-panel>
     </ng-template>
   </div>
 </form>

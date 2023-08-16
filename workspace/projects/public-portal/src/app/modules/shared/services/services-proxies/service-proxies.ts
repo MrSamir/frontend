@@ -1859,6 +1859,62 @@ export class EndowmentRegistrationServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getEndowmentRegistrationApplicant(requestId: string | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentRegistrationApplicant?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEndowmentRegistrationApplicant(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEndowmentRegistrationApplicant(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+        }));
+    }
+
+    protected processGetEndowmentRegistrationApplicant(response: HttpResponseBase): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputEndwomentRegistrationRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -2184,6 +2240,62 @@ export class FileLibraryApplicationServiceProxy {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
             result200 = ApiResponseOfOutputFileDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    deleteFile(body: InputFileDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DeleteFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteFile(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processDeleteFile(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -10133,6 +10245,12 @@ export interface IOutputEndowmerDto {
 }
 
 export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRegistrationRequestDto {
+    requestId!: string | undefined;
+    applicantTypes!: string | undefined;
+    applicant!: InputApplicantDto;
+    applicantEndowmer!: InputApplicantEndowmerDto;
+    applicantSeer!: InputApplicantSeerDto;
+    applicantAgent!: InputApplicantAgentDto;
     id!: string;
 
     constructor(data?: IOutputEndwomentRegistrationRequestDto) {
@@ -10146,6 +10264,12 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
 
     init(_data?: any) {
         if (_data) {
+            this.requestId = _data["requestId"];
+            this.applicantTypes = _data["applicantTypes"];
+            this.applicant = _data["applicant"] ? InputApplicantDto.fromJS(_data["applicant"]) : <any>undefined;
+            this.applicantEndowmer = _data["applicantEndowmer"] ? InputApplicantEndowmerDto.fromJS(_data["applicantEndowmer"]) : <any>undefined;
+            this.applicantSeer = _data["applicantSeer"] ? InputApplicantSeerDto.fromJS(_data["applicantSeer"]) : <any>undefined;
+            this.applicantAgent = _data["applicantAgent"] ? InputApplicantAgentDto.fromJS(_data["applicantAgent"]) : <any>undefined;
             this.id = _data["id"];
         }
     }
@@ -10159,12 +10283,24 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["applicantTypes"] = this.applicantTypes;
+        data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
+        data["applicantEndowmer"] = this.applicantEndowmer ? this.applicantEndowmer.toJSON() : <any>undefined;
+        data["applicantSeer"] = this.applicantSeer ? this.applicantSeer.toJSON() : <any>undefined;
+        data["applicantAgent"] = this.applicantAgent ? this.applicantAgent.toJSON() : <any>undefined;
         data["id"] = this.id;
         return data;
     }
 }
 
 export interface IOutputEndwomentRegistrationRequestDto {
+    requestId: string | undefined;
+    applicantTypes: string | undefined;
+    applicant: InputApplicantDto;
+    applicantEndowmer: InputApplicantEndowmerDto;
+    applicantSeer: InputApplicantSeerDto;
+    applicantAgent: InputApplicantAgentDto;
     id: string;
 }
 
