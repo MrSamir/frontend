@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from "@angular/core";
 // import {lifeStatusMap} from "@app/model/users/personalInformation.model";
 // import {NationalityHelperService} from "@app/services/lookup/NationalityHelper.service";
 import {
-  AlienInfoResponse, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupExtraData
+  AlienInfoResponse, InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData
 } from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
 import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
 import {cibUber} from "@coreui/icons";
@@ -18,7 +18,7 @@ export class YakeenAlienViewComponent implements OnInit {
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   NationalityLookup:any=[];
   _lookupExtraData:   LookupExtraData=new LookupExtraData();
-  constructor(public  lookupService: LookupApplicationServiceServiceProxy) {
+  constructor(public  lookupService: LookupApplicationServiceProxy) {
   }
 
   ngOnInit(): void {

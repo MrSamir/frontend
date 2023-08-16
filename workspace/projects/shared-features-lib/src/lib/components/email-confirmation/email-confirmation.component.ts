@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import * as serviceProxies from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
+import { ApplicationUserServiceProxy, ConfirmUserEmailInputDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 
 @Component({
   selector: 'app-email-confirmation',
@@ -14,7 +14,7 @@ export class EmailConfirmationComponent implements OnInit {
   confirmationResult: any;
 
   constructor(private activatedRoute: ActivatedRoute
-    , private userProfileProxyService: serviceProxies.ApplicationUserServiceServiceProxy
+    , private userProfileProxyService: ApplicationUserServiceProxy
     //, private authenticationService: AuthenticationService
     ) {
   }

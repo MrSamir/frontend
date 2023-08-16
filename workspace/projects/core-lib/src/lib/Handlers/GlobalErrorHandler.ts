@@ -37,6 +37,7 @@ export class GlobalErrorHandler implements ErrorHandler {
                    MessageTypeEnum.message,
                    message
                  );
+               console.error(error);
         }
     }else
     {

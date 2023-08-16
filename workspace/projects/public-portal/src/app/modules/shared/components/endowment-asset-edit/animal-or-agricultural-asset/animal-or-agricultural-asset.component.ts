@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { LookupModel } from '../../../models/LookupModel';
-import { EndowmentRegistrationServiceServiceProxy, InputAnimalOrAgriculturalAssetDto, InputAssetDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAnimalOrAgriculturalAssetDto, InputAssetDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { EnumLookuptypes } from '../../../models/EnumLookuptypes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -24,8 +24,8 @@ cityLookup:LookupDto[]=[];
 _lookupExtraData:LookupExtraData;
   resolveLookup:any;
   cityDisabled=true;
-  constructor(private lookupssrv:LookupApplicationServiceServiceProxy,private modalService: NgbModal,
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy/*,private utilityService:UtilityService,*/) {
+  constructor(private lookupssrv:LookupApplicationServiceProxy,private modalService: NgbModal,
+    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy/*,private utilityService:UtilityService,*/) {
     //this.resolveLookup = this.utilityService.resolveLookup;
    }
 

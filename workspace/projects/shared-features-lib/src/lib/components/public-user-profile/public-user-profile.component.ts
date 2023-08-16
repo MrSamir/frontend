@@ -1,11 +1,13 @@
-import { ApiResponseOfOutputApplicationUserDto, EmailOtpGenerationInputDto, InputApplicationUserDto, LookupApplicationServiceServiceProxy, OtpGenerationOutputDto, PhoneOtpGenerationInputDto, UpdateUserCityRegionInputDto } from './../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
+import { ApiResponseOfOutputApplicationUserDto, EmailOtpGenerationInputDto, InputApplicationUserDto, LookupApplicationServiceProxy, OtpGenerationOutputDto, PhoneOtpGenerationInputDto, UpdateUserCityRegionInputDto } from './../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import {Component, Injector, Input, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { ApplicationUserServiceServiceProxy, InputLookUpDto, LookupExtraData, OtpVerificationOutputDto, OutputApplicationUserDto, PhoneOtpVerificationInputDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { ApplicationUserServiceProxy, InputLookUpDto, LookupExtraData, OtpVerificationOutputDto, OutputApplicationUserDto, PhoneOtpVerificationInputDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { take } from 'rxjs';
 
 export class otpVerificationResult {
@@ -51,9 +53,9 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
     private router: Router
     , private modalService: NgbModal
     , private formBuilder: FormBuilder
-    , private userProfileProxyService: ApplicationUserServiceServiceProxy
+    , private userProfileProxyService: ApplicationUserServiceProxy
     //, private authenticationService: AuthenticationService
-    , public lookupService: LookupApplicationServiceServiceProxy,injector: Injector) {
+    , public lookupService: LookupApplicationServiceProxy,injector: Injector) {
     super(injector);
   }
 
@@ -172,6 +174,16 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
       this.otpVerificationInput = new PhoneOtpVerificationInputDto();
 
     }, error => {
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: '',
+        closable: true,
+        detail: this.l(
+          'Common.PhoneNumberAlreadyVerified'
+        ),
+        summary: '',
+        enableService: true,
+      });
       // var errorServiceResponse = this.parseHttpError(error);
       // switch (errorServiceResponse.errorData[0].code) {
       //   case "PhoneIsAlreadyVerified":
@@ -195,29 +207,37 @@ debugger;
     // verifiy otp by calling backend api
     this.userProfileProxyService.verifyPhoneNumberOtp(this.otpVerificationInput).subscribe(otpVerfiicationResponse => {
       if (otpVerfiicationResponse.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.PhoneNumberUpdatedSeccessfully'
+          ),
+          summary: '',
+          enableService: true,
+        });
         this.otpVerificationResult = {
           dismissModal: false,
           isSuccess: true,
           message: this.l("Common.PhoneNumberUpdatedSeccessfully")
         }
         this.fetchCurrentUserProfile();
+        this.modalService.dismissAll("OtpVerificationFailed");
         // this.authenticationService.updateUserToken().subscribe((response) => {
         // });
       }
     }, error => {
-      // switch (this.parseHttpError(error)?.errorData[0].code) {
-      //   case "InvalidOrExpiredOtp":
-      //     this.otpVerificationResult = {
-      //       dismissModal: false,
-      //       isSuccess: false,
-      //       message: this.l("Common.InvaliedOtpError")
-      //     }
-      //     break;
-        //default:
-          //showError(this.l("Common.PhoneVerificationError"))
-          this.modalService.dismissAll("OtpVerificationFailed");
-          //break;
-      //}
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: '',
+        closable: true,
+        detail: this.l(
+          'Common.InvaliedOtpError'
+        ),
+        summary: '',
+        enableService: true,
+      });
     });
 
     // reset OTP verification model
@@ -245,29 +265,43 @@ debugger;
     })).subscribe(response => {
 
       if (response.isSuccess) {
-        //showSuccess('تم ارسال رسالة تحقق للبريد المدخل.');
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.VerificationMailSent'
+          ),
+          summary: '',
+          enableService: true,
+        });
 
         this.fetchCurrentUserProfile();
-        // this.authenticationService.updateUserToken().subscribe((response) => {
-        // });
         return;
       }
       this.emailUpdateResult.isSuccess = false;
       if (!response.isSuccess) return;
-
-      // switch (response.message) {
-      //   case "EmailAlreadyConfirmed":
-          //showError(response.message)
-      //     break
-      //   case "EmailAlreadyExist":
-      //     case "EmailIsAlreadyVerified":
-      //       showError('البريد الألكتروني المدخل مستخدم من قبل.')
-      //     break;
-      //   case "UserIdNotFound":
-      //   default:
-      //     break;
-      // }
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: '',
+        closable: true,
+        detail: this.l(
+          'Common.EmailNumberAlreadyVerified'
+        ),
+        summary: '',
+        enableService: true,
+      });
     }, (error) => {
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: '',
+        closable: true,
+        detail: this.l(
+          this.emailUpdateResult.message
+        ),
+        summary: '',
+        enableService: true,
+      });
       //showError(this.emailUpdateResult.message);
     });
 
@@ -348,7 +382,7 @@ debugger;
     debugger;
     this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
       {
-        
+
         regionId: this.currentUserProfile.regionId,
         cityId: this.currentUserProfile.cityId,
       })).subscribe({
@@ -360,6 +394,16 @@ debugger;
         //   });
         // });
         // showSuccess(this.l("Common.DataSavedSuccessfully"), () => {
+          this.message.showMessage(MessageTypeEnum.toast, {
+            severity: MessageSeverity.Success,
+            message: '',
+            closable: true,
+            detail: this.l(
+              'Common.DataSavedSuccessfully'
+            ),
+            summary: '',
+            enableService: true,
+          });
           this.modalService.dismissAll()
         //});
         console.log("suceess");

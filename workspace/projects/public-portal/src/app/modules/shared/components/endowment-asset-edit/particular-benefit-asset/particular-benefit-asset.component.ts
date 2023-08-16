@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { LookupModel } from '../../../models/LookupModel';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputParticularBenefitAssetDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputParticularBenefitAssetDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -21,8 +21,8 @@ export class ParticularBenefitAssetComponent {
   _lookupExtraData:LookupExtraData;
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
-  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy,) {
+  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,private modalService: NgbModal,
+    private lookupssrv:LookupApplicationServiceProxy,) {
 
   }
 

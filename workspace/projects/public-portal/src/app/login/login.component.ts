@@ -1,13 +1,13 @@
 import { Component, Injector, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountServiceProxy, LoginModel } from '../modules/shared/services/services-proxies/service-proxies';
+import { AccountProxy, LoginModel } from '../modules/shared/services/services-proxies/service-proxies';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'; 
-import {
-  AppFormControl,
-  
-} from 'projects/core-lib/src/public-api';
-import { isElementMissed, isElementTooLong } from 'projects/core-lib/src/lib/ReactiveFromHelpers/ValidationHelpers';
+
+
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+
+import { MessageModel } from 'projects/core-lib/src/lib/models/MessageModel';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,8 +18,7 @@ export class LoginComponent extends ComponentBase implements OnInit {
   constructor(
     _injecter: Injector,
     private router: Router,
-    private accountServiceProxy: AccountServiceProxy,
-    private formBuilder: FormBuilder
+    private accountServiceProxy: AccountProxy
   ) {
     super(_injecter);
   }
@@ -34,13 +33,25 @@ export class LoginComponent extends ComponentBase implements OnInit {
   }
 
   mockedUserLogin() {
+  
       this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
-        debugger;
+       if(result.isSuccess){
         this.Util.setCookieValue(
-          this.config.getAppConfig().TokenCookieName,
+          this.config.getAppConfig().tokenCookieName,
           result.dto.accessToken!
         );
+        this.Util.setCookieValue(this.config.getAppConfig().refreshTokenName,result.dto.refreshToken.token!)
         this.redirectToLandingPage();
+      }else
+      {
+        var message: MessageModel=new MessageModel()
+        message.summary="Invalid Auntication ";
+        message.detail=result.message!;
+        message.severity= MessageSeverity.Error;
+
+        this.message.showMessage(MessageTypeEnum.toast,message);
+      }
+
       });
   }
 }

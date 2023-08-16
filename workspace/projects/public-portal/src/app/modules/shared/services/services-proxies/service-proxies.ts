@@ -18,7 +18,7 @@ import { DateTime, Duration } from "luxon";
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 @Injectable()
-export class AccountServiceProxy {
+export class AccountProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -86,7 +86,7 @@ export class AccountServiceProxy {
 }
 
 @Injectable()
-export class AppCoreConfigurationsServiceServiceProxy {
+export class AppCoreConfigurationsServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -149,7 +149,7 @@ export class AppCoreConfigurationsServiceServiceProxy {
 }
 
 @Injectable()
-export class ApplicationUserServiceServiceProxy {
+export class ApplicationUserServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -604,7 +604,7 @@ export class ApplicationUserServiceServiceProxy {
 }
 
 @Injectable()
-export class EndowmentRegistrationServiceServiceProxy {
+export class EndowmentRegistrationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -649,67 +649,6 @@ export class EndowmentRegistrationServiceServiceProxy {
     }
 
     protected processCreateEndowment(response: HttpResponseBase): Observable<ApiResponse> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-
-    /**
-     * @param isApplicantAgent (optional) 
-     * @param body (optional) 
-     * @return Success
-     */
-    initiateEndowmentRegistrationRequest(isApplicantAgent: boolean | undefined, body: InputApplicantDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/InitiateEndowmentRegistrationRequest?";
-        if (isApplicantAgent === null)
-            throw new Error("The parameter 'isApplicantAgent' cannot be null.");
-        else if (isApplicantAgent !== undefined)
-            url_ += "isApplicantAgent=" + encodeURIComponent("" + isApplicantAgent) + "&";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processInitiateEndowmentRegistrationRequest(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processInitiateEndowmentRegistrationRequest(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
-        }));
-    }
-
-    protected processInitiateEndowmentRegistrationRequest(response: HttpResponseBase): Observable<ApiResponse> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1864,10 +1803,122 @@ export class EndowmentRegistrationServiceServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createOrEditEndowmentRegistrationRequest(body: InputEndwomentRegistraionRequestApplicantDto | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateOrEditEndowmentRegistrationRequest";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processCreateOrEditEndowmentRegistrationRequest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processCreateOrEditEndowmentRegistrationRequest(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+        }));
+    }
+
+    protected processCreateOrEditEndowmentRegistrationRequest(response: HttpResponseBase): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputEndwomentRegistrationRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param requestId (optional) 
+     * @return Success
+     */
+    getEndowmentRegistrationApplicant(requestId: string | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentRegistrationApplicant?";
+        if (requestId === null)
+            throw new Error("The parameter 'requestId' cannot be null.");
+        else if (requestId !== undefined)
+            url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetEndowmentRegistrationApplicant(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetEndowmentRegistrationApplicant(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto>;
+        }));
+    }
+
+    protected processGetEndowmentRegistrationApplicant(response: HttpResponseBase): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfOutputEndwomentRegistrationRequestDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
-export class FileLibraryApplicationServiceServiceProxy {
+export class FileLibraryApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2198,10 +2249,66 @@ export class FileLibraryApplicationServiceServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    deleteFile(body: InputFileDto | undefined): Observable<ApiResponse> {
+        let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DeleteFile";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processDeleteFile(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processDeleteFile(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponse>;
+        }));
+    }
+
+    protected processDeleteFile(response: HttpResponseBase): Observable<ApiResponse> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponse.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
-export class LookupApplicationServiceServiceProxy {
+export class LookupApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2325,7 +2432,7 @@ export class LookupApplicationServiceServiceProxy {
 }
 
 @Injectable()
-export class MOJApplicationServiceServiceProxy {
+export class MOJApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2393,7 +2500,7 @@ export class MOJApplicationServiceServiceProxy {
 }
 
 @Injectable()
-export class MojDataMigrationApplicationServicesServiceProxy {
+export class MojDataMigrationApplicationServicesProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2512,7 +2619,7 @@ export class MojDataMigrationApplicationServicesServiceProxy {
 }
 
 @Injectable()
-export class OtpHandlerApplicationServiceServiceProxy {
+export class OtpHandlerApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2656,7 +2763,7 @@ export class OtpHandlerApplicationServiceServiceProxy {
 }
 
 @Injectable()
-export class RequestApplicationServiceServiceProxy {
+export class RequestApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2800,7 +2907,7 @@ export class RequestApplicationServiceServiceProxy {
 }
 
 @Injectable()
-export class SendNotificationApplicationServiceServiceProxy {
+export class SendNotificationApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -2944,7 +3051,7 @@ export class SendNotificationApplicationServiceServiceProxy {
 }
 
 @Injectable()
-export class WeatherForecastServiceProxy {
+export class WeatherForecastProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -3014,7 +3121,7 @@ export class WeatherForecastServiceProxy {
 }
 
 @Injectable()
-export class YaqeenApplicationServiceServiceProxy {
+export class YaqeenApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -4229,6 +4336,62 @@ export class ApiResponseOfOutputEndowmerDto implements IApiResponseOfOutputEndow
 export interface IApiResponseOfOutputEndowmerDto {
     isSuccess: boolean;
     dto: OutputEndowmerDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfOutputEndwomentRegistrationRequestDto implements IApiResponseOfOutputEndwomentRegistrationRequestDto {
+    isSuccess!: boolean;
+    dto!: OutputEndwomentRegistrationRequestDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfOutputEndwomentRegistrationRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? OutputEndwomentRegistrationRequestDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfOutputEndwomentRegistrationRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfOutputEndwomentRegistrationRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfOutputEndwomentRegistrationRequestDto {
+    isSuccess: boolean;
+    dto: OutputEndwomentRegistrationRequestDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -6698,7 +6861,7 @@ export interface IEndowmentData {
 }
 
 export class EndowmentRegistrationRequest implements IEndowmentRegistrationRequest {
-    applicantTypeId!: number | undefined;
+    applicantTypeIds!: string | undefined;
     endowmentId!: string | undefined;
     endowmentData!: EndowmentData;
     assetsData!: EndowmentAssetData[] | undefined;
@@ -6731,7 +6894,7 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
 
     init(_data?: any) {
         if (_data) {
-            this.applicantTypeId = _data["applicantTypeId"];
+            this.applicantTypeIds = _data["applicantTypeIds"];
             this.endowmentId = _data["endowmentId"];
             this.endowmentData = _data["endowmentData"] ? EndowmentData.fromJS(_data["endowmentData"]) : <any>undefined;
             if (Array.isArray(_data["assetsData"])) {
@@ -6788,7 +6951,7 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["applicantTypeId"] = this.applicantTypeId;
+        data["applicantTypeIds"] = this.applicantTypeIds;
         data["endowmentId"] = this.endowmentId;
         data["endowmentData"] = this.endowmentData ? this.endowmentData.toJSON() : <any>undefined;
         if (Array.isArray(this.assetsData)) {
@@ -6838,7 +7001,7 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
 }
 
 export interface IEndowmentRegistrationRequest {
-    applicantTypeId: number | undefined;
+    applicantTypeIds: string | undefined;
     endowmentId: string | undefined;
     endowmentData: EndowmentData;
     assetsData: EndowmentAssetData[] | undefined;
@@ -7497,20 +7660,84 @@ export interface IInputAnimalOrAgriculturalAssetDto {
     id: string;
 }
 
+export class InputApplicantAgentDto implements IInputApplicantAgentDto {
+    representativeNumber!: string | undefined;
+    representativeAttachmentId!: string;
+    statusId!: string | undefined;
+    statusName!: string | undefined;
+    issueDateHijri!: string | undefined;
+    issueDateGreg!: DateTime;
+    endDateHijri!: string | undefined;
+    endDateGreg!: DateTime;
+
+    constructor(data?: IInputApplicantAgentDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.representativeNumber = _data["representativeNumber"];
+            this.representativeAttachmentId = _data["representativeAttachmentId"];
+            this.statusId = _data["statusId"];
+            this.statusName = _data["statusName"];
+            this.issueDateHijri = _data["issueDateHijri"];
+            this.issueDateGreg = _data["issueDateGreg"] ? DateTime.fromISO(_data["issueDateGreg"].toString()) : <any>undefined;
+            this.endDateHijri = _data["endDateHijri"];
+            this.endDateGreg = _data["endDateGreg"] ? DateTime.fromISO(_data["endDateGreg"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): InputApplicantAgentDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputApplicantAgentDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["representativeNumber"] = this.representativeNumber;
+        data["representativeAttachmentId"] = this.representativeAttachmentId;
+        data["statusId"] = this.statusId;
+        data["statusName"] = this.statusName;
+        data["issueDateHijri"] = this.issueDateHijri;
+        data["issueDateGreg"] = this.issueDateGreg ? this.issueDateGreg.toString() : <any>undefined;
+        data["endDateHijri"] = this.endDateHijri;
+        data["endDateGreg"] = this.endDateGreg ? this.endDateGreg.toString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IInputApplicantAgentDto {
+    representativeNumber: string | undefined;
+    representativeAttachmentId: string;
+    statusId: string | undefined;
+    statusName: string | undefined;
+    issueDateHijri: string | undefined;
+    issueDateGreg: DateTime;
+    endDateHijri: string | undefined;
+    endDateGreg: DateTime;
+}
+
 export class InputApplicantDto implements IInputApplicantDto {
+    idNumber!: string | undefined;
+    idTypeId!: number;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
     gender!: UserGender;
-    idTypeId!: number | undefined;
-    firstNameEn!: string | undefined;
-    thirdNameEn!: string | undefined;
-    secondNameEn!: string | undefined;
-    lastNameEn!: string | undefined;
     firstNameAr!: string | undefined;
     secondNameAr!: string | undefined;
     thirdNameAr!: string | undefined;
     lastNameAr!: string | undefined;
+    nationalityId!: number;
     isAlive!: boolean | undefined;
+    phoneNumber!: string | undefined;
+    email!: string | undefined;
 
     constructor(data?: IInputApplicantDto) {
         if (data) {
@@ -7523,19 +7750,19 @@ export class InputApplicantDto implements IInputApplicantDto {
 
     init(_data?: any) {
         if (_data) {
+            this.idNumber = _data["idNumber"];
+            this.idTypeId = _data["idTypeId"];
             this.birthDate = _data["birthDate"] ? DateTime.fromISO(_data["birthDate"].toString()) : <any>undefined;
             this.birthDateHijri = _data["birthDateHijri"];
             this.gender = _data["gender"];
-            this.idTypeId = _data["idTypeId"];
-            this.firstNameEn = _data["firstNameEn"];
-            this.thirdNameEn = _data["thirdNameEn"];
-            this.secondNameEn = _data["secondNameEn"];
-            this.lastNameEn = _data["lastNameEn"];
             this.firstNameAr = _data["firstNameAr"];
             this.secondNameAr = _data["secondNameAr"];
             this.thirdNameAr = _data["thirdNameAr"];
             this.lastNameAr = _data["lastNameAr"];
+            this.nationalityId = _data["nationalityId"];
             this.isAlive = _data["isAlive"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.email = _data["email"];
         }
     }
 
@@ -7548,37 +7775,145 @@ export class InputApplicantDto implements IInputApplicantDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["idNumber"] = this.idNumber;
+        data["idTypeId"] = this.idTypeId;
         data["birthDate"] = this.birthDate ? this.birthDate.toString() : <any>undefined;
         data["birthDateHijri"] = this.birthDateHijri;
         data["gender"] = this.gender;
-        data["idTypeId"] = this.idTypeId;
-        data["firstNameEn"] = this.firstNameEn;
-        data["thirdNameEn"] = this.thirdNameEn;
-        data["secondNameEn"] = this.secondNameEn;
-        data["lastNameEn"] = this.lastNameEn;
         data["firstNameAr"] = this.firstNameAr;
         data["secondNameAr"] = this.secondNameAr;
         data["thirdNameAr"] = this.thirdNameAr;
         data["lastNameAr"] = this.lastNameAr;
+        data["nationalityId"] = this.nationalityId;
         data["isAlive"] = this.isAlive;
+        data["phoneNumber"] = this.phoneNumber;
+        data["email"] = this.email;
         return data;
     }
 }
 
 export interface IInputApplicantDto {
+    idNumber: string | undefined;
+    idTypeId: number;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
     gender: UserGender;
-    idTypeId: number | undefined;
-    firstNameEn: string | undefined;
-    thirdNameEn: string | undefined;
-    secondNameEn: string | undefined;
-    lastNameEn: string | undefined;
     firstNameAr: string | undefined;
     secondNameAr: string | undefined;
     thirdNameAr: string | undefined;
     lastNameAr: string | undefined;
+    nationalityId: number;
     isAlive: boolean | undefined;
+    phoneNumber: string | undefined;
+    email: string | undefined;
+}
+
+export class InputApplicantEndowmerDto implements IInputApplicantEndowmerDto {
+    prestigiousAttributeTypeId!: number;
+    commercialNumber!: string | undefined;
+    endowmentPartiesTypeId!: number;
+
+    constructor(data?: IInputApplicantEndowmerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.commercialNumber = _data["commercialNumber"];
+            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+        }
+    }
+
+    static fromJS(data: any): InputApplicantEndowmerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputApplicantEndowmerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["commercialNumber"] = this.commercialNumber;
+        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        return data;
+    }
+}
+
+export interface IInputApplicantEndowmerDto {
+    prestigiousAttributeTypeId: number;
+    commercialNumber: string | undefined;
+    endowmentPartiesTypeId: number;
+}
+
+export class InputApplicantSeerDto implements IInputApplicantSeerDto {
+    prestigiousAttributeTypeId!: number;
+    seenDeedId!: string | undefined;
+    seedDeedAttachmentId!: string;
+    commercialNumber!: string | undefined;
+    educationLevelId!: number;
+    educationLevelCertificateAttachmentId!: string;
+    experienceYearId!: number;
+    endowmentPartiesTypeId!: number;
+
+    constructor(data?: IInputApplicantSeerDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
+            this.seenDeedId = _data["seenDeedId"];
+            this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
+            this.commercialNumber = _data["commercialNumber"];
+            this.educationLevelId = _data["educationLevelId"];
+            this.educationLevelCertificateAttachmentId = _data["educationLevelCertificateAttachmentId"];
+            this.experienceYearId = _data["experienceYearId"];
+            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+        }
+    }
+
+    static fromJS(data: any): InputApplicantSeerDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputApplicantSeerDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
+        data["seenDeedId"] = this.seenDeedId;
+        data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
+        data["commercialNumber"] = this.commercialNumber;
+        data["educationLevelId"] = this.educationLevelId;
+        data["educationLevelCertificateAttachmentId"] = this.educationLevelCertificateAttachmentId;
+        data["experienceYearId"] = this.experienceYearId;
+        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        return data;
+    }
+}
+
+export interface IInputApplicantSeerDto {
+    prestigiousAttributeTypeId: number;
+    seenDeedId: string | undefined;
+    seedDeedAttachmentId: string;
+    commercialNumber: string | undefined;
+    educationLevelId: number;
+    educationLevelCertificateAttachmentId: string;
+    experienceYearId: number;
+    endowmentPartiesTypeId: number;
 }
 
 export class InputApplicationUserDto implements IInputApplicationUserDto {
@@ -8195,6 +8530,62 @@ export interface IInputEndowmerDto {
     commercialNumber: string | undefined;
     endowmentPartiesTypeId: number | undefined;
     endowmerPerson: InputApplicationUserDto;
+}
+
+export class InputEndwomentRegistraionRequestApplicantDto implements IInputEndwomentRegistraionRequestApplicantDto {
+    requestId!: string | undefined;
+    applicantTypes!: string | undefined;
+    applicant!: InputApplicantDto;
+    applicantEndowmer!: InputApplicantEndowmerDto;
+    applicantSeer!: InputApplicantSeerDto;
+    applicantAgent!: InputApplicantAgentDto;
+
+    constructor(data?: IInputEndwomentRegistraionRequestApplicantDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.applicantTypes = _data["applicantTypes"];
+            this.applicant = _data["applicant"] ? InputApplicantDto.fromJS(_data["applicant"]) : <any>undefined;
+            this.applicantEndowmer = _data["applicantEndowmer"] ? InputApplicantEndowmerDto.fromJS(_data["applicantEndowmer"]) : <any>undefined;
+            this.applicantSeer = _data["applicantSeer"] ? InputApplicantSeerDto.fromJS(_data["applicantSeer"]) : <any>undefined;
+            this.applicantAgent = _data["applicantAgent"] ? InputApplicantAgentDto.fromJS(_data["applicantAgent"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): InputEndwomentRegistraionRequestApplicantDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InputEndwomentRegistraionRequestApplicantDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["applicantTypes"] = this.applicantTypes;
+        data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
+        data["applicantEndowmer"] = this.applicantEndowmer ? this.applicantEndowmer.toJSON() : <any>undefined;
+        data["applicantSeer"] = this.applicantSeer ? this.applicantSeer.toJSON() : <any>undefined;
+        data["applicantAgent"] = this.applicantAgent ? this.applicantAgent.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IInputEndwomentRegistraionRequestApplicantDto {
+    requestId: string | undefined;
+    applicantTypes: string | undefined;
+    applicant: InputApplicantDto;
+    applicantEndowmer: InputApplicantEndowmerDto;
+    applicantSeer: InputApplicantSeerDto;
+    applicantAgent: InputApplicantAgentDto;
 }
 
 export class InputFileDto implements IInputFileDto {
@@ -10051,6 +10442,66 @@ export interface IOutputEndowmerDto {
     endowmentPartiesTypeId: number | undefined;
     isMainApplicant: boolean;
     endowmerPerson: OutputApplicationUserDto;
+}
+
+export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRegistrationRequestDto {
+    requestId!: string | undefined;
+    applicantTypes!: string | undefined;
+    applicant!: InputApplicantDto;
+    applicantEndowmer!: InputApplicantEndowmerDto;
+    applicantSeer!: InputApplicantSeerDto;
+    applicantAgent!: InputApplicantAgentDto;
+    id!: string;
+
+    constructor(data?: IOutputEndwomentRegistrationRequestDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.applicantTypes = _data["applicantTypes"];
+            this.applicant = _data["applicant"] ? InputApplicantDto.fromJS(_data["applicant"]) : <any>undefined;
+            this.applicantEndowmer = _data["applicantEndowmer"] ? InputApplicantEndowmerDto.fromJS(_data["applicantEndowmer"]) : <any>undefined;
+            this.applicantSeer = _data["applicantSeer"] ? InputApplicantSeerDto.fromJS(_data["applicantSeer"]) : <any>undefined;
+            this.applicantAgent = _data["applicantAgent"] ? InputApplicantAgentDto.fromJS(_data["applicantAgent"]) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): OutputEndwomentRegistrationRequestDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OutputEndwomentRegistrationRequestDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["applicantTypes"] = this.applicantTypes;
+        data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
+        data["applicantEndowmer"] = this.applicantEndowmer ? this.applicantEndowmer.toJSON() : <any>undefined;
+        data["applicantSeer"] = this.applicantSeer ? this.applicantSeer.toJSON() : <any>undefined;
+        data["applicantAgent"] = this.applicantAgent ? this.applicantAgent.toJSON() : <any>undefined;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IOutputEndwomentRegistrationRequestDto {
+    requestId: string | undefined;
+    applicantTypes: string | undefined;
+    applicant: InputApplicantDto;
+    applicantEndowmer: InputApplicantEndowmerDto;
+    applicantSeer: InputApplicantSeerDto;
+    applicantAgent: InputApplicantAgentDto;
+    id: string;
 }
 
 export class OutputFileDto implements IOutputFileDto {

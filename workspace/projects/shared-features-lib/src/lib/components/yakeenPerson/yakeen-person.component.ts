@@ -13,16 +13,16 @@ import {
   ApiResponse,
   ApiResponseOfAlienInfoResponse,
   ApiResponseOfOutputApplicationUserDto,
-  ApplicationUserServiceServiceProxy,
+  ApplicationUserServiceProxy,
   CitizenInfoResponse,
   GetAlienInfoInputDto,
   GetCitizenInfoInputDto,
   InputApplicationUserDto,
   InputLookUpDto,
-  LookupApplicationServiceServiceProxy,
+  LookupApplicationServiceProxy,
   LookupDto,
   OutputApplicationUserDto,
-  YaqeenApplicationServiceServiceProxy,
+  YaqeenApplicationServiceProxy,
 } from '../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ngBootstrapDatePickerDateType } from '../ng-bootstrap-hijri-gregorian-datepicker/Const';
@@ -68,9 +68,9 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   constructor(
     private formBuilder: FormBuilder,
     private dateHelper: DateFormatterService,
-    private lookupService: LookupApplicationServiceServiceProxy,
-    private yakeenValidationService: YaqeenApplicationServiceServiceProxy,
-    private PersonalInformationServiceProxy: ApplicationUserServiceServiceProxy,
+    private lookupService: LookupApplicationServiceProxy,
+    private yakeenValidationService: YaqeenApplicationServiceProxy,
+    private PersonalInformationServiceProxy: ApplicationUserServiceProxy,
     injector: Injector
   ) {
     super(injector);

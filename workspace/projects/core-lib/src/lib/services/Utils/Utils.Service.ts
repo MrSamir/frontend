@@ -5,7 +5,38 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UtilsService {
+  //#region ObjectMapper
+  /* fillObject<T, U>(source: object, target:Object): U {
+    for (const key in Object.keys(target)) {
+      if (source[key]) {
+        target[key] = source[key];
+      }
+    }
+    return target as U;
+  } */
+  //#endregion
   //#region  Cookies
+  formatBytes(bytes, decimals = 2) {
+    if (!+bytes) return '0 Bytes';
+
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = [
+      'Bytes',
+      'KB',
+      'MB',
+      'GB',
+      'TB',
+      'PB',
+      'EB',
+      'ZB',
+      'YB',
+    ];
+
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+    return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  }
 
   getCookieValue(key: string): string {
     var equalities = document.cookie.split('; ');
@@ -24,7 +55,7 @@ export class UtilsService {
       }
     }
 
-    return "";
+    return '';
   }
 
   setCookieValue(
@@ -65,7 +96,7 @@ export class UtilsService {
 
       cookieValue += '=' + attributes[name].split(';')[0];
     }
-
+    this.deleteCookie(key, path);
     document.cookie = cookieValue;
   }
 
@@ -89,16 +120,13 @@ export class UtilsService {
     var fix = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return str.replace(new RegExp(fix, 'g'), replacement);
   }
-  formatString() {
-    if (arguments.length < 1) {
-      return "";
+  formatString(str,args?:any) {
+    if (args.length < 1) {
+      return '';
     }
-
-    var str = arguments[0];
-
-    for (var i = 1; i < arguments.length; i++) {
-      var placeHolder = '{' + (i - 1) + '}';
-      str = this.replaceAll(str, placeHolder, arguments[i]);
+    for (var i = 0; i < args.length; i++) {
+      var placeHolder = '{{' + (i) + '}}';
+      str = this.replaceAll(str, placeHolder, args[i]);
     }
 
     return str;
