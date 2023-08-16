@@ -36,7 +36,11 @@ const routes: Routes = [
       ).then((m) => m.EndowmentRegistrationModule),
     data: { title: 'تسجيل وقف' },
   },
-
+  {
+    path: 'userdashboard',
+    loadChildren: () => import('./modules/user-dashboard/modules/user-dashboard.module').then(m => m.UserDashBoardModule),
+    data: { title: 'طلبات' }
+  },
   // {
   //   path: 'usertask',
   //   component: PublicUserTaskComponent,
@@ -76,14 +80,16 @@ const routes: Routes = [
   //     loadChildren: () => import('@pages/public-portal/ui-create-seer-registration/ui-create-seer-registration.module').then(m => m.UiCreatSeerRegistrationModule)
   //   },
 
-  //  {
-  //      path: 'seerRequestDetails',
-  //     loadChildren: () => import('@pages/public-portal/ui-seer-details/ui-seer-details.module').then(m => m.UiSeerDetailsModule)
-  //   },
-  //   {
-  //     path: 'seerCertifications',
-  //     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
-  //   },
+//  {
+//      path: 'seerRequestDetails',
+//     loadChildren: () => import('@pages/public-portal/ui-seer-details/ui-seer-details.module').then(m => m.UiSeerDetailsModule)
+//   },
+//   {
+//     path: 'seerCertifications',
+//     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
+//   },
+
+
 ];
 
 @NgModule({
@@ -99,4 +105,4 @@ const routes: Routes = [
     }
   ],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
