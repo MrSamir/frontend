@@ -108,7 +108,7 @@ export class EndowmentApplicantCreateOrEditComponent
             detail: result.message!,
             severity: MessageSeverity.Success,
           });
-          this.activatedroute.
+          this.activatedroute;
         }
       })
     }

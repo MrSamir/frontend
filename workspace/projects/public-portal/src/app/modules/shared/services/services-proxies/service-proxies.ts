@@ -2713,6 +2713,150 @@ export class OtpHandlerApplicationServiceProxy {
 }
 
 @Injectable()
+export class RequestApplicationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param limitCount (optional) 
+     * @return Success
+     */
+    getMyRequests(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+        let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyRequests?";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (limitCount === null)
+            throw new Error("The parameter 'limitCount' cannot be null.");
+        else if (limitCount !== undefined)
+            url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMyRequests(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMyRequests(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto>;
+        }));
+    }
+
+    protected processGetMyRequests(response: HttpResponseBase): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfPagedResultDtoOfRequestOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param limitCount (optional) 
+     * @return Success
+     */
+    getMyTasks(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+        let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyTasks?";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (limitCount === null)
+            throw new Error("The parameter 'limitCount' cannot be null.");
+        else if (limitCount !== undefined)
+            url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMyTasks(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMyTasks(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto>;
+        }));
+    }
+
+    protected processGetMyTasks(response: HttpResponseBase): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfPagedResultDtoOfRequestOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class SendNotificationApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -4356,6 +4500,62 @@ export class ApiResponseOfPagedResultDtoOfOutputEndowmerDto implements IApiRespo
 export interface IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
     isSuccess: boolean | undefined;
     dto: PagedResultDtoOfOutputEndowmerDto | undefined;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfPagedResultDtoOfRequestOutputDto implements IApiResponseOfPagedResultDtoOfRequestOutputDto {
+    isSuccess!: boolean;
+    dto!: PagedResultDtoOfRequestOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfPagedResultDtoOfRequestOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? PagedResultDtoOfRequestOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfPagedResultDtoOfRequestOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfPagedResultDtoOfRequestOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfPagedResultDtoOfRequestOutputDto {
+    isSuccess: boolean;
+    dto: PagedResultDtoOfRequestOutputDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -10504,6 +10704,54 @@ export interface IPagedResultDtoOfOutputEndowmerDto {
     items: OutputEndowmerDto[] | undefined;
 }
 
+export class PagedResultDtoOfRequestOutputDto implements IPagedResultDtoOfRequestOutputDto {
+    totalCount!: number;
+    items!: RequestOutputDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfRequestOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(RequestOutputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfRequestOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfRequestOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfRequestOutputDto {
+    totalCount: number;
+    items: RequestOutputDto[] | undefined;
+}
+
 export class ParticularBenefitAssetData implements IParticularBenefitAssetData {
     benefitValue!: number | undefined;
     isDirectedBenefit!: boolean | undefined;
@@ -11046,6 +11294,78 @@ export class RequestDto implements IRequestDto {
 
 export interface IRequestDto {
     id: string | undefined;
+}
+
+export class RequestOutputDto implements IRequestOutputDto {
+    requestNumber!: number;
+    applicantId!: string | undefined;
+    requestTypeId!: number | undefined;
+    requestStatusId!: number | undefined;
+    workflowInstanceId!: string | undefined;
+    submitionDate!: DateTime | undefined;
+    applicationUser!: ApplicationUser;
+    endowmentRegistrationRequest!: EndowmentRegistrationRequest;
+    requestType!: RequestType;
+    requestStatus!: RequestStatus;
+
+    constructor(data?: IRequestOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestNumber = _data["requestNumber"];
+            this.applicantId = _data["applicantId"];
+            this.requestTypeId = _data["requestTypeId"];
+            this.requestStatusId = _data["requestStatusId"];
+            this.workflowInstanceId = _data["workflowInstanceId"];
+            this.submitionDate = _data["submitionDate"] ? DateTime.fromISO(_data["submitionDate"].toString()) : <any>undefined;
+            this.applicationUser = _data["applicationUser"] ? ApplicationUser.fromJS(_data["applicationUser"]) : <any>undefined;
+            this.endowmentRegistrationRequest = _data["endowmentRegistrationRequest"] ? EndowmentRegistrationRequest.fromJS(_data["endowmentRegistrationRequest"]) : <any>undefined;
+            this.requestType = _data["requestType"] ? RequestType.fromJS(_data["requestType"]) : <any>undefined;
+            this.requestStatus = _data["requestStatus"] ? RequestStatus.fromJS(_data["requestStatus"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): RequestOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestNumber"] = this.requestNumber;
+        data["applicantId"] = this.applicantId;
+        data["requestTypeId"] = this.requestTypeId;
+        data["requestStatusId"] = this.requestStatusId;
+        data["workflowInstanceId"] = this.workflowInstanceId;
+        data["submitionDate"] = this.submitionDate ? this.submitionDate.toString() : <any>undefined;
+        data["applicationUser"] = this.applicationUser ? this.applicationUser.toJSON() : <any>undefined;
+        data["endowmentRegistrationRequest"] = this.endowmentRegistrationRequest ? this.endowmentRegistrationRequest.toJSON() : <any>undefined;
+        data["requestType"] = this.requestType ? this.requestType.toJSON() : <any>undefined;
+        data["requestStatus"] = this.requestStatus ? this.requestStatus.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IRequestOutputDto {
+    requestNumber: number;
+    applicantId: string | undefined;
+    requestTypeId: number | undefined;
+    requestStatusId: number | undefined;
+    workflowInstanceId: string | undefined;
+    submitionDate: DateTime | undefined;
+    applicationUser: ApplicationUser;
+    endowmentRegistrationRequest: EndowmentRegistrationRequest;
+    requestType: RequestType;
+    requestStatus: RequestStatus;
 }
 
 export class RequestStatus implements IRequestStatus {

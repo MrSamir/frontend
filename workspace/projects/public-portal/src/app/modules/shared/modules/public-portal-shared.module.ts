@@ -59,6 +59,8 @@ import { StepsModule } from 'primeng/steps';
     DropdownModule,
     PanelModule,
     StepsModule,
+ CoreLibModule,
+MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [
     
