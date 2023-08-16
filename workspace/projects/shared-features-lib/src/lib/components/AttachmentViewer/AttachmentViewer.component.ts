@@ -102,7 +102,7 @@ export class AttachmentViewerComponent extends ComponentBase implements OnInit {
     return new Blob([byteArray], { type: item.ContentType });
   }
   ViewAttachment(event: AttachementItem) {
-    debugger;
+    
     if (event.ContentType.startsWith('image/')) {
         let url =this.convertToSafeUrl(event);
         this.loading.show();

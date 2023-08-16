@@ -188,7 +188,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
 
     // if (this.otpConfirmationForm.invalid)
     //   return;
-debugger;
+
     this.otpVerificationInput.phoneNumber = this.confirmPhoneNumberForm.controls['phoneNumber'].value;
     this.otpVerificationInput.hash = this.generatedOtpInfo?.hash;
     this.otpVerificationInput.userId = this.currentUserProfile.id;
@@ -345,7 +345,7 @@ debugger;
 
   onRegionAndCityUpdate() {
     this.triggerFormValidation(this.udateUserLocationForm);
-    debugger;
+    
     this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
       {
         

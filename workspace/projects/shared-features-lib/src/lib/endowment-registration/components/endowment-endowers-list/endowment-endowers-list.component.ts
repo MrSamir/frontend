@@ -424,7 +424,7 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
   // }
 
   onNewPersonAvailable(event: {idType: number, userName: string, person: InputApplicationUserDto}) {
-debugger;
+
     this.newPerson = event.person;
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(this.newPerson);

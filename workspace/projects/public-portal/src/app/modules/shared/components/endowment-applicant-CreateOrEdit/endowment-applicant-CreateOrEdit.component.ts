@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Injector, Input, NO_ERRORS_SCHEMA, OnInit } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, Component, Injector, Input, NO_ERRORS_SCHEMA, OnInit, forwardRef } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
     ApplicationUserServiceProxy,
@@ -24,8 +24,8 @@ import { fn } from 'moment';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
-import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { NG_VALIDATORS, NgForm } from '@angular/forms';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
@@ -81,20 +81,28 @@ export class EndowmentApplicantCreateOrEditComponent
     private _endowmentRegistrationService: EndowmentRegistrationServiceProxy,
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
-    private _MojServiceProxy: MOJApplicationServiceProxy,
-    private activatedroute:ActivatedRoute
-  ) {
+    private _MojServiceProxy: MOJApplicationServiceProxy, private router:Router  ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
-    this.requestInfo.applicantAgent = new InputApplicantAgentDto();
+    /* this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
-    this.requestInfo.applicantSeer = new InputApplicantSeerDto();
+    this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
   }
   ngOnInit() {
     this.LoadForm();
   }
   onNextBtnClicked(form:NgForm)
   {
+
+    if(form.valid==false){
+     for(var control in form.controls)
+          if(form.controls[control].invalid)
+          {
+            form.controls[control].markAsTouched();
+            form.controls[control].updateValueAndValidity() ;
+            form.controls[control].markAsPristine();
+          }
+    }
     if(form.valid)
     {
       this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
@@ -108,8 +116,19 @@ export class EndowmentApplicantCreateOrEditComponent
             detail: result.message!,
             severity: MessageSeverity.Success,
           });
-          
-        }
+          this.router.navigate([
+            'registrationform/:requestId/:pahseId',
+            result.dto.id,2]);
+        }else
+        {
+                    this.message.showMessage(MessageTypeEnum.toast, {
+                      closable: true,
+                      enableService: true,
+                      summary: '',
+                      detail: result.message!,
+                      severity: MessageSeverity.Warning,
+                    });
+         }
       })
     }
   }
@@ -184,7 +203,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   loadCurrentUser() {
     this._applicationUserService.getCurrentUser().subscribe((result) => {
-      debugger;
+      
       this.applicantUser = result.dto;
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);
@@ -288,7 +307,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
 
   selectEndowmerType(event: any) {
-    debugger;
+    
     var endowmerType = this.endowmentPartiesTypes.filter((ept, index) => {
       return ept.id == event.value;
     })[0];
@@ -300,7 +319,7 @@ export class EndowmentApplicantCreateOrEditComponent
       };
   }
   selectSeerType(event: any) {
-    debugger;
+    
     var Seerype = this.endowmentPartiesTypes.filter((ept, index) => {
       return ept.id == event.value;
     })[0];
