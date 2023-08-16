@@ -1,6 +1,6 @@
 import { Component, Input, Output } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputRealEstateAssetDto, LookupApplicationServiceServiceProxy, LookupDto,LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputRealEstateAssetDto, LookupApplicationServiceProxy, LookupDto,LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { LookupModel } from '../../../models/LookupModel';
 import { MapModel } from '../../map/map.model';
 import { EnumLookuptypes } from '../../../models/EnumLookuptypes';
@@ -30,8 +30,8 @@ cityDisabled=true;
 // hint key
 //estimatedValuehint:HintEntry;
 
-constructor(private lookupssrv:LookupApplicationServiceServiceProxy,private modalService: NgbModal,
-  private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy)
+constructor(private lookupssrv:LookupApplicationServiceProxy,private modalService: NgbModal,
+  private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy)
   {
     //this.resolveLookup = this.utilityService.resolveLookup;
   }

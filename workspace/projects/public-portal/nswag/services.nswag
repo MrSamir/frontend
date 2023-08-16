@@ -10,7 +10,7 @@
   },
   "codeGenerators": {
     "openApiToTypeScriptClient": {
-      "className": "{controller}ServiceProxy",
+      "className": "{controller}Proxy",
       "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 4.3,
@@ -58,7 +58,6 @@
       "importRequiredTypes": true,
       "useGetBaseUrlMethod": false,
       "baseUrlTokenName": "API_BASE_URL",
-     
       "queryNullValue": "",
       "useAbortSignal": false,
       "inlineNamedDictionaries": false,

@@ -20177,6 +20177,26 @@ p-checkbox {
     line-height: 1
 }
 
+.p-checkbox .p-checkbox-box .p-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #3B82F6;
+    background: #3B82F6;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    border-color: #3B82F6;
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #BFDBFE;
+    border-color: #3B82F6;
+}
 /* .p-colorpicker-panel .p-colorpicker-color {
     background: transparent url(color.dae87a04d07ca92b.png) no-repeat left top
 }

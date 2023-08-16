@@ -1,0 +1,44 @@
+.shape-bg {
+    background: url(../images/shape-bg.svg) no-repeat bottom left;
+    background-size: contain;
+    min-height: 500px;
+  }
+
+  .mainTitle{
+    position: relative;
+    @include py(4);
+    font-weight: bold;
+    color: $awq-primary;
+    font-size: 1.5rem;
+
+    &::before{
+        content: '';
+        position: absolute;
+        bottom: 0;
+        width: 78px;
+        height: 3px;
+        background-color: #D6BD81;
+        
+    }
+  }
+
+
+ .copySection{
+  position: relative;
+  
+  &::before {
+      content: "";
+      position: absolute;
+      width: 66px;
+      height: 2px;
+      background-color: rgba(165, 217, 201, 0.5);
+      top: 0;
+
+      [dir='rtl'] & {
+        right: 0;
+      }
+      [dir='ltr'] & {
+        left: 0;
+      }
+  }
+}

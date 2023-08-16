@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../models/LookupModel';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData, OutputAssetDto } from '../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData, OutputAssetDto } from '../../services/services-proxies/service-proxies';
 import { MapModel } from '../map/map.model';
 //import { ActivatedRoute } from '@angular/router';
 import { RequestModel } from '../../models/RequestModel';
@@ -62,8 +62,8 @@ export class EndowmentSharedAssetEditComponent implements OnInit {
     
 
   constructor (public formBuilder:FormBuilder,private modalService: NgbModal,
-                private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
-                private lookupssrv:LookupApplicationServiceServiceProxy,
+                private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+                private lookupssrv:LookupApplicationServiceProxy,
                /*private activatedRoute: ActivatedRoute*/)
     {}
 

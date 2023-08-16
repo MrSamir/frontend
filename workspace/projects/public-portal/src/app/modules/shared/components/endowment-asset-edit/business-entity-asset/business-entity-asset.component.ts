@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputBusinessEntityAssetDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputBusinessEntityAssetDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { LookupModel } from '../../../models/LookupModel';
 import { MapModel } from '../../map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -37,8 +37,8 @@ _lookupExtraData:LookupExtraData;
   combinedPattern: RegExp;
 
 
-  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy/*, private utilityService: UtilityService*/) {
+  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,private modalService: NgbModal,
+    private lookupssrv:LookupApplicationServiceProxy/*, private utilityService: UtilityService*/) {
     //this.resolveLookup = this.utilityService.resolveLookup;
   }
 

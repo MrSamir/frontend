@@ -1,0 +1,92 @@
+.step{
+    
+    .step-img{
+        position: relative;
+        &::before{
+            position: absolute;
+            content: '';
+            width: 24px;
+            height: 26px;
+            background-image: url(../images/steps-arrow.svg);
+            background-repeat: no-repeat;
+            top:calc(50% - 26px/2);
+            right: -1.5rem;
+        }
+    }
+}
+
+.row .step:first-child .step-img::before{
+    display: none;
+}
+
+
+
+.profile{
+    background:#fff url(../images/profile-box.png) no-repeat left bottom;
+}
+
+.servicesBox{
+    
+}
+
+.IndexPages{
+
+    .BQ-pageTitle{
+        display: none;
+    }
+    .layoutContainer{
+        max-width: 100%;
+        padding: 0;
+    }
+}
+
+.billboard{
+    height: 590px;
+    background:#fff url(../images/billboard.png) no-repeat left bottom;
+    border-top: 1px $light solid
+}
+.BillContent{
+    max-width: 550px;
+}
+
+
+.serviceBox{
+    display: block;
+    border-radius: $border-radius-lg;
+    text-align: center;
+    @include p(4);
+    background-color: #fff;
+    height: 100%;
+    transition: .3s all ease-in-out;
+    overflow: hidden;
+
+    h2{
+        color: $awq-primary;
+    }
+    p{
+        color: #7E8C76;
+    }
+
+    button{
+        transform: translateY(200px);
+    }
+
+    h2, p, button, img{
+        transition: .3s all ease-in-out;
+    }
+    &:hover{
+
+        h2, p{
+            color: #fff;
+        }
+        img{
+            transform: translateY(-200px);
+        }
+
+        h2, p, button{
+            transform: translateY(-50px);
+        }
+
+        background-color: $awq-secondary;
+    }
+}

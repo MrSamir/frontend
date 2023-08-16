@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbDatepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import {BreadcrumbComponent} from '../components/breadcrumb/breadcrumb.component';
@@ -14,10 +12,8 @@ import {IDNumberWithValidationComponent} from '../components/IDNumberWithValidat
 import {DateFormatterService} from '../components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import {BreadcrumbModule} from 'primeng/breadcrumb';
 import {FileUploadModule} from 'primeng/fileupload';
-
 import {ToastModule} from 'primeng/toast';
 import {TableModule} from 'primeng/table';
-
 import {FileUploaderComponent} from '../components/file-uploader/file-uploader.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
@@ -32,27 +28,47 @@ import {EditHafezaComponent} from "../components/Hafeza/edit-hafeza/edit-hafeza.
 import {CreateHafezaComponent} from "../components/Hafeza/create-hafeza/create-hafeza.component";
 import {ViewHafezaComponent} from "../components/Hafeza/view-hafeza/view-hafeza.component";
 import { EmailConfirmationComponent } from '../components/email-confirmation/email-confirmation.component';
+import { AttachmentViewerComponent } from '../components/AttachmentViewer/AttachmentViewer.component';
+ import { GalleriaModule } from 'primeng/galleria';
+
 
 
 @NgModule({
-  declarations: [BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, HijriDatepickerComponent, FileUploaderComponent,
-    IDNumberWithValidationComponent, PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent,
-    ValidationMessagesComponent, YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent],
+  declarations: [
+    BreadcrumbComponent,
+    NgBootstrapHijriGregorianDatepickerComponent,
+    HijriDatepickerComponent,
+    FileUploaderComponent,
+    IDNumberWithValidationComponent,
+        AttachmentViewerComponent,
+        PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent,
+        ValidationMessagesComponent, YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent
+  ],
+  imports: [
+    BreadcrumbModule,
+    FormsModule,
+    NgbDatepickerModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    ToastModule,
+    CommonModule,
+    TableModule,
+    GalleriaModule,
+    CoreLibModule
+  ],
   exports: [
-    BreadcrumbComponent, NgBootstrapHijriGregorianDatepickerComponent, IDNumberWithValidationComponent, FileUploaderComponent,
-    PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent, ValidationMessagesComponent
-    ,YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent
+    BreadcrumbComponent,
+    NgBootstrapHijriGregorianDatepickerComponent,
+    IDNumberWithValidationComponent,
+    FileUploaderComponent,
+      AttachmentViewerComponent,
+      PublicUserProfileComponent, YakeenAlienViewComponent, YakeenCitizenViewComponent, YakeenPersonComponent, ValidationMessagesComponent
+      , YakeenPersonViewComponent, CreateHafezaComponent, EditHafezaComponent, ViewHafezaComponent, EmailConfirmationComponent
   ],
   providers: [
     // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
     // { provide: NgbDatepickerI18n, useClass: IslamicI18n },
-    DateFormatterService
-  ],
-  imports: [
-    BreadcrumbModule,
-    FormsModule, NgbDatepickerModule, ReactiveFormsModule, FileUploadModule, ToastModule, CommonModule, TableModule,
-    CoreLibModule
+    DateFormatterService,
   ]
 })
-export class SharecomponentModule {
-}
+export class SharecomponentModule {}

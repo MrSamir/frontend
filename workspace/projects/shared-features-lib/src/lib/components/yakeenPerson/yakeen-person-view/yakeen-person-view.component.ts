@@ -4,7 +4,7 @@ import {
   CitizenInfoResponse,
   IdType,
   InputLookUpDto,
-  LookupApplicationServiceServiceProxy,
+  LookupApplicationServiceProxy,
   LookupExtraData,
   OutputApplicationUserDto
 } from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
@@ -14,7 +14,7 @@ import {
   templateUrl: './yakeen-person-view.component.html'
 })
 export class YakeenPersonViewComponent implements OnInit {
-  constructor(public  lookupService: LookupApplicationServiceServiceProxy) {
+  constructor(public  lookupService: LookupApplicationServiceProxy) {
   }
 
   @Input() citizen: CitizenInfoResponse | undefined;

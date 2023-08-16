@@ -1,5 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputMonetaryAssetDto, LookupApplicationServiceServiceProxy } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputMonetaryAssetDto, LookupApplicationServiceProxy } from '../../../services/services-proxies/service-proxies';
  
 import { LookupModel } from '../../../models/LookupModel';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,8 +19,8 @@ export class MonetaryAssetComponent {
   ePatternValidation: typeof EnumValidation = EnumValidation;
   resolveLookup:any;
   @Input()assetSubTypes:LookupModel[];
-  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy,/*private utilityService:UtilityService*/) {
+  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,private modalService: NgbModal,
+    private lookupssrv:LookupApplicationServiceProxy,/*private utilityService:UtilityService*/) {
     //this.resolveLookup = this.utilityService.resolveLookup;
    }
 

@@ -32,19 +32,19 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     return next.handle(modifiedRequest).pipe(
       tap({
         next: (event) => {
+        
           if (event instanceof HttpResponse) {
             if (event.status == HttpStatusCode.Unauthorized) {
               errorMessage = 'Unauthorized access!';
             } else if (!event.body?.isSuccess) {
               errorMessage = event.body?.message;
             }
-
             if (errorMessage) {
             var message = new MessageModel();
             message.closable = true;
             message.detail = errorMessage;
             message.severity = MessageSeverity.Error;
-            message.summary = 'Authntication Error';
+            message.summary = 'Error';
             this.appMessageService.showMessage(MessageTypeEnum.message, message);
             }
           
@@ -76,8 +76,9 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     );
   }
   protected AddreqiuredHeaders(request:HttpRequest<any>)
-  {   var appConfig=this.appconifgsubject.getAppConfig();
-             var token= this.utilservice.getCookieValue(appConfig.TokenCookieName);
+  {    
+    var appConfig=this.appconifgsubject.getAppConfig();
+             var token= this.utilservice.getCookieValue(appConfig.tokenCookieName);
              var currentLanguae = this.utilservice.getCookieValue(
                appConfig.langCookieName
              );
@@ -90,11 +91,11 @@ export class HttpResponseInterceptor implements HttpInterceptor {
             .set('X-Requested-With', 'XMLHttpRequest');
             if(token)
             {
-              modifiedHeaders.set('Authorization',"Bearer "+token);
+              modifiedHeaders= modifiedHeaders.set('Authorization',`Bearer ${token}`);
             }
             if(currentLanguae)
             {
-               modifiedHeaders.set('Accept-Language', currentLanguae);
+              modifiedHeaders=  modifiedHeaders.set('Accept-Language', currentLanguae);
             }
             return request.clone({
               headers: modifiedHeaders,
