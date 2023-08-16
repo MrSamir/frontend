@@ -72,7 +72,7 @@ super(injector);
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data ) => {
-    this.spendingCategoriesLookup=data.dto.items;
+    this.spendingCategoriesLookup=data.dto!.items;
     console.log(data);
     this.LoadEndowmentType();
   },
@@ -87,7 +87,7 @@ super(injector);
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data) => {
-    this.EndowmentTypeLookup=data.dto.items;
+    this.EndowmentTypeLookup=data.dto!.items;
     console.log(data);
     this.  LoadRegion();
 
@@ -104,7 +104,7 @@ super(injector);
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data) => {
-    this.RegioneLookup=data.dto.items;
+    this.RegioneLookup=data.dto!.items;
     console.log(data);
     this.  LoadIssuanceCourt();
   }
@@ -121,7 +121,7 @@ super(injector);
     this.lookupfliter.filters=[this._lookupExtraData];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data) => {
-    this.CityLookup=data.dto.items;
+    this.CityLookup=data.dto!.items;
     console.log(data);
 
 
@@ -140,7 +140,7 @@ super(injector);
     this.lookupfliter.filters=[];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
   (data) => {
-    this.IssuanceCourtsLookup=data.dto.items;
+    this.IssuanceCourtsLookup=data.dto!.items;
     console.log(data);
 
   }
