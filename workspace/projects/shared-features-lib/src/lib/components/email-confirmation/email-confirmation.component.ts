@@ -20,7 +20,7 @@ export class EmailConfirmationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userProfileProxyService.confirmUserEmail(new serviceProxies.ConfirmUserEmailInputDto({
+    this.userProfileProxyService.confirmUserEmail(new ConfirmUserEmailInputDto({
       userId: this.userId,
       code : this.confirmationCode,
       id: 0
