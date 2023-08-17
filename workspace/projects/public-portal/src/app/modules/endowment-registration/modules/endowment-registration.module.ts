@@ -14,6 +14,9 @@ import { FormsModule } from '@angular/forms';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { SeerStepComponent } from '../components/endowment-registration-new/seer-step/seer-step.component';
 import { BeneficiaryStepComponent } from '../components/endowment-registration-new/beneficiary-step/beneficiary-step.component';
+import { EndowmentDirectRegisterationComponent } from '../components/endowment-direct-registeration/endowment-direct-registeration.component';
+import {PanelModule} from "primeng/panel";
+
 
 @NgModule({
   declarations: [
@@ -22,12 +25,13 @@ import { BeneficiaryStepComponent } from '../components/endowment-registration-n
     EndowmenInstantRegistrationEditComponent,
     EndowmenInstantRegistrationInfoComponent,
     SeerStepComponent,
-    BeneficiaryStepComponent
+    BeneficiaryStepComponent,
+    EndowmentDirectRegisterationComponent
   ],
   imports: [
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
-    EndowmentRegistrationSharedModule,
+    EndowmentRegistrationSharedModule,PanelModule,
     
  
     PublicPortalSharedModule, 
