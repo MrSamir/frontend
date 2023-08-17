@@ -2779,6 +2779,72 @@ export class RequestApplicationServiceProxy {
      * @param limitCount (optional) 
      * @return Success
      */
+    getMyEndowments(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto> {
+        let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyEndowments?";
+        if (sorting === null)
+            throw new Error("The parameter 'sorting' cannot be null.");
+        else if (sorting !== undefined)
+            url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
+        if (skipCount === null)
+            throw new Error("The parameter 'skipCount' cannot be null.");
+        else if (skipCount !== undefined)
+            url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
+        if (limitCount === null)
+            throw new Error("The parameter 'limitCount' cannot be null.");
+        else if (limitCount !== undefined)
+            url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetMyEndowments(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetMyEndowments(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto>;
+        }));
+    }
+
+    protected processGetMyEndowments(response: HttpResponseBase): Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfPagedResultDtoOfEndowmentOutputDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
+     * @param sorting (optional) 
+     * @param skipCount (optional) 
+     * @param limitCount (optional) 
+     * @return Success
+     */
     getMyRequests(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
         let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyRequests?";
         if (sorting === null)
@@ -4448,6 +4514,62 @@ export class ApiResponseOfOutputFileDto implements IApiResponseOfOutputFileDto {
 export interface IApiResponseOfOutputFileDto {
     isSuccess: boolean;
     dto: OutputFileDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfPagedResultDtoOfEndowmentOutputDto implements IApiResponseOfPagedResultDtoOfEndowmentOutputDto {
+    isSuccess!: boolean;
+    dto!: PagedResultDtoOfEndowmentOutputDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfPagedResultDtoOfEndowmentOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? PagedResultDtoOfEndowmentOutputDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfPagedResultDtoOfEndowmentOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfPagedResultDtoOfEndowmentOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfPagedResultDtoOfEndowmentOutputDto {
+    isSuccess: boolean;
+    dto: PagedResultDtoOfEndowmentOutputDto;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
@@ -6858,6 +6980,150 @@ export interface IEndowmentData {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: string;
+}
+
+export class EndowmentOutputDto implements IEndowmentOutputDto {
+    applicantTypeIds!: string | undefined;
+    endowmentId!: string | undefined;
+    endowmentData!: EndowmentData;
+    assetsData!: EndowmentAssetData[] | undefined;
+    endowmersData!: EndowmerData[] | undefined;
+    seersData!: EndowmentSeerData[] | undefined;
+    cetifcatesdata!: Certificate;
+    agentsData!: EndowmentAgentData[] | undefined;
+    beneficiariesData!: EndowmentBeneficiaryData[] | undefined;
+    unifiedNumberResponse!: string | undefined;
+    bankAccountData!: EndowmentBankAccountData[] | undefined;
+    endowmentRegistrationSourceId!: number | undefined;
+    dataStateId!: number | undefined;
+    tobeVisitedStep!: number | undefined;
+    applicantType!: ApplicantType;
+    request!: Request;
+
+    constructor(data?: IEndowmentOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.applicantTypeIds = _data["applicantTypeIds"];
+            this.endowmentId = _data["endowmentId"];
+            this.endowmentData = _data["endowmentData"] ? EndowmentData.fromJS(_data["endowmentData"]) : <any>undefined;
+            if (Array.isArray(_data["assetsData"])) {
+                this.assetsData = [] as any;
+                for (let item of _data["assetsData"])
+                    this.assetsData!.push(EndowmentAssetData.fromJS(item));
+            }
+            if (Array.isArray(_data["endowmersData"])) {
+                this.endowmersData = [] as any;
+                for (let item of _data["endowmersData"])
+                    this.endowmersData!.push(EndowmerData.fromJS(item));
+            }
+            if (Array.isArray(_data["seersData"])) {
+                this.seersData = [] as any;
+                for (let item of _data["seersData"])
+                    this.seersData!.push(EndowmentSeerData.fromJS(item));
+            }
+            this.cetifcatesdata = _data["cetifcatesdata"] ? Certificate.fromJS(_data["cetifcatesdata"]) : <any>undefined;
+            if (Array.isArray(_data["agentsData"])) {
+                this.agentsData = [] as any;
+                for (let item of _data["agentsData"])
+                    this.agentsData!.push(EndowmentAgentData.fromJS(item));
+            }
+            if (Array.isArray(_data["beneficiariesData"])) {
+                this.beneficiariesData = [] as any;
+                for (let item of _data["beneficiariesData"])
+                    this.beneficiariesData!.push(EndowmentBeneficiaryData.fromJS(item));
+            }
+            this.unifiedNumberResponse = _data["unifiedNumberResponse"];
+            if (Array.isArray(_data["bankAccountData"])) {
+                this.bankAccountData = [] as any;
+                for (let item of _data["bankAccountData"])
+                    this.bankAccountData!.push(EndowmentBankAccountData.fromJS(item));
+            }
+            this.endowmentRegistrationSourceId = _data["endowmentRegistrationSourceId"];
+            this.dataStateId = _data["dataStateId"];
+            this.tobeVisitedStep = _data["tobeVisitedStep"];
+            this.applicantType = _data["applicantType"] ? ApplicantType.fromJS(_data["applicantType"]) : <any>undefined;
+            this.request = _data["request"] ? Request.fromJS(_data["request"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): EndowmentOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EndowmentOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["applicantTypeIds"] = this.applicantTypeIds;
+        data["endowmentId"] = this.endowmentId;
+        data["endowmentData"] = this.endowmentData ? this.endowmentData.toJSON() : <any>undefined;
+        if (Array.isArray(this.assetsData)) {
+            data["assetsData"] = [];
+            for (let item of this.assetsData)
+                data["assetsData"].push(item.toJSON());
+        }
+        if (Array.isArray(this.endowmersData)) {
+            data["endowmersData"] = [];
+            for (let item of this.endowmersData)
+                data["endowmersData"].push(item.toJSON());
+        }
+        if (Array.isArray(this.seersData)) {
+            data["seersData"] = [];
+            for (let item of this.seersData)
+                data["seersData"].push(item.toJSON());
+        }
+        data["cetifcatesdata"] = this.cetifcatesdata ? this.cetifcatesdata.toJSON() : <any>undefined;
+        if (Array.isArray(this.agentsData)) {
+            data["agentsData"] = [];
+            for (let item of this.agentsData)
+                data["agentsData"].push(item.toJSON());
+        }
+        if (Array.isArray(this.beneficiariesData)) {
+            data["beneficiariesData"] = [];
+            for (let item of this.beneficiariesData)
+                data["beneficiariesData"].push(item.toJSON());
+        }
+        data["unifiedNumberResponse"] = this.unifiedNumberResponse;
+        if (Array.isArray(this.bankAccountData)) {
+            data["bankAccountData"] = [];
+            for (let item of this.bankAccountData)
+                data["bankAccountData"].push(item.toJSON());
+        }
+        data["endowmentRegistrationSourceId"] = this.endowmentRegistrationSourceId;
+        data["dataStateId"] = this.dataStateId;
+        data["tobeVisitedStep"] = this.tobeVisitedStep;
+        data["applicantType"] = this.applicantType ? this.applicantType.toJSON() : <any>undefined;
+        data["request"] = this.request ? this.request.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IEndowmentOutputDto {
+    applicantTypeIds: string | undefined;
+    endowmentId: string | undefined;
+    endowmentData: EndowmentData;
+    assetsData: EndowmentAssetData[] | undefined;
+    endowmersData: EndowmerData[] | undefined;
+    seersData: EndowmentSeerData[] | undefined;
+    cetifcatesdata: Certificate;
+    agentsData: EndowmentAgentData[] | undefined;
+    beneficiariesData: EndowmentBeneficiaryData[] | undefined;
+    unifiedNumberResponse: string | undefined;
+    bankAccountData: EndowmentBankAccountData[] | undefined;
+    endowmentRegistrationSourceId: number | undefined;
+    dataStateId: number | undefined;
+    tobeVisitedStep: number | undefined;
+    applicantType: ApplicantType;
+    request: Request;
 }
 
 export class EndowmentRegistrationRequest implements IEndowmentRegistrationRequest {
@@ -10666,6 +10932,54 @@ export interface IOutputSeerDto {
     isDeleted: boolean | undefined;
     endowmentPartiesTypeId: number | undefined;
     seerPerson: OutputApplicationUserDto;
+}
+
+export class PagedResultDtoOfEndowmentOutputDto implements IPagedResultDtoOfEndowmentOutputDto {
+    totalCount!: number;
+    items!: EndowmentOutputDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfEndowmentOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(EndowmentOutputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfEndowmentOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfEndowmentOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfEndowmentOutputDto {
+    totalCount: number;
+    items: EndowmentOutputDto[] | undefined;
 }
 
 export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {

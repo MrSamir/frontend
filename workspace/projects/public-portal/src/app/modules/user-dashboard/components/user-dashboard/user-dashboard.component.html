@@ -1,21 +1,22 @@
 <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
 
-    <li [ngbNavItem]="1">
-      <a ngbNavLink>طلباتي </a>
-      <ng-template ngbNavContent>
-           <app-my-requests></app-my-requests>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="2" >
-      <a ngbNavLink>أوقافي</a>
-      <ng-template ngbNavContent>
-      </ng-template>
-    </li>
-    <li [ngbNavItem]="3">
-      <a ngbNavLink>مهامي</a>
-      <ng-template ngbNavContent>
-        <app-my-tasks></app-my-tasks>
-      </ng-template>
-    </li>
-  </ul>
-   <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <li [ngbNavItem]="1">
+    <a ngbNavLink>طلباتي </a>
+    <ng-template ngbNavContent>
+      <app-my-requests></app-my-requests>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="2">
+    <a ngbNavLink>أوقافي</a>
+    <ng-template ngbNavContent>
+      <app-my-awqafs></app-my-awqafs>
+    </ng-template>
+  </li>
+  <li [ngbNavItem]="3">
+    <a ngbNavLink>مهامي</a>
+    <ng-template ngbNavContent>
+      <app-my-tasks></app-my-tasks>
+    </ng-template>
+  </li>
+</ul>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>
