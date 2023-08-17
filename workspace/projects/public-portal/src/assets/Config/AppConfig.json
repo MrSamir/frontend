@@ -1,5 +1,6 @@
 {
-    "BaseApiUrl":"https://localhost:7071",
+     "baseApiUrl":"https://localhost:7071",
     "langCookieName":"Public.App.Lang",
-    "TokenCookieName":"Public.AspCore.net.token"
+    "tokenCookieName":"Public.AspCore.accessToken",
+    "refreshTokenName":"Public.AspCore.refreshToken"
 }

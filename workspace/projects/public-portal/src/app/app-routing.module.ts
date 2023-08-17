@@ -8,33 +8,39 @@ import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appC
 import {
   PublicUserProfileComponent
 } from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
+import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
 
 
 const routes: Routes = [
-
   {
     path: 'login',
     component: LoginComponent,
-    data: { title: 'الدخول للمنصة' }
+    data: { title: 'الدخول للمنصة' },
   },
   {
     path: '',
     component: LoginComponent,
-    data: { title: 'الدخول للمنصة' }
+    data: { title: 'الدخول للمنصة' },
   },
   {
     path: 'landing',
     component: LandingComponent,
-    data: { title: 'الخدمات الالكترونية' }
+    data: { title: 'الخدمات الالكترونية' },
   },
 
   {
     path: 'endowmentregistration',
-    loadChildren: () => import('../app/modules/endowment-registration/modules/endowment-registration.module').then(m => m.EndowmentRegistrationModule),
-     data: { title: 'تسجيل وقف' }
+    loadChildren: () =>
+      import(
+        '../app/modules/endowment-registration/modules/endowment-registration.module'
+      ).then((m) => m.EndowmentRegistrationModule),
+    data: { title: 'تسجيل وقف' },
   },
-
-
+  {
+    path: 'userdashboard',
+    loadChildren: () => import('./modules/user-dashboard/modules/user-dashboard.module').then(m => m.UserDashBoardModule),
+    data: { title: 'طلبات' }
+  },
   // {
   //   path: 'usertask',
   //   component: PublicUserTaskComponent,
@@ -47,32 +53,32 @@ const routes: Routes = [
     data: { title: 'الملف الشخصي' },
     //canActivate:[AuthGuard]
   },
-  // {
-  //   path: 'confirm-email/:userId/:confirmationCode',
-  //   component: EmailConfirmationComponent,
-  //   data: { title: 'تفعيل البريد الألكتروني' },
-  //   canActivate:[]
-  // },
+  {
+    path: 'confirm-email/:userId/:confirmationCode',
+    component: EmailConfirmationComponent,
+    data: { title: 'تفعيل البريد الألكتروني' },
+    canActivate:[]
+  },
   // {
   //   path: 'dashboard',
   //   component: HomePageComponent,
   //   data: { title: 'لوحة التحكم' },
   //   canActivate:[AuthGuard]
   // },
-//   {path: "request-details", component: RequestDetailsComponent , canActivate:[AuthGuard]},
-//   {
-//     path: '',
-//     loadChildren: () => import('@pages/public-portal/ui-create-waqf/ui-create-waqf.module').then(m => m.UiCreateWaqfModule)
-//   },
-//   {
-//     path: 'editwaqf',
-//     loadChildren: () => import('@pages/public-portal/ui-edit-waqf/editWaqfRequest.module').then(m => m.EditWaqfRequestModule)
-//   },
-//   {
-//     path: 'seerRegistration',
-//     data: { title: 'تسجيل ناظر' },
-//     loadChildren: () => import('@pages/public-portal/ui-create-seer-registration/ui-create-seer-registration.module').then(m => m.UiCreatSeerRegistrationModule)
-//   },
+  //   {path: "request-details", component: RequestDetailsComponent , canActivate:[AuthGuard]},
+  //   {
+  //     path: '',
+  //     loadChildren: () => import('@pages/public-portal/ui-create-waqf/ui-create-waqf.module').then(m => m.UiCreateWaqfModule)
+  //   },
+  //   {
+  //     path: 'editwaqf',
+  //     loadChildren: () => import('@pages/public-portal/ui-edit-waqf/editWaqfRequest.module').then(m => m.EditWaqfRequestModule)
+  //   },
+  //   {
+  //     path: 'seerRegistration',
+  //     data: { title: 'تسجيل ناظر' },
+  //     loadChildren: () => import('@pages/public-portal/ui-create-seer-registration/ui-create-seer-registration.module').then(m => m.UiCreatSeerRegistrationModule)
+  //   },
 
 //  {
 //      path: 'seerRequestDetails',
@@ -99,4 +105,4 @@ const routes: Routes = [
     }
   ],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

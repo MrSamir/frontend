@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
-import { ApiException, EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupApplicationServiceServiceProxy, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
-//import { EndowmentRegistrationServiceServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
-import { EndowmentApplicantEditComponent } from '../../../shared/components/endowment-applicant-edit/endowment-applicant-edit.component';
+import { ApiException, EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupApplicationServiceProxy, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
+//import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -13,20 +12,24 @@ import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
 import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
+
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-endowment-registration-new',
-  templateUrl: './endowment-registration-new.component.html'
+  templateUrl: './endowment-registration-new.component.html',
 })
 export class EndowmentRegistrationNewComponent implements OnInit {
 
   constructor(
     //private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy,
-    private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy
+    private lookupssrv:LookupApplicationServiceProxy,
+    private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceProxy,
+    private activatedRoute:ActivatedRoute
     ) { }
-  //constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceServiceProxy) { }
-  @ViewChild(EndowmentApplicantEditComponent, { static: false }) _applicantEditComponent!: EndowmentApplicantEditComponent;
+  //constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceProxy) { }
+
   @Input() viewOnly: boolean = false;
   @Input() @Output() request: any;
   @Input() requestId: string;
@@ -66,7 +69,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
 
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined)
-        this.requestId = '';//this.activatedRoute.snapshot.params['requestId'];
+        this.requestId = this.activatedRoute.snapshot.params['requestId'];
       else {
         this.requestId = this.request.id;
       }
@@ -86,15 +89,15 @@ export class EndowmentRegistrationNewComponent implements OnInit {
 // this._serviceProxy.getByUserName()
 
 
-    this._applicantData.FirstNameAr="محمد"
-    this._applicantData.SecondNameAr="سمير"
-    this._applicantData.ThirdNameAr="محمد"
-    this._applicantData.LastNameAr="محمد"
+    this._applicantData.FirstNameAr="????"
+    this._applicantData.SecondNameAr="????"
+    this._applicantData.ThirdNameAr="????"
+    this._applicantData.LastNameAr="????"
     this._applicantData.IdNumber="2088755802"
     this._applicantData.BirthDateGregorian=new Date(Date.parse("01/08/1984"));
 
 
-    this._applicantData.NationalityName="مصري"
+    this._applicantData.NationalityName="????"
 
 
     this._applicantData.IsAlive=true;
@@ -105,27 +108,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   }
 
   InitiateRequest(){
-    if (this._applicantEditComponent.applicantForm.valid && this._applicantEditComponent.attorneyForm.valid) {
-      console.log(this._applicantEditComponent.applicantForm.value);
-    }
-    else {
-
-      console.log(this._applicantEditComponent.applicantForm.value)}
-
-      this._serviceProxyEndowmentRegistraion.initiateEndowmentRegistrationRequest(this._applicantEditComponent.applicantform['isApplicantAsAgent'].value,this._applicantEditComponent.applicantForm.value).subscribe({
-
-        next:(response)=>{
-
-console.log(response);
-        },
-        error:(error)=>{
-
-          console.log(error);
-
-        },
-        
-          })
-
+    
 
     }
 
@@ -279,7 +262,7 @@ console.log(response);
           //   this.modalService.dismissAll();
           //   this.loadAssetsBy();
           // });
-          // showSuccess('تم تعديل الاصل بنجاح', () => {
+          // showSuccess('?? ????? ????? ?????', () => {
           //   this.modalService.dismissAll();
           //   this.loadAssetsBy();
           // });
@@ -295,9 +278,9 @@ console.log(response);
 
   onDeleteTableCellClicked(assetToDelete: OutputAssetDto, index: number) {
     Swal.fire({
-      title: 'تأكيد حذف أصل الوقف ؟',
+      title: '????? ??? ??? ????? ?',
       icon: 'question',
-      confirmButtonText: 'متابعة',
+      confirmButtonText: '??????',
       width: 600,
       padding: '3em',
       confirmButtonColor: '#D6BD81',
@@ -318,7 +301,7 @@ console.log(response);
             // showSuccess('تم حذف الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });
-          } //else showError('تم حدوث خطأ');
+          } //else showError('?? ???? ???');
         });
       }
     });
@@ -405,7 +388,7 @@ console.log(response);
     //     if (response.isSuccess) {
     //       this.Assets = response.data;
     //     } else if (response.errorData.length > 0) {
-    //       showError('حدث خطأ');
+    //       showError('??? ???');
     //     }
     //   });
     // }

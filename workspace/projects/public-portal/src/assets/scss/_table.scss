@@ -1,0 +1,119 @@
+.table tbody + tbody{
+  border: 1px #F7F7F7 solid;
+}
+.table{
+
+  thead{
+    background-color: $awq-secondary;
+    color: #fff;
+  }
+
+}
+
+.table-striped tbody tr:nth-of-type(odd){
+  background-color: #fff;
+}
+.table-striped tbody tr:nth-of-type(even){
+  background-color: #EFFBF6;
+}
+
+
+.table-hover tbody tr:hover{
+  background-color: #DBEBE5;
+}
+
+.page-item{
+  font-size: 80%;
+&.active{
+  .page-link{
+    border-color:$pagination-border-color !important;
+  }
+}
+  .page-link{
+
+    cursor: pointer;
+    @include hover-focus() {
+      background: $primary;
+      color: #FFF !important;
+    }
+  }
+  &.disabled{
+      .page-link{
+          //color: $gray-300 !important;
+      }
+  }
+}
+
+
+.table_scroll{
+max-height: 80%;
+overflow: auto;
+th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1000;
+}
+}
+
+.modal-body .table_scroll{
+max-height: 400px;
+overflow: auto;
+th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1000;
+}
+}
+
+/* width */
+::-webkit-scrollbar {
+width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius:2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: #888;
+border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+background: #555;
+}
+
+.page-item .page-link:hover, .page-item .page-link:focus {
+  background: rgba(0, 132, 108, 0.999);
+  color: #FFF !important;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #FFF !important;
+  background-color: rgb(28 97 78);
+  border-color: rgba(0, 132, 108, 0.999);
+}
+.page-item.active:hover .page-link
+{
+  background: rgba(0, 132, 108, 0.999);
+}
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.3rem 0.65rem;
+  margin-left: -1px;
+  line-height: 1.5;
+  color: rgba(0, 132, 108, 0.999);
+  background-color: #fff;
+  border: 1px solid #FFF;
+}
+.visually-hidden{
+  display: none;
+}

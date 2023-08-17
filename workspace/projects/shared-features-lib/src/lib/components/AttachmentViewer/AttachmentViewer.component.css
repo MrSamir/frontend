@@ -1,0 +1,17 @@
+.view-box
+{
+border: solid 0.05rem #c9c9c9;
+    padding: 0.5rem;
+    border-radius: 6px;
+    background: #cbddd63b;
+}
+.attachementViewer-raw
+{
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+}
+.attachment-col
+{
+    padding-right: .50rem;
+}

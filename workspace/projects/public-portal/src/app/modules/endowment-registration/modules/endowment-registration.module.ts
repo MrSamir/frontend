@@ -28,6 +28,8 @@ import { BeneficiaryStepComponent } from '../components/endowment-registration-n
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
+    
+ 
     PublicPortalSharedModule, 
     AccordionModule,FormsModule,CoreLibModule,
     MultiSelectModule,SeerStepComponent,BeneficiaryStepComponent

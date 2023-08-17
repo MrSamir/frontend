@@ -1,0 +1,114 @@
+@import "variables";
+
+// color definitions
+$wz-color-current: $awq-secondary;
+$wz-color-done: $awq-secondary;
+$wz-color-editing: darken( $awq-secondary, 10% );
+
+@import "node_modules/angular-archwizard/archwizard.scss";
+/*=====================================================================
+Steps (Wizard)
+=====================================================================*/
+
+.aw-content{
+  @include p(5);
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $border-radius;
+}
+
+.aw-btn{
+  @include my(5);
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+}
+.awq-custom {
+
+  .steps-indicator{
+    margin-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    border-bottom: 1px solid #EBEBEB;
+  }
+
+  li{
+
+    &:not(:last-child):before{
+      height: 5px !important;
+    }
+    .label{
+
+    }
+
+    .step-indicator{
+      width: 45px !important;
+      height: 45px !important;
+      line-height: 45px !important;
+      top: -48px !important;
+      color: #C7C7C7 !important;
+      background-color: #fff;
+      border-width: 2px !important;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+  &.done .step-indicator,
+  &.current .step-indicator,
+  &.editing .step-indicator{
+
+    color: #fff !important;
+
+    &::after {
+      display: block;
+      content: '';
+      height: 100%;
+      width: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 50%;
+    }
+  }
+
+
+  &.current .label {
+    color: $awq-secondary;
+  }
+  &.current .step-indicator {
+    background-color: $wz-color-current;
+  }
+  &.done .step-indicator{
+    text-indent: 100px;
+    background-color: #F0FDF7;
+    background-image: url("../images/check-wzrd.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    border-color: #00A95C;
+    overflow: hidden;
+  }
+
+  &:not(:last-child):after{
+    width: calc(100% - 75px) !important;
+  }
+}
+
+
+}
+
+
+
+.addBox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px #B4DDC0 solid;
+  background-color: #fff;
+  border-radius: 16px;
+  color: $awq-secondary;
+  box-shadow: $box-shadow;
+}
+.success{
+  text-align: center;
+  background-color: #fff;
+  border-radius: 16px;
+  color: $awq-secondary;
+  box-shadow: $box-shadow;
+}

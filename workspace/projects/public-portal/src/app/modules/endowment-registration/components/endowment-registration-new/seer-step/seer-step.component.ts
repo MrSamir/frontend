@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddSeerInputDto, AddSeerOutputDto, ApiException, ApiResponse, EndowmentRegistrationServiceServiceProxy, OutputSeerDto, RemoveSeerInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { AddSeerInputDto, AddSeerOutputDto, ApiException, ApiResponse, EndowmentRegistrationServiceProxy, OutputSeerDto, RemoveSeerInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
@@ -13,7 +13,7 @@ export class SeerStepComponent  implements OnInit {
   @Input() public requestId: string;
   seers: OutputSeerDto[] = [];
   OneRequestSeer: RemoveSeerInputDto;
-  constructor(private registerWaqfService:EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal){}
+  constructor(private registerWaqfService:EndowmentRegistrationServiceProxy,private modalService: NgbModal){}
 
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
@@ -29,13 +29,13 @@ export class SeerStepComponent  implements OnInit {
           if (data) {
             let resSeerData = data;
             if (resSeerData.isSuccess) {
-              showSuccess('تم إنشاء الاصل بنجاح', () => {
-                // console.log('res here: ', resSeerData);
-                // this.newSeer.id = resSeerData.data.toString();
-                // let obj = {Seer: resSeerData.data}
-                this.modalService.dismissAll();
-                this.getAllSeers();
-              });
+              // showSuccess('تم إنشاء الاصل بنجاح', () => {
+              //   // console.log('res here: ', resSeerData);
+              //   // this.newSeer.id = resSeerData.data.toString();
+              //   // let obj = {Seer: resSeerData.data}
+              //   this.modalService.dismissAll();
+              //   this.getAllSeers();
+              // });
             }
           }
         },
@@ -59,10 +59,10 @@ export class SeerStepComponent  implements OnInit {
         (data) => {
           let resp = data as ApiResponse;
           if (resp.isSuccess) {
-            showSuccess('تم تعديل الاصل بنجاح', () => {
-              this.modalService.dismissAll();
-              this.getAllSeers();
-            });
+            // showSuccess('تم تعديل الاصل بنجاح', () => {
+            //   this.modalService.dismissAll();
+            //   this.getAllSeers();
+            // });
           }
         },
         (err: ApiException) => {

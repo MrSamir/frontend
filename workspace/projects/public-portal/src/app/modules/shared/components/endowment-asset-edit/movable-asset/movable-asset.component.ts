@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../../models/LookupModel';
-import { EndowmentRegistrationServiceServiceProxy, InputAssetDto, InputLookUpDto, InputMovableAssetDto, LookupApplicationServiceServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
+import { EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputMovableAssetDto, LookupApplicationServiceProxy, LookupDto, LookupExtraData } from '../../../services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -23,8 +23,8 @@ export class MovableAssetComponent {
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   _lookupExtraData:LookupExtraData;
 
-  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceServiceProxy) { }
+  constructor(private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,private modalService: NgbModal,
+    private lookupssrv:LookupApplicationServiceProxy) { }
 
   ngOnInit() {
 

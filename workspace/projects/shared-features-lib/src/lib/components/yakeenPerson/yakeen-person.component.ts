@@ -1,3 +1,4 @@
+import { ApiResponseOfCitizenInfoResponse } from './../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import {
   Component,
   EventEmitter,
@@ -9,19 +10,19 @@ import {
 } from '@angular/core';
 import {
   AlienInfoResponse,
+  ApiResponse,
   ApiResponseOfAlienInfoResponse,
-  ApiResponseOfCitizenInfoResponse,
   ApiResponseOfOutputApplicationUserDto,
-  ApplicationUserServiceServiceProxy,
+  ApplicationUserServiceProxy,
   CitizenInfoResponse,
   GetAlienInfoInputDto,
   GetCitizenInfoInputDto,
   InputApplicationUserDto,
   InputLookUpDto,
-  LookupApplicationServiceServiceProxy,
+  LookupApplicationServiceProxy,
   LookupDto,
   OutputApplicationUserDto,
-  YaqeenApplicationServiceServiceProxy,
+  YaqeenApplicationServiceProxy,
 } from '../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { DateFormatterService } from '../ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ngBootstrapDatePickerDateType } from '../ng-bootstrap-hijri-gregorian-datepicker/Const';
@@ -30,7 +31,7 @@ import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.serv
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from '../IDNumberWithValidation/EnumValidation';
 import { ValidationItem } from '../../Models/validation-item';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { DateTime } from 'luxon';
 import {
   isElementBlank,
@@ -46,6 +47,7 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
   templateUrl: './yakeen-person.component.html',
 })
 export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDestroy {
+  
   @Output() OnNewCitizenValidated = new EventEmitter<{ citizenInfo: CitizenInfoResponse, idType: number, userName: string, person: InputApplicationUserDto, isValid: boolean }>();
     @Output() OnNewAlienValidated = new EventEmitter<{ alienInfo: AlienInfoResponse, idType: number, userName: string, person: InputApplicationUserDto, isValid: boolean }>();
   
@@ -66,9 +68,9 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   constructor(
     private formBuilder: FormBuilder,
     private dateHelper: DateFormatterService,
-    private lookupService: LookupApplicationServiceServiceProxy,
-    private yakeenValidationService: YaqeenApplicationServiceServiceProxy,
-    private PersonalInformationServiceProxy: ApplicationUserServiceServiceProxy,
+    private lookupService: LookupApplicationServiceProxy,
+    private yakeenValidationService: YaqeenApplicationServiceProxy,
+    private PersonalInformationServiceProxy: ApplicationUserServiceProxy,
     injector: Injector
   ) {
     super(injector);
@@ -99,6 +101,22 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
       ? parseInt(this.personForm.value.selectedTypeId)
       : 0;
 
+      YaqeenPersonInfo.firstNameAr = this.citizenInfoResponse.firstName;
+      YaqeenPersonInfo.secondNameAr = this.citizenInfoResponse.fatherName;
+      YaqeenPersonInfo.thirdNameAr = this.citizenInfoResponse.grandFatherName;
+      YaqeenPersonInfo.lastNameAr = this.citizenInfoResponse.familyName;
+      YaqeenPersonInfo.gender=(this.citizenInfoResponse.gender==='Male'||this.citizenInfoResponse.gender==='M' || this.citizenInfoResponse.gender =='m')?0:1;
+      YaqeenPersonInfo.isAlive = this.citizenInfoResponse.lifeStatus == 0?true:false;
+      YaqeenPersonInfo.firstNameEn = this.citizenInfoResponse.englishFirstName;
+      YaqeenPersonInfo.secondNameEn = this.citizenInfoResponse.englishSecondName;
+      YaqeenPersonInfo.thirdNameEn = this.citizenInfoResponse.englishThirdName;      
+      YaqeenPersonInfo.lastNameEn = this.citizenInfoResponse.englishLastName;
+      YaqeenPersonInfo.idExpiryDate = this.citizenInfoResponse.idExpiryDate;
+      YaqeenPersonInfo.idIssueDate = this.citizenInfoResponse.idIssueDate;
+      YaqeenPersonInfo.idIssuePlace = this.citizenInfoResponse.idIssuePlace;
+      YaqeenPersonInfo.placeOfBirth = this.citizenInfoResponse.placeOfBirth;
+      YaqeenPersonInfo.nationalityId = this.citizenInfoResponse.nationalityId;
+      
     this.PersonalInformationServiceProxy.ensureYaqeenPersonalInfo(
       YaqeenPersonInfo
     ).subscribe(
@@ -123,6 +141,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   };
 
   onAlienValidated = (res: AlienInfoResponse) => {
+    debugger;
     this.alienInfoResponse = res;
     const timestamp = Date.parse(this.personDateString ?? '');
     if (!isNaN(timestamp)) {
@@ -130,15 +149,36 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
       this.alienInfoResponse.dateOfBirthG = DateTime.fromJSDate(date);
     }
     var YaqeenPersonInfo = new InputApplicationUserDto();
+    this.AlienToPerson(this.alienInfoResponse);
     YaqeenPersonInfo.userName = this.personForm.value.iqamaId ?? undefined;
     YaqeenPersonInfo.birthDate = this.alienInfoResponse.dateOfBirthG;
     YaqeenPersonInfo.idTypeId = this.personForm.value.selectedTypeId
       ? parseInt(this.personForm.value.selectedTypeId)
       : 0;
 
+      YaqeenPersonInfo.firstNameAr = this.alienInfoResponse.firstName;
+      YaqeenPersonInfo.secondNameAr = this.alienInfoResponse.secondName;
+      YaqeenPersonInfo.thirdNameAr = this.alienInfoResponse.thirdName;
+      YaqeenPersonInfo.lastNameAr = this.alienInfoResponse.lastName;
+      YaqeenPersonInfo.gender=(this.alienInfoResponse.gender==='Male'||this.alienInfoResponse.gender==='M' || this.alienInfoResponse.gender =='m')?0:1;
+      YaqeenPersonInfo.isAlive = this.alienInfoResponse.lifeStatus == 0?true:false;
+      YaqeenPersonInfo.firstNameEn = this.alienInfoResponse.englishFirstName;
+      YaqeenPersonInfo.secondNameEn = this.alienInfoResponse.englishSecondName;
+      YaqeenPersonInfo.thirdNameEn = this.alienInfoResponse.englishThirdName;      
+      YaqeenPersonInfo.lastNameEn = this.alienInfoResponse.englishLastName;
+      YaqeenPersonInfo.iqamaExpiryDateGregorian = this.alienInfoResponse.iqamaExpiryDateG;
+      YaqeenPersonInfo.iqamaIssueDateGregorian = this.alienInfoResponse.iqamaIssueDateG;
+      YaqeenPersonInfo.iqamaIssuePlaceCode = this.alienInfoResponse.iqamaIssuePlaceCode?.toString();
+      YaqeenPersonInfo.placeOfBirthCode = this.alienInfoResponse.placeOfBirthCode?.toString();
+      YaqeenPersonInfo.placeOfBirth = this.alienInfoResponse.placeOfBirthAr;
+      YaqeenPersonInfo.nationalityId = this.alienInfoResponse.awqafNatinaityId;
+
+
+
     this.PersonalInformationServiceProxy.ensureYaqeenPersonalInfo(
       YaqeenPersonInfo
     ).subscribe((fetchedPerson: ApiResponseOfOutputApplicationUserDto) => {
+      debugger;
       this.OnNewAlienValidated.emit({
         alienInfo: this.alienInfoResponse?? new AlienInfoResponse(),
         idType: this.personForm.value.selectedTypeId
@@ -148,12 +188,16 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
         person: fetchedPerson.dto,
         isValid: this.isVaild,
       });
+      debugger;
       this.personForm.controls.birthdate.disable();
       this.personForm.controls.iqamaId.disable();
       this.onPersonFetched(fetchedPerson.dto);
     });
   };
-
+  AlienToPerson (alienInfoResponse: AlienInfoResponse) : InputApplicationUserDto {
+    var YaqeenPersonInfo = new InputApplicationUserDto();
+    return YaqeenPersonInfo;
+  }
   yakeenValidationResultAction = {
     '1': this.onCitizenValidated,
     '2': this.onAlienValidated,
@@ -189,6 +233,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
 
   // Whether it gets fetched from url hit or passed from the parent
   onPersonFetched(fetchedPerson: InputApplicationUserDto | undefined) {
+    debugger;
     this.newPerson = fetchedPerson;
     this.mobileEditAllowed =
       !!this.newPerson &&
@@ -402,13 +447,14 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   }
 
   onValidateBtnClicked() {
+    debugger;
     this.yakeenValidationActions[
       this.personForm.value.selectedTypeId ?? 0
     ]().subscribe(
       (res) => {
         this.yakeenValidationResultAction[
           this.personForm.value.selectedTypeId ?? 0
-        ](res.data);
+        ](res.dto);
       },
       (err) => {
         handleError<object>(err.error);
@@ -416,30 +462,22 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     );
   }
 
-  validateCitizen(): CitizenInfoResponse {
+  validateCitizen(): Observable<ApiResponseOfCitizenInfoResponse> {
     var citizen: CitizenInfoResponse = new CitizenInfoResponse();
     var citizenInfo = new GetCitizenInfoInputDto();
     citizenInfo.nin = this.personForm.value.saudiNationalId ?? undefined;
     citizenInfo.dateOfBirth = this.personDateString;
-    this.yakeenValidationService
-      .getCitizenInfo(citizenInfo)
-      .subscribe((res: ApiResponseOfCitizenInfoResponse) => {
-        citizen = res.dto;
-      });
-    return citizen;
+    return this.yakeenValidationService
+      .getCitizenInfo(citizenInfo);
   }
 
-  validateAlien(): AlienInfoResponse {
-    var alien: AlienInfoResponse = new AlienInfoResponse();
+  validateAlien(): Observable<ApiResponseOfAlienInfoResponse> {
+    debugger;
     var alienInfo = new GetAlienInfoInputDto();
     alienInfo.iqama = this.personForm.value.iqamaId ?? undefined;
     alienInfo.dateOfBirth = this.personDateString;
-    this.yakeenValidationService
-      .getAlienInfo(alienInfo)
-      .subscribe((res: ApiResponseOfAlienInfoResponse) => {
-        alien = res.dto;
-      });
-    return alien;
+    return this.yakeenValidationService
+      .getAlienInfo(alienInfo);
   }
 
   saudiNationalIdValidationItems: ValidationItem[] = [
