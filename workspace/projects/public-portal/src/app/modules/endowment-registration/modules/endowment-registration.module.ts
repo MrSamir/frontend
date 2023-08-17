@@ -32,11 +32,11 @@ import {PanelModule} from "primeng/panel";
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,PanelModule,
-    
- 
-    PublicPortalSharedModule, 
+
+
+    PublicPortalSharedModule,
     AccordionModule,FormsModule,CoreLibModule,
-    MultiSelectModule,SeerStepComponent,BeneficiaryStepComponent
+    MultiSelectModule
 
   ],
   exports: [ /*RouterModule*/]

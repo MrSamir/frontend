@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
-import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
+import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
   templateUrl: './endowment-seer-edit.component.html',
   styleUrls: ['./endowment-seer-edit.component.css']
 })
-export class EndowmentSeerEditComponent implements OnInit {
-  
+export class EndowmentSeerEditComponent extends ComponentBase implements OnInit {
+
   @Input() viewOnly: boolean = false;
   @Output() OnAddingNewSeer = new EventEmitter<AddSeerInputDto>();
   @Output() OnEditingExistingSeer = new EventEmitter<AddSeerInputDto>();
@@ -22,7 +23,7 @@ export class EndowmentSeerEditComponent implements OnInit {
   }>();
   @Output() OnCancelClick = new EventEmitter();
   @Input() seers: OutputSeerDto[] = [];
-  
+
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   regionsLookups: LookupDto[] = [];
   sifaEtibariLookups: LookupDto[] = [];
@@ -53,11 +54,13 @@ export class EndowmentSeerEditComponent implements OnInit {
       console.log('alienToView: ', this.alienToView);
     },
   };
- 
-  
 
-  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceServiceProxy)
-  {}
+
+
+  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy, injector: Injector)
+  {
+    super(injector);
+  }
 
   ngOnInit(): void {
     this.fetchSeerLookup();
@@ -121,8 +124,8 @@ export class EndowmentSeerEditComponent implements OnInit {
   onNewCitizenAvailable(event: {
     citizenInfo: CitizenInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     this.newCitizen = event.citizenInfo;
     this.onNewPersonAvailable(event);
@@ -132,8 +135,8 @@ export class EndowmentSeerEditComponent implements OnInit {
   onNewAlienAvailable(event: {
     alienInfo: AlienInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     this.newAlien = event.alienInfo;
     this.onNewPersonAvailable(event);
@@ -142,8 +145,8 @@ export class EndowmentSeerEditComponent implements OnInit {
 
   onNewPersonAvailable(event: {
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     //let educationLevel: number =this.seerToCreate.createSeerInputDto.educationLevelId;
     this.newPerson = event.person;
@@ -156,7 +159,27 @@ export class EndowmentSeerEditComponent implements OnInit {
     //   this.newSeer.mobileNumber = event.person.mobileNumber;
     // }
   }
-
+  agentDeedFileSelect(event) {
+    // this.AgentDeed = event.files[0];
+  }
+  agentDeedFileUpload(event) {
+    // this.UploadFile(event.files[0], (response) => {
+    //   this.agentDeedAttachment = {
+    //     id: response.id,
+    //     fileName: response.fileName!,
+    //     fileData: response.fileData!,
+    //     ContentType: response.contentType!,
+    //   };
+    //   this.AgentDeed = null!;
+    //   this.requestInfo.applicantAgent.representativeAttachmentId = response.id;
+    // });
+  }
+  // removeAgentDeedFile(event: AttachementItem) {
+  //   this.removeFile(event, (result) => {
+  //     this.requestInfo.applicantAgent.representativeAttachmentId = undefined!;
+  //     this.agentDeedAttachment = undefined!;
+  //   });
+  // }
   onAddNewSeer(content: any) {
     this.reset();
     this.modalService.open(content, { size: 'lg' });
@@ -168,7 +191,7 @@ export class EndowmentSeerEditComponent implements OnInit {
   }
 
   onEditBtnClicked() {
-    
+
     // const input = new EditSeerInputDto({
     //   createSeerInputDto: this.seers[this.seerToEditIndex].id,
     //   requestId: this.requestId,
@@ -224,7 +247,7 @@ export class EndowmentSeerEditComponent implements OnInit {
         this.sifaEtibariLookups = data.dto.items!;
         console.log(data);
         //this.loadAssetSize();
-      
+
       });
 
     // this.getLookupValues(EnumLookuptypes.SifaEtibariType).subscribe((res: any) => {
@@ -247,7 +270,7 @@ export class EndowmentSeerEditComponent implements OnInit {
         this.educationLevelLookups = data.dto.items!;
         console.log(data);
         //this.loadAssetSize();
-      
+
       });
 
     // this.getLookupValues(EnumLookuptypes.EducationLevel).subscribe((res: any) => {
@@ -274,7 +297,7 @@ export class EndowmentSeerEditComponent implements OnInit {
       (data) => {
         this.regionsLookups = data.dto.items!;
         console.log(data);
-        
+
       });
     // this.getLookupValuesFromServiceResponseType(EnumLookuptypes.RegionLookup).subscribe((res: any) => {
     //   res.subscribe((res: LookupModel[]) => {
@@ -292,9 +315,9 @@ export class EndowmentSeerEditComponent implements OnInit {
       (data) => {
         this.seerTypeLookup = data.dto.items!;
         console.log(data);
-        
+
       });
-    
+
   }
 
 }

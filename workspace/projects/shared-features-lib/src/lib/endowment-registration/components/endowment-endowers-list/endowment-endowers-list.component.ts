@@ -150,13 +150,13 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.modalService.open(content, { size: 'lg'});
   }
 
-  CheckDublicateItemInList(idNumber: string | undefined ) {
-    if(idNumber != undefined)
+  CheckDublicateItemInList(userName: string | undefined ) {
+    if(userName != undefined)
     {
-      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === idNumber);
+      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === userName);
       if (itemindex !== -1) {
         this.modalService.dismissAll();
-        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:idNumber });
+        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:userName });
         //showError(errMessage);
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Error,
@@ -240,7 +240,7 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     );
   }
 
-  deleteOwner(idNumber: string | undefined, index: number) {
+  deleteOwner(userName: string | undefined, index: number) {
     if( this.isOwnerMainApplicant(index)) {   // can't delete main applicant: refer to Brs 1.6
       return;
     }

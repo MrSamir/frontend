@@ -28,7 +28,7 @@ import { HintComponent } from 'projects/core-lib/src/lib/components/hint/hint.co
 import { StepsModule } from 'primeng/steps';
 @NgModule({
   declarations: [
-    
+
     EndowmentInfoEditComponent,
     EndowmentSharedAssetEditComponent,
     AnimalOrAgriculturalAssetComponent,
@@ -41,13 +41,11 @@ import { StepsModule } from 'primeng/steps';
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
   ],
   imports: [
 
     CommonModule,FormsModule,
     ReactiveFormsModule,
-    CoreLibModule,
     SharecomponentModule,
     MultiSelectModule,
     FileUploadModule,
@@ -60,10 +58,9 @@ import { StepsModule } from 'primeng/steps';
     PanelModule,
     StepsModule,
  CoreLibModule,
-MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [
-    
+
     //EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSharedAssetEditComponent,
@@ -76,7 +73,7 @@ MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
     // ParticularBenefitAssetComponent,
     // RealestateAssetComponent
 
-  
+
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent

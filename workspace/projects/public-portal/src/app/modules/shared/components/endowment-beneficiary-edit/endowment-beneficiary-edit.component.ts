@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AddBeneficiaryInputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, InputApplicationUserDto, LookupApplicationServiceServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
+import { AddBeneficiaryInputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, InputApplicationUserDto, LookupApplicationServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
@@ -56,7 +56,7 @@ export class EndowmentBeneficiaryEditComponent {
   newBeneficiaryOutKsa: BeneficiaryOutKsa;
   isMobileNumberModified: boolean;
 
-  constructor(private modalService: NgbModal,private lookupssrv:LookupApplicationServiceServiceProxy){}
+  constructor(private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy){}
 
 
   openLg(content: any) {
@@ -73,8 +73,8 @@ export class EndowmentBeneficiaryEditComponent {
   onNewCitizenAvailable(event: {
     citizenInfo: CitizenInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
 
     this.newCitizen = event.citizenInfo;
@@ -87,8 +87,8 @@ export class EndowmentBeneficiaryEditComponent {
   onNewAlienAvailable(event: {
     alienInfo: AlienInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     this.isValid = true;
     this.isValidNumber = true;
@@ -120,7 +120,7 @@ export class EndowmentBeneficiaryEditComponent {
 
   onNewPersonAvailable(event: {
     idType: number;
-    idNumber: string;
+    userName: string;
     person: InputApplicationUserDto;
   }) {
     this.newPerson = event.person;
@@ -143,7 +143,7 @@ export class EndowmentBeneficiaryEditComponent {
     // this.addBenificiaryInputDto.createBeneficiaryDto.gender.toString();
     // this.addBenificiaryInputDto.createBeneficiaryPersonInputDto.gender =
     //   genderVal === 'Male' || genderVal === 'M' || genderVal === '0' ? 0 : 1;
-    
+
   }
 
   OnNewAlienNumberChanged(event: {
@@ -176,19 +176,19 @@ export class EndowmentBeneficiaryEditComponent {
       event.citizenInfoNumber;
   }
 
-  // Emit Add New beneficiary event to parent component 
+  // Emit Add New beneficiary event to parent component
   addToBenefList()
   {
     this.OnAddingNewBeneficiary.emit(this.addBenificiaryInputDto);
   }
 
-  // Emit Edit New beneficiary event to parent component 
+  // Emit Edit New beneficiary event to parent component
 
   onEditBtnClicked() {
 
     this.activeCrudOperation = CrudOperation.Update;
     this.OnEditingExistingBeneficiary.emit(this.addBenificiaryInputDto);
-    
+
   }
 
   get hasBenifiaries() {
@@ -219,7 +219,7 @@ export class EndowmentBeneficiaryEditComponent {
   get isPersonMobileFound() {
     return !!this.newPerson && !!this.newPerson.phoneNumber;
   }
-  
+
   isInsideKsaChanged(event: any) {
     this.isBenificiaryInKsa = event.target.value == '1';
   }

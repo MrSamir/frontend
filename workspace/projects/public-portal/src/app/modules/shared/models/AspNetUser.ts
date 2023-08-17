@@ -2,7 +2,7 @@
 export class  AspNetUser {
     Id: string;
     UserType: number;
-    IdNumber: string;
+    userName: string;
     FullName: string;
     BirthDateGregorian: Date;
     HijriBirthDate: string;
@@ -34,4 +34,3 @@ export class  AspNetUser {
     ValidatedByYaqeen: boolean;
     IsAlive: boolean;
   }
-  

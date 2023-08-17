@@ -8,13 +8,12 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
 import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 
 import { ActivatedRoute } from '@angular/router';
-import { WizardStep } from 'angular-archwizard';
+import { WizardComponent, WizardStep } from 'angular-archwizard';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -61,6 +60,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   oldCommercialRegisterAttachmentId: string;
 
   //@Input() public wizard: WizardComponent;
+  @ViewChild(WizardComponent, {static: true}) public wizard: WizardComponent;
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -72,7 +72,11 @@ export class EndowmentRegistrationNewComponent implements OnInit {
       if (this.request == undefined || this.request.id == undefined){
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
         this.phaseId=this.activatedRoute.snapshot.params['phaseId'];
-         
+        if (!!this.requestId &&(this.phaseId >= 0 && this.phaseId <= 6)) {
+          this.moveWizardToTabOfPhase().then();
+          return;
+        }
+
       }
       else {
         this.requestId = this.request.id;
@@ -82,6 +86,14 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.loadAssetType();
     this.loadAssetSize();
     this.loadAssetsBy();
+  }
+  async moveWizardToTabOfPhase() {
+    let count = 0;
+    // while( count < this.phaseId ) {
+    //   await timeExtensions.sleep(100);
+      this.wizard.goToNextStep();
+    //   count++;
+    // }
   }
 
 
@@ -97,7 +109,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this._applicantData.SecondNameAr="????"
     this._applicantData.ThirdNameAr="????"
     this._applicantData.LastNameAr="????"
-    this._applicantData.IdNumber="2088755802"
+    this._applicantData.userName="2088755802"
     this._applicantData.BirthDateGregorian=new Date(Date.parse("01/08/1984"));
 
 
@@ -112,7 +124,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   }
 
   InitiateRequest(){
-    
+
 
     }
 

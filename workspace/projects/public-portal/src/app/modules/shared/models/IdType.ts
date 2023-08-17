@@ -9,14 +9,14 @@ export enum IdType {
 export const insideKsaIds = [ IdType.NIN_ONLY, IdType.IQAMA_ONLY];
 export const outsideKsaIds = [ IdType.OTHER ];
 
-export const defineIdType = (idNumber: string) => {
+export const defineIdType = (userName: string) => {
   let ninRegEx: RegExp = /^[1]\d{9}$/g;
-  if( ninRegEx.test(idNumber) ) {
+  if( ninRegEx.test(userName) ) {
     return IdType.NIN_ONLY;
   }
 
   let iqamaRegEx: RegExp = /^[2]\d{9}$/g;
-  if( iqamaRegEx.test(idNumber) ) {
+  if( iqamaRegEx.test(userName) ) {
     return IdType.NIN_ONLY;
   }
 
