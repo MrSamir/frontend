@@ -6,24 +6,27 @@ import { EndowmentRegistrationNewComponent } from '../components/endowment-regis
  import { ArchwizardModule } from 'angular-archwizard';
 import { PublicPortalSharedModule } from '../../shared/modules/public-portal-shared.module';
 import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/lib/endowment-registration/modules/endowment-registration-shared.module';
- 
- 
+import { EndowmentDirectRegisterationComponent } from '../components/endowment-direct-registeration/endowment-direct-registeration.component';
+import { CoreLibModule } from "../../../../../../core-lib/src/lib/core-lib.module";
+import { FormsModule } from '@angular/forms';
+import {PanelModule} from "primeng/panel";
+
+
 
 @NgModule({
-  declarations: [
-    EndowmentRegistrationStartServiceComponent,
-    EndowmentRegistrationNewComponent,
-
-   
-  ],
-  imports: [
-    ArchwizardModule,
-    EndowmentRegistrationRoutingModule,
-    EndowmentRegistrationSharedModule,
-    PublicPortalSharedModule 
-
-
-  ],
-  exports: [ /*RouterModule*/]
+    declarations: [
+        EndowmentRegistrationStartServiceComponent,
+        EndowmentRegistrationNewComponent,
+        EndowmentDirectRegisterationComponent
+    ],
+    exports: [ /*RouterModule*/],
+    imports: [
+        CommonModule, FormsModule,
+        ArchwizardModule,
+        EndowmentRegistrationRoutingModule,
+        EndowmentRegistrationSharedModule,
+        PublicPortalSharedModule,
+        CoreLibModule, PanelModule
+    ]
 })
 export class EndowmentRegistrationModule { }
