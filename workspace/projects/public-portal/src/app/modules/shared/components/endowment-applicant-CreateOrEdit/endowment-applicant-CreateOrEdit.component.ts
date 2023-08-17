@@ -94,17 +94,7 @@ export class EndowmentApplicantCreateOrEditComponent
   onNextBtnClicked(form:NgForm)
   {
 
-    if(form.valid==false){
-     for(var control in form.controls)
-          if(form.controls[control].invalid)
-          {
-            form.controls[control].markAsTouched();
-            form.controls[control].updateValueAndValidity() ;
-            form.controls[control].markAsPristine();
-          }
-    }
-    if(form.valid)
-    {
+     if(this.validateForm(form)){
       this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
       .subscribe((result)=>{
         if(result.isSuccess)
@@ -129,8 +119,8 @@ export class EndowmentApplicantCreateOrEditComponent
                       severity: MessageSeverity.Warning,
                     });
          }
-      })
-    }
+      });
+     }
   }
   //#region FromAndLookupLoad
   LoadForm() {
@@ -246,12 +236,15 @@ export class EndowmentApplicantCreateOrEditComponent
       switch (value.id) {
         case 1:
           this.isEndwowmer = true;
+           this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
           break;
         case 2:
           this.isSeer = true;
+           this.requestInfo.applicantSeer = new InputApplicantSeerDto();
           break;
         case 3:
           this.isAgent = true;
+           this.requestInfo.applicantAgent = new InputApplicantAgentDto();
           break;
       }
     });
@@ -262,7 +255,7 @@ export class EndowmentApplicantCreateOrEditComponent
       }) == -1
     ) {
       this.isEndwowmer = false;
-      this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
+     this.requestInfo.applicantEndowmer=undefined!;
     }
     //check isSeer checked
     if (
@@ -271,7 +264,7 @@ export class EndowmentApplicantCreateOrEditComponent
       }) == -1
     ) {
       this.isSeer = false;
-      this.requestInfo.applicantSeer = new InputApplicantSeerDto();
+      this.requestInfo.applicantSeer=undefined!;
     }
     //check isAgent checked
     if (
@@ -280,7 +273,7 @@ export class EndowmentApplicantCreateOrEditComponent
       }) == -1
     ) {
       this.isAgent = false;
-      this.requestInfo.applicantAgent = new InputApplicantAgentDto();
+      this.requestInfo.applicantAgent =undefined!;
     }
 
     if (this.isEndwowmer && this.isAgent) {

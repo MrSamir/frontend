@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,22 @@ export class UtilsService {
     return target as U;
   } */
   //#endregion
+
+   blobToText(blob: any): Observable<string> {
+    return new Observable<string>((observer: any) => {
+        if (!blob) {
+            observer.next("");
+            observer.complete();
+        } else {
+            let reader = new FileReader();
+            reader.onload = event => {
+                observer.next((event.target as any).result);
+                observer.complete();
+            };
+            reader.readAsText(blob);
+        }
+    });
+  }
   //#region  Cookies
   formatBytes(bytes, decimals = 2) {
     if (!+bytes) return '0 Bytes';
