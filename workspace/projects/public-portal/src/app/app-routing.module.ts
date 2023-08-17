@@ -9,7 +9,7 @@ import {
   PublicUserProfileComponent
 } from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
 import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
-
+import { environment } from "../environments/environment";
 
 const routes: Routes = [
   {
@@ -53,7 +53,7 @@ const routes: Routes = [
     path: 'confirm-email/:userId/:confirmationCode',
     component: EmailConfirmationComponent,
     data: { title: 'تفعيل البريد الألكتروني' },
-    canActivate:[]
+    canActivate: []
   },
   // {
   //   path: 'dashboard',
@@ -92,11 +92,12 @@ const routes: Routes = [
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (appInitializer: AppInitializer) =>
-        appInitializer.loadAppConfig(),
+      useFactory: (appInitializer: AppInitializer) => {
+        return () => appInitializer.loadAppConfig(environment);
+      },
       deps: [AppInitializer],
       multi: true,
     }
   ],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
