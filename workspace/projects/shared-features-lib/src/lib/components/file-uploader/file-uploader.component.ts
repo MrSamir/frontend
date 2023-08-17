@@ -35,7 +35,7 @@ export class FileUploaderComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    debugger;
+    
     this.name=this.name+"[]"
     this.fileSizeIntext = this.Util.formatBytes(
       this.maxFileSizeInMB * 1024 * 1024
@@ -62,13 +62,13 @@ export class FileUploaderComponent extends ComponentBase implements OnInit {
   }
   onFileSelect(event) {
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-      debugger;
+      
     this.OnSelectFile.emit(event);
   }
 
   onFileUpload(event) {
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-    debugger;
+    
     this.OnUploadFile.emit(event);
   }
 }
