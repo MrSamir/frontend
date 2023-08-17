@@ -116,9 +116,7 @@ export class EndowmentApplicantCreateOrEditComponent
             detail: result.message!,
             severity: MessageSeverity.Success,
           });
-          this.router.navigate([
-            'registrationform/:requestId/:pahseId',
-            result.dto.id,2]);
+          this.router.navigate(['endowmentregistration/registrationform/' + result.dto.id + '/' + 2]);
         }else
         {
                     this.message.showMessage(MessageTypeEnum.toast, {
@@ -203,7 +201,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   loadCurrentUser() {
     this._applicationUserService.getCurrentUser().subscribe((result) => {
-      
+
       this.applicantUser = result.dto;
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);
@@ -307,7 +305,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
 
   selectEndowmerType(event: any) {
-    
+
     var endowmerType = this.endowmentPartiesTypes.filter((ept, index) => {
       return ept.id == event.value;
     })[0];
@@ -319,7 +317,7 @@ export class EndowmentApplicantCreateOrEditComponent
       };
   }
   selectSeerType(event: any) {
-    
+
     var Seerype = this.endowmentPartiesTypes.filter((ept, index) => {
       return ept.id == event.value;
     })[0];

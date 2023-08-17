@@ -230,7 +230,7 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
           message: '',
           closable: true,
           detail: this.l(
-            'Common.ProcessError'
+            'Common.CommonError'
           ),
           summary: '',
           enableService: true,
@@ -274,7 +274,7 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
           message: '',
           closable: true,
           detail: this.l(
-            'Common.ProcessError'
+            'Common.CommonError'
           ),
           summary: '',
           enableService: true,
@@ -440,7 +440,7 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
           message: '',
           closable: true,
           detail: this.l(
-            'Common.ProcessError'
+            'Common.CommonError'
           ),
           summary: '',
           enableService: true,
