@@ -141,7 +141,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   };
 
   onAlienValidated = (res: AlienInfoResponse) => {
-    debugger;
+    
     this.alienInfoResponse = res;
     const timestamp = Date.parse(this.personDateString ?? '');
     if (!isNaN(timestamp)) {
@@ -178,7 +178,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     this.PersonalInformationServiceProxy.ensureYaqeenPersonalInfo(
       YaqeenPersonInfo
     ).subscribe((fetchedPerson: ApiResponseOfOutputApplicationUserDto) => {
-      debugger;
+      
       this.OnNewAlienValidated.emit({
         alienInfo: this.alienInfoResponse?? new AlienInfoResponse(),
         idType: this.personForm.value.selectedTypeId
@@ -188,7 +188,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
         person: fetchedPerson.dto,
         isValid: this.isVaild,
       });
-      debugger;
+      
       this.personForm.controls.birthdate.disable();
       this.personForm.controls.iqamaId.disable();
       this.onPersonFetched(fetchedPerson.dto);
@@ -233,7 +233,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
 
   // Whether it gets fetched from url hit or passed from the parent
   onPersonFetched(fetchedPerson: InputApplicationUserDto | undefined) {
-    debugger;
+    
     this.newPerson = fetchedPerson;
     this.mobileEditAllowed =
       !!this.newPerson &&
@@ -447,7 +447,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   }
 
   onValidateBtnClicked() {
-    debugger;
+    
     this.yakeenValidationActions[
       this.personForm.value.selectedTypeId ?? 0
     ]().subscribe(
@@ -472,7 +472,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   }
 
   validateAlien(): Observable<ApiResponseOfAlienInfoResponse> {
-    debugger;
+    
     var alienInfo = new GetAlienInfoInputDto();
     alienInfo.iqama = this.personForm.value.iqamaId ?? undefined;
     alienInfo.dateOfBirth = this.personDateString;

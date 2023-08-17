@@ -230,7 +230,7 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
           message: '',
           closable: true,
           detail: this.l(
-            'Common.ProcessError'
+            'Common.CommonError'
           ),
           summary: '',
           enableService: true,
@@ -256,8 +256,30 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     this.registerWaqfService.deleteEndowmer(input).subscribe(
       () => {
         this.owners.splice(index, 1);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
         //showSuccess(translations.operationSuccess);
       },
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //(apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
@@ -418,7 +440,7 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
           message: '',
           closable: true,
           detail: this.l(
-            'Common.ProcessError'
+            'Common.CommonError'
           ),
           summary: '',
           enableService: true,
@@ -477,7 +499,7 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
   // }
 
   onNewPersonAvailable(event: {idType: number, userName: string, person: InputApplicationUserDto}) {
-debugger;
+
     this.newPerson = event.person;
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
@@ -520,6 +542,18 @@ debugger;
 
   onNextClicked() {
     if (this.owners.length == 0) {
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //showError(translations.atLeastOneOwner);
       return;
     }

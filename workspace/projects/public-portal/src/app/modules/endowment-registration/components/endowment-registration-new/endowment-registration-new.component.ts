@@ -13,6 +13,7 @@ import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.serv
 
 
 import { ActivatedRoute } from '@angular/router';
+import { WizardStep } from 'angular-archwizard';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -33,7 +34,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   @Input() @Output() request: any;
   @Input() requestId: string;
   @Input() waqfId: string | undefined;
-
+   phaseId;
   //@ViewChild(NgForm, { static: false }) form: NgForm;
 
   map: MapModel;
@@ -67,8 +68,11 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.getLoggedInUserData();
 
     if (this.requestId == undefined) {
-      if (this.request == undefined || this.request.id == undefined)
+      if (this.request == undefined || this.request.id == undefined){
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
+        this.phaseId=this.activatedRoute.snapshot.params['phaseId'];
+         
+      }
       else {
         this.requestId = this.request.id;
       }
