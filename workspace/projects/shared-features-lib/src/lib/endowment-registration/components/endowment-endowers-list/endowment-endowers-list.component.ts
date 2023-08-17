@@ -256,8 +256,30 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     this.registerWaqfService.deleteEndowmer(input).subscribe(
       () => {
         this.owners.splice(index, 1);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
         //showSuccess(translations.operationSuccess);
       },
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.ProcessError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //(apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
@@ -520,6 +542,18 @@ debugger;
 
   onNextClicked() {
     if (this.owners.length == 0) {
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //showError(translations.atLeastOneOwner);
       return;
     }
