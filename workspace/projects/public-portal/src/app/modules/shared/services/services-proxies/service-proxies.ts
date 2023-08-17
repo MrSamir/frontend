@@ -2829,6 +2829,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
     requestId!: string;
     createBeneficiaryDto!: CreateBeneficiaryDto;
     applicationUserId!: string | undefined;
+    beneficiaryPerson!: InputApplicationUserDto;
 
     constructor(data?: IAddBeneficiaryInputDto) {
         if (data) {
@@ -2844,6 +2845,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
             this.requestId = _data["requestId"];
             this.createBeneficiaryDto = _data["createBeneficiaryDto"] ? CreateBeneficiaryDto.fromJS(_data["createBeneficiaryDto"]) : <any>undefined;
             this.applicationUserId = _data["applicationUserId"];
+            this.beneficiaryPerson = _data["beneficiaryPerson"] ? InputApplicationUserDto.fromJS(_data["beneficiaryPerson"]) : <any>undefined;
         }
     }
 
@@ -2859,6 +2861,7 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
         data["requestId"] = this.requestId;
         data["createBeneficiaryDto"] = this.createBeneficiaryDto ? this.createBeneficiaryDto.toJSON() : <any>undefined;
         data["applicationUserId"] = this.applicationUserId;
+        data["beneficiaryPerson"] = this.beneficiaryPerson ? this.beneficiaryPerson.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -2867,6 +2870,7 @@ export interface IAddBeneficiaryInputDto {
     requestId: string;
     createBeneficiaryDto: CreateBeneficiaryDto;
     applicationUserId: string | undefined;
+    beneficiaryPerson: InputApplicationUserDto;
 }
 
 export class AddBeneficiaryOutputDto implements IAddBeneficiaryOutputDto {
@@ -7568,7 +7572,7 @@ export interface IInputEndowmentRegistrationRequestDto {
 export class InputEndowmerDto implements IInputEndowmerDto {
     requestId!: string;
     endowmerId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     endowmerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
@@ -7621,7 +7625,7 @@ export class InputEndowmerDto implements IInputEndowmerDto {
 export interface IInputEndowmerDto {
     requestId: string;
     endowmerId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     endowmerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
@@ -8843,6 +8847,7 @@ export interface INotificationMessageDto {
 
 export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     id!: string | undefined;
+    idNumber!: string | undefined;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
     gender!: UserGender;
@@ -8889,6 +8894,7 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     init(_data?: any) {
         if (_data) {
             this.id = _data["id"];
+            this.idNumber = _data["idNumber"];
             this.birthDate = _data["birthDate"] ? DateTime.fromISO(_data["birthDate"].toString()) : <any>undefined;
             this.birthDateHijri = _data["birthDateHijri"];
             this.gender = _data["gender"];
@@ -8935,6 +8941,7 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
+        data["idNumber"] = this.idNumber;
         data["birthDate"] = this.birthDate ? this.birthDate.toString() : <any>undefined;
         data["birthDateHijri"] = this.birthDateHijri;
         data["gender"] = this.gender;
@@ -8974,6 +8981,7 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
 
 export interface IOutputApplicationUserDto {
     id: string | undefined;
+    idNumber: string | undefined;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
     gender: UserGender;
@@ -9845,6 +9853,50 @@ export interface IRealEstateAssetData {
     id: string;
 }
 
+export class RefreshToken implements IRefreshToken {
+    token!: string | undefined;
+    expires!: DateTime;
+    created!: DateTime;
+
+    constructor(data?: IRefreshToken) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.token = _data["token"];
+            this.expires = _data["expires"] ? DateTime.fromISO(_data["expires"].toString()) : <any>undefined;
+            this.created = _data["created"] ? DateTime.fromISO(_data["created"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): RefreshToken {
+        data = typeof data === 'object' ? data : {};
+        let result = new RefreshToken();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["token"] = this.token;
+        data["expires"] = this.expires ? this.expires.toString() : <any>undefined;
+        data["created"] = this.created ? this.created.toString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IRefreshToken {
+    token: string | undefined;
+    expires: DateTime;
+    created: DateTime;
+}
+
 export class Region implements IRegion {
     regionCode!: string | undefined;
     localizedKey!: string | undefined;
@@ -10422,7 +10474,8 @@ export interface ITemplateParameter {
 }
 
 export class TokenResponse implements ITokenResponse {
-    token!: string | undefined;
+    accessToken!: string | undefined;
+    refreshToken!: RefreshToken;
 
     constructor(data?: ITokenResponse) {
         if (data) {
@@ -10435,7 +10488,8 @@ export class TokenResponse implements ITokenResponse {
 
     init(_data?: any) {
         if (_data) {
-            this.token = _data["token"];
+            this.accessToken = _data["accessToken"];
+            this.refreshToken = _data["refreshToken"] ? RefreshToken.fromJS(_data["refreshToken"]) : <any>undefined;
         }
     }
 
@@ -10448,13 +10502,15 @@ export class TokenResponse implements ITokenResponse {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["token"] = this.token;
+        data["accessToken"] = this.accessToken;
+        data["refreshToken"] = this.refreshToken ? this.refreshToken.toJSON() : <any>undefined;
         return data;
     }
 }
 
 export interface ITokenResponse {
-    token: string | undefined;
+    accessToken: string | undefined;
+    refreshToken: RefreshToken;
 }
 
 export class UpdateUserCityRegionInputDto implements IUpdateUserCityRegionInputDto {

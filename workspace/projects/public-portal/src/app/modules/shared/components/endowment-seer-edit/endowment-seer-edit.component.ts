@@ -3,6 +3,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
+import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
+import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',

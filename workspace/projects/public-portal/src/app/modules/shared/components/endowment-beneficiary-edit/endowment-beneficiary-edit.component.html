@@ -42,18 +42,18 @@
           </thead>
   
           <tbody>
-          <tr *ngFor="let ben of essentialInfoForBeneficiaryTab.beneficiaries; let i = index ">
+          <tr *ngFor="let ben of BeneficiaryList; let i = index ">
             <td class="text-center" scope="col">
               {{i + 1}}
             </td>
             <td class="text-center" scope="col">
-              {{ben.person.fullName}}
+              {{ben.beneficiaryPerson.fullName}}
             </td>
             <td class="text-center" scope="col">
-              {{ben.person.idNumber}}
+              {{ben.beneficiaryPerson.userName}}
             </td>
             <td class="text-center" scope="col">
-              {{ben.person.mobileNumber}}
+              {{ben.beneficiaryPerson.phoneNumber}}
             </td>
             <td class="text-center" scope="col" *ngIf="viewOnly" (click)="viewBeneficiary(addData, i)">
               <a class="btn btn-sm btn-outline-awq-secondary rounded">
