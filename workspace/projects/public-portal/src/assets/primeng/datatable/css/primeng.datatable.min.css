@@ -81,10 +81,17 @@
   cursor: pointer !important;
   margin-right: 5px !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator span a:last-child {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  span
+  a:last-child {
   margin-right: 0px !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator .ui-dropdown {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  .ui-dropdown {
   border: 1px solid #d6d6d6;
   height: 35px;
   min-width: 60px;
@@ -116,19 +123,38 @@
   font-weight: 400;
   opacity: 1 !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator a.ui-paginator-first span.fa-step-backward:before {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  a.ui-paginator-first
+  span.fa-step-backward:before {
   content: "\f100" !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator a.ui-paginator-prev span.fa-backward:before {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  a.ui-paginator-prev
+  span.fa-backward:before {
   content: "\f104" !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator a.ui-paginator-next span.fa-forward:before {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  a.ui-paginator-next
+  span.fa-forward:before {
   content: "\f105" !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator a.ui-paginator-last span.fa-step-forward:before {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  a.ui-paginator-last
+  span.fa-step-forward:before {
   content: "\f101" !important;
 }
-.primeng-datatable-container .primeng-paging-container .ui-paginator .ui-paginator-rpp-options {
+.primeng-datatable-container
+  .primeng-paging-container
+  .ui-paginator
+  .ui-paginator-rpp-options {
   float: left;
   margin-left: 100px;
 }

@@ -1,17 +1,16 @@
 .navbar-toggler {
-
   min-width: auto !important;
   border-radius: 0 !important;
 
   &:hover {
-    background-color: darken($sahl-primary, 10%)
+    background-color: darken($sahl-primary, 10%);
   }
 
   &:focus,
   &:active {
     outline: 0;
     box-shadow: 0 0 0 0;
-    background-color: lighten($sahl-primary, 10%)
+    background-color: lighten($sahl-primary, 10%);
   }
 
   .cd-nav-trigger {
@@ -29,11 +28,11 @@
     transform: translateX(-50%) translateY(-50%);
     width: 22px;
     height: 2px;
-    background-color: #CFCFCF;
+    background-color: #cfcfcf;
 
     &::before,
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       width: 100%;
@@ -43,13 +42,16 @@
       transform: translateZ(0);
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      transition: transform 0.5s, width 0.5s, top 0.3s;
+      transition:
+        transform 0.5s,
+        width 0.5s,
+        top 0.3s;
 
-      [dir='ltr'] & {
+      [dir="ltr"] & {
         left: 0;
       }
 
-      [dir='rtl'] & {
+      [dir="rtl"] & {
         right: 0;
       }
     }
@@ -57,11 +59,11 @@
     &::before {
       transform: translateY(-6px);
 
-      [dir='ltr'] & {
+      [dir="ltr"] & {
         transform-origin: left top;
       }
 
-      [dir='rtl'] & {
+      [dir="rtl"] & {
         transform-origin: right top;
       }
     }
@@ -69,15 +71,14 @@
     &::after {
       transform: translateY(6px);
 
-      [dir='ltr'] & {
+      [dir="ltr"] & {
         transform-origin: left bottom;
       }
 
-      [dir='rtl'] & {
+      [dir="rtl"] & {
         transform-origin: right bottom;
       }
     }
-
   }
 
   &:hover .cd-nav-icon::after {
@@ -96,7 +97,9 @@
     .cd-nav-icon::after,
     .cd-nav-icon::before {
       width: 50%;
-      transition: transform 0.5s, width 0.5s;
+      transition:
+        transform 0.5s,
+        width 0.5s;
     }
 
     .cd-nav-icon::before {
@@ -111,8 +114,5 @@
     &:hover .cd-nav-icon::before {
       top: 0;
     }
-
   }
-
-
 }

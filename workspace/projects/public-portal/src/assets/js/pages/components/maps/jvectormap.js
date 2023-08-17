@@ -1,22 +1,20 @@
 "use strict";
 
 // Class definition
-var KTjVectorMap = function() {
+var KTjVectorMap = (function () {
+  // Private functions
 
-    // Private functions
+  var demo1 = function () {};
 
-    var demo1 = function() {
-    }
+  return {
+    // public functions
+    init: function () {
+      // default charts
+      demo1();
+    },
+  };
+})();
 
-    return {
-        // public functions
-        init: function() {
-            // default charts
-            demo1();
-        }
-    };
-}();
-
-jQuery(document).ready(function() {
-    KTjVectorMap.init();
+jQuery(document).ready(function () {
+  KTjVectorMap.init();
 });

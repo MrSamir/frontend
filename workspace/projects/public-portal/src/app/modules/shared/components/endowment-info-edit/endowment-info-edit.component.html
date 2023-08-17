@@ -1,44 +1,100 @@
-<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" >
-    <div class="aw-content">
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-        <div class="form-group col">
-          <label class="col-form-label">{{'Module1.awqafService.EndowmentName' | localize}}<span class="text-danger">*</span></label>
-          <input type="text" class="form-control" #endowmentName="ngModel" name="endowmentName"
-                 [(ngModel)]="InputEndowmentDto.endowmentName" required>
-          <div *ngIf="endowmentName.invalid && (endowmentName.dirty || endowmentName.touched)" class="">
-            <p *ngIf="endowmentName.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.EndowmentNameValidation' | localize}}</p>
-          </div>
+<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html">
+  <div class="aw-content">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+      <div class="form-group col">
+        <label class="col-form-label"
+          >{{ "Module1.awqafService.EndowmentName" | localize
+          }}<span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          #endowmentName="ngModel"
+          name="endowmentName"
+          [(ngModel)]="InputEndowmentDto.endowmentName"
+          required
+        />
+        <div
+          *ngIf="
+            endowmentName.invalid &&
+            (endowmentName.dirty || endowmentName.touched)
+          "
+          class=""
+        >
+          <p *ngIf="endowmentName.errors" class="text-danger pt-1 small">
+            {{ "Module1.awqafService.EndowmentNameValidation" | localize }}
+          </p>
         </div>
+      </div>
 
-        <div class="form-group col">
-          <div class="d-flex">
-            <label class="col col-form-label">{{'Module1.awqafService.EndowmentType' | localize}}<span class="text-danger">*</span></label>
-          </div>
-          <select class="custom-select" 
-          #endowmentTypeId="ngModel" name="endowmentTypeId"
-     
-           [(ngModel)]=InputEndowmentDto.endowmentTypeId required>
-            
-          
-          <option *ngFor="let endowmentType of EndowmentTypeLookup" value={{endowmentType.id}}>{{endowmentType.name}}</option>
-          
-          </select>
-          <div *ngIf="endowmentTypeId.invalid && (endowmentTypeId.dirty || endowmentTypeId.touched)" class="">
-            <p *ngIf="endowmentTypeId.errors" class="text-danger pt-1 small"> {{'Module1.awqafService.EndowmentTypeValidation' | localize}}</p>
-          </div>
+      <div class="form-group col">
+        <div class="d-flex">
+          <label class="col col-form-label"
+            >{{ "Module1.awqafService.EndowmentType" | localize
+            }}<span class="text-danger">*</span></label
+          >
         </div>
-        <div class="form-group col">
-          <label class="col-form-label">{{'Module1.awqafService.EndowmentSpendingCategories' | localize}}<span class="text-danger">*</span></label>
-          <p-multiSelect #spendingCategoriesIds="ngModel" display="chip" name="spendingCategoriesIds"
-                         [options]="spendingCategoriesLookup" optionLabel="name" optionValue="id"
-                         [(ngModel)]=InputEndowmentDto.spendingCategoriesIds required></p-multiSelect>
-          <div *ngIf="spendingCategoriesIds.invalid && (spendingCategoriesIds.dirty || spendingCategoriesIds.touched)" class="">
-            <p *ngIf="spendingCategoriesIds.errors" class="text-danger pt-1 small">
-              {{'Module1.awqafService.EndowmentSpendingCategoriesValidation' | localize}}</p>
-          </div>
+        <select
+          class="custom-select"
+          #endowmentTypeId="ngModel"
+          name="endowmentTypeId"
+          [(ngModel)]="InputEndowmentDto.endowmentTypeId"
+          required
+        >
+          <option
+            *ngFor="let endowmentType of EndowmentTypeLookup"
+            value="{{ endowmentType.id }}"
+          >
+            {{ endowmentType.name }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            endowmentTypeId.invalid &&
+            (endowmentTypeId.dirty || endowmentTypeId.touched)
+          "
+          class=""
+        >
+          <p *ngIf="endowmentTypeId.errors" class="text-danger pt-1 small">
+            {{ "Module1.awqafService.EndowmentTypeValidation" | localize }}
+          </p>
         </div>
-  
-        <!-- <div class="form-group col">
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label"
+          >{{ "Module1.awqafService.EndowmentSpendingCategories" | localize
+          }}<span class="text-danger">*</span></label
+        >
+        <p-multiSelect
+          #spendingCategoriesIds="ngModel"
+          display="chip"
+          name="spendingCategoriesIds"
+          [options]="spendingCategoriesLookup"
+          optionLabel="name"
+          optionValue="id"
+          [(ngModel)]="InputEndowmentDto.spendingCategoriesIds"
+          required
+        ></p-multiSelect>
+        <div
+          *ngIf="
+            spendingCategoriesIds.invalid &&
+            (spendingCategoriesIds.dirty || spendingCategoriesIds.touched)
+          "
+          class=""
+        >
+          <p
+            *ngIf="spendingCategoriesIds.errors"
+            class="text-danger pt-1 small"
+          >
+            {{
+              "Module1.awqafService.EndowmentSpendingCategoriesValidation"
+                | localize
+            }}
+          </p>
+        </div>
+      </div>
+
+      <!-- <div class="form-group col">
           <ng-bootstrap-hijri-gregorian-datepicker
             [Label]={{'Module1.awqafService.EndowmentSpendingCategories'}}
             [IsRequired]=true
@@ -52,39 +108,77 @@
           </ng-bootstrap-hijri-gregorian-datepicker>
   
         </div> -->
-  
-        <div class="form-group col">
-          <div class="d-flex">
-            <label class=" col  col-form-label">{{'Module1.awqafService.EndowmentRevenue' | localize}}<span class="text-danger">*</span></label>
-      
-          </div>
-  <!-- pattern_number  [pattern]="ePatternValidation.pattern_number"-->
-          <input type="text" class="form-control" #revenue="ngModel" name="revenue"
-                 placeholder="{{'Module1.awqafService.EndowmentRevenuePlaceHolder' | localize}}"
-                 [(ngModel)]="InputEndowmentDto.endowmentRevenue" required>
-          <div *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)" class="">
-            <p *ngIf="revenue.errors?.['required']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationRequired' | localize}}</p>
-            <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">{{'Module1.awqafService.EndowmentRevenueValidationPattern' | localize}}</p>
-          </div>
+
+      <div class="form-group col">
+        <div class="d-flex">
+          <label class="col col-form-label"
+            >{{ "Module1.awqafService.EndowmentRevenue" | localize
+            }}<span class="text-danger">*</span></label
+          >
         </div>
-  
-        <div class="form-group col-12 m-0 ">
-          <label class="col-form-label font-weight-bold" > {{'Module1.awqafService.EndowmentAcceptDonations' | localize}}</label>
+        <!-- pattern_number  [pattern]="ePatternValidation.pattern_number"-->
+        <input
+          type="text"
+          class="form-control"
+          #revenue="ngModel"
+          name="revenue"
+          placeholder="{{
+            'Module1.awqafService.EndowmentRevenuePlaceHolder' | localize
+          }}"
+          [(ngModel)]="InputEndowmentDto.endowmentRevenue"
+          required
+        />
+        <div
+          *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)"
+          class=""
+        >
+          <p
+            *ngIf="revenue.errors?.['required']"
+            class="text-danger pt-1 small"
+          >
+            {{
+              "Module1.awqafService.EndowmentRevenueValidationRequired"
+                | localize
+            }}
+          </p>
+          <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">
+            {{
+              "Module1.awqafService.EndowmentRevenueValidationPattern"
+                | localize
+            }}
+          </p>
         </div>
-        <div class="form-group col">
-            <label class="col-form-label" > {{'Module1.awqafService.EndowmentAcceptDonations' | localize}}
-            </label>
-            <p-inputSwitch [(ngModel)]="InputEndowmentDto.acceptDonations" name="acceptDonations"></p-inputSwitch>
-        </div>
-        <div class="form-group col">
-            <label class="col-form-label" > {{'Module1.awqafService.EndowmentacceptGiveaways' | localize}}
-            </label>
-            <p-inputSwitch [(ngModel)]="InputEndowmentDto.acceptGiveaways" name="acceptGiveaways"></p-inputSwitch>
-        </div>
-  
-        <div class="form-group col-12"> </div>
-        <!-- Section Title -->
-        <!-- <div class="form-group col">
+      </div>
+
+      <div class="form-group col-12 m-0">
+        <label class="col-form-label font-weight-bold">
+          {{
+            "Module1.awqafService.EndowmentAcceptDonations" | localize
+          }}</label
+        >
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentAcceptDonations" | localize }}
+        </label>
+        <p-inputSwitch
+          [(ngModel)]="InputEndowmentDto.acceptDonations"
+          name="acceptDonations"
+        ></p-inputSwitch>
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentacceptGiveaways" | localize }}
+        </label>
+        <p-inputSwitch
+          [(ngModel)]="InputEndowmentDto.acceptGiveaways"
+          name="acceptGiveaways"
+        ></p-inputSwitch>
+      </div>
+
+      <div class="form-group col-12"></div>
+      <!-- Section Title -->
+      <!-- <div class="form-group col">
           <label class="col-form-label">
             {{'Module1.awqafService.EndowmentRegion'}}
             <span class="text-danger">*</span></label>
@@ -109,47 +203,73 @@
             <p *ngIf="cityId.errors" class="text-danger pt-1 small">     {{'Module1.awqafService.EndowmentCityValidation'}}</p>
           </div> 
         </div> -->
-<!--   
+      <!--   
         <div class="form-group col-12">
           <label class="col-form-label">موقع الوقف<span class="text-danger">*</span></label>
           <div class="col-sm-12 px-0">
             <google-map (mapChange)="onChangeMap()" [(map)]="map" required></google-map>
           </div>
         </div> -->
-  
-        <div class="form-group col-12">
-          <label class="col-form-label">  {{'Module1.awqafService.EndowmentCondation' | localize}} </label>
-          <textarea [rows]="5" cols="10" class="form-control" #condition="ngModel" name="condition"
-                    [(ngModel)]="InputEndowmentDto.endowmentConditions"
-                    >
-          </textarea>
-          <div *ngIf="condition.invalid && (condition.dirty || condition.touched)" class="">
-            <p *ngIf="condition.errors" class="text-danger pt-1 small">    {{'Module1.awqafService.EndowmentCondationValidation' | localize}}   </p>
-          </div>
+
+      <div class="form-group col-12">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentCondation" | localize }}
+        </label>
+        <textarea
+          [rows]="5"
+          cols="10"
+          class="form-control"
+          #condition="ngModel"
+          name="condition"
+          [(ngModel)]="InputEndowmentDto.endowmentConditions"
+        >
+        </textarea>
+        <div
+          *ngIf="condition.invalid && (condition.dirty || condition.touched)"
+          class=""
+        >
+          <p *ngIf="condition.errors" class="text-danger pt-1 small">
+            {{ "Module1.awqafService.EndowmentCondationValidation" | localize }}
+          </p>
         </div>
-        <!-- Section Title -->
-  
-        <div class="mt-4 col-12">
-          <h3 class="text-awq-primary my-3">
-            <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
-            {{'Module1.awqafService.EndowmentdeedInfo' | localize}} 
-          </h3>
+      </div>
+      <!-- Section Title -->
+
+      <div class="mt-4 col-12">
+        <h3 class="text-awq-primary my-3">
+          <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
+          {{ "Module1.awqafService.EndowmentdeedInfo" | localize }}
+        </h3>
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentdeedNumber" | localize }}
+          <span class="text-danger">*</span></label
+        >
+        <input
+          type="text"
+          class="form-control"
+          #deedNumber="ngModel"
+          name="deedNumber"
+          [disabled]="IsDeedDisabled"
+          [(ngModel)]="InputEndowmentDto.endowmentDeedNumber"
+          [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char"
+          required
+        />
+        <div
+          *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)"
+          class=""
+        >
+          <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">
+            {{
+              "Module1.awqafService.EndowmentdeedNumberValidation" | localize
+            }}
+          </p>
         </div>
-  
-        <div class="form-group col">
-          <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedNumber' | localize}}   
-            <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="IsDeedDisabled"
-                 [(ngModel)]="InputEndowmentDto.endowmentDeedNumber" [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required>
-          <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
-            <p *ngIf="deedNumber.errors" class="text-danger pt-1 small"> 
-              {{'Module1.awqafService.EndowmentdeedNumberValidation' | localize}}  
-            </p>
-          </div>
-        </div>
-  
-        <!-- <div class="form-group col">
+      </div>
+
+      <!-- <div class="form-group col">
           <ng-bootstrap-hijri-gregorian-datepicker 
             [Label]="'تاريخ الصك'"
             [IsRequired]=true
@@ -161,55 +281,81 @@
           >
           </ng-bootstrap-hijri-gregorian-datepicker>
         </div> -->
-  
-        <div class="form-group col">
-          <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedRegion' | localize}}   
-            <span class="text-danger">*</span></label>
-          <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="IsDeedDisabled"
-                  [(ngModel)]=InputEndowmentDto.endowmentDeedRegionId required
-                  (change)="LoadCitiesByRegion(deedRegionId.value)">
-            <option [value]="null" disabled selected></option>
-            <option *ngFor="let region of RegioneLookup" value={{region.id}}>
-              {{region.name}}</option>
-          </select>
-        </div>
-  
-        <div class="form-group col">
-          <label class="col-form-label">     
-            {{'Module1.awqafService.EndowmentdeedCity' | localize}}   
-            <span class="text-danger">*</span></label>
-          <select class="custom-select" #deedCityId="ngModel" name="deedCityId" [(ngModel)]=InputEndowmentDto.endowmentDeedCityId [disabled]="IsDeedDisabled"
-                  required>
-            <option *ngFor="let city of CityLookup" value={{city.id}}>
-              {{city.name}}</option>
-          </select>
-        </div>
-  
-        <div class="form-group col">
-          <label class="col-form-label">
-            {{'Module1.awqafService.EndowmentdeedCourt' | localize}}  
-            <span class="text-danger">*</span></label>
-          <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId" [disabled]="IsDeedDisabled"
-                  [(ngModel)]=InputEndowmentDto.issuanceCourtId required>
-            <option *ngFor="let issuanceCourtItem of IssuanceCourtsLookup" value={{issuanceCourtItem.id}}>
-              {{issuanceCourtItem.name}}</option>
-          </select>
-        </div>
-  
-        <div class="form-group col-12">
-          <div class="d-flex">
-            <label class="col col-form-label"> 
-              
-              {{'Module1.awqafService.EndowmentdeedAttachement' | localize}}  
 
-              <span class="text-danger">*</span></label>
-        
-          </div>
-  
-          <div class="input-group mb-3 download p-2">
-            <div class="flex-grow-1">
-              <!-- <file-uploader
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentdeedRegion" | localize }}
+          <span class="text-danger">*</span></label
+        >
+        <select
+          class="custom-select"
+          #deedRegionId="ngModel"
+          name="deedRegionId"
+          [disabled]="IsDeedDisabled"
+          [(ngModel)]="InputEndowmentDto.endowmentDeedRegionId"
+          required
+          (change)="LoadCitiesByRegion(deedRegionId.value)"
+        >
+          <option [value]="null" disabled selected></option>
+          <option *ngFor="let region of RegioneLookup" value="{{ region.id }}">
+            {{ region.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentdeedCity" | localize }}
+          <span class="text-danger">*</span></label
+        >
+        <select
+          class="custom-select"
+          #deedCityId="ngModel"
+          name="deedCityId"
+          [(ngModel)]="InputEndowmentDto.endowmentDeedCityId"
+          [disabled]="IsDeedDisabled"
+          required
+        >
+          <option *ngFor="let city of CityLookup" value="{{ city.id }}">
+            {{ city.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">
+          {{ "Module1.awqafService.EndowmentdeedCourt" | localize }}
+          <span class="text-danger">*</span></label
+        >
+        <select
+          class="custom-select"
+          #issuanceCourtId="ngModel"
+          name="issuanceCourtId"
+          [disabled]="IsDeedDisabled"
+          [(ngModel)]="InputEndowmentDto.issuanceCourtId"
+          required
+        >
+          <option
+            *ngFor="let issuanceCourtItem of IssuanceCourtsLookup"
+            value="{{ issuanceCourtItem.id }}"
+          >
+            {{ issuanceCourtItem.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group col-12">
+        <div class="d-flex">
+          <label class="col col-form-label">
+            {{ "Module1.awqafService.EndowmentdeedAttachement" | localize }}
+
+            <span class="text-danger">*</span></label
+          >
+        </div>
+
+        <div class="input-group mb-3 download p-2">
+          <div class="flex-grow-1">
+            <!-- <file-uploader
                 [showDownloadButton]="true"
                 [showDeleteButton]="true"
                 [allowedExtensions]="['.pdf']"
@@ -219,17 +365,31 @@
                 [serviceTypeId]="requestType.NewWaqf"
               >
               </file-uploader> -->
-            </div>
           </div>
         </div>
       </div>
     </div>
-  
-    <div class="aw-btn">
-      <div>
-        <button type="button" class="btn btn-outline-awq-secondary" [disabled]="navigationButtonsDisabled" (click)="onNextBtnClicked()"> {{'Module1.awqafService.ButtonNext' | localize}}  </button>
-      </div>
-      <button type="button" class="btn btn-outline-awq-secondary" [hidden]="!IsCreate" (click)="onBackBtnClicked()" awPreviousStep> {{'Module1.awqafService.ButtonPreviouse' | localize}}</button>
+  </div>
+
+  <div class="aw-btn">
+    <div>
+      <button
+        type="button"
+        class="btn btn-outline-awq-secondary"
+        [disabled]="navigationButtonsDisabled"
+        (click)="onNextBtnClicked()"
+      >
+        {{ "Module1.awqafService.ButtonNext" | localize }}
+      </button>
     </div>
-  </form>
-  
+    <button
+      type="button"
+      class="btn btn-outline-awq-secondary"
+      [hidden]="!IsCreate"
+      (click)="onBackBtnClicked()"
+      awPreviousStep
+    >
+      {{ "Module1.awqafService.ButtonPreviouse" | localize }}
+    </button>
+  </div>
+</form>

@@ -5,30 +5,25 @@
 
 <p-button label="Submit"></p-button> -->
 
-
 <div class="d-flex flex-column min-vh-100">
+  <!-- HEADER & SETTING -->
+  <app-header></app-header>
 
-    <!-- HEADER & SETTING -->
-     <app-header></app-header>
-  
-    <!-- CONTENT (ROUTER OUTLET) -->
-    <div class="flex-grow-1 shape-bg">
-      <div class="container layoutContainer">
-      
-       <app-messageAndspinner></app-messageAndspinner>
-        <!-- <lib-breadcrumb></lib-breadcrumb> -->
-        <router-outlet #o="outlet"></router-outlet>
-      </div>
+  <!-- CONTENT (ROUTER OUTLET) -->
+  <div class="flex-grow-1 shape-bg">
+    <div class="container layoutContainer">
+      <app-messageAndspinner></app-messageAndspinner>
+      <!-- <lib-breadcrumb></lib-breadcrumb> -->
+      <router-outlet #o="outlet"></router-outlet>
     </div>
-  
-    <!-- FOOTER & COPYRIGHTS -->
-<app-footer></app-footer>
-  
   </div>
- 
+
+  <!-- FOOTER & COPYRIGHTS -->
+  <app-footer></app-footer>
+</div>
+
 <!-- <legend>  {{'Common.idNumber' | localize}}</legend> -->
 
- 
 <!-- 
 <p-button label="Submit"></p-button> -->
 <lib-loacalization-base></lib-loacalization-base>

@@ -1,65 +1,179 @@
-<div class="row row-cols-1 row-cols-md-2" >
-    <div class="form-group col-12" >
-      <div  *ngIf="!viewOnly" class="d-flex">
-        <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBenefitTypeLabel' | localize}}<span class="text-danger">*</span></label>
-        <!-- <hint  [hintContent]="Typehint?.hintContentAr" [hintTitle]="Typehint?.hintTitleAr"></hint> -->
-      </div>
-       <!-- <label [hidden]="!viewOnly" class="col-form-label">نوع المنقول</label> -->
-      <input type="text" class="form-control" [minLength]="1" [maxLength]="250" [hidden]="viewOnly" #benefitType="ngModel"
-        name="benefitType" [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers" [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitType" required>
-  
-        <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.particularBenefitAsset.benefitType}} </label>
-  
-      <div *ngIf="benefitType.invalid && (benefitType.dirty || benefitType.touched)" class="">
-        <p *ngIf="benefitType.errors?.['required']" class="text-danger pt-1 small"> {{'EndowmentModule.EndowmentRgistrationService.AssetBenefitRequiredValidationLabel' | localize}}</p>
-        <p *ngIf="benefitType.errors?.['pattern']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBenefitCharacterValidationLabel' | localize}} </p>
-  
-      </div>
+<div class="row row-cols-1 row-cols-md-2">
+  <div class="form-group col-12">
+    <div *ngIf="!viewOnly" class="d-flex">
+      <label class="col col-form-label"
+        >{{
+          "EndowmentModule.EndowmentRgistrationService.AssetBenefitTypeLabel"
+            | localize
+        }}<span class="text-danger">*</span></label
+      >
+      <!-- <hint  [hintContent]="Typehint?.hintContentAr" [hintTitle]="Typehint?.hintTitleAr"></hint> -->
     </div>
-    <div class="form-group col-12">
-      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBenefitDescriptionLabel' | localize}}</label>
-      <textarea [rows]="5" cols="10" class="form-control" [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers"   #benefitDescription="ngModel" 
-      name="benefitDescription"  [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitDescription"  [hidden]="viewOnly">
-      </textarea>
-      <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.particularBenefitAsset.benefitDescription}} </label>
-      <div *ngIf="benefitDescription.invalid && (benefitDescription.dirty || benefitDescription.touched)" class="">
-        
-             <p  class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetBenefitCharacterValidationLabel' | localize}} </p>
-  
-      </div>
-    </div>
-    <div class="form-group col" >
-      <label  class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetBenefitAmountLabel' | localize}} </label>
-  
-      <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10" #benefitValue="ngModel"
-      onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
-        name="benefitValue" [(ngModel)]=assetInfoModel.particularBenefitAsset.benefitValue
-        [pattern]="ePatternValidation.pattern_decimal_values">
-        <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.particularBenefitAsset.benefitValue}} </label>
-      <div
-        *ngIf="benefitValue.invalid && (benefitValue.dirty || benefitValue.touched)"
-        class="">
-  
-        <p *ngIf="benefitValue.errors?.['pattern']" class="text-danger pt-1 small">
-          {{'EndowmentModule.EndowmentRgistrationService.AssetBenefitNumberValidationLabel' | localize}}
-           </p>
-      </div>
-    </div>
-    <div class="form-group col" >
-      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.IsDirectAssetBenefitLabel' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-      <select class="custom-select" #isDirectedBenefit="ngModel" name="isDirectedBenefit" [(ngModel)]=assetInfoModel.particularBenefitAsset.isDirectedBenefit
-        [hidden]="viewOnly" required>
-        <option [ngValue]=undefined ></option>
-        <option [ngValue]=true >{{'EndowmentModule.EndowmentRgistrationService.yes' | localize}}</option>
-        <option [ngValue]=false >{{'EndowmentModule.EndowmentRgistrationService.no' | localize}}</option>
-      </select>
-      <label class="col-form-label font-weight-bold" *ngIf="assetInfoModel.particularBenefitAsset.isDirectedBenefit"
-        [hidden]="!viewOnly">&nbsp; {{'EndowmentModule.EndowmentRgistrationService.yes' | localize}} </label>
-        <label class="col-form-label font-weight-bold" *ngIf="!assetInfoModel.particularBenefitAsset.isDirectedBenefit"
-        [hidden]="!viewOnly">&nbsp; {{'EndowmentModule.EndowmentRgistrationService.no' | localize}} </label>
-      <div *ngIf="isDirectedBenefit.invalid && (isDirectedBenefit.dirty || isDirectedBenefit.touched)" class="">
-        <p *ngIf="isDirectedBenefit.errors" class="text-danger pt-1 small"> {{'EndowmentModule.EndowmentRgistrationService.isDirectedBenefitSelectedLabel' | localize}}</p>
-      </div>
+    <!-- <label [hidden]="!viewOnly" class="col-form-label">نوع المنقول</label> -->
+    <input
+      type="text"
+      class="form-control"
+      [minLength]="1"
+      [maxLength]="250"
+      [hidden]="viewOnly"
+      #benefitType="ngModel"
+      name="benefitType"
+      [pattern]="
+        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+      "
+      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitType"
+      required
+    />
+
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitType }}
+    </label>
+
+    <div
+      *ngIf="benefitType.invalid && (benefitType.dirty || benefitType.touched)"
+      class=""
+    >
+      <p
+        *ngIf="benefitType.errors?.['required']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBenefitRequiredValidationLabel"
+            | localize
+        }}
+      </p>
+      <p *ngIf="benefitType.errors?.['pattern']" class="text-danger pt-1 small">
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBenefitCharacterValidationLabel"
+            | localize
+        }}
+      </p>
     </div>
   </div>
-  
+  <div class="form-group col-12">
+    <label class="col-form-label">{{
+      "EndowmentModule.EndowmentRgistrationService.AssetBenefitDescriptionLabel"
+        | localize
+    }}</label>
+    <textarea
+      [rows]="5"
+      cols="10"
+      class="form-control"
+      [pattern]="
+        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+      "
+      #benefitDescription="ngModel"
+      name="benefitDescription"
+      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitDescription"
+      [hidden]="viewOnly"
+    >
+    </textarea>
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitDescription }}
+    </label>
+    <div
+      *ngIf="
+        benefitDescription.invalid &&
+        (benefitDescription.dirty || benefitDescription.touched)
+      "
+      class=""
+    >
+      <p class="text-danger pt-1 small">
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBenefitCharacterValidationLabel"
+            | localize
+        }}
+      </p>
+    </div>
+  </div>
+  <div class="form-group col">
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetBenefitAmountLabel"
+          | localize
+      }}
+    </label>
+
+    <input
+      type="text"
+      class="form-control"
+      [hidden]="viewOnly"
+      [minLength]="1"
+      [maxLength]="10"
+      #benefitValue="ngModel"
+      onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
+      name="benefitValue"
+      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitValue"
+      [pattern]="ePatternValidation.pattern_decimal_values"
+    />
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitValue }}
+    </label>
+    <div
+      *ngIf="
+        benefitValue.invalid && (benefitValue.dirty || benefitValue.touched)
+      "
+      class=""
+    >
+      <p
+        *ngIf="benefitValue.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBenefitNumberValidationLabel"
+            | localize
+        }}
+      </p>
+    </div>
+  </div>
+  <div class="form-group col">
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.IsDirectAssetBenefitLabel"
+          | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <select
+      class="custom-select"
+      #isDirectedBenefit="ngModel"
+      name="isDirectedBenefit"
+      [(ngModel)]="assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      [hidden]="viewOnly"
+      required
+    >
+      <option [ngValue]="undefined"></option>
+      <option [ngValue]="true">
+        {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+      </option>
+      <option [ngValue]="false">
+        {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+      </option>
+    </select>
+    <label
+      class="col-form-label font-weight-bold"
+      *ngIf="assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      [hidden]="!viewOnly"
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+    </label>
+    <label
+      class="col-form-label font-weight-bold"
+      *ngIf="!assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      [hidden]="!viewOnly"
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+    </label>
+    <div
+      *ngIf="
+        isDirectedBenefit.invalid &&
+        (isDirectedBenefit.dirty || isDirectedBenefit.touched)
+      "
+      class=""
+    >
+      <p *ngIf="isDirectedBenefit.errors" class="text-danger pt-1 small">
+        {{
+          "EndowmentModule.EndowmentRgistrationService.isDirectedBenefitSelectedLabel"
+            | localize
+        }}
+      </p>
+    </div>
+  </div>
+</div>

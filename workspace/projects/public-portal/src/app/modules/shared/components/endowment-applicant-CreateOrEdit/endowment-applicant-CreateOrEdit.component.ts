@@ -1,9 +1,17 @@
-import { CUSTOM_ELEMENTS_SCHEMA, Component, Injector, Input, NO_ERRORS_SCHEMA, OnInit, forwardRef } from '@angular/core';
+import {
+  CUSTOM_ELEMENTS_SCHEMA,
+  Component,
+  Injector,
+  Input,
+  NO_ERRORS_SCHEMA,
+  OnInit,
+  forwardRef,
+} from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
-    ApplicationUserServiceProxy,
-    AttorneyInquiryInput,
-    EndowmentRegistrationServiceProxy,
+  ApplicationUserServiceProxy,
+  AttorneyInquiryInput,
+  EndowmentRegistrationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputApplicantAgentDto,
   InputApplicantDto,
@@ -60,14 +68,14 @@ export class EndowmentApplicantCreateOrEditComponent
 
   yaqeenErrorMessage = '';
 
-  maxFileSizeInMB: number = 5;
-  allowedFileTypes: string = '.pdf,.doc,.docx,.txt';
-  showCancelButton: boolean = true;
-  showUploadButton: boolean = true;
+  maxFileSizeInMB = 5;
+  allowedFileTypes = '.pdf,.doc,.docx,.txt';
+  showCancelButton = true;
+  showUploadButton = true;
 
-  showUploadProgressBar: boolean = true;
+  showUploadProgressBar = true;
 
-  alllowMultipleFiles: boolean = true;
+  alllowMultipleFiles = true;
 
   uploadedFiles: OutputFileDto[] = [];
   seerDeadAttachemt: AttachementItem;
@@ -81,7 +89,9 @@ export class EndowmentApplicantCreateOrEditComponent
     private _endowmentRegistrationService: EndowmentRegistrationServiceProxy,
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
-    private _MojServiceProxy: MOJApplicationServiceProxy, private router:Router  ) {
+    private _MojServiceProxy: MOJApplicationServiceProxy,
+    private router: Router
+  ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
     /* this.requestInfo.applicantAgent = new InputApplicantAgentDto();
@@ -91,51 +101,47 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.LoadForm();
   }
-  onNextBtnClicked(form:NgForm)
-  {
-
-    if(form.valid==false){
-     for(var control in form.controls)
-          if(form.controls[control].invalid)
-          {
-            form.controls[control].markAsTouched();
-            form.controls[control].updateValueAndValidity() ;
-            form.controls[control].markAsPristine();
-          }
+  onNextBtnClicked(form: NgForm) {
+    if (form.valid == false) {
+      for (const control in form.controls) {
+        if (form.controls[control].invalid) {
+          form.controls[control].markAsTouched();
+          form.controls[control].updateValueAndValidity();
+          form.controls[control].markAsPristine();
+        }
+      }
     }
-    if(form.valid)
-    {
-      this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
-      .subscribe((result)=>{
-        if(result.isSuccess)
-        {
-          this.message.showMessage(MessageTypeEnum.toast, {
-            closable: true,
-            enableService: true,
-            summary: '',
-            detail: result.message!,
-            severity: MessageSeverity.Success,
-          });
-          this.router.navigate([
-            'registrationform/:requestId/:pahseId',
-            result.dto.id,2]);
-        }else
-        {
-                    this.message.showMessage(MessageTypeEnum.toast, {
-                      closable: true,
-                      enableService: true,
-                      summary: '',
-                      detail: result.message!,
-                      severity: MessageSeverity.Warning,
-                    });
-         }
-      })
+    if (form.valid) {
+      this._endowmentRegistrationService
+        .createOrEditEndowmentRegistrationRequest(this.requestInfo)
+        .subscribe((result) => {
+          if (result.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Success,
+            });
+            this.router.navigate([
+              'registrationform/:requestId/:pahseId',
+              result.dto.id,
+              2,
+            ]);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Warning,
+            });
+          }
+        });
     }
   }
   //#region FromAndLookupLoad
   LoadForm() {
-
-
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -203,7 +209,6 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   loadCurrentUser() {
     this._applicationUserService.getCurrentUser().subscribe((result) => {
-      
       this.applicantUser = result.dto;
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);
@@ -256,37 +261,25 @@ export class EndowmentApplicantCreateOrEditComponent
       }
     });
     // check isendowmenr checked.
-    if (
-      this.selectedTypes.findIndex((value, index) => {
-        return value.id == 1;
-      }) == -1
-    ) {
+    if (this.selectedTypes.findIndex((value, index) => value.id == 1) == -1) {
       this.isEndwowmer = false;
       this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
     }
     //check isSeer checked
-    if (
-      this.selectedTypes.findIndex((value, index) => {
-        return value.id == 2;
-      }) == -1
-    ) {
+    if (this.selectedTypes.findIndex((value, index) => value.id == 2) == -1) {
       this.isSeer = false;
       this.requestInfo.applicantSeer = new InputApplicantSeerDto();
     }
     //check isAgent checked
-    if (
-      this.selectedTypes.findIndex((value, index) => {
-        return value.id == 3;
-      }) == -1
-    ) {
+    if (this.selectedTypes.findIndex((value, index) => value.id == 3) == -1) {
       this.isAgent = false;
       this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     }
 
     if (this.isEndwowmer && this.isAgent) {
-      this.selectedTypes = this.selectedTypes.filter((value, index) => {
-        return value.id != 3;
-      });
+      this.selectedTypes = this.selectedTypes.filter(
+        (value, index) => value.id != 3
+      );
       this.message.showMessage(MessageTypeEnum.toast, {
         severity: MessageSeverity.Warning,
         message: '',
@@ -300,35 +293,35 @@ export class EndowmentApplicantCreateOrEditComponent
       return;
     }
     this.requestInfo.applicantTypes = (event.checked as LookupDto[])
-      .map((value, index) => {
-        return value.id;
-      })
+      .map((value, index) => value.id)
       .join(',');
   }
 
   selectEndowmerType(event: any) {
-    
-    var endowmerType = this.endowmentPartiesTypes.filter((ept, index) => {
-      return ept.id == event.value;
-    })[0];
-    if (endowmerType == undefined) this.loadEndowmerTypeHint();
-    else
+    const endowmerType = this.endowmentPartiesTypes.filter(
+      (ept, index) => ept.id == event.value
+    )[0];
+    if (endowmerType == undefined) {
+      this.loadEndowmerTypeHint();
+    } else {
       this.EndowmerTypeHint = {
-        hintHeader: endowmerType?.name!,
-        hintBody: endowmerType?.hint!,
+        hintHeader: endowmerType?.name || '',
+        hintBody: endowmerType?.hint || '',
       };
+    }
   }
   selectSeerType(event: any) {
-    
-    var Seerype = this.endowmentPartiesTypes.filter((ept, index) => {
-      return ept.id == event.value;
-    })[0];
-    if (Seerype == undefined) this.loadSeerTypeHint();
-    else
+    const Seerype = this.endowmentPartiesTypes.filter(
+      (ept, index) => ept.id == event.value
+    )[0];
+    if (Seerype == undefined) {
+      this.loadSeerTypeHint();
+    } else {
       this.seerTypeHint = {
-        hintHeader: Seerype?.name!,
-        hintBody: Seerype?.hint!,
+        hintHeader: Seerype?.name || '',
+        hintBody: Seerype?.hint || '',
       };
+    }
   }
   seerDeedFileSelect(event: any) {
     this.seerDeedFile = event.files[0];
@@ -402,7 +395,7 @@ export class EndowmentApplicantCreateOrEditComponent
     event: AttachementItem,
     callback: (item: AttachementItem) => void
   ) {
-    let input = new InputFileDto();
+    const input = new InputFileDto();
     input.entityName = this.FileUploadentityName;
     input.id = event.id;
     input.filters = [];
@@ -459,7 +452,7 @@ export class EndowmentApplicantCreateOrEditComponent
     });
   }
   fetchAgentDetails() {
-    let inqury = new AttorneyInquiryInput();
+    const inqury = new AttorneyInquiryInput();
     inqury.code = this.requestInfo.applicantAgent.representativeNumber;
     inqury.identityNumber = this.requestInfo.applicant.idNumber;
     this._MojServiceProxy.attorneyInquiry(inqury).subscribe((result) => {

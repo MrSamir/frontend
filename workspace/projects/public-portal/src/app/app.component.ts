@@ -8,6 +8,4 @@ import { LoadingService } from 'projects/core-lib/src/public-api';
 })
 export class AppComponent {
   title = 'Common.welcome';
-  
- 
 }

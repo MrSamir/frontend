@@ -1,4 +1,3 @@
 export enum RequestTypeEnum {
-    EndowmentRegistration = 1,
-   
+  EndowmentRegistration = 1,
 }

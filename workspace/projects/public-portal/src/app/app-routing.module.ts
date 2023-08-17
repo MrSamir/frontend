@@ -3,13 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { LandingComponent } from './layout/landing/landing.component';
 import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
-import { API_BASE_URL } from './modules/shared/services/services-proxies/service-proxies';
-import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
-import {
-  PublicUserProfileComponent
-} from "../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component";
+import { PublicUserProfileComponent } from '../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component';
 import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
-import { environment } from "../environments/environment";
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   {
@@ -53,7 +49,7 @@ const routes: Routes = [
     path: 'confirm-email/:userId/:confirmationCode',
     component: EmailConfirmationComponent,
     data: { title: 'تفعيل البريد الألكتروني' },
-    canActivate: []
+    canActivate: [],
   },
   // {
   //   path: 'dashboard',
@@ -92,12 +88,11 @@ const routes: Routes = [
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (appInitializer: AppInitializer) => {
-        return () => appInitializer.loadAppConfig(environment);
-      },
+      useFactory: (appInitializer: AppInitializer) => () =>
+        appInitializer.loadAppConfig(environment),
       deps: [AppInitializer],
       multi: true,
-    }
+    },
   ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
