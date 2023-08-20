@@ -22,7 +22,7 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
-import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
+import {  ApiResponseModel } from 'projects/core-lib/src/lib/models/ApiResponseModel';
 //import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 // import {WizardComponent} from "angular-archwizard";

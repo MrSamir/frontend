@@ -5,6 +5,7 @@ import { LocalizationService } from '../../services/localization/localization.se
 import { UtilsService } from '../../services/Utils/Utils.Service';
 import { AppConfigSubjectService } from '../../services/appConfigSubjectService';
 import { EnumValidation } from '../../enums/EnumValidation';
+import { NgForm } from '@angular/forms';
 
 export enum ComponentState
 {
@@ -40,6 +41,21 @@ export abstract class ComponentBase  {
   get EnumValidation()
   {
     return EnumValidation;
+  }
+  validateForm(form:NgForm)
+  {
+    if(form.valid==false){
+     for(var control in form.controls)
+          if(form.controls[control].invalid)
+          {
+            form.controls[control].markAsTouched();
+            form.controls[control].updateValueAndValidity() ;
+            form.controls[control].markAsPristine();
+          }
+        
+          } 
+
+          return form.valid;
   }
   
 }

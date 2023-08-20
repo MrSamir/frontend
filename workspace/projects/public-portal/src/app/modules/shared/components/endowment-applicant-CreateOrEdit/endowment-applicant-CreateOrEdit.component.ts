@@ -102,44 +102,36 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.LoadForm();
   }
-  onNextBtnClicked(form: NgForm) {
-    if (form.valid == false) {
-      for (const control in form.controls) {
-        if (form.controls[control].invalid) {
-          form.controls[control].markAsTouched();
-          form.controls[control].updateValueAndValidity();
-          form.controls[control].markAsPristine();
-        }
-      }
-    }
-    if (form.valid) {
-      this._endowmentRegistrationService
-        .createOrEditEndowmentRegistrationRequest(this.requestInfo)
-        .subscribe((result) => {
-          if (result.isSuccess) {
-            this.message.showMessage(MessageTypeEnum.toast, {
-              closable: true,
-              enableService: true,
-              summary: '',
-              detail: result.message!,
-              severity: MessageSeverity.Success,
-            });
-            this.router.navigate([
-              'registrationform/:requestId/:pahseId',
-              result.dto.id,
-              2,
-            ]);
-          } else {
-            this.message.showMessage(MessageTypeEnum.toast, {
-              closable: true,
-              enableService: true,
-              summary: '',
-              detail: result.message!,
-              severity: MessageSeverity.Warning,
-            });
-          }
-        });
-    }
+  onNextBtnClicked(form:NgForm)
+  {
+
+     if(this.validateForm(form)){
+      this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
+      .subscribe((result)=>{
+        if(result.isSuccess)
+        {
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: '',
+            detail: result.message!,
+            severity: MessageSeverity.Success,
+          });
+          this.router.navigate([
+            'registrationform/:requestId/:pahseId',
+            result.dto.id,2]);
+        }else
+        {
+                    this.message.showMessage(MessageTypeEnum.toast, {
+                      closable: true,
+                      enableService: true,
+                      summary: '',
+                      detail: result.message!,
+                      severity: MessageSeverity.Warning,
+                    });
+         }
+      });
+     }
   }
   //#region FromAndLookupLoad
   LoadForm() {
@@ -252,29 +244,32 @@ export class EndowmentApplicantCreateOrEditComponent
       switch (value.id) {
         case 1:
           this.isEndwowmer = true;
+           this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
           break;
         case 2:
           this.isSeer = true;
+           this.requestInfo.applicantSeer = new InputApplicantSeerDto();
           break;
         case 3:
           this.isAgent = true;
+           this.requestInfo.applicantAgent = new InputApplicantAgentDto();
           break;
       }
     });
     // check isendowmenr checked.
     if (this.selectedTypes.findIndex((value, index) => value.id == 1) == -1) {
       this.isEndwowmer = false;
-      this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
+     this.requestInfo.applicantEndowmer=undefined!;
     }
     //check isSeer checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 2) == -1) {
       this.isSeer = false;
-      this.requestInfo.applicantSeer = new InputApplicantSeerDto();
+      this.requestInfo.applicantSeer=undefined!;
     }
     //check isAgent checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 3) == -1) {
       this.isAgent = false;
-      this.requestInfo.applicantAgent = new InputApplicantAgentDto();
+      this.requestInfo.applicantAgent =undefined!;
     }
 
     if (this.isEndwowmer && this.isAgent) {
