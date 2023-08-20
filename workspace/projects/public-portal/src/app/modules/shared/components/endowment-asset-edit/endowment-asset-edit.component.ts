@@ -107,8 +107,10 @@ export class EndowmentSharedAssetEditComponent {
     this.modalService.open(data, { size: 'lg' });
   }
 
-  onViewTableCellClicked(content: any, _AssetIdEditIndex: number) {
+  onViewTableCellClicked(content: any, id?: string) {
+    if (!id) return;
     this.isEditRequested = true;
+    const assetToEditIndex = parseInt(id);
     const seerToView = this.Assets[assetToEditIndex];
     const SelectedAssetToView = new InputAssetDto();
     SelectedAssetToView.init(seerToView);
@@ -117,8 +119,10 @@ export class EndowmentSharedAssetEditComponent {
     this.modalService.open(content, { size: 'lg' });
   }
 
-  async onEditTableCellClicked(content: any, _AssetIdEditIndex: number) {
+  async onEditTableCellClicked(content: any, id?: string) {
+    if (!id) return;
     this.isEditRequested = true;
+    const assetToEditIndex = parseInt(id);
     const seerToEdit = this.Assets[assetToEditIndex];
     const SelectedAssetToEdit = new InputAssetDto();
     SelectedAssetToEdit.init(seerToEdit);

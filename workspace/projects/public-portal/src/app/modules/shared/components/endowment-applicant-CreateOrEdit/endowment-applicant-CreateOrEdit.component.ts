@@ -94,6 +94,7 @@ export class EndowmentApplicantCreateOrEditComponent
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
+    console.log('🔆',this.requestInfo);
     /* this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */

@@ -4,8 +4,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
- 
- 
+
+
 
 import { HttpClient } from '@angular/common/http';
 import { TableModule } from 'primeng/table';
@@ -25,10 +25,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { LoadingService } from 'projects/core-lib/src/lib/services/loading.service';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { SharecomponentModule } from 'projects/shared-features-lib/src/lib/modules/sharecomponent.module';
- 
- 
 
- 
+
+
+
 
 export function setupAppConfigServiceFactory(
   service:AppconfigurationLoaderService,
@@ -46,7 +46,7 @@ export function setupAppConfigServiceFactory(
     AppRoutingModule,
     CoreModule,
     SharecomponentModule,
-    
+
     CoreLibModule,
     BrowserAnimationsModule ,
     ButtonModule,
