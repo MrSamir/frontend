@@ -36,7 +36,7 @@ export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
     FooterComponent,
     LoginComponent,
     LandingComponent,
-    EndowmentSeerEditComponent,
+    //EndowmentSeerEditComponent,
 
     //SeerStepComponent
 

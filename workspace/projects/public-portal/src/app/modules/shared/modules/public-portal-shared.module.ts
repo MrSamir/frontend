@@ -25,6 +25,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
+import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -39,6 +40,7 @@ import { StepsModule } from 'primeng/steps';
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
+    EndowmentSeerEditComponent
   ],
   imports: [
     CommonModule,
@@ -73,6 +75,7 @@ import { StepsModule } from 'primeng/steps';
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
+    EndowmentSeerEditComponent
   ],
 })
 export class PublicPortalSharedModule {}

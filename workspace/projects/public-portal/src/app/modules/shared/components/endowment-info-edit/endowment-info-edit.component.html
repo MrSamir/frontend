@@ -3,7 +3,7 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
       <div class="form-group col">
         <label class="col-form-label"
-          >{{ "Module1.awqafService.EndowmentName" | localize
+          >{{ "EndowmentModule.EndowmentRgistrationService.EndowmentName" | localize
           }}<span class="text-danger">*</span></label
         >
         <input
@@ -22,7 +22,7 @@
           class=""
         >
           <p *ngIf="endowmentName.errors" class="text-danger pt-1 small">
-            {{ "Module1.awqafService.EndowmentNameValidation" | localize }}
+            {{ "EndowmentModule.EndowmentRgistrationService.EndowmentNameValidation" | localize }}
           </p>
         </div>
       </div>
@@ -30,7 +30,7 @@
       <div class="form-group col">
         <div class="d-flex">
           <label class="col col-form-label"
-            >{{ "Module1.awqafService.EndowmentType" | localize
+            >{{ "EndowmentModule.EndowmentRgistrationService.EndowmentType" | localize
             }}<span class="text-danger">*</span></label
           >
         </div>
@@ -56,13 +56,13 @@
           class=""
         >
           <p *ngIf="endowmentTypeId.errors" class="text-danger pt-1 small">
-            {{ "Module1.awqafService.EndowmentTypeValidation" | localize }}
+            {{ "EndowmentModule.EndowmentRgistrationService.EndowmentTypeValidation" | localize }}
           </p>
         </div>
       </div>
       <div class="form-group col">
         <label class="col-form-label"
-          >{{ "Module1.awqafService.EndowmentSpendingCategories" | localize
+          >{{ "EndowmentModule.EndowmentRgistrationService.EndowmentSpendingCategories" | localize
           }}<span class="text-danger">*</span></label
         >
         <p-multiSelect
@@ -87,7 +87,7 @@
             class="text-danger pt-1 small"
           >
             {{
-              "Module1.awqafService.EndowmentSpendingCategoriesValidation"
+              "EndowmentModule.EndowmentRgistrationService.EndowmentSpendingCategoriesValidation"
                 | localize
             }}
           </p>
@@ -112,7 +112,7 @@
       <div class="form-group col">
         <div class="d-flex">
           <label class="col col-form-label"
-            >{{ "Module1.awqafService.EndowmentRevenue" | localize
+            >{{ "EndowmentModule.EndowmentRgistrationService.EndowmentRevenue" | localize
             }}<span class="text-danger">*</span></label
           >
         </div>
@@ -123,7 +123,7 @@
           #revenue="ngModel"
           name="revenue"
           placeholder="{{
-            'Module1.awqafService.EndowmentRevenuePlaceHolder' | localize
+            'EndowmentModule.EndowmentRgistrationService.EndowmentRevenuePlaceHolder' | localize
           }}"
           [(ngModel)]="InputEndowmentDto.endowmentRevenue"
           required
@@ -137,13 +137,13 @@
             class="text-danger pt-1 small"
           >
             {{
-              "Module1.awqafService.EndowmentRevenueValidationRequired"
+              "EndowmentModule.EndowmentRgistrationService.EndowmentRevenueValidationRequired"
                 | localize
             }}
           </p>
           <p *ngIf="revenue.errors?.['pattern']" class="text-danger pt-1 small">
             {{
-              "Module1.awqafService.EndowmentRevenueValidationPattern"
+              "EndowmentModule.EndowmentRgistrationService.EndowmentRevenueValidationPattern"
                 | localize
             }}
           </p>
@@ -153,13 +153,13 @@
       <div class="form-group col-12 m-0">
         <label class="col-form-label font-weight-bold">
           {{
-            "Module1.awqafService.EndowmentAcceptDonations" | localize
+            "EndowmentModule.EndowmentRgistrationService.EndowmentAcceptDonations" | localize
           }}</label
         >
       </div>
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentAcceptDonations" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentAcceptDonations" | localize }}
         </label>
         <p-inputSwitch
           [(ngModel)]="InputEndowmentDto.acceptDonations"
@@ -168,7 +168,7 @@
       </div>
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentacceptGiveaways" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentacceptGiveaways" | localize }}
         </label>
         <p-inputSwitch
           [(ngModel)]="InputEndowmentDto.acceptGiveaways"
@@ -213,7 +213,7 @@
 
       <div class="form-group col-12">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentCondation" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentCondation" | localize }}
         </label>
         <textarea
           [rows]="5"
@@ -229,7 +229,7 @@
           class=""
         >
           <p *ngIf="condition.errors" class="text-danger pt-1 small">
-            {{ "Module1.awqafService.EndowmentCondationValidation" | localize }}
+            {{ "EndowmentModule.EndowmentRgistrationService.EndowmentCondationValidation" | localize }}
           </p>
         </div>
       </div>
@@ -238,13 +238,13 @@
       <div class="mt-4 col-12">
         <h3 class="text-awq-primary my-3">
           <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
-          {{ "Module1.awqafService.EndowmentdeedInfo" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedInfo" | localize }}
         </h3>
       </div>
 
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentdeedNumber" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumber" | localize }}
           <span class="text-danger">*</span></label
         >
         <input
@@ -263,7 +263,7 @@
         >
           <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">
             {{
-              "Module1.awqafService.EndowmentdeedNumberValidation" | localize
+              "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumberValidation" | localize
             }}
           </p>
         </div>
@@ -284,7 +284,7 @@
 
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentdeedRegion" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedRegion" | localize }}
           <span class="text-danger">*</span></label
         >
         <select
@@ -305,7 +305,7 @@
 
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentdeedCity" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCity" | localize }}
           <span class="text-danger">*</span></label
         >
         <select
@@ -324,7 +324,7 @@
 
       <div class="form-group col">
         <label class="col-form-label">
-          {{ "Module1.awqafService.EndowmentdeedCourt" | localize }}
+          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCourt" | localize }}
           <span class="text-danger">*</span></label
         >
         <select
@@ -347,7 +347,7 @@
       <div class="form-group col-12">
         <div class="d-flex">
           <label class="col col-form-label">
-            {{ "Module1.awqafService.EndowmentdeedAttachement" | localize }}
+            {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement" | localize }}
 
             <span class="text-danger">*</span></label
           >
@@ -379,7 +379,7 @@
         [disabled]="navigationButtonsDisabled"
         (click)="onNextBtnClicked()"
       >
-        {{ "Module1.awqafService.ButtonNext" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.ButtonNext" | localize }}
       </button>
     </div>
     <button
@@ -389,7 +389,7 @@
       (click)="onBackBtnClicked()"
       awPreviousStep
     >
-      {{ "Module1.awqafService.ButtonPreviouse" | localize }}
+      {{ "EndowmentModule.EndowmentRgistrationService.ButtonPreviouse" | localize }}
     </button>
   </div>
 </form>

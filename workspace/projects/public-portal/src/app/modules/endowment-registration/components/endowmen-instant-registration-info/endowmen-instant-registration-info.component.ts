@@ -3,7 +3,6 @@ import { ApiResponseOfOutputEndowmentDetailsDto, EndowmentRegistrationServicePro
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
-import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
 
 @Component({
   selector: 'app-endowmen-instant-registration-info',

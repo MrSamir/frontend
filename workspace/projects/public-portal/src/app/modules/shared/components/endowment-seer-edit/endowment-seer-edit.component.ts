@@ -6,6 +6,7 @@ import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
@@ -24,24 +25,25 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   @Output() OnCancelClick = new EventEmitter();
   @Input() seers: OutputSeerDto[] = [];
 
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionsLookups: LookupDto[] = [];
   sifaEtibariLookups: LookupDto[] = [];
-  seerTypeLookup:LookupDto[]=[];
+  seerTypeLookup: LookupDto[] = [];
   educationLevelLookups: LookupDto[] = [];
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  seerToCreate:AddSeerInputDto;
+  seerToCreate: AddSeerInputDto;
   seerToEditIndex: number;
   isEditRequested: boolean = false;
-  citizenToView: CitizenInfoResponse;
-  alienToView: AlienInfoResponse;
+  citizenToView: CitizenInfoResponse | undefined;
+  alienToView: AlienInfoResponse | undefined;
   oldSeedDeedAttachmentId: string;
-  newCitizen: CitizenInfoResponse;
-  newAlien: AlienInfoResponse;
-  newPerson: InputApplicationUserDto ; // When we finish yakeen validation we ask the system for the person if found through his IdNumber, if yes, then mobile/email will be readonly
+  newCitizen: CitizenInfoResponse | undefined;
+  newAlien: AlienInfoResponse | undefined;
+  newPerson: InputApplicationUserDto | undefined; // When we finish yakeen validation we ask the system for the person if found through his IdNumber, if yes, then mobile/email will be readonly
   isCitizen: boolean;
   isAddRequested: boolean;
   requestId: string;
+  activeCrudOperation: CrudOperation = CrudOperation.Create;
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -57,8 +59,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
 
 
-  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy, injector: Injector)
-  {
+  constructor(private modalService: NgbModal, private lookupssrv: LookupApplicationServiceProxy, injector: Injector) {
     super(injector);
   }
 
@@ -75,7 +76,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   editSeer(content: any, index: number) {
-    //his.activeCrudOperation = CrudOperation.Update;
+    this.activeCrudOperation = CrudOperation.Update;
     this.reset();
     this.isEditRequested = true;
     this.seerToEditIndex = index;
@@ -99,15 +100,15 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   reset() {
-    this.newCitizen = new CitizenInfoResponse();
-    this.newAlien = new AlienInfoResponse();
-    this.citizenToView = new CitizenInfoResponse();
-    this.alienToView = new AlienInfoResponse();
-    this.newPerson = new InputApplicationUserDto();
-    this.isEditRequested = false;
+    this.newCitizen = undefined;
+    this.newAlien = undefined;
+    this.citizenToView = undefined;
+    this.alienToView = undefined;
+    this.newPerson = undefined;
+    //this.isEditRequested = false;
 
     this.seerToCreate = new AddSeerInputDto();
-    this.seerToCreate.seerPerson =new OutputApplicationUserDto();
+    this.seerToCreate.seerPerson = new OutputApplicationUserDto();
     this.seerToCreate.createSeerInputDto = new CreateSeerInputDto();
     this.isAddRequested = true;
     this.seerToCreate.requestId = this.requestId;
@@ -118,7 +119,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     // if (seerToDelete.personId == this.mainApplicantPerson.applicantPersonId) {
     //   return;
     // }
-    this.OnDeletingExistingSeer.emit({seerToDelete,index});
+    this.OnDeletingExistingSeer.emit({ seerToDelete, index });
   }
 
   onNewCitizenAvailable(event: {
@@ -150,9 +151,15 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }) {
     //let educationLevel: number =this.seerToCreate.createSeerInputDto.educationLevelId;
     this.newPerson = event.person;
+    this.seerToCreate.seerPerson = new InputApplicationUserDto()
     this.seerToCreate.seerPerson.init(this.newPerson);
     this.seerToCreate.seerPerson.gender =
-    this.seerToCreate.seerPerson.gender.toString() === 'Male' ? 0 : 1;
+      this.seerToCreate.seerPerson.gender.toString() === ('Male' || 'M') ? 0 : 1;
+    this.seerToCreate.createSeerInputDto.seerId = this.newPerson.id;
+    this.seerToCreate.requestId = this.requestId;
+    this.seerToCreate.seerPerson.phoneNumber = this.newPerson.phoneNumber;
+    this.seerToCreate.seerPerson.email = this.newPerson.email;
+
     //this.seerToCreate.createSeerInputDto.educationLevelId
     // if( !!event.person ) {
     //   this.newSeer.email = event.person.email;
@@ -181,12 +188,13 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   //   });
   // }
   onAddNewSeer(content: any) {
+    debugger;
     this.reset();
+    this.activeCrudOperation = CrudOperation.Create;
     this.modalService.open(content, { size: 'lg' });
   }
 
-  addToSeerList()
-  {
+  addToSeerList() {
     this.OnAddingNewSeer.emit(this.seerToCreate);
   }
 
@@ -307,8 +315,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     // });
   }
 
-  fetchSeerLookup()
-  {
+  fetchSeerLookup() {
     this.lookupfliter.lookUpName = "EndowmentPartiesType";
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
@@ -318,6 +325,13 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
       });
 
+  }
+  get isUpdateMode() {
+    return this.activeCrudOperation === CrudOperation.Update;
+  }
+
+  get isCreateMode() {
+    return this.activeCrudOperation === CrudOperation.Create;
   }
 
 }

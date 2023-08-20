@@ -71,7 +71,7 @@
       </div>
       <div class="modal-body fixed-modal-body pt-0">
 
-        <yakeen-person *ngIf="isEditRequested||!viewOnly"
+        <yakeen-person *ngIf="isUpdateMode || isCreateMode"
                        (OnNewPersonAvailable)="onNewPersonAvailable($event)"
                        (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
                        (OnNewAlienValidated)="onNewAlienAvailable($event)"
@@ -195,7 +195,7 @@
           </div>
         </div>
       </div>
-      <ng-container *ngIf="!isEditRequested&&!viewOnly">
+      <ng-container *ngIf="isCreateMode&&!viewOnly">
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-awq-secondary px-6"
                   [disabled]="seerListForm.form?.invalid || isSeerDeedAttachmentUploaded" (click)="addToSeerList()">
@@ -204,7 +204,7 @@
           </button>
         </div>
       </ng-container>
-      <ng-container *ngIf="isEditRequested&&!viewOnly">
+      <ng-container *ngIf="isUpdateMode&&!viewOnly">
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-warning px-6" [disabled]="seerListForm.form?.invalid"
                   (click)="onEditBtnClicked()">

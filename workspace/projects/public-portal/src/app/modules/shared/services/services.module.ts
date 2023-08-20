@@ -22,6 +22,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
     ServiceProxy.AccountProxy,
     ServiceProxy.YaqeenApplicationServiceProxy,
     ServiceProxy.MOJApplicationServiceProxy,
+    ServiceProxy.MojDataMigrationApplicationServicesProxy
   ],
 })
 export class ServicesProxyModule {

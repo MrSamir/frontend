@@ -266,7 +266,7 @@ export class EndowmentInfoEditComponent implements OnInit {
         //   (err: ApiException) => handleServiceProxyError(err)
         // );
         (data) => {
-          //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
+          //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
           //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
         }
       );
