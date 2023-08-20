@@ -1,312 +1,303 @@
 // Class definition
-var KTnoUiSliderDemos = function() {
+var KTnoUiSliderDemos = (function () {
+  // Private functions
 
-    // Private functions
+  var demo1 = function () {
+    // init slider
+    var slider = document.getElementById("kt_nouislider_1");
 
-     
-    var demo1 = function() {
-        // init slider
-        var slider = document.getElementById('kt_nouislider_1');
+    noUiSlider.create(slider, {
+      start: [0],
+      step: 2,
+      range: {
+        min: [0],
+        max: [10],
+      },
+      format: wNumb({
+        decimals: 0,
+      }),
+    });
 
-        noUiSlider.create(slider, {
-            start: [ 0 ],
-            step: 2,
-            range: {
-                'min': [ 0 ],
-                'max': [ 10 ]
-            },
-            format: wNumb({
-                decimals: 0 
-            })
-        });
+    // init slider input
+    var sliderInput = document.getElementById("kt_nouislider_1_input");
 
-        // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_1_input');
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
 
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
+    sliderInput.addEventListener("change", function () {
+      slider.noUiSlider.set(this.value);
+    });
+  };
 
-        sliderInput.addEventListener('change', function(){
-            slider.noUiSlider.set(this.value);
-        });
+  var demo2 = function () {
+    // init slider
+    var slider = document.getElementById("kt_nouislider_2");
+
+    noUiSlider.create(slider, {
+      start: [20000],
+      connect: [true, false],
+      step: 1000,
+      range: {
+        min: [20000],
+        max: [80000],
+      },
+      format: wNumb({
+        decimals: 3,
+        thousand: ".",
+        postfix: " (US $)",
+      }),
+    });
+
+    // init slider input
+    var sliderInput = document.getElementById("kt_nouislider_2_input");
+
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
+
+    sliderInput.addEventListener("change", function () {
+      slider.noUiSlider.set(this.value);
+    });
+  };
+
+  var demo3 = function () {
+    // init slider
+    var slider = document.getElementById("kt_nouislider_3");
+
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      direction: "rtl",
+      tooltips: [true, wNumb({ decimals: 1 })],
+      range: {
+        min: [0],
+        "10%": [10, 10],
+        "50%": [80, 50],
+        "80%": 150,
+        max: 200,
+      },
+    });
+
+    // init slider input
+    var sliderInput0 = document.getElementById("kt_nouislider_3_input");
+    var sliderInput1 = document.getElementById("kt_nouislider_3.1_input");
+    var sliderInputs = [sliderInput1, sliderInput0];
+
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInputs[handle].value = values[handle];
+    });
+  };
+
+  var demo4 = function () {
+    var slider = document.getElementById("kt_nouislider_input_select");
+
+    // Append the option elements
+    for (var i = -20; i <= 40; i++) {
+      var option = document.createElement("option");
+      option.text = i;
+      option.value = i;
+
+      slider.appendChild(option);
     }
 
-    var demo2 = function() {
-        // init slider
-        var slider = document.getElementById('kt_nouislider_2');
+    // init slider
+    var html5Slider = document.getElementById("kt_nouislider_4");
 
-        noUiSlider.create(slider, {
-            start: [ 20000 ],
-            connect: [true, false],
-            step: 1000,
-            range: {
-                'min': [ 20000 ],
-                'max': [ 80000 ]
-            },
-            format: wNumb({
-                decimals: 3,
-                thousand: '.',
-                postfix: ' (US $)',
-            })
-        });
+    noUiSlider.create(html5Slider, {
+      start: [10, 30],
+      connect: true,
+      range: {
+        min: -20,
+        max: 40,
+      },
+    });
 
-        // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_2_input');
+    // init slider input
+    var inputNumber = document.getElementById("kt_nouislider_input_number");
 
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
+    html5Slider.noUiSlider.on("update", function (values, handle) {
+      var value = values[handle];
 
-        sliderInput.addEventListener('change', function(){
-            slider.noUiSlider.set(this.value);
-        });
-    }
+      if (handle) {
+        inputNumber.value = value;
+      } else {
+        slider.value = Math.round(value);
+      }
+    });
 
-    var demo3 = function() {
-        // init slider
-        var slider = document.getElementById('kt_nouislider_3');
+    slider.addEventListener("change", function () {
+      html5Slider.noUiSlider.set([this.value, null]);
+    });
 
-        noUiSlider.create(slider, {
-            start: [20, 80],
-            connect: true,
-            direction: 'rtl',
-            tooltips: [true, wNumb({ decimals: 1 })],
-            range: {
-                'min': [0],
-                '10%': [10, 10],
-                '50%': [80, 50],
-                '80%': 150,
-                'max': 200
-            }
-        });
-       
+    inputNumber.addEventListener("change", function () {
+      html5Slider.noUiSlider.set([null, this.value]);
+    });
+  };
 
-        // init slider input
-        var sliderInput0 = document.getElementById('kt_nouislider_3_input');
-        var sliderInput1 = document.getElementById('kt_nouislider_3.1_input');
-        var sliderInputs = [sliderInput1, sliderInput0];        
+  var demo5 = function () {
+    // init slider
+    var slider = document.getElementById("kt_nouislider_5");
 
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInputs[handle].value = values[handle];
-        });
-    }
+    noUiSlider.create(slider, {
+      start: 20,
+      range: {
+        min: 0,
+        max: 100,
+      },
+      pips: {
+        mode: "values",
+        values: [20, 80],
+        density: 4,
+      },
+    });
 
-    var demo4 = function() {
+    var sliderInput = document.getElementById("kt_nouislider_5_input");
 
-       var slider = document.getElementById('kt_nouislider_input_select');
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
 
-        // Append the option elements
-        for ( var i = -20; i <= 40; i++ ){
+    sliderInput.addEventListener("change", function () {
+      slider.noUiSlider.set(this.value);
+    });
 
-            var option = document.createElement("option");
-                option.text = i;
-                option.value = i;
+    slider.noUiSlider.on("change", function (values, handle) {
+      if (values[handle] < 20) {
+        slider.noUiSlider.set(20);
+      } else if (values[handle] > 80) {
+        slider.noUiSlider.set(80);
+      }
+    });
+  };
 
-            slider.appendChild(option);
-        }
+  var demo6 = function () {
+    // init slider
 
-        // init slider
-        var html5Slider = document.getElementById('kt_nouislider_4');
+    var verticalSlider = document.getElementById("kt_nouislider_6");
 
-        noUiSlider.create(html5Slider, {
-            start: [ 10, 30 ],
-            connect: true,
-            range: {
-                'min': -20,
-                'max': 40
-            }
-        });
+    noUiSlider.create(verticalSlider, {
+      start: 40,
+      orientation: "vertical",
+      range: {
+        min: 0,
+        max: 100,
+      },
+    });
 
-        // init slider input
-        var inputNumber = document.getElementById('kt_nouislider_input_number');
+    // init slider input
+    var sliderInput = document.getElementById("kt_nouislider_6_input");
 
-        html5Slider.noUiSlider.on('update', function( values, handle ) {
+    verticalSlider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
 
-            var value = values[handle];
+    sliderInput.addEventListener("change", function () {
+      verticalSlider.noUiSlider.set(this.value);
+    });
+  };
 
-            if ( handle ) {
-                inputNumber.value = value;
-            } else {
-                slider.value = Math.round(value);
-            }
-        });
+  // Modal demo
 
-        slider.addEventListener('change', function(){
-            html5Slider.noUiSlider.set([this.value, null]);
-        });
+  var modaldemo1 = function () {
+    var slider = document.getElementById("kt_nouislider_modal1");
 
-        inputNumber.addEventListener('change', function(){
-            html5Slider.noUiSlider.set([null, this.value]);
-        });
-    }
- 
-    var demo5 = function() {
-        // init slider
-        var slider = document.getElementById('kt_nouislider_5');
+    noUiSlider.create(slider, {
+      start: [0],
+      step: 2,
+      range: {
+        min: [0],
+        max: [10],
+      },
+      format: wNumb({
+        decimals: 0,
+      }),
+    });
 
-        noUiSlider.create(slider, {
-            start: 20,
-            range: {
-                min: 0,
-                max: 100
-            },
-            pips: {
-                mode: 'values',
-                values: [20, 80],
-                density: 4
-            }
-        });
+    // init slider input
+    var sliderInput = document.getElementById("kt_nouislider_modal1_input");
 
-        var sliderInput = document.getElementById('kt_nouislider_5_input');
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
 
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
+    sliderInput.addEventListener("change", function () {
+      slider.noUiSlider.set(this.value);
+    });
+  };
 
-        sliderInput.addEventListener('change', function(){
-            slider.noUiSlider.set(this.value);
-        });
+  var modaldemo2 = function () {
+    var slider = document.getElementById("kt_nouislider_modal2");
 
-        slider.noUiSlider.on('change', function ( values, handle ) {
-            if ( values[handle] < 20 ) {
-                slider.noUiSlider.set(20);
-            } else if ( values[handle] > 80 ) {
-                slider.noUiSlider.set(80);
-            }
-        });
-    }
+    noUiSlider.create(slider, {
+      start: [20000],
+      connect: [true, false],
+      step: 1000,
+      range: {
+        min: [20000],
+        max: [80000],
+      },
+      format: wNumb({
+        decimals: 3,
+        thousand: ".",
+        postfix: " (US $)",
+      }),
+    });
 
-    var demo6 = function() {
-        // init slider             
+    // init slider input
+    var sliderInput = document.getElementById("kt_nouislider_modal2_input");
 
-        var verticalSlider = document.getElementById('kt_nouislider_6');
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInput.value = values[handle];
+    });
 
-        noUiSlider.create(verticalSlider, {
-            start: 40,
-            orientation: 'vertical',
-            range: {
-                'min': 0,
-                'max': 100
-            }
-        }); 
+    sliderInput.addEventListener("change", function () {
+      slider.noUiSlider.set(this.value);
+    });
+  };
 
-        // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_6_input');
+  var modaldemo3 = function () {
+    var slider = document.getElementById("kt_nouislider_modal3");
 
-        verticalSlider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
+    noUiSlider.create(slider, {
+      start: [20, 80],
+      connect: true,
+      direction: "rtl",
+      tooltips: [true, wNumb({ decimals: 1 })],
+      range: {
+        min: [0],
+        "10%": [10, 10],
+        "50%": [80, 50],
+        "80%": 150,
+        max: 200,
+      },
+    });
 
-        sliderInput.addEventListener('change', function(){
-            verticalSlider.noUiSlider.set(this.value);
-        });      
-    }    
+    // init slider input
+    var sliderInput0 = document.getElementById("kt_nouislider_modal1.1_input");
+    var sliderInput1 = document.getElementById("kt_nouislider_modal1.2_input");
+    var sliderInputs = [sliderInput1, sliderInput0];
 
-    // Modal demo
+    slider.noUiSlider.on("update", function (values, handle) {
+      sliderInputs[handle].value = values[handle];
+    });
+  };
+  return {
+    // public functions
+    init: function () {
+      demo1();
+      demo2();
+      demo3();
+      demo4();
+      demo5();
+      demo6();
+      modaldemo1();
+      modaldemo2();
+      modaldemo3();
+    },
+  };
+})();
 
-    var modaldemo1 = function() {
-        var slider = document.getElementById('kt_nouislider_modal1');
-
-        noUiSlider.create(slider, {
-            start: [ 0 ],
-            step: 2,
-            range: {
-                'min': [ 0 ],
-                'max': [ 10 ]
-            },
-            format: wNumb({
-                decimals: 0 
-            })
-        });
-
-        // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_modal1_input');
-
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
-
-        sliderInput.addEventListener('change', function(){
-            slider.noUiSlider.set(this.value);
-        });
-    }
-
-    var modaldemo2 = function() {
-        var slider = document.getElementById('kt_nouislider_modal2');
-
-        noUiSlider.create(slider, {
-            start: [ 20000 ],
-            connect: [true, false],
-            step: 1000,
-            range: {
-                'min': [ 20000 ],
-                'max': [ 80000 ]
-            },
-            format: wNumb({
-                decimals: 3,
-                thousand: '.',
-                postfix: ' (US $)',
-            })
-        });
-
-        // init slider input
-        var sliderInput = document.getElementById('kt_nouislider_modal2_input');
-
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInput.value = values[handle];
-        });
-
-        sliderInput.addEventListener('change', function(){
-            slider.noUiSlider.set(this.value);
-        });
-    }
-
-    var modaldemo3 = function() {
-        var slider = document.getElementById('kt_nouislider_modal3');
-
-        noUiSlider.create(slider, {
-            start: [20, 80],
-            connect: true,
-            direction: 'rtl',
-            tooltips: [true, wNumb({ decimals: 1 })],
-            range: {
-                'min': [0],
-                '10%': [10, 10],
-                '50%': [80, 50],
-                '80%': 150,
-                'max': 200
-            }
-        });
-       
-
-        // init slider input
-        var sliderInput0 = document.getElementById('kt_nouislider_modal1.1_input');
-        var sliderInput1 = document.getElementById('kt_nouislider_modal1.2_input');
-        var sliderInputs = [sliderInput1, sliderInput0];        
-
-        slider.noUiSlider.on('update', function( values, handle ) {
-            sliderInputs[handle].value = values[handle];
-        });
-    }
-    return {
-        // public functions
-        init: function() {
-            demo1();
-            demo2();
-            demo3();  
-            demo4(); 
-            demo5();  
-            demo6(); 
-            modaldemo1();
-            modaldemo2();
-            modaldemo3();                           
-        }
-    };
-}();
-
-jQuery(document).ready(function() {
-    KTnoUiSliderDemos.init();
+jQuery(document).ready(function () {
+  KTnoUiSliderDemos.init();
 });
-
-

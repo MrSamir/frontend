@@ -1,6 +1,16 @@
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
-import { ApiException, EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupApplicationServiceProxy, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
+import {
+  ApiException,
+  EndowmentRegistrationServiceProxy,
+  InputAssetDto,
+  InputLookUpDto,
+  InputOneAssetDto,
+  InputRemoveAssetDto,
+  LookupApplicationServiceProxy,
+  LookupDto,
+  OutputAssetDto,
+} from '../../../shared/services/services-proxies/service-proxies';
 //import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
@@ -11,7 +21,6 @@ import Swal from 'sweetalert2';
 import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
-
 import { ActivatedRoute } from '@angular/router';
 import { WizardStep } from 'angular-archwizard';
 
@@ -20,21 +29,20 @@ import { WizardStep } from 'angular-archwizard';
   templateUrl: './endowment-registration-new.component.html',
 })
 export class EndowmentRegistrationNewComponent implements OnInit {
-
   constructor(
     //private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
-    private lookupssrv:LookupApplicationServiceProxy,
-    private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceProxy,
-    private activatedRoute:ActivatedRoute
-    ) { }
+    private lookupssrv: LookupApplicationServiceProxy,
+    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
+    private activatedRoute: ActivatedRoute
+  ) {}
   //constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceProxy) { }
 
-  @Input() viewOnly: boolean = false;
+  @Input() viewOnly = false;
   @Input() @Output() request: any;
   @Input() requestId: string;
   @Input() waqfId: string | undefined;
-   phaseId;
+  phaseId;
   //@ViewChild(NgForm, { static: false }) form: NgForm;
 
   map: MapModel;
@@ -45,16 +53,16 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   cancelAsset: OutputAssetDto;
   assetToEditIndex: number;
 
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
-  AssetTypeLookup: LookupDto[]=[] ;
-  AssetSizeLookup: LookupDto[]=[];
-  RegionLookup: LookupDto[]=[];
-  CityLookup: LookupDto[]=[];
-  AssetSubType: LookupDto[]=[];
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
+  AssetTypeLookup: LookupDto[] = [];
+  AssetSizeLookup: LookupDto[] = [];
+  RegionLookup: LookupDto[] = [];
+  CityLookup: LookupDto[] = [];
+  AssetSubType: LookupDto[] = [];
   OneRequestAsset: InputOneAssetDto;
   assetTypeMap: { [value: number]: string } = {};
 
-  isEditRequested: boolean = false;
+  isEditRequested = false;
   oldOwnershipDeedAttachementId: string;
   oldFiscalAssetAttachementId: string;
   oldCommercialRegisterAttachmentId: string;
@@ -68,12 +76,10 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.getLoggedInUserData();
 
     if (this.requestId == undefined) {
-      if (this.request == undefined || this.request.id == undefined){
+      if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
-        this.phaseId=this.activatedRoute.snapshot.params['phaseId'];
-         
-      }
-      else {
+        this.phaseId = this.activatedRoute.snapshot.params['phaseId'];
+      } else {
         this.requestId = this.request.id;
       }
     }
@@ -83,86 +89,71 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.loadAssetsBy();
   }
 
+  _applicantData: AspNetUser = new AspNetUser();
 
- _applicantData: AspNetUser = new AspNetUser();
+  getLoggedInUserData() {
+    // this._serviceProxy.getByUserName()
 
-  getLoggedInUserData(){
+    this._applicantData.FirstNameAr = '????';
+    this._applicantData.SecondNameAr = '????';
+    this._applicantData.ThirdNameAr = '????';
+    this._applicantData.LastNameAr = '????';
+    this._applicantData.IdNumber = '2088755802';
+    this._applicantData.BirthDateGregorian = new Date(Date.parse('01/08/1984'));
 
+    this._applicantData.NationalityName = '????';
 
-// this._serviceProxy.getByUserName()
-
-
-    this._applicantData.FirstNameAr="????"
-    this._applicantData.SecondNameAr="????"
-    this._applicantData.ThirdNameAr="????"
-    this._applicantData.LastNameAr="????"
-    this._applicantData.IdNumber="2088755802"
-    this._applicantData.BirthDateGregorian=new Date(Date.parse("01/08/1984"));
-
-
-    this._applicantData.NationalityName="????"
-
-
-    this._applicantData.IsAlive=true;
-    this._applicantData.MobileNumber="2088755802"
-    this._applicantData.Email="m.eldesouky.c@awqaf.gov.sa"
-    this._applicantData.Gender=0;
-
+    this._applicantData.IsAlive = true;
+    this._applicantData.MobileNumber = '2088755802';
+    this._applicantData.Email = 'm.eldesouky.c@awqaf.gov.sa';
+    this._applicantData.Gender = 0;
   }
 
-  InitiateRequest(){
-    
-
-    }
-
-    async onAddNewAssetClicked(content: any) {
-      if (this.requestId == undefined) {
-        if (this.request == undefined || this.request.id == undefined)
-          this.requestId ='';// this.activatedRoute.snapshot.params['requestId'];
-        else {
-          this.requestId = this.request.id;
-        }
+  async onAddNewAssetClicked(content: any) {
+    if (this.requestId == undefined) {
+      if (this.request == undefined || this.request.id == undefined) {
+        this.requestId = '';
+      } // this.activatedRoute.snapshot.params['requestId'];
+      else {
+        this.requestId = this.request.id;
       }
-      this.newAsset = new InputAssetDto();
-      this.newAsset.requestId = this.requestId;
-      // this.newAsset.isDirectlyBenefited = true;
-      await this.loadAssetType();
-
-      await this.loadAssetSize();
-      this.isEditRequested = false;
-      this.modalService.open(content, { size: 'lg', backdrop: 'static' });
     }
+    this.newAsset = new InputAssetDto();
+    this.newAsset.requestId = this.requestId;
+    // this.newAsset.isDirectlyBenefited = true;
+    await this.loadAssetType();
 
-    loadAssetType() {
-      this.lookupfliter.lookUpName = "AssetType";
+    await this.loadAssetSize();
+    this.isEditRequested = false;
+    this.modalService.open(content, { size: 'lg', backdrop: 'static' });
+  }
+
+  loadAssetType() {
+    this.lookupfliter.lookUpName = 'AssetType';
     this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.AssetTypeLookup = data.dto.items!;
-        console.log(data);
-      });
-
-    }
-    loadAssetSize() {
-
-      this.lookupfliter.lookUpName = "AssetSize";
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
+      this.AssetTypeLookup = data.dto.items!;
+      console.log(data);
+    });
+  }
+  loadAssetSize() {
+    this.lookupfliter.lookUpName = 'AssetSize';
     this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.AssetSizeLookup = data.dto.items!;
-        console.log(data);
-      });
-    }
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
+      this.AssetSizeLookup = data.dto.items!;
+      console.log(data);
+    });
+  }
 
-    onAddBtnClicked() {
-      //this.setIsAttachmentChanged();
+  onAddBtnClicked() {
+    //this.setIsAttachmentChanged();
 
-      this._serviceProxyEndowmentRegistraion.createWaqfRequestAsset(
-        this.newAsset
-      ).subscribe(
+    this._serviceProxyEndowmentRegistraion
+      .createWaqfRequestAsset(this.newAsset)
+      .subscribe(
         (data) => {
           if (data) {
-            let resAssetData = data;
+            const resAssetData = data;
             if (resAssetData.isSuccess) {
               this.loadAssetsBy();
               this.modalService.dismissAll();
@@ -181,16 +172,16 @@ export class EndowmentRegistrationNewComponent implements OnInit {
           //handleServiceProxyError(err);
         }
       );
-    }
+  }
 
-    onEditBtnClicked() {
-      this.newAsset.requestId = this.requestId; //set request ID
-      //this.setIsAttachmentChanged();
-      this._serviceProxyEndowmentRegistraion.editWaqfAssetRequest(
-        this.newAsset
-      ).subscribe(
+  onEditBtnClicked() {
+    this.newAsset.requestId = this.requestId; //set request ID
+    //this.setIsAttachmentChanged();
+    this._serviceProxyEndowmentRegistraion
+      .editWaqfAssetRequest(this.newAsset)
+      .subscribe(
         (data) => {
-          let resp = data; //as ApiResponse<any>;
+          const resp = data; //as ApiResponse<any>;
           if (resp.isSuccess) {
             this.loadAssetsBy();
             // showSuccess('تم تعديل الاصل بنجاح', () => {
@@ -204,63 +195,66 @@ export class EndowmentRegistrationNewComponent implements OnInit {
         }
       );
 
-      this.modalService.dismissAll();
-    }
+    this.modalService.dismissAll();
+  }
 
-    onCancelBtnClicked() {
-      this.modalService.dismissAll();
-    }
+  onCancelBtnClicked() {
+    this.modalService.dismissAll();
+  }
 
-     // Passed new Asset from Common Assets Component in order to add it through calling API from Parent component
+  // Passed new Asset from Common Assets Component in order to add it through calling API from Parent component
   OnAddingNewAsset(newAwqafAsset: InputAssetDto) {
     //this.setIsAttachmentChanged(newAwqafAsset);
-    this._serviceProxyEndowmentRegistraion.createWaqfRequestAsset(
-      newAwqafAsset
-    ).subscribe(
-      (data) => {
-        if (data) {
-          let resAssetData = data;
-          if (resAssetData.isSuccess) {
-            //showSuccess('تم إنشاء الاصل بنجاح', () => {
+    this._serviceProxyEndowmentRegistraion
+      .createWaqfRequestAsset(newAwqafAsset)
+      .subscribe(
+        (data) => {
+          if (data) {
+            const resAssetData = data;
+            if (resAssetData.isSuccess) {
+              //showSuccess('تم إنشاء الاصل بنجاح', () => {
               // console.log('res here: ', resAssetData);
               // this.newAsset.id = resAssetData.data.toString();
               // let obj = {asset: resAssetData.data}
               //this.modalService.dismissAll();
               //this.loadAssetsBy();
-            //});
+              //});
+            }
           }
+        },
+        (err: ApiException) => {
+          //handleServiceProxyError(err);
         }
-      },
-      (err: ApiException) => {
-        //handleServiceProxyError(err);
-      }
-    );
+      );
   }
 
   // Passed Asset from Common Assets Component in order to delete it through calling API from Parent component
-  OnDeletingExistingAsset(event: { assetToDelete: OutputAssetDto; index: number }) {
+  OnDeletingExistingAsset(event: {
+    assetToDelete: OutputAssetDto;
+    index: number;
+  }) {
     this.onDeleteTableCellClicked(event.assetToDelete, event.index);
   }
 
   OnEditingExistingAsset(CurrentAsset: InputAssetDto) {
     CurrentAsset.requestId = this.requestId; //set request ID
     //this.setIsAttachmentChanged();
-    this._serviceProxyEndowmentRegistraion.editWaqfAssetRequest(
-      CurrentAsset
-    ).subscribe(
-      (data) => {
-        let resp = data;
-        if (resp.isSuccess) {
-          // showSuccess('?? ????? ????? ?????', () => {
-          //   this.modalService.dismissAll();
-          //   this.loadAssetsBy();
-          // });
+    this._serviceProxyEndowmentRegistraion
+      .editWaqfAssetRequest(CurrentAsset)
+      .subscribe(
+        (data) => {
+          const resp = data;
+          if (resp.isSuccess) {
+            // showSuccess('?? ????? ????? ?????', () => {
+            //   this.modalService.dismissAll();
+            //   this.loadAssetsBy();
+            // });
+          }
+        },
+        (err: ApiException) => {
+          //handleServiceProxyError(err);
         }
-      },
-      (err: ApiException) => {
-        //handleServiceProxyError(err);
-      }
-    );
+      );
 
     this.modalService.dismissAll();
   }
@@ -279,25 +273,25 @@ export class EndowmentRegistrationNewComponent implements OnInit {
         this.OneRequestAsset.id = assetToDelete.requestId!;
         this.OneRequestAsset.requestId = this.requestId;
 
-        this._serviceProxyEndowmentRegistraion.deleteWaqfRequestAsset(
-          this.OneRequestAsset
-        ).subscribe((result) => {
-          if (result.isSuccess) {
-            this.loadAssetsBy();
-            //showSuccess('?? ??? ????? ?????',()=> {
+        this._serviceProxyEndowmentRegistraion
+          .deleteWaqfRequestAsset(this.OneRequestAsset)
+          .subscribe((result) => {
+            if (result.isSuccess) {
+              this.loadAssetsBy();
+              //showSuccess('?? ??? ????? ?????',()=> {
               //this.modalService.dismissAll();
-            //});
-            // showSuccess('?? ??? ????? ?????', () => {
-            //   this.modalService.dismissAll();
-            // });
-          } //else showError('?? ???? ???');
-        });
+              //});
+              // showSuccess('?? ??? ????? ?????', () => {
+              //   this.modalService.dismissAll();
+              // });
+            } //else showError('?? ???? ???');
+          });
       }
     });
   }
 
   isNewOrEditAssetValid() {
-    var asset = this.newAsset;
+    const asset = this.newAsset;
     return (
       !!asset.assetTypeId &&
       !!asset.assetSizeId &&
@@ -399,10 +393,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.waqfId === undefined ? this.loadAssets() : this.loadAssetsByWaqfId();
   }
 
-  loadAssetsByWaqfId()
-  {
-
+  loadAssetsByWaqfId() {
+    throw 'not implemented';
   }
-
-
 }

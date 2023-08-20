@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { EndowmentRegistrationNewComponent } from '../components/endowment-registration-new/endowment-registration-new.component';
 import { EndowmentRegistrationStartServiceComponent } from '../components/endowment-registration-start-service/endowment-registration-start-service.component';
- 
-
 
 const routes: Routes = [
   {
@@ -29,6 +27,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class EndowmentRegistrationRoutingModule { }
+export class EndowmentRegistrationRoutingModule {}

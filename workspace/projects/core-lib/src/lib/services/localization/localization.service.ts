@@ -4,7 +4,7 @@ import { CurrentLangaugeSubjectService } from '../current-langauge-subject.servi
 import { AppCoreSubjectService } from '../app-core-subject.service';
 import { AppInitializer } from '../../application-configuration-loader/appInitializer';
 import { currentCulture } from '../../Classes/currentCulture';
-import { appCore } from '../../Classes/appCore';
+import { AppCore } from '../../Classes/appCore';
 import { AppConfigSubjectService } from '../appConfigSubjectService';
 
 @Injectable({
@@ -44,7 +44,7 @@ export class LocalizationService {
     }
     const appCore = this.AppCoreSubject.getAppCore();
     const culture = appCore.localization.currentLanguage.name;
-   
+
     let translatedValue = !appCore.localization?.localizationDatas[culture][Key]
       ? Key
       : appCore.localization?.localizationDatas[culture][Key];

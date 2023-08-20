@@ -1,77 +1,216 @@
-<div class="row row-cols-1 row-cols-md-2" >
-    <div class="form-group col" >
-      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationType' | localize}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-      <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId" [(ngModel)]=assetInfoModel.fiscalAsset.assetSubTypeId (change)="subTypeChanged()"
-        [hidden]="viewOnly" required>
-        <option *ngFor="let assetSubType of assetSubTypes" value={{assetSubType.id}}>
-          {{assetSubType.name}}</option>
-      </select>
-      <label class="col-form-label font-weight-bold"
-        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.fiscalAsset.assetSubTypeId,assetSubTypes)}} </label>
-  
-      <div *ngIf="assetSubTypeId.invalid && (assetSubTypeId.dirty || assetSubTypeId.touched)" class="">
-        <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationTypeRequiredValidationLabel' | localize}}</p>
-      </div>
+<div class="row row-cols-1 row-cols-md-2">
+  <div class="form-group col">
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationType"
+          | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <select
+      class="custom-select"
+      #assetSubTypeId="ngModel"
+      name="assetSubTypeId"
+      [(ngModel)]="assetInfoModel.fiscalAsset.assetSubTypeId"
+      (change)="subTypeChanged()"
+      [hidden]="viewOnly"
+      required
+    >
+      <option
+        *ngFor="let assetSubType of assetSubTypes"
+        value="{{ assetSubType.id }}"
+      >
+        {{ assetSubType.name }}
+      </option>
+    </select>
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{
+        resolveLookup(assetInfoModel.fiscalAsset.assetSubTypeId, assetSubTypes)
+      }}
+    </label>
+
+    <div
+      *ngIf="
+        assetSubTypeId.invalid &&
+        (assetSubTypeId.dirty || assetSubTypeId.touched)
+      "
+      class=""
+    >
+      <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationTypeRequiredValidationLabel"
+            | localize
+        }}
+      </p>
     </div>
-    <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
-        <label  class="col-form-label"> {{numberOfshareLable}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
-         <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10" #numberOfShare="ngModel"
-        onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
-        name="numberOfShare" [(ngModel)]=assetInfoModel.fiscalAsset.numberOfShare
-        [pattern]="ePatternValidation.pattern_number" required>
-        <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.fiscalAsset.numberOfShare}} </label>
-      <div
-        *ngIf="numberOfShare.invalid && (numberOfShare.dirty || numberOfShare.touched)"
-        class="">
-        <p *ngIf="numberOfShare.errors?.['required']" class="text-danger pt-1 small">   {{numberOfshareLable}}  مطلوب
-        </p>
-        <p *ngIf="numberOfShare.errors?.['pattern']" class="text-danger pt-1 small">
-          يجب ان يكون {{numberOfshareLable}}  ارقاما
-           </p>
-      </div>
-    </div>
-    <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
-      <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberLabel' | localize}} <span *ngIf="!viewOnly" class="text-danger">*</span></label>
-    <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="20" #investmentPortfolioNumber="ngModel"
+  </div>
+  <div
+    class="form-group col"
+    *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined"
+  >
+    <label class="col-form-label">
+      {{ numberOfshareLable }}
+      <span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [hidden]="viewOnly"
+      [minLength]="1"
+      [maxLength]="10"
+      #numberOfShare="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
-      name="investmentPortfolioNumber" [(ngModel)]=assetInfoModel.fiscalAsset.investmentPortfolioNumber
-      [pattern]="ePatternValidation.pattern_number" required>
-      <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.fiscalAsset.investmentPortfolioNumber}} </label>
+      name="numberOfShare"
+      [(ngModel)]="assetInfoModel.fiscalAsset.numberOfShare"
+      [pattern]="ePatternValidation.pattern_number"
+      required
+    />
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.fiscalAsset.numberOfShare }}
+    </label>
     <div
-      *ngIf="investmentPortfolioNumber.invalid && (investmentPortfolioNumber.dirty || investmentPortfolioNumber.touched)"
-      class="">
-      <p *ngIf="investmentPortfolioNumber.errors?.['required']" class="text-danger pt-1 small">  {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberRequired' | localize}}
+      *ngIf="
+        numberOfShare.invalid && (numberOfShare.dirty || numberOfShare.touched)
+      "
+      class=""
+    >
+      <p
+        *ngIf="numberOfShare.errors?.['required']"
+        class="text-danger pt-1 small"
+      >
+        {{ numberOfshareLable }} مطلوب
       </p>
-      <p *ngIf="investmentPortfolioNumber.errors?.['pattern']" class="text-danger pt-1 small">
-        {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberDigitalvalidation' | localize}}
-         </p>
+      <p
+        *ngIf="numberOfShare.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        يجب ان يكون {{ numberOfshareLable }} ارقاما
+      </p>
     </div>
   </div>
-  <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
-      <label name="currentAssetValuelbl" class="col-form-label">{{currentassetvalueLabel}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-    <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="15" #currentAssetValue="ngModel"
+  <div
+    class="form-group col"
+    *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined"
+  >
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberLabel"
+          | localize
+      }}
+      <span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [hidden]="viewOnly"
+      [minLength]="1"
+      [maxLength]="20"
+      #investmentPortfolioNumber="ngModel"
+      onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
+      name="investmentPortfolioNumber"
+      [(ngModel)]="assetInfoModel.fiscalAsset.investmentPortfolioNumber"
+      [pattern]="ePatternValidation.pattern_number"
+      required
+    />
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.fiscalAsset.investmentPortfolioNumber }}
+    </label>
+    <div
+      *ngIf="
+        investmentPortfolioNumber.invalid &&
+        (investmentPortfolioNumber.dirty || investmentPortfolioNumber.touched)
+      "
+      class=""
+    >
+      <p
+        *ngIf="investmentPortfolioNumber.errors?.['required']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberRequired"
+            | localize
+        }}
+      </p>
+      <p
+        *ngIf="investmentPortfolioNumber.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberDigitalvalidation"
+            | localize
+        }}
+      </p>
+    </div>
+  </div>
+  <div
+    class="form-group col"
+    *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined"
+  >
+    <label name="currentAssetValuelbl" class="col-form-label"
+      >{{ currentassetvalueLabel
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [hidden]="viewOnly"
+      [minLength]="1"
+      [maxLength]="15"
+      #currentAssetValue="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 45 && event.charCode <= 57"
-      name="currentAssetValue" [(ngModel)]=assetInfoModel.fiscalAsset.currentAssetValue
-      [pattern]="ePatternValidation.pattern_decimal_values" required>
-      <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{assetInfoModel.fiscalAsset.currentAssetValue}} </label>
+      name="currentAssetValue"
+      [(ngModel)]="assetInfoModel.fiscalAsset.currentAssetValue"
+      [pattern]="ePatternValidation.pattern_decimal_values"
+      required
+    />
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+      >&nbsp;{{ assetInfoModel.fiscalAsset.currentAssetValue }}
+    </label>
     <div
-      *ngIf="currentAssetValue.invalid && (currentAssetValue.dirty || currentAssetValue.touched)"
-      class="">
-      <p *ngIf="currentAssetValue.errors?.['required']" class="text-danger pt-1 small">  {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalRequiredValidationLabel' | localize}}
+      *ngIf="
+        currentAssetValue.invalid &&
+        (currentAssetValue.dirty || currentAssetValue.touched)
+      "
+      class=""
+    >
+      <p
+        *ngIf="currentAssetValue.errors?.['required']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetFiscalRequiredValidationLabel"
+            | localize
+        }}
       </p>
-      <p *ngIf="currentAssetValue.errors?.['pattern']" class="text-danger pt-1 small">
-        {{'EndowmentModule.EndowmentRgistrationService.AssetFiscalNumberValidationLabel' | localize}}
-         </p>
+      <p
+        *ngIf="currentAssetValue.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetFiscalNumberValidationLabel"
+            | localize
+        }}
+      </p>
     </div>
   </div>
-    <div class="form-group col-12" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId!== undefined">
-  
-        <label class="col-form-label">{{assetAttachementLable}}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-  
-         <input type="hidden" #fiscalAssetAttachementId name="fiscalassetSelectedDocument" [(ngModel)]=assetInfoModel.fiscalAsset.fiscalAssetAttachementId required   >
-      <div class="input-group mb-3 download p-2">
-        <div class="flex-grow-1" >
-          <!-- <file-uploader
+  <div
+    class="form-group col-12"
+    *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined"
+  >
+    <label class="col-form-label"
+      >{{ assetAttachementLable
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+
+    <input
+      type="hidden"
+      #fiscalAssetAttachementId
+      name="fiscalassetSelectedDocument"
+      [(ngModel)]="assetInfoModel.fiscalAsset.fiscalAssetAttachementId"
+      required
+    />
+    <div class="input-group mb-3 download p-2">
+      <div class="flex-grow-1">
+        <!-- <file-uploader
             [showDownloadButton]="true"
             [showDeleteButton]="!viewOnly"
             [allowedExtensions]="['.pdf' ]"
@@ -81,8 +220,7 @@
             [serviceTypeId]="requestType.NewWaqf"
           >
           </file-uploader> -->
-        </div>
       </div>
     </div>
   </div>
-  
+</div>

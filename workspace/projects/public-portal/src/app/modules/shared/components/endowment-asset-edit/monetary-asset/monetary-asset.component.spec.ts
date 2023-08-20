@@ -8,9 +8,8 @@ describe('MonetaryAssetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonetaryAssetComponent ]
-    })
-    .compileComponents();
+      declarations: [MonetaryAssetComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MonetaryAssetComponent);
     component = fixture.componentInstance;

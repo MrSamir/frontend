@@ -1,124 +1,162 @@
-<aw-wizard #wizard [disableNavigationBar]="true" class="awq-custom" [navBarLayout]="'large-empty'"
-    navigateBackward="deny" navigateForward="deny">
+<aw-wizard
+  #wizard
+  [disableNavigationBar]="true"
+  class="awq-custom"
+  [navBarLayout]="'large-empty'"
+  navigateBackward="deny"
+  navigateForward="deny"
+>
+  <aw-wizard-step
+    stepTitle="معلومات المتقدم"
+    [navigationSymbol]="{ symbol: '1' }"
+    stepId="0"
+  >
+    <!--=========================   step one  =========================-->
+    <div class="aw-wrpper_content">
+      <app-endowment-applicant-CreateOrEdit
+        [RequestId]="requestId"
+      ></app-endowment-applicant-CreateOrEdit>
+    </div>
 
-    <aw-wizard-step stepTitle="معلومات المتقدم" [navigationSymbol]="{ symbol: '1' }" stepId="0">
-        <!--=========================   step one  =========================-->
-        <div class="aw-wrpper_content">
-            <app-endowment-applicant-CreateOrEdit [RequestId]="requestId"></app-endowment-applicant-CreateOrEdit> 
-        </div>
+    <div class="aw-btn">
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-awq-secondary"
+          awNextStep
+        >
+          التالي
+        </button>
+      </div>
+    </div>
+  </aw-wizard-step>
 
+  <!--=========================   step Tow  =========================-->
+  <aw-wizard-step
+    stepTitle="معلومات الوقف"
+    [navigationSymbol]="{ symbol: '2' }"
+    stepId="1"
+  >
+    <div class="aw-wrpper_content">
+      <app-endowment-info-edit></app-endowment-info-edit>
+    </div>
 
-
-        <div class="aw-btn">
+    <!-- <div class="aw-btn">
             <div>
-                <button type="button" (click)="InitiateRequest()"  class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
 
-            </div>
-
-
-        </div>
-    </aw-wizard-step>
-
-    <!--=========================   step Tow  =========================-->
-    <aw-wizard-step stepTitle="معلومات الوقف" [navigationSymbol]="{ symbol: '2' }" stepId="1">
-        <div class="aw-wrpper_content">
-            <app-endowment-info-edit></app-endowment-info-edit>
-        </div>
-
-
-
-
-        <!-- <div class="aw-btn">
-            <div>
-               
                 <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
             </div>
             <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
         </div> -->
+  </aw-wizard-step>
 
-    </aw-wizard-step>
+  <!--=========================   step three  =========================-->
 
+  <aw-wizard-step
+    stepTitle="أصول الوقف"
+    [navigationSymbol]="{ symbol: '3' }"
+    stepId="2"
+  >
+    <div class="aw-wrpper_content">
+      <!-- <app-endowment-assets-edit></app-endowment-assets-edit> -->
+      <app-endowment-shared-asset-edit></app-endowment-shared-asset-edit>
+    </div>
 
-    <!--=========================   step three  =========================-->
-
-    <aw-wizard-step stepTitle="أصول الوقف" [navigationSymbol]="{ symbol: '3' }" stepId="2">
-        <div class="aw-wrpper_content">
-            <!-- <app-endowment-assets-edit></app-endowment-assets-edit> -->
-            <app-endowment-shared-asset-edit></app-endowment-shared-asset-edit>
-        </div>
-
-
-        <div class="aw-btn">
-            <div>
-                <!-- <button type="button" [disabled]="requestDetails._requestDetailsform?.invalid"
+    <div class="aw-btn">
+      <div>
+        <!-- <button type="button" [disabled]="requestDetails._requestDetailsform?.invalid"
                 class="btn btn-outline-awq-secondary" (click)="setEntityNameForConsent()" awNextStep>التالي</button> -->
-                <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
-            </div>
-            <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
-        </div>
+        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
+          التالي
+        </button>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-awq-secondary"
+        awPreviousStep
+      >
+        السابق
+      </button>
+    </div>
+  </aw-wizard-step>
 
-    </aw-wizard-step>
+  <!--=========================   step Four  =========================-->
+  <aw-wizard-step
+    stepTitle="الواقفين"
+    [navigationSymbol]="{ symbol: '4' }"
+    stepId="3"
+  >
+    <div class="aw-wrpper_content">
+      <app-endowment-endowers-list></app-endowment-endowers-list>
+    </div>
 
+    <div class="aw-btn">
+      <div>
+        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
+          التالي
+        </button>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-awq-secondary"
+        awPreviousStep
+      >
+        السابق
+      </button>
+    </div>
+  </aw-wizard-step>
 
+  <!--=========================   step Five  =========================-->
+  <aw-wizard-step
+    stepTitle="النظارة"
+    [navigationSymbol]="{ symbol: '5' }"
+    stepId="4"
+  >
+    <div class="aw-wrpper_content">
+      <app-endowment-seers-list></app-endowment-seers-list>
+    </div>
 
+    <div class="aw-btn">
+      <div>
+        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
+          التالي
+        </button>
+      </div>
 
-    <!--=========================   step Four  =========================-->
-    <aw-wizard-step stepTitle="الواقفين" [navigationSymbol]="{ symbol: '4' }" stepId="3">
-        <div class="aw-wrpper_content">
-            <app-endowment-endowers-list></app-endowment-endowers-list>
-        </div>
+      <button
+        type="button"
+        class="btn btn-outline-awq-secondary"
+        awPreviousStep
+      >
+        السابق
+      </button>
+    </div>
+  </aw-wizard-step>
 
-
-
-        <div class="aw-btn">
-            <div>
-
-                <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
-            </div>
-            <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
-        </div>
-    </aw-wizard-step>
-
-
-
-    <!--=========================   step Five  =========================-->
-    <aw-wizard-step stepTitle="النظارة" [navigationSymbol]="{ symbol: '5' }" stepId="4">
-        <div class="aw-wrpper_content">
-            <app-endowment-seers-list></app-endowment-seers-list>
-        </div>
-
-
-        <div class="aw-btn">
-            <div>
-                <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
-            </div>
-
-            <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
-        </div>
-    </aw-wizard-step>
-
-
-
-
-
-
-    <!--=========================   step Six  =========================-->
-<aw-wizard-step stepTitle="المستفيدين" [navigationSymbol]="{ symbol: '6' }" stepId="5">
+  <!--=========================   step Six  =========================-->
+  <aw-wizard-step
+    stepTitle="المستفيدين"
+    [navigationSymbol]="{ symbol: '6' }"
+    stepId="5"
+  >
     <div class="aw-wrpper_content">
       <app-endowment-beneficiaries-list></app-endowment-beneficiaries-list>
     </div>
 
-
-
     <div class="aw-btn">
-        <div>
-            <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
-        </div>
+      <div>
+        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
+          التالي
+        </button>
+      </div>
 
-        <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
+      <button
+        type="button"
+        class="btn btn-outline-awq-secondary"
+        awPreviousStep
+      >
+        السابق
+      </button>
     </div>
-
   </aw-wizard-step>
-  
-
 </aw-wizard>
