@@ -16,6 +16,8 @@ import {EnumValidation} from "../../../components/IDNumberWithValidation/EnumVal
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { CitizenUtilities } from '../../../Models/CitizenInfo';
 import { AlienUtilities } from '../../../Models/alienInfo';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 
 
 @Component({
@@ -81,7 +83,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   ngOnInit(): void {
-    
+
     this.init();
   }
 
@@ -148,14 +150,24 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.modalService.open(content, { size: 'lg'});
   }
 
-  CheckDublicateItemInList(idNumber: string | undefined ) {
-    if(idNumber != undefined)
+  CheckDublicateItemInList(userName: string | undefined ) {
+    if(userName != undefined)
     {
-      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === idNumber);
+      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === userName);
       if (itemindex !== -1) {
         this.modalService.dismissAll();
-        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:idNumber });
+        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:userName });
         //showError(errMessage);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            errMessage
+          ),
+          summary: '',
+          enableService: true,
+        });
         return true;
       }
     }
@@ -199,17 +211,36 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
         newOwner.init(this.addOwnerInputDto);
         newOwner= res.dto;
         this.owners?.push(newOwner);
-        // showSuccess(translations.operationSuccess, () => {
-        //   this.modalService.dismissAll()
-        // });
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
         console.log(res.message);
         this.modalService.dismissAll()
       },
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       // (apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
 
-  deleteOwner(idNumber: string | undefined, index: number) {
+  deleteOwner(userName: string | undefined, index: number) {
     if( this.isOwnerMainApplicant(index)) {   // can't delete main applicant: refer to Brs 1.6
       return;
     }
@@ -225,8 +256,30 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     this.registerWaqfService.deleteEndowmer(input).subscribe(
       () => {
         this.owners.splice(index, 1);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
         //showSuccess(translations.operationSuccess);
       },
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //(apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
@@ -360,6 +413,16 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
 editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesTypeId;
     this.registerWaqfService.editEndowmer(editOwnerInputDto).subscribe(
       () => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.editOwnerSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
       //   showSuccess(translations.editOwnerSuccess, () => {
           this.owners[this.requestedOwnerIndexToEditOrView].endowmentPartiesTypeId = editOwnerInputDto.endowmentPartiesTypeId;
           this.child_ownertypeid.emit(editOwnerInputDto.endowmentPartiesTypeId);
@@ -371,6 +434,18 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
           this.modalService.dismissAll()
       //   });
        },
+       (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       // (apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
@@ -431,7 +506,7 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
     this.addOwnerInputDto.requestId = this.requestId;
     this.addOwnerInputDto.endowmerId = this.newPerson.id;
     this.addOwnerInputDto.endowmentId = this.waqfId;
-    
+
     if( this.activeCrudOperation === CrudOperation.Update) {
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
@@ -467,6 +542,18 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
 
   onNextClicked() {
     if (this.owners.length == 0) {
+      (error)=>{
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       //showError(translations.atLeastOneOwner);
       return;
     }

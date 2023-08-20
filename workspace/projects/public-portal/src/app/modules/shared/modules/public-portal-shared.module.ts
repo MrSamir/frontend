@@ -39,13 +39,11 @@ import { StepsModule } from 'primeng/steps';
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    CoreLibModule,
     SharecomponentModule,
     MultiSelectModule,
     FileUploadModule,
@@ -57,6 +55,7 @@ import { StepsModule } from 'primeng/steps';
     DropdownModule,
     PanelModule,
     StepsModule,
+ CoreLibModule,
   ],
   exports: [
     //EndowmentAssetsEditComponent,

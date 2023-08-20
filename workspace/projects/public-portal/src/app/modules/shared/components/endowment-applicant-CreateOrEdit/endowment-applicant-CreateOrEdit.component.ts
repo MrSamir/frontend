@@ -117,9 +117,7 @@ export class EndowmentApplicantCreateOrEditComponent
             detail: result.message!,
             severity: MessageSeverity.Success,
           });
-          this.router.navigate([
-            'registrationform/:requestId/:pahseId',
-            result.dto.id,2]);
+          this.router.navigate(['endowmentregistration/registrationform/' + result.dto.id + '/' + 2]);
         }else
         {
                     this.message.showMessage(MessageTypeEnum.toast, {

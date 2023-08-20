@@ -23,6 +23,12 @@ const routes: Routes = [
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
   },
+  {
+    path: 'directregistrationform',
+    component: EndowmentDirectRegisterationComponent,
+    data: { title: 'خدمة تسجيل فوري لوقف', breadcrumb: 'خدمة تسجيل فوري لوقف' },
+    title: 'خدمة تسجيل فوري لوقف',
+  },
 ];
 
 @NgModule({

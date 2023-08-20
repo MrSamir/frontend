@@ -3,6 +3,7 @@ import {
   AlienInfoResponse,
   CitizenInfoResponse,
   IdType,
+  InputApplicationUserDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupExtraData,
@@ -19,7 +20,7 @@ export class YakeenPersonViewComponent implements OnInit {
 
   @Input() citizen: CitizenInfoResponse | undefined;
   @Input() alien: AlienInfoResponse | undefined;
-  @Input() person: OutputApplicationUserDto;
+  @Input() person: InputApplicationUserDto;
   @Input() isCitizen: boolean;
   @Input() isHafeza:boolean;
   lookupfliter:InputLookUpDto=new InputLookUpDto();
