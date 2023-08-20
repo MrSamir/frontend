@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../models/LookupModel';
 import {
-  EndowmentRegistrationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
   InputOneAssetDto,

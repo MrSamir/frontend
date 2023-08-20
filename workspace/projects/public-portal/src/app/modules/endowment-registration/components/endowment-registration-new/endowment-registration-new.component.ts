@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
 import {
   ApiException,
@@ -12,7 +12,6 @@ import {
   OutputAssetDto,
 } from '../../../shared/services/services-proxies/service-proxies';
 //import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
-import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
@@ -22,7 +21,6 @@ import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.serv
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 import { ActivatedRoute } from '@angular/router';
-import { WizardStep } from 'angular-archwizard';
 
 @Component({
   selector: 'app-endowment-registration-new',

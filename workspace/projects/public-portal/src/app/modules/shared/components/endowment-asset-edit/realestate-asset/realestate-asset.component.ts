@@ -9,9 +9,7 @@ import {
   LookupDto,
   LookupExtraData,
 } from '../../../services/services-proxies/service-proxies';
-import { LookupModel } from '../../../models/LookupModel';
 import { MapModel } from '../../map/map.model';
-import { EnumLookuptypes } from '../../../models/EnumLookuptypes';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoadingService } from 'projects/core-lib/src/public-api';
 //import {LoginDemoComponent} from 'projects/shared-features-lib/src/lib/components/login-demo/login-demo.component'
 @Component({
   selector: 'app-root',

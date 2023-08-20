@@ -9,7 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "eslint --fix --quiet ./projects/public-portal"
+    "lint:public-portal": "eslint --fix --quiet ./projects/public-portal"
   },
   "private": true,
   "dependencies": {
@@ -59,7 +59,6 @@
     "eslint-plugin-import": "latest",
     "eslint-plugin-jsdoc": "latest",
     "eslint-plugin-prefer-arrow": "latest",
-    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-react": "latest",
     "eslint-plugin-unused-imports": "^3.0.0",
     "jasmine-core": "~4.5.0",
