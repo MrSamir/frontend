@@ -8,11 +8,12 @@ describe('IntellectualPropertyAndTrademarkAssetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IntellectualPropertyAndTrademarkAssetComponent ]
-    })
-    .compileComponents();
+      declarations: [IntellectualPropertyAndTrademarkAssetComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(IntellectualPropertyAndTrademarkAssetComponent);
+    fixture = TestBed.createComponent(
+      IntellectualPropertyAndTrademarkAssetComponent
+    );
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,21 +1,20 @@
 // Class definition
 
-var KTBootstrapSwitch = function() {
-
+var KTBootstrapSwitch = (function () {
   // Private functions
-  var demos = function() {
+  var demos = function () {
     // minimum setup
-    $('[data-switch=true]').bootstrapSwitch();
+    $("[data-switch=true]").bootstrapSwitch();
   };
 
   return {
     // public functions
-    init: function() {
+    init: function () {
       demos();
     },
   };
-}();
+})();
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
   KTBootstrapSwitch.init();
 });

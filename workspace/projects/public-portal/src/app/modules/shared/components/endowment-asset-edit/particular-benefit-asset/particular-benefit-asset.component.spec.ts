@@ -8,9 +8,8 @@ describe('ParticularBenefitAssetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ParticularBenefitAssetComponent ]
-    })
-    .compileComponents();
+      declarations: [ParticularBenefitAssetComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ParticularBenefitAssetComponent);
     component = fixture.componentInstance;

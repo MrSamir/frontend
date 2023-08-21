@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
   templateUrl: './endowment-seer-edit.component.html',
   styleUrls: ['./endowment-seer-edit.component.css']
 })
-export class EndowmentSeerEditComponent implements OnInit {
-  
+export class EndowmentSeerEditComponent extends ComponentBase implements OnInit {
+
   @Input() viewOnly: boolean = false;
   @Output() OnAddingNewSeer = new EventEmitter<AddSeerInputDto>();
   @Output() OnEditingExistingSeer = new EventEmitter<AddSeerInputDto>();
@@ -22,25 +24,26 @@ export class EndowmentSeerEditComponent implements OnInit {
   }>();
   @Output() OnCancelClick = new EventEmitter();
   @Input() seers: OutputSeerDto[] = [];
-  
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
+
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionsLookups: LookupDto[] = [];
   sifaEtibariLookups: LookupDto[] = [];
-  seerTypeLookup:LookupDto[]=[];
+  seerTypeLookup: LookupDto[] = [];
   educationLevelLookups: LookupDto[] = [];
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  seerToCreate:AddSeerInputDto;
+  seerToCreate: AddSeerInputDto;
   seerToEditIndex: number;
   isEditRequested: boolean = false;
-  citizenToView: CitizenInfoResponse;
-  alienToView: AlienInfoResponse;
+  citizenToView: CitizenInfoResponse | undefined;
+  alienToView: AlienInfoResponse | undefined;
   oldSeedDeedAttachmentId: string;
-  newCitizen: CitizenInfoResponse;
-  newAlien: AlienInfoResponse;
-  newPerson: InputApplicationUserDto ; // When we finish yakeen validation we ask the system for the person if found through his IdNumber, if yes, then mobile/email will be readonly
+  newCitizen: CitizenInfoResponse | undefined;
+  newAlien: AlienInfoResponse | undefined;
+  newPerson: InputApplicationUserDto | undefined; // When we finish yakeen validation we ask the system for the person if found through his IdNumber, if yes, then mobile/email will be readonly
   isCitizen: boolean;
   isAddRequested: boolean;
   requestId: string;
+  activeCrudOperation: CrudOperation = CrudOperation.Create;
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -53,11 +56,12 @@ export class EndowmentSeerEditComponent implements OnInit {
       console.log('alienToView: ', this.alienToView);
     },
   };
- 
-  
 
-  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy)
-  {}
+
+
+  constructor(private modalService: NgbModal, private lookupssrv: LookupApplicationServiceProxy, injector: Injector) {
+    super(injector);
+  }
 
   ngOnInit(): void {
     this.fetchSeerLookup();
@@ -72,7 +76,7 @@ export class EndowmentSeerEditComponent implements OnInit {
   }
 
   editSeer(content: any, index: number) {
-    //his.activeCrudOperation = CrudOperation.Update;
+    this.activeCrudOperation = CrudOperation.Update;
     this.reset();
     this.isEditRequested = true;
     this.seerToEditIndex = index;
@@ -96,15 +100,15 @@ export class EndowmentSeerEditComponent implements OnInit {
   }
 
   reset() {
-    this.newCitizen = new CitizenInfoResponse();
-    this.newAlien = new AlienInfoResponse();
-    this.citizenToView = new CitizenInfoResponse();
-    this.alienToView = new AlienInfoResponse();
-    this.newPerson = new InputApplicationUserDto();
-    this.isEditRequested = false;
+    this.newCitizen = undefined;
+    this.newAlien = undefined;
+    this.citizenToView = undefined;
+    this.alienToView = undefined;
+    this.newPerson = undefined;
+    //this.isEditRequested = false;
 
     this.seerToCreate = new AddSeerInputDto();
-    this.seerToCreate.seerPerson =new OutputApplicationUserDto();
+    this.seerToCreate.seerPerson = new OutputApplicationUserDto();
     this.seerToCreate.createSeerInputDto = new CreateSeerInputDto();
     this.isAddRequested = true;
     this.seerToCreate.requestId = this.requestId;
@@ -115,14 +119,14 @@ export class EndowmentSeerEditComponent implements OnInit {
     // if (seerToDelete.personId == this.mainApplicantPerson.applicantPersonId) {
     //   return;
     // }
-    this.OnDeletingExistingSeer.emit({seerToDelete,index});
+    this.OnDeletingExistingSeer.emit({ seerToDelete, index });
   }
 
   onNewCitizenAvailable(event: {
     citizenInfo: CitizenInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     this.newCitizen = event.citizenInfo;
     this.onNewPersonAvailable(event);
@@ -132,8 +136,8 @@ export class EndowmentSeerEditComponent implements OnInit {
   onNewAlienAvailable(event: {
     alienInfo: AlienInfoResponse;
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     this.newAlien = event.alienInfo;
     this.onNewPersonAvailable(event);
@@ -142,33 +146,60 @@ export class EndowmentSeerEditComponent implements OnInit {
 
   onNewPersonAvailable(event: {
     idType: number;
-    idNumber: string;
-    person: OutputApplicationUserDto;
+    userName: string;
+    person: InputApplicationUserDto;
   }) {
     //let educationLevel: number =this.seerToCreate.createSeerInputDto.educationLevelId;
     this.newPerson = event.person;
+    this.seerToCreate.seerPerson = new InputApplicationUserDto()
     this.seerToCreate.seerPerson.init(this.newPerson);
     this.seerToCreate.seerPerson.gender =
-    this.seerToCreate.seerPerson.gender.toString() === 'Male' ? 0 : 1;
+      this.seerToCreate.seerPerson.gender.toString() === ('Male' || 'M') ? 0 : 1;
+    this.seerToCreate.createSeerInputDto.seerId = this.newPerson.id;
+    this.seerToCreate.requestId = this.requestId;
+    this.seerToCreate.seerPerson.phoneNumber = this.newPerson.phoneNumber;
+    this.seerToCreate.seerPerson.email = this.newPerson.email;
+
     //this.seerToCreate.createSeerInputDto.educationLevelId
     // if( !!event.person ) {
     //   this.newSeer.email = event.person.email;
     //   this.newSeer.mobileNumber = event.person.mobileNumber;
     // }
   }
-
+  agentDeedFileSelect(event) {
+    // this.AgentDeed = event.files[0];
+  }
+  agentDeedFileUpload(event) {
+    // this.UploadFile(event.files[0], (response) => {
+    //   this.agentDeedAttachment = {
+    //     id: response.id,
+    //     fileName: response.fileName!,
+    //     fileData: response.fileData!,
+    //     ContentType: response.contentType!,
+    //   };
+    //   this.AgentDeed = null!;
+    //   this.requestInfo.applicantAgent.representativeAttachmentId = response.id;
+    // });
+  }
+  // removeAgentDeedFile(event: AttachementItem) {
+  //   this.removeFile(event, (result) => {
+  //     this.requestInfo.applicantAgent.representativeAttachmentId = undefined!;
+  //     this.agentDeedAttachment = undefined!;
+  //   });
+  // }
   onAddNewSeer(content: any) {
+    debugger;
     this.reset();
+    this.activeCrudOperation = CrudOperation.Create;
     this.modalService.open(content, { size: 'lg' });
   }
 
-  addToSeerList()
-  {
+  addToSeerList() {
     this.OnAddingNewSeer.emit(this.seerToCreate);
   }
 
   onEditBtnClicked() {
-    
+
     // const input = new EditSeerInputDto({
     //   createSeerInputDto: this.seers[this.seerToEditIndex].id,
     //   requestId: this.requestId,
@@ -224,7 +255,7 @@ export class EndowmentSeerEditComponent implements OnInit {
         this.sifaEtibariLookups = data.dto.items!;
         console.log(data);
         //this.loadAssetSize();
-      
+
       });
 
     // this.getLookupValues(EnumLookuptypes.SifaEtibariType).subscribe((res: any) => {
@@ -247,7 +278,7 @@ export class EndowmentSeerEditComponent implements OnInit {
         this.educationLevelLookups = data.dto.items!;
         console.log(data);
         //this.loadAssetSize();
-      
+
       });
 
     // this.getLookupValues(EnumLookuptypes.EducationLevel).subscribe((res: any) => {
@@ -274,7 +305,7 @@ export class EndowmentSeerEditComponent implements OnInit {
       (data) => {
         this.regionsLookups = data.dto.items!;
         console.log(data);
-        
+
       });
     // this.getLookupValuesFromServiceResponseType(EnumLookuptypes.RegionLookup).subscribe((res: any) => {
     //   res.subscribe((res: LookupModel[]) => {
@@ -284,17 +315,23 @@ export class EndowmentSeerEditComponent implements OnInit {
     // });
   }
 
-  fetchSeerLookup()
-  {
+  fetchSeerLookup() {
     this.lookupfliter.lookUpName = "EndowmentPartiesType";
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
         this.seerTypeLookup = data.dto.items!;
         console.log(data);
-        
+
       });
-    
+
+  }
+  get isUpdateMode() {
+    return this.activeCrudOperation === CrudOperation.Update;
+  }
+
+  get isCreateMode() {
+    return this.activeCrudOperation === CrudOperation.Create;
   }
 
 }

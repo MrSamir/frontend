@@ -1,4 +1,4 @@
-export class appConfig {
+export class AppConfig {
     baseApiUrl: string;
     appBaseHref: string;
     langCookieName: string;

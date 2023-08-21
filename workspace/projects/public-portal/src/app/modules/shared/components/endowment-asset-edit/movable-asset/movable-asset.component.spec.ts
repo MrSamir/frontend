@@ -8,9 +8,8 @@ describe('MovableAssetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MovableAssetComponent ]
-    })
-    .compileComponents();
+      declarations: [MovableAssetComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MovableAssetComponent);
     component = fixture.componentInstance;

@@ -1,61 +1,84 @@
 <div class="container">
   <div class="row my-6 bg-white">
-
     <div class="col-6 d-flex justify-content-center align-items-center">
       <div class="nic-box">
         <h2 class="font-weight-bold">النفاذ الوطني الموحد</h2>
-        <p class="text-black-50">عزيزنا العميل يمكنك الدخول عن طريق اسم المستخدم و كلمة المرور المستخدمة في منصة النفاذ
-          الوطني</p>
+        <p class="text-black-50">
+          عزيزنا العميل يمكنك الدخول عن طريق اسم المستخدم و كلمة المرور
+          المستخدمة في منصة النفاذ الوطني
+        </p>
         <div class="swatch-100 p-6">
-          <img class="mt-4" src="assets/images/nic-logo.png" alt="">
+          <img class="mt-4" src="assets/images/nic-logo.png" alt="" />
           <!-- <button id="imaLogin" type="submit" class="btn btn-awq-secondary mt-5 px-3"
                   (click)="redirectToPublicLoginPage()">الدخول عن طريق منصة النفاذ الموحد
           </button> -->
-          <button id="imaLogin" type="submit" class="btn btn-awq-secondary mt-5 px-3"
-                  (click)="redirectToLandingPage()">الدخول عن طريق منصة النفاذ الموحد
+          <button
+            id="imaLogin"
+            type="submit"
+            class="btn btn-awq-secondary mt-5 px-3"
+            (click)="redirectToLandingPage()"
+          >
+            الدخول عن طريق منصة النفاذ الموحد
           </button>
-
-          
         </div>
       </div>
     </div>
 
     <div class="col-6 d-flex justify-content-center pr-3">
-      <img src="assets/images/nic.jpg" alt="">
+      <img src="assets/images/nic.jpg" alt="" />
     </div>
-    <div class=" col-6 justify-content-center my-5">
-      
-        <div class="col-lg-12">
-          <div class="bg-white rounded-lg p-5">
-            <form #loginfom="ngForm">
-              <div class="alert alert-primary" role="alert">
-                قم بإدخال رقم هوية مسجل مسبقا لتخطي التحقق من نفاذ اثناء التطوير
-              </div>
-              <div class="form-group">
-                <label class="col-form-label" for="mockedIdNumber">رقم الهوية</label>
-                <label for="idNumber">رقم الهوية / الإقامة <span class="text-danger px-1">*</span></label>
-                <input type="text" name="userName" class="form-control" #loginmodel_userName="ngModel"  [(ngModel)]="loginmodel.userName"  [ngModelOptions]="{standalone: true}" required
-                   maxlength="10" pattern="^[1|2]{1}[0-9]{9}$" />
-                  <app-validationMessages 
-                  [control]="loginmodel_userName"
-                    relatedControlName ="userName"
-                  [validationMessages]='[
-                  {ruleName:"required",ruleMessage:l("Common.Required",l("Common.idNumber"))},
-                  {ruleName:"pattern", ruleMessage:"not Vliad"}
-                  ]'
-                  >
-                  </app-validationMessages>              
-              </div>
-              <div class="form-group ">
-                <button type="submit" [disabled]="loginmodel_userName.invalid" (click)="mockedUserLogin()"
-                  class="btn btn-awq-secondary btn-block">تسجيل الدخول
-                </button>
-              </div>
-             
-            </form>
-          </div>
+    <div class="col-6 justify-content-center my-5">
+      <div class="col-lg-12">
+        <div class="bg-white rounded-lg p-5">
+          <form #loginfom="ngForm">
+            <div class="alert alert-primary" role="alert">
+              قم بإدخال رقم هوية مسجل مسبقا لتخطي التحقق من نفاذ اثناء التطوير
+            </div>
+            <div class="form-group">
+              <label class="col-form-label" for="mockedIdNumber"
+                >رقم الهوية</label
+              >
+              <label for="idNumber"
+                >رقم الهوية / الإقامة
+                <span class="text-danger px-1">*</span></label
+              >
+              <input
+                type="text"
+                name="userName"
+                class="form-control"
+                #loginmodel_userName="ngModel"
+                [(ngModel)]="loginmodel.userName"
+                [ngModelOptions]="{ standalone: true }"
+                required
+                maxlength="10"
+                pattern="^[1|2]{1}[0-9]{9}$"
+              />
+              <app-validationMessages
+                [control]="loginmodel_userName"
+                relatedControlName="userName"
+                [validationMessages]="[
+                  {
+                    ruleName: 'required',
+                    ruleMessage: l('Common.Required', l('Common.idNumber'))
+                  },
+                  { ruleName: 'pattern', ruleMessage: 'not Vliad' }
+                ]"
+              >
+              </app-validationMessages>
+            </div>
+            <div class="form-group">
+              <button
+                type="submit"
+                [disabled]="loginmodel_userName.invalid"
+                (click)="mockedUserLogin()"
+                class="btn btn-awq-secondary btn-block"
+              >
+                تسجيل الدخول
+              </button>
+            </div>
+          </form>
         </div>
-     
+      </div>
     </div>
   </div>
 </div>

@@ -8,9 +8,8 @@ describe('EndowmentSharedAssetEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EndowmentSharedAssetEditComponent ]
-    })
-    .compileComponents();
+      declarations: [EndowmentSharedAssetEditComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EndowmentSharedAssetEditComponent);
     component = fixture.componentInstance;

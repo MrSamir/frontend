@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiResponseOfOutputEndowmentDetailsDto,  EndowmentRegistrationServiceProxy,  InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData, OutputEndowmentDetailsDto } from '../../../shared/services/services-proxies/service-proxies';
+import { ApiResponseOfOutputEndowmentDetailsDto, EndowmentRegistrationServiceProxy, InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData, OutputEndowmentDetailsDto } from '../../../shared/services/services-proxies/service-proxies';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
-import { ApiResponse } from 'projects/core-lib/src/lib/models/apiResponse';
 
 @Component({
   selector: 'app-endowmen-instant-registration-info',
@@ -37,7 +36,7 @@ export class EndowmenInstantRegistrationInfoComponent   implements OnInit{
       this.requestId='06EC682A-9455-476C-94EF-17190CBA3C99'
       this.init();
     }
-    
+
   init() {
     if (!this.requestId || !!this.endowmentInitialDate) {
       return;
@@ -142,5 +141,5 @@ export class EndowmenInstantRegistrationInfoComponent   implements OnInit{
     this.minDeedDate = {year: 100, month: 1, day: 1};
     this.minHijriForWaqf = {year: 100, month: 1, day: 1};
   }
-  
+
 }

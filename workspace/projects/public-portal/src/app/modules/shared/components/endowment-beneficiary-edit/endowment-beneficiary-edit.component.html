@@ -17,16 +17,16 @@
               </div>
             </div>
           </div>
-  
+
           <ng-container *ngIf="isThereBeneficiaries === '1'">
             <a href="javascript:viod(0)" class="addBox my-6 py-3" (click)="openLg(addData)">
-              <svg-icon styleClass="fa-3x mr-2 mb-2 " icon="add-user"></svg-icon>
+              <!-- <svg-icon styleClass="fa-3x mr-2 mb-2 " icon="add-user"></svg-icon> -->
               <span>إضفط لإضافة بيانات المستفيد</span>
             </a>
           </ng-container>
         </div>
       </div>
-  
+
       <div class="table-responsive mt-2" *ngIf="hasBenifiaries">
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
@@ -40,7 +40,7 @@
             <td class="text-center" scope="col" *ngIf="!viewOnly">حذف</td>
           </tr>
           </thead>
-  
+
           <tbody>
           <tr *ngFor="let ben of BeneficiaryList; let i = index ">
             <td class="text-center" scope="col">
@@ -57,32 +57,32 @@
             </td>
             <td class="text-center" scope="col" *ngIf="viewOnly" (click)="viewBeneficiary(addData, i)">
               <a class="btn btn-sm btn-outline-awq-secondary rounded">
-                <svg-icon icon="eye" ></svg-icon>
+                <!-- <svg-icon icon="eye" ></svg-icon> -->
               </a>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
               <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editBeneficiary(addData, i)">
-                <svg-icon icon="pencil"></svg-icon>
+                <!-- <svg-icon icon="pencil"></svg-icon> -->
               </a>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
               <a class="btn btn-sm btn-outline-danger rounded" (click)="deleteBeneficiary(i)"
                  *ngIf="!viewOnly">
-                <svg-icon icon="trash-alt"></svg-icon>
+                <!-- <svg-icon icon="trash-alt"></svg-icon> -->
               </a>
             </td>
           </tr>
           </tbody>
         </table>
       </div>
-  
+
       <div class="d-flex justify-content-end my-6" *ngIf="!viewOnly && hasBenifiaries">
         <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm" (click)="openLg(addData)">
-          <svg-icon styleClass="h1 mr-2" icon="add-user"></svg-icon>
+          <!-- <svg-icon styleClass="h1 mr-2" icon="add-user"></svg-icon> -->
           <span>إضافة مستفيد آخر</span>
         </a>
       </div>
-  
+
       <ng-template #addData let-modal>
         <div class="modal-header">
           <h2>بيانات المستفيد</h2>
@@ -105,7 +105,7 @@
               </div>
             </div>
           </div>
-  
+
           <yakeen-person *ngIf="isBenificiaryInKsa && (isUpdateMode || isCreateMode) && !viewOnly"
                          (OnNewPersonAvailable)="onNewPersonAvailable($event)"
                          (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
@@ -113,13 +113,13 @@
                          [initialData]="{alien: newAlien, citizen: newCitizen, person: newPerson, hafeza:undefined }"
                          >
           </yakeen-person>
-  
+
           <app-beneficiary-outside-ksa
             [viewOnly]="viewOnly"
             [beneficiary]="beneficiaryOutKSAToView"
             (OnNewBeneficiaryValidated)="onNewBeneficiaryAvailable($event)"
             *ngIf="(!isBenificiaryInKsa || !isBeneficiaryInKsaEditView)">
-  
+
           </app-beneficiary-outside-ksa>
      <!-- !isEditRequested&&!viewOnly  ** (isEditRequested && isBeneficiaryInKsaEditView)-->
           <yakeen-person-view *ngIf="(viewOnly && isBeneficiaryInKsaView)"
@@ -128,13 +128,13 @@
                               [alien]="alienToView"
                               [person]="addBenificiaryInputDto?.createBeneficiaryPersonInputDto"></yakeen-person-view>
         </div>
-  
+
         <ng-container *ngIf="!isEditRequested&&!viewOnly">
           <div class="modal-footer justify-content-center">
             <button type="button" class="btn btn-awq-secondary px-6" [disabled]="!isValidNumber"
                     (click)="addToBenefList()">
               إضافة
-              <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon>
+              <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
             </button>
           </div>
         </ng-container>
@@ -150,6 +150,5 @@
         </ng-container>
       </ng-template>
     </form>
-    
+
   </div>
-  

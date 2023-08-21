@@ -26,14 +26,14 @@
               "projects/public-portal/src/app.config.json"
             ],
             "styles": [
-               "projects/public-portal/src/assets/snipped.css" ,
+              "projects/public-portal/src/assets/snipped.css",
               "projects/public-portal/src/assets/main.css",
               "projects/public-portal/src/assets/primeng/theme.custom.css",
               "node_modules/primeng/resources/primeng.min.css",
-            "primeng/resources/themes/lara-light-teal/theme.css",
+              "primeng/resources/themes/lara-light-teal/theme.css",
               "node_modules/bootstrap/dist/css/bootstrap.rtl.css",
               "projects/public-portal/src/styles.scss",
-                "projects/public-portal/src/styles.css",
+              "projects/public-portal/src/styles.css",
               "projects/public-portal/src/assets/primeng/file-upload/css/primeng.file-upload.css",
               "projects/public-portal/src/assets/primeng/autocomplete/css/primeng.autocomplete.css",
               "projects/public-portal/src/assets/primeng/tree/css/primeng.tree.css",
@@ -41,7 +41,6 @@
               "projects/public-portal/src/assets/primeng/datatable/css/primeng.datatable.css",
               "projects/public-portal/src/assets/primeng/accordion/accordion.css",
               "projects/public-portal/src/assets/primeng/tabview/primeng.tabview.css"
-
             ],
             "scripts": []
           },
@@ -67,7 +66,13 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/public-portal/src/environments/environment.ts",
+                  "with": "projects/public-portal/src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -86,7 +91,6 @@
           "options": {
             "browserTarget": "proxy-for-angular:build",
             "proxyConfig": "proxy.conf.json"
-
           }
         },
         "extract-i18n": {
@@ -112,6 +116,15 @@
               "node_modules/primeng/resources/primeng.min.css"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/public-portal/**/*.ts",
+              "projects/public-portal/**/*.html"
+            ]
           }
         }
       }
@@ -139,15 +152,10 @@
               "projects/employee-portal/src/app.config.json"
             ],
             "styles": [
-
-           
-              "projects/employee-portal/src/assets/snipped.css" ,
-          
-
+              "projects/employee-portal/src/assets/snipped.css",
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.rtl.css",
-
               "projects/employee-portal/src/assets/primeng/file-upload/css/primeng.file-upload.css",
               "projects/employee-portal/src/assets/primeng/autocomplete/css/primeng.autocomplete.css",
               "projects/employee-portal/src/assets/primeng/tree/css/primeng.tree.css",
@@ -155,19 +163,11 @@
               "projects/employee-portal/src/assets/primeng/datatable/css/primeng.datatable.css",
               "projects/employee-portal/src/assets/primeng/accordion/accordion.css",
               "projects/employee-portal/src/assets/primeng/tabview/primeng.tabview.css",
-
-
-
-
               "styles/styles.css",
-
-              "projects/employee-portal/src/assets/card-style.css" 
-             
+              "projects/employee-portal/src/assets/card-style.css"
             ],
             "scripts": [
-           "node_modules/bootstrap/dist/js/bootstrap.js"
-
-
+              "node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
@@ -211,7 +211,6 @@
           "options": {
             "browserTarget": "proxy-for-angular:build",
             "proxyConfig": "proxy.conf.json"
-
           }
         },
         "extract-i18n": {
@@ -308,6 +307,9 @@
     }
   },
   "cli": {
-    "analytics": "1869d834-5d63-4db7-9a10-aab96a78020e"
+    "analytics": "1869d834-5d63-4db7-9a10-aab96a78020e",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

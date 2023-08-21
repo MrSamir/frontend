@@ -28,13 +28,13 @@ export class BeneficiaryStepComponent implements OnInit{
         if (data) {
           let resSeerData = data;
           if (resSeerData.isSuccess) {
-            // showSuccess('تم إنشاء الاصل بنجاح', () => {
-            //   // console.log('res here: ', resSeerData);
-            //   // this.newSeer.id = resSeerData.data.toString();
-            //   // let obj = {Seer: resSeerData.data}
-            //   this.modalService.dismissAll();
-            //   this.getAllBeneficiaries();
-            // });
+            //showSuccess('تم إنشاء الاصل بنجاح', () => {
+              // console.log('res here: ', resSeerData);
+              // this.newSeer.id = resSeerData.data.toString();
+              // let obj = {Seer: resSeerData.data}
+              //this.modalService.dismissAll();
+              //this.getAllBeneficiaries();
+            //});
           }
         }
       },
@@ -43,12 +43,12 @@ export class BeneficiaryStepComponent implements OnInit{
       }
     );
   }
-  
+
   OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto)
   {
 
   }
-  
+
   OnDeletingExistingBeneficiary(event: { BeneficiaryToDelete: OutputBeneficiaryDto; index: number })
   {
 
