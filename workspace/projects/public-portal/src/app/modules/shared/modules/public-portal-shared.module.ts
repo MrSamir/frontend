@@ -1,11 +1,11 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreLibModule } from 'projects/core-lib/src/public-api';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CommonModule } from '@angular/common';
-import { EndowmentSharedAssetEditComponent } from '../components/endowment-asset-edit/endowment-asset-edit.component';//../components/endowment-asset-edit/endowment-asset-edit.component';
+import { EndowmentSharedAssetEditComponent } from '../components/endowment-asset-edit/endowment-asset-edit.component'; //../components/endowment-asset-edit/endowment-asset-edit.component';
 import { AnimalOrAgriculturalAssetComponent } from '../components/endowment-asset-edit/animal-or-agricultural-asset/animal-or-agricultural-asset.component';
 import { BusinessEntityAssetComponent } from '../components/endowment-asset-edit/business-entity-asset/business-entity-asset.component';
 import { FiscalAssetComponent } from '../components/endowment-asset-edit/fiscal-asset/fiscal-asset.component';
@@ -17,18 +17,17 @@ import { RealestateAssetComponent } from '../components/endowment-asset-edit/rea
 import { FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { SharecomponentModule } from 'projects/shared-features-lib/src/public-api';
-import {InputSwitchModule} from "primeng/inputswitch";
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { EndowmentApplicantCreateOrEditComponent } from '../components/endowment-applicant-CreateOrEdit/endowment-applicant-CreateOrEdit.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
- import { PanelModule } from 'primeng/panel';
-import { HintComponent } from 'projects/core-lib/src/lib/components/hint/hint.component';
+import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
+import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
 @NgModule({
   declarations: [
-    
     EndowmentInfoEditComponent,
     EndowmentSharedAssetEditComponent,
     AnimalOrAgriculturalAssetComponent,
@@ -41,13 +40,12 @@ import { StepsModule } from 'primeng/steps';
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
+    EndowmentSeerEditComponent
   ],
   imports: [
-
-    CommonModule,FormsModule,
+    CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    CoreLibModule,
     SharecomponentModule,
     MultiSelectModule,
     FileUploadModule,
@@ -60,10 +58,8 @@ import { StepsModule } from 'primeng/steps';
     PanelModule,
     StepsModule,
  CoreLibModule,
-MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
   ],
   exports: [
-    
     //EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSharedAssetEditComponent,
@@ -76,10 +72,10 @@ MultiSelectModule,FileUploadModule,ToastModule, InputSwitchModule,
     // ParticularBenefitAssetComponent,
     // RealestateAssetComponent
 
-  
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent
+    EndowmentInfoEditComponent,
+    EndowmentSeerEditComponent
   ],
 })
 export class PublicPortalSharedModule {}

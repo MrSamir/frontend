@@ -1,4 +1,4 @@
-export class MapModel{
+export class MapModel {
   latitude: number;
   longitude: number;
 }

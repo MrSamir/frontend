@@ -1,21 +1,19 @@
 "use strict";
 // Class definition
 
-var KTBootstrapMarkdown = function () {    
-    // Private functions
-    var demos = function () {
-        
-    }
+var KTBootstrapMarkdown = (function () {
+  // Private functions
+  var demos = function () {};
 
-    return {
-        // public functions
-        init: function() {
-            demos(); 
-        }
-    };
-}();
+  return {
+    // public functions
+    init: function () {
+      demos();
+    },
+  };
+})();
 
 // Initialization
-jQuery(document).ready(function() {
-    KTBootstrapMarkdown.init();
+jQuery(document).ready(function () {
+  KTBootstrapMarkdown.init();
 });

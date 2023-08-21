@@ -1,10 +1,4 @@
-import {
-  NgModule,
-  CUSTOM_ELEMENTS_SCHEMA,
-  APP_INITIALIZER,
-  NO_ERRORS_SCHEMA,
-  forwardRef,
-} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,22 +20,15 @@ import { LandingComponent } from './layout/landing/landing.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicesProxyModule } from './modules/shared/services/services.module';
-import { appCoreLoader } from 'projects/core-lib/src/lib/loaders/appCoreLoader';
 import { API_BASE_URL } from './modules/shared/services/services-proxies/service-proxies';
-import { AppInitializer } from '../../../core-lib/src/lib/application-configuration-loader/appInitializer';
 import { AppConfigSubjectService } from 'projects/core-lib/src/lib/services/appConfigSubjectService';
-import { FormGroupDirective, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { EndowmentSeerEditComponent } from './modules/shared/components/endowment-seer-edit/endowment-seer-edit.component';
-//import { BeneficiaryStepComponent } from './modules/endowment-registration/components/endowment-registration-new/beneficiary-step/beneficiary-step.component';
-//import { SeerStepComponent } from './modules/endowment-registration/components/endowment-registration-new/seer-step/seer-step.component';
-
-import { InputSwitch, InputSwitchModule } from 'primeng/inputswitch';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
-export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
-    return ConfigSubject.getAppConfig().baseApiUrl;
-};
+export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
+  ConfigSubject.getAppConfig().baseApiUrl;
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,11 +36,11 @@ export const configApiBaseUrl = (ConfigSubject :AppConfigSubjectService) => {
     FooterComponent,
     LoginComponent,
     LandingComponent,
-    EndowmentSeerEditComponent,
-    
+    //EndowmentSeerEditComponent,
+
     //SeerStepComponent
-    
-    
+
+
   ],
   imports: [
     MultiSelectModule,

@@ -1,27 +1,41 @@
-<agm-map [latitude]="map && map.latitude ?  map.latitude : initLat"
-         [longitude]="map && map.longitude ? map.longitude : initLong"
-         [zoom]="map && map.latitude && map.longitude ? zoom : initZoom"
-         (mapClick)="onClickLocation($event)">
-
-  <agm-marker [latitude]="map?.latitude" [longitude]="map?.longitude"></agm-marker>
-
+<agm-map
+  [latitude]="map && map.latitude ? map.latitude : initLat"
+  [longitude]="map && map.longitude ? map.longitude : initLong"
+  [zoom]="map && map.latitude && map.longitude ? zoom : initZoom"
+  (mapClick)="onClickLocation($event)"
+>
+  <agm-marker
+    [latitude]="map?.latitude"
+    [longitude]="map?.longitude"
+  ></agm-marker>
 </agm-map>
-
 
 <ng-template #outSideOfSaudiArabia let-modal>
   <div class="modal-content">
     <div class="modal-header">
       <h5 class="modal-title" id="exampleModalLabel">خطأ</h5>
-      <button type="button" class="close" (click)="modal.dismiss('Cross click')" aria-label="Close">
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss('Cross click')"
+        aria-label="Close"
+      >
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-      الموقع المختار خارج الأراضي السعودية، الرجاء اختيار موقع داخل الحدود السعودية
+      الموقع المختار خارج الأراضي السعودية، الرجاء اختيار موقع داخل الحدود
+      السعودية
     </div>
     <div class="modal-footer d-flex justify-content-center">
-      <div class="right" >
-        <button type="button" class="btn btn-primary" (click)="modal.close('CANCEL')">متابعة</button>
+      <div class="right">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="modal.close('CANCEL')"
+        >
+          متابعة
+        </button>
       </div>
     </div>
   </div>

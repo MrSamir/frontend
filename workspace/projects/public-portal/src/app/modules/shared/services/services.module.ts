@@ -1,8 +1,6 @@
 import * as ServiceProxy from './services-proxies/service-proxies';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-
-
 @NgModule({
   imports: [
     /*DccCommonsNgServicesModule*/
@@ -24,7 +22,6 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
     ServiceProxy.AccountProxy,
     ServiceProxy.YaqeenApplicationServiceProxy,
     ServiceProxy.MOJApplicationServiceProxy,
-    ServiceProxy.RequestApplicationServiceProxy,
     ServiceProxy.MojDataMigrationApplicationServicesProxy
   ],
 })

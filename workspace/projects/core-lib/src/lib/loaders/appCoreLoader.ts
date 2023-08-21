@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { appCore } from '../Classes/appCore';
+import { AppCore } from '../Classes/appCore';
 
 @NgModule({
   declarations: [],
@@ -13,7 +13,7 @@ export class appCoreLoader {
   constructor(private http: HttpClient) {
 
   }
-  data :appCore = new appCore();
+  data :AppCore = new AppCore();
   load(configFilePath: string, appCoreModel?: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.http.get(configFilePath).subscribe(

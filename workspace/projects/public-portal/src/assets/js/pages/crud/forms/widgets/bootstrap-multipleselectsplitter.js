@@ -1,21 +1,22 @@
 // Class definition
 
-var KTBootstrapMultipleSelectsplitter = function () {
-    
-    // Private functions
-    var demos = function () {
-        // minimum setup
-        $('#kt_multipleselectsplitter_1, #kt_multipleselectsplitter_2').multiselectsplitter();
-    }
+var KTBootstrapMultipleSelectsplitter = (function () {
+  // Private functions
+  var demos = function () {
+    // minimum setup
+    $(
+      "#kt_multipleselectsplitter_1, #kt_multipleselectsplitter_2"
+    ).multiselectsplitter();
+  };
 
-    return {
-        // public functions
-        init: function() {
-            demos(); 
-        }
-    };
-}();
+  return {
+    // public functions
+    init: function () {
+      demos();
+    },
+  };
+})();
 
-jQuery(document).ready(function() {
-    KTBootstrapMultipleSelectsplitter.init();
+jQuery(document).ready(function () {
+  KTBootstrapMultipleSelectsplitter.init();
 });

@@ -18,7 +18,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     // Check if it's an error from an HTTP response
     if (!(error instanceof HttpErrorResponse)) {
        if (error.status == HttpStatusCode.Unauthorized){
-         //ToDo:handle expire token
+         //ToDo: handel logout in case falier of refresh the token.
            var message =new MessageModel();
            message.closable=true;
            message.detail = error.message;
@@ -26,7 +26,11 @@ export class GlobalErrorHandler implements ErrorHandler {
            message.severity=MessageSeverity.Error;
            message.summary="Authntication Error";
          this.messageService.showMessage(MessageTypeEnum.message, message);
-        }else
+        }else if(error.status==HttpStatusCode.BadRequest)
+        {
+          console.error(error);
+        }
+        else
         {
                  var message = new MessageModel();
                  message.closable = true;
@@ -42,12 +46,12 @@ export class GlobalErrorHandler implements ErrorHandler {
     }else
     {
     this.zone.run(() =>{
-           var message =new MessageModel();
+        /*    var message =new MessageModel();
            message.closable=true;
            message.detail = error.message;
            message.severity=MessageSeverity.Error;
            message.summary="Error";
-         this.messageService.showMessage(MessageTypeEnum.message, message);
+         this.messageService.showMessage(MessageTypeEnum.message, message); */
     });
      }
   }
