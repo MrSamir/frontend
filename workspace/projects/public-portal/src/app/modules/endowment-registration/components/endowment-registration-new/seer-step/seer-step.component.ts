@@ -21,6 +21,8 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
+    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    this.getAllSeers();
     //throw new Error('Method not implemented.');
   }
 
@@ -77,8 +79,8 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   // Passed Seer from Common Seers Component in order to delete it through calling API from Parent component
-  OnDeletingExistingSeer(event: { SeerToDelete: OutputSeerDto; index: number }) {
-    this.onDeleteTableCellClicked(event.SeerToDelete, event.index);
+  OnDeletingExistingSeer( SeerToDelete: OutputSeerDto) {
+    this.onDeleteTableCellClicked(SeerToDelete);
   }
 
   OnEditingExistingSeer(CurrentSeer: AddSeerInputDto) {
@@ -132,7 +134,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
     this.modalService.dismissAll();
   }
 
-  onDeleteTableCellClicked(seerToDelete: OutputSeerDto, index: number) {
+  onDeleteTableCellClicked(seerToDelete: OutputSeerDto) {
     Swal.fire({
       title: 'تأكيد حذف ناظر؟',
       icon: 'question',
@@ -142,6 +144,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
       confirmButtonColor: '#D6BD81',
     }).then((result) => {
       if (result.isConfirmed) {
+        debugger;
         this.OneRequestSeer = new RemoveSeerInputDto();
         this.OneRequestSeer.seerId = seerToDelete.seerId!;
         this.OneRequestSeer.requestId = this.requestId;
@@ -191,8 +194,10 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
 
   getAllSeers() {
     this.registerWaqfService.getSeersInformationByReqId(this.requestId).subscribe(
-      (res: OutputSeerDto[]) =>
-        (this.seers = res),
+      (res: OutputSeerDto[]) =>{
+        debugger;
+        this.seers = res;
+      },
       (error) => {
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Error,

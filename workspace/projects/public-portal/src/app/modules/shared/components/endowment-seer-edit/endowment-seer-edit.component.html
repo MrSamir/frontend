@@ -15,7 +15,7 @@
           <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerNameLabel' | localize}}</td>
           <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerIdNumberLabel' | localize}}</td>
           <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerMobileNoLabel' | localize}}</td>
-          <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}</td>
+          <td class="text-center" scope="col" *ngIf="viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}</td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}</td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.DeleteSeerInfoBton' | localize}}</td>
         </tr>
@@ -36,18 +36,21 @@
           </td>
           <td class="text-center" scope="col" *ngIf="viewOnly">
             <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewSeer(addData, i)">
+              {{'Common.ReviewLabel' | localize}}
               <!-- <svg-icon icon="eye" ></svg-icon> -->
             </a>
           </td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">
             <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editSeer(addData, i)"
                *ngIf="!viewOnly">
+              {{'Common.EditLabel' | localize}}
               <!-- <svg-icon icon="pencil"></svg-icon> -->
             </a>
           </td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">
             <a class="btn btn-sm btn-outline-danger rounded"
                (click)="deleteSeer(i)" *ngIf="!viewOnly">
+              {{'Common.DeleteLabel' | localize}}
               <!-- <svg-icon icon="trash-alt"></svg-icon> -->
             </a>
           </td>
@@ -91,114 +94,265 @@
           </div>
 
           <div class="form-group col">
-            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.EducationExperience' | localize}}<span class="text-danger">*</span></label>
-            <select class="custom-select" [hidden]="viewOnly" #educationLevelId="ngModel" name="educationLevelId"
-                    [(ngModel)]="seerToCreate.createSeerInputDto.educationLevelId" required>
-              <option *ngFor="let educationLookup of educationLevelLookups" value="{{educationLookup.id}}">
-                {{educationLookup.name}}</option>
-            </select>
-            <!-- <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp; {{lookupService.educationalLevelReverseMap.nameOf(seerToCreate.createSeerInputDto.educationLevelId) }} </label> -->
+            <label class="col col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.EducationLevel"
+                | localize
+              }}</label>
+            <p-dropdown
+              [required]="true"
+              [options]="educationLevelLookups"
+              [showClear]="true"
+              name="EducationLevel"
+              #educationLevelId="ngModel"
+              [(ngModel)]="seerToCreate.createSeerInputDto.educationLevelId"
+              optionLabel="name"
+              optionValue="id"
+              [placeholder]="
+                l(
+                  'Common.Choose',
+                  l(
+                    'EndowmentModule.EndowmentRgistrationService.EducationLevel'
+                  )
+                )
+              "
+            ></p-dropdown>
+            <app-validationMessages
+              relatedControlName="EducationLevel"
+              [control]="educationLevelId"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l(
+                      'EndowmentModule.EndowmentRgistrationService.EducationLevel'
+                    )
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
-
           <div class="form-group col">
             <div class="d-flex">
-              <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerType' | localize}}<span class="text-danger">*</span></label>
-              <!-- <hint [hintContent]="seertypehint?.hintContentAr" [hintTitle]="seertypehint?.hintTitleAr"></hint> -->
+              <label class="col col-form-label"
+              >{{
+                "EndowmentModule.EndowmentRgistrationService.SeerType"
+                  | localize
+                }}<span class="text-danger">*</span> :
+              </label>
+<!--              <app-hint [hint]="seerTypeHint"> </app-hint>-->
             </div>
-            <select class="custom-select" #seerTypeId="ngModel" [hidden]="viewOnly" name="seerTypeId"
-                    [(ngModel)]="seerToCreate.createSeerInputDto.seerTypeId" required>
-              <option *ngFor="let seerType of seerTypeLookup" value="{{seerType.id}}">
-                {{seerType.name}}
-              </option>
-            </select>
-            <!-- <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp; {{lookupService.seerTypeLookupsReverseMap.nameOf(seerToCreate.createSeerInputDto.seerTypeId) }} </label> -->
-            <div *ngIf="seerTypeId.invalid && (seerTypeId.dirty || seerTypeId.touched)" class="">
-              <p *ngIf="seerTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerTypeRequiredValidation' | localize}}</p>
-            </div>
+            <p-dropdown
+              [required]="true"
+              [options]="seerTypeLookup"
+              [showClear]="true"
+              name="SeerTypes"
+              #seerTypeId="ngModel"
+              (onChange)="selectSeerType($event)"
+              [(ngModel)]="seerToCreate.createSeerInputDto.endowmentPartiesTypeId"
+              optionLabel="name"
+              optionValue="id"
+              [placeholder]="
+                l(
+                  'Common.Choose',
+                  l('EndowmentModule.EndowmentRgistrationService.SeerType')
+                )
+              "
+            ></p-dropdown>
+            <app-validationMessages
+              relatedControlName="SeerTypes"
+              [control]="seerTypeId"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l('EndowmentModule.EndowmentRgistrationService.SeerType')
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
+          <div
+            *ngIf="seerToCreate.createSeerInputDto.endowmentPartiesTypeId == 2"
+            class="form-group col"
+          >
+            <label class="col col-form-label"
+            >{{
+              "EndowmentModule.EndowmentRgistrationService.PrestigiousAttributeType"
+                | localize
+              }}<span class="text-danger">*</span> :
+            </label>
 
-          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2">
-            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.PartyType' | localize}}<span class="text-danger">*</span></label>
-            <select class="custom-select" #sifaEtibariTypeId="ngModel" name="sifaEtibariTypeId" [hidden]="viewOnly"
-                    [(ngModel)]="seerToCreate.createSeerInputDto.prestigiousAttributeTypeId" required>
-              <option *ngFor="let sifaEtibaria of sifaEtibariLookups" value="{{sifaEtibaria.id}}">
-                {{sifaEtibaria.name}}</option>
-            </select>
-            <!-- <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp; {{lookupService.sifaEtibariLookupsReverseMap.nameOf(seerToCreate.createSeerInputDto.prestigiousAttributeTypeId) }} </label> -->
-            <div *ngIf="sifaEtibariTypeId.invalid && (sifaEtibariTypeId.dirty || sifaEtibariTypeId.touched)" class="">
-              <p *ngIf="sifaEtibariTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.PartyTypeRequiredValidation' | localize}}</p>
-            </div>
+            <p-dropdown
+              [required]="true"
+              [options]="sifaEtibariLookups"
+              [showClear]="true"
+              name="seerprestigiousAttributeType"
+              #prestigiousAttributeTypeId="ngModel"
+              [(ngModel)]="seerToCreate.createSeerInputDto.prestigiousAttributeTypeId"
+              optionLabel="name"
+              optionValue="id"
+              [placeholder]="
+                l(
+                  'Common.Choose',
+                  l(
+                    'EndowmentModule.EndowmentRgistrationService.PrestigiousAttributeType'
+                  )
+                )
+              "
+            ></p-dropdown>
+            <app-validationMessages
+              relatedControlName="seerprestigiousAttributeType"
+              [control]="prestigiousAttributeTypeId"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l(
+                      'EndowmentModule.EndowmentRgistrationService.PrestigiousAttributeType'
+                    )
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
-
-          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2">
-            <!-- <label class="col-form-label">{{translations.sifaEtibariName}}<span *ngIf="!viewOnly" -->
-                                                                                <!-- class="text-danger">*</span></label> -->
-            <input type="text" class="form-control" #sifaEtibariName="ngModel"
-                  [hidden]="viewOnly" [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers"
-                   name="sifaEtibariName" [(ngModel)]="seerToCreate.createSeerInputDto.prestigiousAttributeName"
-                   [disabled]="viewOnly" required>
-            <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.prestigiousAttributeName}} </label>
-            <div *ngIf="sifaEtibariName.invalid && (sifaEtibariName.dirty || sifaEtibariName.touched)" class="">
-              <p *ngIf="sifaEtibariName.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.EndowmentPartiesCharacterValidationLabel' | localize}} </p>
-              <p *ngIf="sifaEtibariName.errors?.['pattern']"  class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.EndowmentPartiesCharacterValidationLabel' | localize}} </p>
-            </div>
+          <div
+            *ngIf="
+              seerToCreate.createSeerInputDto.endowmentPartiesTypeId== 2 &&
+              seerToCreate.createSeerInputDto?.prestigiousAttributeTypeId &&
+              seerToCreate.createSeerInputDto.prestigiousAttributeTypeId != 5 &&
+              seerToCreate.createSeerInputDto.prestigiousAttributeTypeId != 3
+            "
+            class="form-group col"
+          >
+            <label class="col-form-label"
+            >{{
+              "EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo"
+                | localize
+              }}<span class="text-danger">*</span> :
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              name="seercommercialNumber"
+              #commercialNumber="ngModel"
+              [(ngModel)]="seerToCreate.createSeerInputDto.commercialNumber"
+              [ngModelOptions]="{ standalone: true }"
+              required
+            />
+            <app-validationMessages
+              relatedControlName="seercommercialNumber"
+              [control]="commercialNumber"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l(
+                      'EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo'
+                    )
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
-
-          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2&&(seerToCreate.createSeerInputDto.endowmentPartiesTypeId == 1 || seerToCreate.createSeerInputDto.endowmentPartiesTypeId == 2)">
-            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo' | localize}}<span class="text-danger">*</span></label>
-            <input type="number" class="form-control" #commercialNumber="ngModel" name="commercialNumber"   [hidden]="viewOnly"
-                   [(ngModel)]="seerToCreate.createSeerInputDto.commercialNumber"
-                   [pattern]="ePatternValidation.pattern_number">
-            <label class="col-form-label font-weight-bold"
-                  [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.commercialNumber}} </label>
-                  <div *ngIf="commercialNumber.invalid && (commercialNumber.dirty || commercialNumber.touched)" class="">
-                    <p *ngIf="commercialNumber.errors?.['pattern']"class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo' | localize}}</p>
-                  </div>
-          </div>
-
           <div class="form-group col">
-            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}<span class="text-danger">*</span></label>
-            <input type="number" class="form-control" #seenDeedId="ngModel" name="seenDeedId"  [hidden]="viewOnly"
-                   [(ngModel)]="seerToCreate.createSeerInputDto.seenDeedId" [pattern]="ePatternValidation.pattern_number" required>
-            <label class="col-form-label font-weight-bold"
-                   [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.seenDeedId}} </label>
-                   <div *ngIf="seenDeedId.invalid && (seenDeedId.dirty || seenDeedId.touched)" class="">
-                    <p *ngIf="seenDeedId.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedIdRequiredValidation' | localize}}</p>
-                    <p *ngIf="seenDeedId.errors?.['pattern']"class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}</p>
-                  </div>
+            <label class="col-form-label"
+            >{{
+              "EndowmentModule.EndowmentRgistrationService.SeerDeedId"
+                | localize
+              }}<span class="text-danger">*</span> :
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              #seenDeedId="ngModel"
+              name="representativeNumber"
+              maxlength="20"
+              [(ngModel)]="seerToCreate.createSeerInputDto.seenDeedId"
+              [pattern]="EnumValidation.pattern_number"
+              required
+            />
+            <app-validationMessages
+              relatedControlName="representativeNumber"
+              [control]="seenDeedId"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l('EndowmentModule.EndowmentRgistrationService.SeerDeedId')
+                  )
+                },
+                {
+                  ruleName: 'pattern',
+                  ruleMessage: l(
+                    'EndowmentModule.EndowmentRgistrationService.SeerDeedIdRequiredValidation'
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
-
-          <div class="form-group col-12">
-            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}</label>
-            <div class="input-group mb-3 download p-2">
-
-              <!-- <div class="flex-grow-1">
-                <file-uploader
-                  [showDownloadButton]="true"
-                  [showDeleteButton]="!viewOnly"
-                  [allowedExtensions]="['.pdf' ]"
-                  [objects]="[ seerToCreate.createSeerInputDto ]"
-                  [keys]="['seedDeedAttachmentId']"
-                  [fileDisplayName]="' صك النظارة'"
-                  [serviceTypeId]=""
-                >
-                </file-uploader> -->
-                <lib-file-uploader [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.seerDeed')"
-              [showDisclaimer]="true" (OnSelectFile)="agentDeedFileSelect($event)"
-              (OnUploadFile)="agentDeedFileUpload($event)"></lib-file-uploader>
-              <!-- </div> -->
-            </div>
+          <div
+            *ngIf="!seerToCreate.createSeerInputDto.seedDeedAttachmentId"
+            class="form-group col-12"
+          >
+            <lib-file-uploader
+              name="seerDeed"
+              [fileLabel]="
+                l('EndowmentModule.EndowmentRgistrationService.seenDeed')
+              "
+              [showDisclaimer]="true"
+              [MultipleFiles]="true"
+              (OnSelectFile)="seerDeedFileSelect($event)"
+              (OnUploadFile)="SeerDeedFileUpload($event)"
+            ></lib-file-uploader>
+            <input
+              type="text"
+              hidden
+              [(ngModel)]="seerToCreate.createSeerInputDto.seedDeedAttachmentId"
+              #seedDeedAttachmentId="ngModel"
+              required
+              name="seedDeedAttachmentId"
+            />
+            <app-validationMessages
+              relatedControlName="seedDeedAttachmentId"
+              [control]="seedDeedAttachmentId"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l('EndowmentModule.EndowmentRgistrationService.seenDeed')
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
+          </div>
+          <div
+            *ngIf="seerToCreate.createSeerInputDto.seedDeedAttachmentId"
+            class="form-group col-12"
+          >
+            <app-AttachmentViewer
+              *ngIf="seerDeadAttachemt"
+              (OnAttachementRemove)="SeerDeedremoveFile($event)"
+              [Attachements]="[seerDeadAttachemt]"
+            ></app-AttachmentViewer>
           </div>
         </div>
       </div>
       <ng-container *ngIf="isCreateMode&&!viewOnly">
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-awq-secondary px-6"
-                  [disabled]="seerListForm.form?.invalid || isSeerDeedAttachmentUploaded" (click)="addToSeerList()">
+                  [disabled]="seerListForm.form?.invalid || !isSeerDeedAttachmentUploaded" (click)="addToSeerList()">
                   {{'EndowmentModule.EndowmentRgistrationService.AddSeerInfoBton' | localize}}
             <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
           </button>
@@ -210,10 +364,11 @@
                   (click)="onEditBtnClicked()">
                   {{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}
           </button>
-          <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditSeerValid()"
+          <button type="button" class="btn btn-outline-awq-secondary px-6"
                   (click)="onCancelBtnClicked()">
                   {{'EndowmentModule.EndowmentRgistrationService.CancelSeerInfoBton' | localize}}
           </button>
         </div>
       </ng-container>
     </ng-template>
+</form>

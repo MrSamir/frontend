@@ -18,6 +18,7 @@ import { AlienUtilities } from '../../../Models/alienInfo';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import Swal from 'sweetalert2';
+import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   // addHafezaOwnerInputDto:AddHafezaInputDto= undefined;
   // editHafezaOwnerInputDto:EditHafezaInputDto= undefined;
 
-  addOwnerInputDto: InputEndowmerDto = new InputEndowmerDto();
+  addOwnerInputDto: InputEndowmerDto;
   owners: OutputEndowmerDto[] = [];
   requestedOwnerIndexToEditOrView: number;
   mainApplicantPerson: OutputEndowmerDto | undefined;
@@ -54,7 +55,11 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   citizenToView: CitizenInfoResponse | undefined
   alienToView: AlienInfoResponse | undefined;
   PartiesTypesLookup: any = [];
+  prestigiousAttributeTypes: any = [];
   //ownertypehint: HintEntry;
+  EndowmerTypeHint: HintModel;
+
+  lookupInput: InputLookUpDto = new InputLookUpDto();
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -95,31 +100,29 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
 
     return this.viewOnly;
   }
-
-  // loadHint() {
-  //   this.ownertypehint = HintDictionary.getHintByKey("seertype");
-  // }
-
   init() {
-    //this.requestId = '03CB854E-427E-4933-AFCD-A722AAAEC593';
+    debugger;
+    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
     if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
     //this.lookupService.fetchOwnerTypeLookups();
     //this.loadHint();
-    this.LoadPartiesTypes();
+    debugger;
+    this.LoadLookups('EndowmentPartiesType', (lookups) => {
+      this.PartiesTypesLookup = lookups;
+    });
+    this.LoadLookups('PrestigiousAttributeType', (lookups) => {
+      this.prestigiousAttributeTypes = lookups;
+    });
     this.processRequest();
   }
-  LoadPartiesTypes() {
-    this.lookupfliter.lookUpName = "EndowmentPartiesType";
-    this.lookupfliter.filters = [];
-    this.lookupService.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.PartiesTypesLookup = data.dto.items;
-        console.log(data);
-      }
-    );
-
+  LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
+    this.lookupInput.lookUpName = LookupName;
+    this.lookupInput.filters = [];
+    this.lookupService.getAllLookups(this.lookupInput).subscribe((result) => {
+      callback(result.dto.items!);
+    });
   }
   processRequest() {
     this.registerWaqfService.getEndowersInformationByReqId(this.requestId).subscribe(
@@ -129,6 +132,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
       },
       (err) => handleError<object>(err.error)
     );
+    this.loadEndowmerTypeHint();
   }
 
   onAddNewWaqif(content: any) {
@@ -325,9 +329,8 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   get isCreateMode() {
     return this.activeCrudOperation === CrudOperation.Create;
   }
-  //createRegisterWaqfApplicantDto.ownerDto.ownerTypeId
   editWaqif(content: any, index: number) {
-
+debugger;
     this.activeCrudOperation = CrudOperation.Update;
     this.requestedOwnerIndexToEditOrView = index;
     const owner = this.owners[index];
@@ -500,39 +503,14 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.onNewPersonAvailable(event);
   }
 
-
-
-  // onNewHafezaAvailable(event){
-  //   this.isAddHafezaValid= true;
-
-  //   this.addHafezaOwnerInputDto = new AddHafezaInputDto();
-  //   this.addHafezaOwnerInputDto = event.hafeza;
-  //   this.addHafezaOwnerInputDto.isHafeza = event.hafeza.isHafeza;
-  //   this.addHafezaOwnerInputDto.requestId= this.requestId;
-
-  // }
-
-
-  // onEditHafezaAvailable(event){
-  //   this.isAddHafezaValid= true;
-
-  //   this.editHafezaOwnerInputDto = new EditHafezaInputDto();
-  //   this.editHafezaOwnerInputDto.editHafezaPersonInputDto = event.editHafeza.editHafezaPersonInputDto;
-  //   this.editHafezaOwnerInputDto.ownerId = event.editHafeza.ownerId;
-  //   this.editHafezaOwnerInputDto.isHafeza =  event.editHafeza.isHafeza;
-  //   this.editHafezaOwnerInputDto.requestId= this.requestId;
-
-  // }
-
   onNewPersonAvailable(event: { idType: number, userName: string, person: InputApplicationUserDto }) {
-
     this.newPerson = event.person;
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
     this.addOwnerInputDto.requestId = this.requestId;
     this.addOwnerInputDto.endowmerId = this.newPerson.id;
     this.addOwnerInputDto.endowmentId = this.waqfId;
-
+    this.addOwnerInputDto.endowmentPartiesTypeId = undefined;
     if (this.activeCrudOperation === CrudOperation.Update) {
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
@@ -556,13 +534,18 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.isOwnerMainApplicant(i) ? 'disabledIcon' : '';
   }
 
-  // get translations() {
-  //   return translations;
-  // }
-
   changeOwner(event: any) {
-    this.addOwnerInputDto.endowmentPartiesTypeId = event?.target?.value;
-    //this.ownertypehint = HintDictionary.getHintByKey(event?.target?.selectedOptions[0]?.dataset?.hintkey);
+    const endowmerType = this.PartiesTypesLookup.filter(
+      (ept, index) => ept.id == event.value
+    )[0];
+    if (endowmerType == undefined) {
+      this.loadEndowmerTypeHint();
+    } else {
+      this.EndowmerTypeHint = {
+        hintHeader: endowmerType?.name || '',
+        hintBody: endowmerType?.hint || '',
+      };
+    }
   }
 
   onNextClicked() {
@@ -589,4 +572,37 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.wizard.goToPreviousStep();
   }
 
+  loadEndowmerTypeHint() {
+    this.EndowmerTypeHint = {
+      hintBody: this.l(
+        'EndowmentModule.EndowmentRgistrationService.EndowmmentPartyTypeHints'
+      ),
+      hintHeader: this.l(
+        'EndowmentModule.EndowmentRgistrationService.EndowmerType'
+      ),
+    };
+  }
+
+
+  // onNewHafezaAvailable(event){
+  //   this.isAddHafezaValid= true;
+
+  //   this.addHafezaOwnerInputDto = new AddHafezaInputDto();
+  //   this.addHafezaOwnerInputDto = event.hafeza;
+  //   this.addHafezaOwnerInputDto.isHafeza = event.hafeza.isHafeza;
+  //   this.addHafezaOwnerInputDto.requestId= this.requestId;
+
+  // }
+
+
+  // onEditHafezaAvailable(event){
+  //   this.isAddHafezaValid= true;
+
+  //   this.editHafezaOwnerInputDto = new EditHafezaInputDto();
+  //   this.editHafezaOwnerInputDto.editHafezaPersonInputDto = event.editHafeza.editHafezaPersonInputDto;
+  //   this.editHafezaOwnerInputDto.ownerId = event.editHafeza.ownerId;
+  //   this.editHafezaOwnerInputDto.isHafeza =  event.editHafeza.isHafeza;
+  //   this.editHafezaOwnerInputDto.requestId= this.requestId;
+
+  // }
 }
