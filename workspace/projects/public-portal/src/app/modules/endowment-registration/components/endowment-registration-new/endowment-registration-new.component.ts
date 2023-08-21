@@ -8,11 +8,13 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
+import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 
 import { ActivatedRoute } from '@angular/router';
+import { WizardStep } from 'angular-archwizard';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -33,7 +35,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   @Input() @Output() request: any;
   @Input() requestId: string;
   @Input() waqfId: string | undefined;
-
+   phaseId;
   //@ViewChild(NgForm, { static: false }) form: NgForm;
 
   map: MapModel;
@@ -67,8 +69,11 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.getLoggedInUserData();
 
     if (this.requestId == undefined) {
-      if (this.request == undefined || this.request.id == undefined)
+      if (this.request == undefined || this.request.id == undefined){
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
+        this.phaseId=this.activatedRoute.snapshot.params['phaseId'];
+         
+      }
       else {
         this.requestId = this.request.id;
       }
@@ -169,6 +174,13 @@ export class EndowmentRegistrationNewComponent implements OnInit {
               //     this.modalService.dismissAll();
               //   }
               // )
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
               //this.setOldAttachmentIds();
             }
           }
@@ -189,6 +201,9 @@ export class EndowmentRegistrationNewComponent implements OnInit {
           let resp = data; //as ApiResponse<any>;
           if (resp.isSuccess) {
             this.loadAssetsBy();
+            // showSuccess('تم تعديل الاصل بنجاح', () => {
+            //   this.modalService.dismissAll();
+            // });
             // showSuccess('تم تعديل الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });
@@ -217,13 +232,13 @@ export class EndowmentRegistrationNewComponent implements OnInit {
         if (data) {
           let resAssetData = data;
           if (resAssetData.isSuccess) {
-            //showSuccess('تم إنشاء الاصل بنجاح', () => {
-              // console.log('res here: ', resAssetData);
-              // this.newAsset.id = resAssetData.data.toString();
-              // let obj = {asset: resAssetData.data}
-              //this.modalService.dismissAll();
-              //this.loadAssetsBy();
-            //});
+            // showSuccess('تم إنشاء الاصل بنجاح', () => {
+            //   // console.log('res here: ', resAssetData);
+            //   // this.newAsset.id = resAssetData.data.toString();
+            //   // let obj = {asset: resAssetData.data}
+            //   this.modalService.dismissAll();
+            //   this.loadAssetsBy();
+            // });
           }
         }
       },
@@ -247,6 +262,10 @@ export class EndowmentRegistrationNewComponent implements OnInit {
       (data) => {
         let resp = data;
         if (resp.isSuccess) {
+          // showSuccess('تم تعديل الاصل بنجاح', () => {
+          //   this.modalService.dismissAll();
+          //   this.loadAssetsBy();
+          // });
           // showSuccess('?? ????? ????? ?????', () => {
           //   this.modalService.dismissAll();
           //   this.loadAssetsBy();
@@ -280,10 +299,10 @@ export class EndowmentRegistrationNewComponent implements OnInit {
         ).subscribe((result) => {
           if (result.isSuccess) {
             this.loadAssetsBy();
-            //showSuccess('?? ??? ????? ?????',()=> {
-              //this.modalService.dismissAll();
-            //});
-            // showSuccess('?? ??? ????? ?????', () => {
+            // showSuccess('تم حذف الاصل بنجاح',()=> {
+            //   this.modalService.dismissAll();
+            // });
+            // showSuccess('تم حذف الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });
           } //else showError('?? ???? ???');

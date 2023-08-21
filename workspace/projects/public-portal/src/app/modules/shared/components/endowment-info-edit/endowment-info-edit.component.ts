@@ -181,7 +181,7 @@ private dateHelper: DateFormatterService,
 
    /* if (this.InputEndowmentDto) {
 
-    debugger;
+
     if (!!this.InputEndowmentDto?.endowmentInitialDate) {
        this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
     }
@@ -290,7 +290,7 @@ this.createOrEditWaqf();
   }
 
   createOrEditWaqf() {
-    debugger;
+
     //this._editWaqfInputDto.requestId = this.requestId;
     //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
     this.InputEndowmentDto.deedNotes="";
@@ -315,7 +315,7 @@ this.createOrEditWaqf();
       // );
       (data) => {
 
- //string={{'Module1.awqafService.ButtonPreviouse' | localize}} ;this._localize.transform("Module1.awqafService.SuccessMsg")
+ //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
 
 
         //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());

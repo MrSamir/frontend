@@ -44,8 +44,9 @@ export class ValidationMessagesComponent
       this.control?.valueChanges?.subscribe(() => {
         this.validateNgmodel();
       });
-      this.control?.statusChanges?.subscribe(() => {
-        if (this.control?.touched && this.control?.invalid) {
+      this.control?.statusChanges?.subscribe((state) => {
+        
+        if ( this.control?.invalid) {
             this.element.classList.add('ng-invalid');
         }
       });

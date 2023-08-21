@@ -1,0 +1,217 @@
+<form name="form" #seerListForm="ngForm">
+
+    <div class="d-flex justify-content-center my-6" *ngIf="!viewOnly && !hasSeers">
+      <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewSeer(addData)">
+        <svg-icon styleClass="fa-3x mr-2 mb-2 " icon="add-user"></svg-icon>
+        <span>{{'EndowmentModule.EndowmentRgistrationService.ClickToAddNewSeer' | localize}}</span>
+      </a>
+    </div>
+  
+    <div class="table-responsive mt-2" *ngIf="hasSeers">
+      <table class="table table-striped table-hover">
+        <thead class="thead-dark">
+        <tr>
+          <td class="text-center" scope="col">#</td>
+          <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerNameLabel' | localize}}</td>
+          <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerIdNumberLabel' | localize}}</td>
+          <td class="text-center" scope="col">{{'EndowmentModule.EndowmentRgistrationService.SeerMobileNoLabel' | localize}}</td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}</td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}</td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.DeleteSeerInfoBton' | localize}}</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let seer of seers; let i = index">
+          <td class="text-center" scope="col">
+            {{i + 1}}
+          </td>
+          <td class="text-center" scope="col">
+            {{seer.seerPerson.fullName}}
+          </td>
+          <td class="text-center" scope="col">
+            {{seer.seerPerson.userName}}
+          </td>
+          <td class="text-center" scope="col">
+            {{seer.seerPerson.phoneNumber}}
+          </td>
+          <td class="text-center" scope="col" *ngIf="viewOnly">
+            <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewSeer(addData, i)">
+              <svg-icon icon="eye" ></svg-icon>
+            </a>
+          </td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">
+            <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editSeer(addData, i)"
+               *ngIf="!viewOnly">
+              <svg-icon icon="pencil"></svg-icon>
+            </a>
+          </td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">
+            <a class="btn btn-sm btn-outline-danger rounded" 
+               (click)="deleteSeer(i)" *ngIf="!viewOnly">
+              <svg-icon icon="trash-alt"></svg-icon>
+            </a>
+          </td>
+        </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  
+    <div class="d-flex justify-content-end my-6" *ngIf="!viewOnly &&  hasSeers">
+      <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
+         (click)="onAddNewSeer(addData)">
+        <svg-icon styleClass="h1 mr-2" icon="add-user"></svg-icon>
+        <span>{{'EndowmentModule.EndowmentRgistrationService.ClickToAddAnohterNewSeer' | localize}}</span>
+      </a>
+    </div>
+    
+    <ng-template #addData let-modal>
+      <div class="modal-header">
+        <h2>{{'EndowmentModule.EndowmentRgistrationService.SeerInformationHeader' | localize}}</h2>
+      </div>
+      <div class="modal-body fixed-modal-body pt-0">
+  
+        <yakeen-person *ngIf="isEditRequested||!viewOnly"
+                       (OnNewPersonAvailable)="onNewPersonAvailable($event)"
+                       (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
+                       (OnNewAlienValidated)="onNewAlienAvailable($event)"
+                       [fromSeer]="true"
+                       [initialData]="{alien: newAlien, citizen: newCitizen, person: newPerson}">
+        </yakeen-person>
+  
+        <yakeen-person-view *ngIf="viewOnly" [isCitizen]="isCitizen" [citizen]="citizenToView" [alien]="alienToView" [person]="seers[seerToEditIndex].person"></yakeen-person-view>
+  
+        <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady || !!citizenToView || !!alienToView">
+          <!-- Section Title -->
+  
+          <div class="mt-4 col-12">
+            <h3 class="text-awq-primary my-3">
+              <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
+              {{'EndowmentModule.EndowmentRgistrationService.SeeringInformationHeader' | localize}}
+            </h3>
+          </div>
+  
+          <div class="form-group col">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.EducationExperience' | localize}}<span class="text-danger">*</span></label>
+            <select class="custom-select" [hidden]="viewOnly" #educationLevelId="ngModel" name="educationLevelId"
+                    [(ngModel)]="seerToCreate.createSeerInputDto.educationLevelId" required>
+              <option *ngFor="let educationLookup of educationLevelLookups" value="{{educationLookup.id}}">
+                {{educationLookup.name}}</option>
+            </select>
+            <!-- <label class="col-form-label font-weight-bold"
+            [hidden]="!viewOnly">&nbsp; {{lookupService.educationalLevelReverseMap.nameOf(seerToCreate.createSeerInputDto.educationLevelId) }} </label> -->
+          </div>
+  
+          <div class="form-group col">
+            <div class="d-flex">
+              <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerType' | localize}}<span class="text-danger">*</span></label>
+              <!-- <hint [hintContent]="seertypehint?.hintContentAr" [hintTitle]="seertypehint?.hintTitleAr"></hint> -->
+            </div>
+            <select class="custom-select" #seerTypeId="ngModel" [hidden]="viewOnly" name="seerTypeId" 
+                    [(ngModel)]="seerToCreate.createSeerInputDto.seerTypeId" required>
+              <option *ngFor="let seerType of seerTypeLookup" value="{{seerType.id}}">
+                {{seerType.name}}
+              </option>
+            </select>
+            <!-- <label class="col-form-label font-weight-bold"
+            [hidden]="!viewOnly">&nbsp; {{lookupService.seerTypeLookupsReverseMap.nameOf(seerToCreate.createSeerInputDto.seerTypeId) }} </label> -->
+            <div *ngIf="seerTypeId.invalid && (seerTypeId.dirty || seerTypeId.touched)" class="">
+              <p *ngIf="seerTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerTypeRequiredValidation' | localize}}</p>
+            </div>
+          </div>
+  
+          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.PartyType' | localize}}<span class="text-danger">*</span></label>
+            <select class="custom-select" #sifaEtibariTypeId="ngModel" name="sifaEtibariTypeId" [hidden]="viewOnly"
+                    [(ngModel)]="seerToCreate.createSeerInputDto.prestigiousAttributeTypeId" required>
+              <option *ngFor="let sifaEtibaria of sifaEtibariLookups" value="{{sifaEtibaria.id}}">
+                {{sifaEtibaria.name}}</option>
+            </select>
+            <!-- <label class="col-form-label font-weight-bold"
+            [hidden]="!viewOnly">&nbsp; {{lookupService.sifaEtibariLookupsReverseMap.nameOf(seerToCreate.createSeerInputDto.prestigiousAttributeTypeId) }} </label> -->
+            <div *ngIf="sifaEtibariTypeId.invalid && (sifaEtibariTypeId.dirty || sifaEtibariTypeId.touched)" class="">
+              <p *ngIf="sifaEtibariTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.PartyTypeRequiredValidation' | localize}}</p>
+            </div>
+          </div>
+  
+          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2">
+            <label class="col-form-label">{{translations.sifaEtibariName}}<span *ngIf="!viewOnly"
+                                                                                class="text-danger">*</span></label>
+            <input type="text" class="form-control" #sifaEtibariName="ngModel"
+                  [hidden]="viewOnly" [pattern]="ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers"
+                   name="sifaEtibariName" [(ngModel)]="seerToCreate.createSeerInputDto.prestigiousAttributeName"
+                   [disabled]="viewOnly" required>
+            <label class="col-form-label font-weight-bold"
+            [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.prestigiousAttributeName}} </label>
+            <div *ngIf="sifaEtibariName.invalid && (sifaEtibariName.dirty || sifaEtibariName.touched)" class="">
+              <p *ngIf="sifaEtibariName.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.EndowmentPartiesCharacterValidationLabel' | localize}} </p>
+              <p *ngIf="sifaEtibariName.errors?.['pattern']"  class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.EndowmentPartiesCharacterValidationLabel' | localize}} </p>
+            </div>
+          </div>
+  
+          <div class="form-group col" *ngIf="seerToCreate.createSeerInputDto.seerTypeId == 2&&(seerToCreate.createSeerInputDto.endowmentPartiesTypeId == 1 || seerToCreate.createSeerInputDto.endowmentPartiesTypeId == 2)">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo' | localize}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" #commercialNumber="ngModel" name="commercialNumber"   [hidden]="viewOnly"
+                   [(ngModel)]="seerToCreate.createSeerInputDto.commercialNumber"
+                   [pattern]="ePatternValidation.pattern_number">
+            <label class="col-form-label font-weight-bold"
+                  [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.commercialNumber}} </label>
+                  <div *ngIf="commercialNumber.invalid && (commercialNumber.dirty || commercialNumber.touched)" class="">
+                    <p *ngIf="commercialNumber.errors?.['pattern']"class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo' | localize}}</p>
+                  </div>
+          </div>
+  
+          <div class="form-group col">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}<span class="text-danger">*</span></label>
+            <input type="number" class="form-control" #seenDeedId="ngModel" name="seenDeedId"  [hidden]="viewOnly"
+                   [(ngModel)]="seerToCreate.createSeerInputDto.seenDeedId" [pattern]="ePatternValidation.pattern_number" required>
+            <label class="col-form-label font-weight-bold"
+                   [hidden]="!viewOnly">&nbsp; {{seerToCreate.createSeerInputDto.seenDeedId}} </label>
+                   <div *ngIf="seenDeedId.invalid && (seenDeedId.dirty || seenDeedId.touched)" class="">
+                    <p *ngIf="seenDeedId.errors?.['required']" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedIdRequiredValidation' | localize}}</p>
+                    <p *ngIf="seenDeedId.errors?.['pattern']"class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}</p>
+                  </div>
+          </div>
+  
+          <div class="form-group col-12">
+            <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.SeerDeedId' | localize}}</label>
+            <div class="input-group mb-3 download p-2">
+  
+              <div class="flex-grow-1">
+                <file-uploader
+                  [showDownloadButton]="true"
+                  [showDeleteButton]="!viewOnly"
+                  [allowedExtensions]="['.pdf' ]"
+                  [objects]="[ seerToCreate.createSeerInputDto ]"
+                  [keys]="['seedDeedAttachmentId']"
+                  [fileDisplayName]="' صك النظارة'"
+                  [serviceTypeId]=""
+                >
+                </file-uploader>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="!isEditRequested&&!viewOnly">
+        <div class="modal-footer justify-content-center">
+          <button type="button" class="btn btn-awq-secondary px-6"
+                  [disabled]="seerListForm.form?.invalid || isSeerDeedAttachmentUploaded" (click)="addToSeerList()">
+                  {{'EndowmentModule.EndowmentRgistrationService.AddSeerInfoBton' | localize}}
+            <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon>
+          </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="isEditRequested&&!viewOnly">
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-warning px-6" [disabled]="seerListForm.form?.invalid"
+                  (click)="onEditBtnClicked()">
+                  {{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}
+          </button>
+          <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditSeerValid()"
+                  (click)="onCancelBtnClicked()">
+                  {{'EndowmentModule.EndowmentRgistrationService.CancelSeerInfoBton' | localize}}
+          </button>
+        </div>
+      </ng-container>
+    </ng-template>
