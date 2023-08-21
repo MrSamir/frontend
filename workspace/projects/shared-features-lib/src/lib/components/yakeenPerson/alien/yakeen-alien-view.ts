@@ -5,8 +5,8 @@ import { Component, Input, OnInit } from "@angular/core";
 import {
   AlienInfoResponse, InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData
 } from "../../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies";
-import {EnumValidation} from "../../IDNumberWithValidation/EnumValidation";
-import {cibUber} from "@coreui/icons";
+import { EnumValidation } from "../../IDNumberWithValidation/EnumValidation";
+import { cibUber } from "@coreui/icons";
 
 @Component({
   selector: 'yakeen-alien-view',
@@ -15,36 +15,36 @@ import {cibUber} from "@coreui/icons";
 export class YakeenAlienViewComponent implements OnInit {
   @Input() alienInfo: AlienInfoResponse | undefined;
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
-  NationalityLookup:any=[];
-  _lookupExtraData:   LookupExtraData=new LookupExtraData();
-  constructor(public  lookupService: LookupApplicationServiceProxy) {
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
+  NationalityLookup: any = [];
+  _lookupExtraData: LookupExtraData = new LookupExtraData();
+  constructor(public lookupService: LookupApplicationServiceProxy) {
   }
 
   ngOnInit(): void {
     // check if NationlaityId has value AND no name, then this case require a manual mapping
     // this case happens when the input param [alienInfo] is being passed as input, not as a response from GetCitizenInfo() API.
-    if(this.alienInfo?.awqafNatinaityId != undefined && this.alienInfo.nationalityNameAr == undefined){
+    debugger;
+    if (this.alienInfo?.awqafNatinaityId != undefined && this.alienInfo.nationalityNameAr == undefined) {
       this.LoadNationalities(this.alienInfo.awqafNatinaityId);
-      
+
     }
 
 
 
   }
-  LoadNationalities(Id:number)
-  {
-    this._lookupExtraData.dataName="Id"
-    this._lookupExtraData.dataValue=Id.toString();
-    this.lookupfliter.lookUpName="Nationality";
-    this.lookupfliter.filters=[this._lookupExtraData];
+  LoadNationalities(Id: number) {
+    this._lookupExtraData.dataName = "Id"
+    this._lookupExtraData.dataValue = Id.toString();
+    this.lookupfliter.lookUpName = "Nationality";
+    this.lookupfliter.filters = [this._lookupExtraData];
     this.lookupService.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.NationalityLookup=data.dto.items;
-        if (this.NationalityLookup != undefined && this.alienInfo){
+        this.NationalityLookup = data.dto.items;
+        if (this.NationalityLookup != undefined && this.alienInfo) {
           var natInfo = this.NationalityLookup.filter(item => item.id === this.alienInfo?.awqafNatinaityId)[0];
           this.alienInfo.nationalityNameAr = natInfo ? natInfo?.name : '';
-          }
+        }
         console.log(data);
       }
     );

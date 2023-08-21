@@ -21,7 +21,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit(): void {
-    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     this.getAllSeers();
     //throw new Error('Method not implemented.');
   }
@@ -79,7 +79,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   // Passed Seer from Common Seers Component in order to delete it through calling API from Parent component
-  OnDeletingExistingSeer( SeerToDelete: OutputSeerDto) {
+  OnDeletingExistingSeer(SeerToDelete: OutputSeerDto) {
     this.onDeleteTableCellClicked(SeerToDelete);
   }
 
@@ -144,7 +144,6 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
       confirmButtonColor: '#D6BD81',
     }).then((result) => {
       if (result.isConfirmed) {
-        debugger;
         this.OneRequestSeer = new RemoveSeerInputDto();
         this.OneRequestSeer.seerId = seerToDelete.seerId!;
         this.OneRequestSeer.requestId = this.requestId;
@@ -194,8 +193,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
 
   getAllSeers() {
     this.registerWaqfService.getSeersInformationByReqId(this.requestId).subscribe(
-      (res: OutputSeerDto[]) =>{
-        debugger;
+      (res: OutputSeerDto[]) => {
         this.seers = res;
       },
       (error) => {

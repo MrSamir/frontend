@@ -20,12 +20,12 @@ import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/Ci
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
-import {HintModel} from "../../../../../../../core-lib/src/lib/components/hint/hint.component";
+import { HintModel } from "../../../../../../../core-lib/src/lib/components/hint/hint.component";
 import {
   AttachementItem
 } from "../../../../../../../shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component";
-import {MessageTypeEnum} from "../../../../../../../core-lib/src/lib/enums/message-type";
-import {MessageSeverity} from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
+import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
@@ -87,7 +87,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   ngOnInit(): void {
-    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     this.LoadLookups('EndowmentPartiesType', (lookups) => {
       this.seerTypeLookup = lookups;
     });
@@ -117,10 +117,10 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     this.seerToCreate.seerPerson.init(seerToEdit.seerPerson);
     //this.setOldAttachmentIds();
 
-    this.citizenToView = new CitizenInfoResponse();
-    this.newCitizen = new CitizenInfoResponse();
-    this.alienToView = new AlienInfoResponse();
-    this.newAlien = new AlienInfoResponse();
+    this.citizenToView = undefined;
+    this.newCitizen = undefined;
+    this.alienToView = undefined;
+    this.newAlien = undefined;
 
     this.yakeenPersonUtilities[seerToEdit.seerPerson.idTypeId!](seerToEdit.seerPerson);
 
@@ -132,7 +132,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   reset() {
-    debugger;
     this.newCitizen = undefined;
     this.newAlien = undefined;
     this.citizenToView = undefined;
@@ -149,11 +148,10 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
   deleteSeer(index: number) {
     const seerToDelete = this.seers[index];
-    debugger;
     // if (seerToDelete.seerId == this.mainApplicantPerson.applicantPersonId) {
     //   return;
     // }
-    this.OnDeletingExistingSeer.emit( seerToDelete);
+    this.OnDeletingExistingSeer.emit(seerToDelete);
   }
 
   onNewCitizenAvailable(event: {
@@ -183,24 +181,15 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     userName: string;
     person: InputApplicationUserDto;
   }) {
-    debugger;
-    //let educationLevel: number =this.seerToCreate.createSeerInputDto.educationLevelId;
     this.newPerson = event.person;
     this.seerToCreate.seerPerson = new InputApplicationUserDto()
     this.seerToCreate.seerPerson.init(this.newPerson);
-    this.seerToCreate.seerPerson.gender =
-      this.seerToCreate.seerPerson.gender.toString() === ('Male' || 'M') ? 0 : 1;
     this.seerToCreate.createSeerInputDto.seerId = this.newPerson.id;
-    //this.seerToCreate.requestId = this.requestId;
     this.seerToCreate.seerPerson.phoneNumber = this.newPerson.phoneNumber;
     this.seerToCreate.seerPerson.email = this.newPerson.email;
 
-    //this.seerToCreate.createSeerInputDto.educationLevelId
-    // if( !!event.person ) {
-    //   this.newSeer.email = event.person.email;
-    //   this.newSeer.mobileNumber = event.person.mobileNumber;
-    // }
   }
+
 
   loadSeerTypeHint() {
     this.seerTypeHint = {
@@ -353,7 +342,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   //   });
   // }
   onAddNewSeer(content: any) {
-    debugger;
     this.reset();
     this.activeCrudOperation = CrudOperation.Create;
     this.modalService.open(content, { size: 'lg' });
@@ -364,18 +352,17 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   onEditBtnClicked() {
-debugger;
     let input = new EditSeerInputDto();
     input.createSeerInputDto = new CreateSeerInputDto();
     input.createSeerInputDto.init(this.seers[this.seerToEditIndex]),
-      input.requestId =  this.requestId,
+      input.requestId = this.requestId,
       input.seerPerson = new InputApplicationUserDto();
-      input.seerPerson.init(this.seerToCreate.seerPerson);
-        input.createSeerInputDto = new CreateSeerInputDto();
-      input.createSeerInputDto.init(this.seerToCreate.createSeerInputDto),
-    // input.seerInputDto.isSeedDeedAttachmentChanged =
-    //   input.seerInputDto != undefined &&
-    //   this.oldSeedDeedAttachmentId != input.seerInputDto.seedDeedAttachmentId;
+    input.seerPerson.init(this.seerToCreate.seerPerson);
+    input.createSeerInputDto = new CreateSeerInputDto();
+    input.createSeerInputDto.init(this.seerToCreate.createSeerInputDto),
+      // input.seerInputDto.isSeedDeedAttachmentChanged =
+      //   input.seerInputDto != undefined &&
+      //   this.oldSeedDeedAttachmentId != input.seerInputDto.seedDeedAttachmentId;
       this.OnEditingExistingSeer.emit(input);
   }
 

@@ -101,14 +101,12 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.viewOnly;
   }
   init() {
-    debugger;
-    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
     //this.lookupService.fetchOwnerTypeLookups();
     //this.loadHint();
-    debugger;
     this.LoadLookups('EndowmentPartiesType', (lookups) => {
       this.PartiesTypesLookup = lookups;
     });
@@ -330,7 +328,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.activeCrudOperation === CrudOperation.Create;
   }
   editWaqif(content: any, index: number) {
-debugger;
     this.activeCrudOperation = CrudOperation.Update;
     this.requestedOwnerIndexToEditOrView = index;
     const owner = this.owners[index];
@@ -504,21 +501,18 @@ debugger;
   }
 
   onNewPersonAvailable(event: { idType: number, userName: string, person: InputApplicationUserDto }) {
+    debugger;
     this.newPerson = event.person;
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
     this.addOwnerInputDto.requestId = this.requestId;
     this.addOwnerInputDto.endowmerId = this.newPerson.id;
     this.addOwnerInputDto.endowmentId = this.waqfId;
-    this.addOwnerInputDto.endowmentPartiesTypeId = undefined;
     if (this.activeCrudOperation === CrudOperation.Update) {
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
       this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
     }
-    var genderVal = this.addOwnerInputDto.endowmerPerson?.gender?.toString();
-    if (this.addOwnerInputDto.endowmerPerson != undefined) {
-      this.addOwnerInputDto.endowmerPerson.gender = (genderVal === 'Male' || genderVal === 'M') ? 0 : 1;
-    }
+
   }
 
   get hasOwners() {
