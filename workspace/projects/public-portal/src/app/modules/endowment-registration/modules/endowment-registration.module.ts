@@ -1,3 +1,4 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -34,12 +35,15 @@ import {PanelModule} from "primeng/panel";
   imports: [
     ArchwizardModule,
     EndowmentRegistrationRoutingModule,
-    EndowmentRegistrationSharedModule,PanelModule,
-    
- 
-    PublicPortalSharedModule, 
-    AccordionModule,FormsModule,CoreLibModule,
-    MultiSelectModule,SeerStepComponent,BeneficiaryStepComponent
+    EndowmentRegistrationSharedModule,
+    PanelModule,
+
+
+    PublicPortalSharedModule,
+    AccordionModule,
+    FormsModule,
+    CoreLibModule,
+    MultiSelectModule,
 
   ],
   exports: [ /*RouterModule*/]

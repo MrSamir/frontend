@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
-import { OutputFileDto } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 
 @Component({
   selector: 'lib-file-uploader',
@@ -35,7 +34,7 @@ export class FileUploaderComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.name=this.name+"[]"
     this.fileSizeIntext = this.Util.formatBytes(
       this.maxFileSizeInMB * 1024 * 1024
@@ -62,13 +61,13 @@ export class FileUploaderComponent extends ComponentBase implements OnInit {
   }
   onFileSelect(event) {
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-      
+
     this.OnSelectFile.emit(event);
   }
 
   onFileUpload(event) {
     // Do something with the selected file, e.g., emit an event, upload to the server, etc.
-    
+
     this.OnUploadFile.emit(event);
   }
 }

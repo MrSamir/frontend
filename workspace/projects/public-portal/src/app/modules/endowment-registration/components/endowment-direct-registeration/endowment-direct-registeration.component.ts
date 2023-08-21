@@ -1,10 +1,9 @@
-import { Message } from 'primeng/api';
-import { MojDataMigrationApplicationServicesProxy } from './../../../shared/services/services-proxies/service-proxies';
-import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
-import { Component, Injector, OnInit } from '@angular/core';
+import { ComponentBase } from '../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { NgForm } from '@angular/forms';
-import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
-import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { MessageTypeEnum } from '../../../../../../../core-lib/src/lib/enums/message-type';
+import { MessageSeverity } from '../../../../../../../core-lib/src/lib/enums/message-severity';
+import { MojDataMigrationApplicationServicesProxy } from '../../../shared/services/services-proxies/service-proxies'
+import { Component, OnInit, Injector } from '@angular/core';
 
 @Component({
   selector: 'app-endowment-direct-registeration',
@@ -21,11 +20,11 @@ constructor(injector:Injector, private mojDataMigrationApplicationServices: MojD
   }
 
   deedNumber: number;
-  
+
 
   directRegisterClicked(form:NgForm){
 
-    this.mojDataMigrationApplicationServices.registerEndowmentByDeedNumber(this.deedNumber, true).subscribe(result => {
+    this.mojDataMigrationApplicationServices.registerEndowmentByDeedNumberFromWeb(this.deedNumber, true).subscribe(result => {
       this.message.showMessage(MessageTypeEnum.toast, {
         closable: true,
         enableService: true,

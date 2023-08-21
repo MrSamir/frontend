@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddBeneficiaryInputDto, ApiException, EndowmentRegistrationServiceServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { AddBeneficiaryInputDto, ApiException, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -12,7 +12,7 @@ export class BeneficiaryStepComponent implements OnInit{
   @Input() public requestId: string;
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
-  constructor(private registerWaqfService:EndowmentRegistrationServiceServiceProxy,private modalService: NgbModal){}
+  constructor(private registerWaqfService:EndowmentRegistrationServiceProxy,private modalService: NgbModal){}
 
 
   ngOnInit(): void {
@@ -28,13 +28,13 @@ export class BeneficiaryStepComponent implements OnInit{
         if (data) {
           let resSeerData = data;
           if (resSeerData.isSuccess) {
-            showSuccess('تم إنشاء الاصل بنجاح', () => {
+            //showSuccess('تم إنشاء الاصل بنجاح', () => {
               // console.log('res here: ', resSeerData);
               // this.newSeer.id = resSeerData.data.toString();
               // let obj = {Seer: resSeerData.data}
-              this.modalService.dismissAll();
-              this.getAllBeneficiaries();
-            });
+              //this.modalService.dismissAll();
+              //this.getAllBeneficiaries();
+            //});
           }
         }
       },
@@ -43,12 +43,12 @@ export class BeneficiaryStepComponent implements OnInit{
       }
     );
   }
-  
+
   OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto)
   {
 
   }
-  
+
   OnDeletingExistingBeneficiary(event: { BeneficiaryToDelete: OutputBeneficiaryDto; index: number })
   {
 

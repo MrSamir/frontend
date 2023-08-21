@@ -1,21 +1,29 @@
-import {Component, EventEmitter, Input, NgZone, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
-import {GoogleMapsAPIWrapper, MapsAPILoader} from "@agm/core";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  NgZone,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MapModel } from './map.model';
 //import {MapModel} from "@app/_shared/map/map.model";
 
-declare var google: any;
+declare let google: any;
 
 @Component({
   selector: 'google-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent {
+  @ViewChild('outSideOfSaudiArabia', { static: true, read: TemplateRef })
+  outSideOfSaudiArabia: TemplateRef<any>;
 
-  @ViewChild('outSideOfSaudiArabia', {static: true, read: TemplateRef}) outSideOfSaudiArabia: TemplateRef<any>;
-
-  geocoder:any;
+  geocoder: any;
 
   @Input() disabled: boolean;
 
@@ -37,12 +45,12 @@ export class MapComponent implements OnInit {
   initLat = 23.69665233084885;
   initLong = 45.657655575820215;
 
-  constructor(public mapsApiLoader: MapsAPILoader,
-              private zone: NgZone,
-              private wrapper: GoogleMapsAPIWrapper,
-              private modalService: NgbModal
+  constructor(
+    public mapsApiLoader: MapsAPILoader,
+    private zone: NgZone,
+    private wrapper: GoogleMapsAPIWrapper,
+    private modalService: NgbModal
   ) {
-
     this.mapsApiLoader = mapsApiLoader;
     this.zone = zone;
     this.wrapper = wrapper;
@@ -51,18 +59,12 @@ export class MapComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-
-  }
-
   onClickLocation(event: any) {
-
     ////////////YOU SHOULD DELETE THIS AFTER GETTING THE API KEY///////////////
-    if(!this.disabled){
+    if (!this.disabled) {
       this.map = new MapModel();
       this.map.latitude = event.coords.lat;
       this.map.longitude = event.coords.lng;
-
     }
     ///////////////////////////////////////////////////////////////////////////
 
@@ -92,14 +94,12 @@ export class MapComponent implements OnInit {
     // }
   }
 
-  getCountryName(results : any) : string{
-
-    if(results.length){
-      if(results[results.length-1].formatted_address){
-        return (results[results.length-1].formatted_address) as string;
+  getCountryName(results: any): string {
+    if (results.length) {
+      if (results[results.length - 1].formatted_address) {
+        return results[results.length - 1].formatted_address as string;
       }
     }
-    return "";
+    return '';
   }
-
 }

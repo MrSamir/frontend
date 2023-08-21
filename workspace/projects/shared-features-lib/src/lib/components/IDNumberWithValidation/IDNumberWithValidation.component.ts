@@ -6,13 +6,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./IDNumberWithValidation.component.css']
 })
 export class IDNumberWithValidationComponent   {
- 
+
   @Input()IsSaudi:boolean=true;
   IsIqama:boolean=false;
    IDNumberForm:FormGroup;
   constructor() {
     this.IDNumberForm = new FormGroup({
-      idNumber: new FormControl('', [
+      userName: new FormControl('', [
         Validators.required,
         Validators.maxLength(10),
         Validators.pattern('^1[0-9]{9}$')

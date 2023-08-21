@@ -9,7 +9,8 @@ import { AppCoreSubjectService } from 'projects/core-lib/src/lib/services/app-co
 import { CurrentLangaugeSubjectService } from '../services/current-langauge-subject.service';
 import { UtilsService } from '../../public-api';
 import { AppConfigSubjectService } from '../services/appConfigSubjectService';
-import { appConfig } from '../Classes/appConfig';
+import { AppConfig } from '../Classes/appConfig';
+import { AppCore } from '../Classes/appCore';
 
 
 // import { AppSessionService } from '@shared/session/app-session.service';
@@ -21,42 +22,34 @@ import { appConfig } from '../Classes/appConfig';
   providedIn: 'root',
 })
 export class AppInitializer {
-    constructor(
+  constructor(
     private _injector: Injector,
     private _platformLocation: PlatformLocation,
     private _httpClient: HttpClient,
     private appcoreLoader: appCoreLoader,
     private appCoreSubject: AppCoreSubjectService,
     private currentLanguge: CurrentLangaugeSubjectService,
-    private ConfigSubject:AppConfigSubjectService,
+    private ConfigSubject: AppConfigSubjectService,
     private utilsService: UtilsService
-  ) {}
+  ) { }
 
-loadAppConfig(): () => Promise<boolean> {
-    return () => {
- return new Promise<boolean>((resolve, reject) => {
-        var appconfig=  this.ConfigSubject.getAppConfig();
-        this.appcoreLoader.load(
-          '../assets/Config/AppConfig.json',
-          appconfig
-        ).then((appconfig:appConfig) => {
-          
-           appconfig.appBaseHref= this.getBaseHref();
-                   this.ConfigSubject.setAppConfig(appconfig);
-          this.loadBakcendUserConfig(()=>{
-            resolve(true);
-          })
-        });
+  private getBaseHref(): string {
+    const baseUrl = this._platformLocation.getBaseHrefFromDOM();
+    if (baseUrl) {
+      return baseUrl;
+    }
+    return '/';
+  }
 
+  async loadAppConfig(config: Partial<AppConfig>) {
+    this.ConfigSubject.setAppConfig(config);
+    this.ConfigSubject.setBaseHref(this.getBaseHref());
+    return this.loadBakcendUserConfig();
+  }
 
-
- })}}
-
- private loadBakcendUserConfig(callback: () => void) :void
- {
-  
-    var appconfig=this.ConfigSubject.getAppConfig();
- if (!this.utilsService.getCookieValue(appconfig.langCookieName)) {
+  private async loadBakcendUserConfig() {
+    const appconfig = this.ConfigSubject.getAppConfig();
+    if (!this.utilsService.getCookieValue(appconfig.langCookieName)) {
       this.utilsService.setCookieValue(appconfig.langCookieName, 'ar');
     }
     const cookieLangValue = this.utilsService.getCookieValue(
@@ -74,31 +67,20 @@ loadAppConfig(): () => Promise<boolean> {
     if (token) {
       requestHeaders['Authorization'] = `Bearer ${token}`;
     }
-    let app = this.appCoreSubject.getAppCore();
-    this._httpClient
-      .get<any>(
-        `${appconfig.baseApiUrl}/api/AppCoreConfigurationsService/GetAppCoreConfigurations`,
-        {
-          headers: requestHeaders,
-        }
-      )
-      .subscribe((response) => {
-        const result = response;
-        this.appCoreSubject.setAppCore(response);
-        callback();
-      });
-
-
- }
-  private getBaseHref(): string {
-    const baseUrl = this._platformLocation.getBaseHrefFromDOM();
-    if (baseUrl) {
-      return baseUrl;
-    }
-
-    return '/';
+    return new Promise((resolve) => {
+      this._httpClient
+        .get<AppCore>(
+          `${appconfig.baseApiUrl}/api/AppCoreConfigurationsService/GetAppCoreConfigurations`,
+          {
+            headers: requestHeaders,
+          }
+        )
+        .subscribe(appCore => {
+          console.log(['resolved', appCore])
+          this.appCoreSubject.setAppCore(appCore)
+          resolve(true);
+        });
+    })
   }
-
-
 
 }
