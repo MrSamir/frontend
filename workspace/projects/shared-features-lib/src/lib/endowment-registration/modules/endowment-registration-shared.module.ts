@@ -8,11 +8,13 @@ import { EndowmentBeneficiariesListComponent } from '../components/endowment-ben
 import { EndowmentEndowersListComponent } from '../components/endowment-endowers-list/endowment-endowers-list.component';
  import { MultiSelectModule } from 'primeng/multiselect';
 import {SharecomponentModule} from "../../modules/sharecomponent.module";
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
     imports: [
         CommonModule,
-        ReactiveFormsModule, CoreLibModule, MultiSelectModule, SharecomponentModule, FormsModule
+        ReactiveFormsModule, CoreLibModule, MultiSelectModule, SharecomponentModule, FormsModule,
+      DropdownModule
     ],
   exports: [
     CommonModule,

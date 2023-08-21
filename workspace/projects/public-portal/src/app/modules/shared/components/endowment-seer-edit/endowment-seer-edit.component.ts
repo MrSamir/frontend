@@ -1,12 +1,31 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
-import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
+import {
+  AddSeerInputDto,
+  AlienInfoResponse, ApiResponseOfOutputFileDto,
+  CitizenInfoResponse,
+  CreateSeerInputDto,
+  EditSeerInputDto, FileLibraryApplicationServiceProxy,
+  InputApplicationUserDto, InputFileDto,
+  InputLookUpDto,
+  LookupApplicationServiceProxy,
+  LookupDto,
+  OutputApplicationUserDto,
+  OutputFileDto,
+  OutputSeerDto
+} from '../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
+import {HintModel} from "../../../../../../../core-lib/src/lib/components/hint/hint.component";
+import {
+  AttachementItem
+} from "../../../../../../../shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component";
+import {MessageTypeEnum} from "../../../../../../../core-lib/src/lib/enums/message-type";
+import {MessageSeverity} from "../../../../../../../core-lib/src/lib/enums/message-severity";
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
@@ -18,10 +37,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   @Input() viewOnly: boolean = false;
   @Output() OnAddingNewSeer = new EventEmitter<AddSeerInputDto>();
   @Output() OnEditingExistingSeer = new EventEmitter<AddSeerInputDto>();
-  @Output() OnDeletingExistingSeer = new EventEmitter<{
-    seerToDelete: OutputSeerDto;
-    index: number;
-  }>();
+  @Output() OnDeletingExistingSeer = new EventEmitter<OutputSeerDto>();
   @Output() OnCancelClick = new EventEmitter();
   @Input() seers: OutputSeerDto[] = [];
 
@@ -44,6 +60,13 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   isAddRequested: boolean;
   requestId: string;
   activeCrudOperation: CrudOperation = CrudOperation.Create;
+  seerTypeHint: HintModel;
+  seerDeedFile: File;
+  uploadedFiles: OutputFileDto[] = [];
+  seerDeadAttachemt: AttachementItem;
+  FileUploadentityName = 'EndowmentAttachment';
+  lookupInput: InputLookUpDto = new InputLookUpDto();
+
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -59,15 +82,24 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
 
 
-  constructor(private modalService: NgbModal, private lookupssrv: LookupApplicationServiceProxy, injector: Injector) {
+  constructor(private modalService: NgbModal, private lookupssrv: LookupApplicationServiceProxy, injector: Injector, private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy) {
     super(injector);
   }
 
   ngOnInit(): void {
-    this.fetchSeerLookup();
-    this.fetchSifaEtibariTypeLookups();
-    this.fetchRegionsLookups();
-    this.fetchEducationLevelLookups();
+    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    this.LoadLookups('EndowmentPartiesType', (lookups) => {
+      this.seerTypeLookup = lookups;
+    });
+    this.LoadLookups('PrestigiousAttributeType', (lookups) => {
+      this.sifaEtibariLookups = lookups;
+    });
+    this.LoadLookups('EducationLevel', (lookups) => {
+      this.educationLevelLookups = lookups;
+    });
+    this.LoadLookups('Region', (lookups) => {
+      this.regionsLookups = lookups;
+    });
   }
 
   viewSeer(content: any, index: number) {
@@ -100,6 +132,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   reset() {
+    debugger;
     this.newCitizen = undefined;
     this.newAlien = undefined;
     this.citizenToView = undefined;
@@ -116,10 +149,11 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
   deleteSeer(index: number) {
     const seerToDelete = this.seers[index];
-    // if (seerToDelete.personId == this.mainApplicantPerson.applicantPersonId) {
+    debugger;
+    // if (seerToDelete.seerId == this.mainApplicantPerson.applicantPersonId) {
     //   return;
     // }
-    this.OnDeletingExistingSeer.emit({ seerToDelete, index });
+    this.OnDeletingExistingSeer.emit( seerToDelete);
   }
 
   onNewCitizenAvailable(event: {
@@ -149,6 +183,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     userName: string;
     person: InputApplicationUserDto;
   }) {
+    debugger;
     //let educationLevel: number =this.seerToCreate.createSeerInputDto.educationLevelId;
     this.newPerson = event.person;
     this.seerToCreate.seerPerson = new InputApplicationUserDto()
@@ -156,7 +191,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     this.seerToCreate.seerPerson.gender =
       this.seerToCreate.seerPerson.gender.toString() === ('Male' || 'M') ? 0 : 1;
     this.seerToCreate.createSeerInputDto.seerId = this.newPerson.id;
-    this.seerToCreate.requestId = this.requestId;
+    //this.seerToCreate.requestId = this.requestId;
     this.seerToCreate.seerPerson.phoneNumber = this.newPerson.phoneNumber;
     this.seerToCreate.seerPerson.email = this.newPerson.email;
 
@@ -165,6 +200,136 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     //   this.newSeer.email = event.person.email;
     //   this.newSeer.mobileNumber = event.person.mobileNumber;
     // }
+  }
+
+  loadSeerTypeHint() {
+    this.seerTypeHint = {
+      hintBody: this.l(
+        'EndowmentModule.EndowmentRgistrationService.EndowmmentPartyTypeHints'
+      ),
+      hintHeader: this.l(
+        'EndowmentModule.EndowmentRgistrationService.SeerType'
+      ),
+    };
+  }
+  selectSeerType(event: any) {
+    const Seerype = this.sifaEtibariLookups.filter(
+      (ept, index) => ept.id == event.value
+    )[0];
+    if (Seerype == undefined) {
+      this.loadSeerTypeHint();
+    } else {
+      this.seerTypeHint = {
+        hintHeader: Seerype?.name || '',
+        hintBody: Seerype?.hint || '',
+      };
+    }
+  }
+  seerDeedFileSelect(event: any) {
+    this.seerDeedFile = event.files[0];
+  }
+
+  SeerDeedFileUpload(event: any) {
+    this.UploadFile(event.files[0], (response) => {
+      this.seerDeadAttachemt = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.seerDeedFile = null!;
+      this.seerToCreate.createSeerInputDto.seedDeedAttachmentId = response.id;
+    });
+  }
+  SeerDeedremoveFile(event: AttachementItem) {
+    this.removeFile(event, (result) => {
+      this.seerToCreate.createSeerInputDto.seedDeedAttachmentId = undefined!;
+      this.seerDeadAttachemt = undefined!;
+    });
+  }
+
+  UploadFile(file: File, callback: (response: OutputFileDto) => void) {
+    this._serviceProxyFileLibrary
+      .uploadFile(
+        this.FileUploadentityName,
+        { data: file, fileName: file.name },
+        []
+      )
+      .subscribe(
+        (response: ApiResponseOfOutputFileDto) => {
+          // Handle the successful response here
+
+          if (response.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: this.l('Common.SuccesUploadMessge'),
+              severity: MessageSeverity.Success,
+            });
+            callback(response.dto);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: response.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
+          // Optionally, perform additional actions with the response data
+        },
+        (error: any) => {
+          // Handle the error response here
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: this.l('Common.Upload'),
+            detail: this.l('Common.ErrorInFileUpload'),
+            severity: MessageSeverity.Error,
+          });
+          this.Util.error(error);
+          // Optionally, perform error handling
+        }
+      );
+  }
+  removeFile(
+    event: AttachementItem,
+    callback: (item: AttachementItem) => void
+  ) {
+    const input = new InputFileDto();
+    input.entityName = this.FileUploadentityName;
+    input.id = event.id;
+    input.filters = [];
+    this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
+      if (result.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Success,
+        });
+        callback(event);
+      } else {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Error,
+        });
+      }
+    });
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    this._serviceProxyFileLibrary
+      .downloadFileById(this.FileUploadentityName, id)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
   }
   agentDeedFileSelect(event) {
     // this.AgentDeed = event.files[0];
@@ -199,19 +364,19 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   onEditBtnClicked() {
-
-    // const input = new EditSeerInputDto({
-    //   createSeerInputDto: this.seers[this.seerToEditIndex].id,
-    //   requestId: this.requestId,
-    //   seerPersonInputDto: this.seerToCreate.seerPersonInputDto,
-    //   seerInputDto: this.seerToCreate.seerInputDto,
-    //   email: this.newPerson.email,
-    //   mobileNumber: this.newPerson.mobileNumber,
-    // });
+debugger;
+    let input = new EditSeerInputDto();
+    input.createSeerInputDto = new CreateSeerInputDto();
+    input.createSeerInputDto.init(this.seers[this.seerToEditIndex]),
+      input.requestId =  this.requestId,
+      input.seerPerson = new InputApplicationUserDto();
+      input.seerPerson.init(this.seerToCreate.seerPerson);
+        input.createSeerInputDto = new CreateSeerInputDto();
+      input.createSeerInputDto.init(this.seerToCreate.createSeerInputDto),
     // input.seerInputDto.isSeedDeedAttachmentChanged =
     //   input.seerInputDto != undefined &&
     //   this.oldSeedDeedAttachmentId != input.seerInputDto.seedDeedAttachmentId;
-    //   this.OnEditingExistingSeer.emit(input);
+      this.OnEditingExistingSeer.emit(input);
   }
 
   onCancelBtnClicked() {
@@ -244,88 +409,16 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     );
   }
 
-  fetchSifaEtibariTypeLookups() {
-    if (!!this.sifaEtibariLookups) {
-      return;
-    }
-    this.lookupfliter.lookUpName = "PrestigiousAttributeType";
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.sifaEtibariLookups = data.dto.items!;
-        console.log(data);
-        //this.loadAssetSize();
-
-      });
-
-    // this.getLookupValues(EnumLookuptypes.SifaEtibariType).subscribe((res: any) => {
-    //   res.subscribe((res: LookupModel[]) => {
-    //     this.sifaEtibariLookups = res;
-    //     this.sifaEtibariLookupsReverseMap.rebuild(this.sifaEtibariLookups);
-
-    //   });
-    // });
+  LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
+    this.lookupInput.lookUpName = LookupName;
+    this.lookupInput.filters = [];
+    this.lookupssrv.getAllLookups(this.lookupInput).subscribe((result) => {
+      callback(result.dto.items!);
+    });
   }
 
-  fetchEducationLevelLookups() {
-    if (this.educationLevelLookups.length > 0) {
-      return;
-    }
-    this.lookupfliter.lookUpName = "EducationLevel";
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.educationLevelLookups = data.dto.items!;
-        console.log(data);
-        //this.loadAssetSize();
 
-      });
 
-    // this.getLookupValues(EnumLookuptypes.EducationLevel).subscribe((res: any) => {
-    //   res.subscribe((res: EducationLevel[]) => {
-    //     //this.educationLevelLookups = res;
-    //     this.educationLevelList = [];
-    //     this.educationLevelLookups = [];
-    //     this.educationLevelList = res;
-    //     this.educationLevelList.forEach(element => {
-    //       this.educationLevelLookups.push(new LookupModel(element.id, element.name));
-    //     });
-    //     this.educationalLevelReverseMap.rebuild(this.educationLevelLookups);
-    //   });
-    // });
-  }
-
-  fetchRegionsLookups() {
-    if (!!this.regionsLookups) {
-      return;
-    }
-    this.lookupfliter.lookUpName = "Region";
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.regionsLookups = data.dto.items!;
-        console.log(data);
-
-      });
-    // this.getLookupValuesFromServiceResponseType(EnumLookuptypes.RegionLookup).subscribe((res: any) => {
-    //   res.subscribe((res: LookupModel[]) => {
-    //     this.regionsLookups = res;
-    //     this.regionLookupsReverseMap = new ReverseLookupMap(this.regionsLookups);
-    //   });
-    // });
-  }
-
-  fetchSeerLookup() {
-    this.lookupfliter.lookUpName = "EndowmentPartiesType";
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.seerTypeLookup = data.dto.items!;
-        console.log(data);
-
-      });
-
-  }
   get isUpdateMode() {
     return this.activeCrudOperation === CrudOperation.Update;
   }
