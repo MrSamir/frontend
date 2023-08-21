@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
-import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
+import { AddSeerInputDto, AlienInfoResponse, CitizenInfoResponse, CreateSeerInputDto, EditSeerInputDto, InputApplicationUserDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto, OutputSeerDto } from '../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
 import { AlienUtilities } from 'projects/shared-features-lib/src/lib/Models/alienInfo';
@@ -56,7 +56,7 @@ export class EndowmentSeerEditComponent implements OnInit {
  
   
 
-  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceServiceProxy)
+  constructor (private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy)
   {}
 
   ngOnInit(): void {

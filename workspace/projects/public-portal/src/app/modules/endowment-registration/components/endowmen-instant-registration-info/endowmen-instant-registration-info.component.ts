@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ApiResponseOfOutputEndowmentDetailsDto, EndowmentRegistrationServiceServiceProxy, InputLookUpDto, LookupApplicationServiceServiceProxy, LookupExtraData, OutputEndowmentDetailsDto } from '../../../shared/services/services-proxies/service-proxies';
+import { ApiResponseOfOutputEndowmentDetailsDto,  EndowmentRegistrationServiceProxy,  InputLookUpDto, LookupApplicationServiceProxy, LookupExtraData, OutputEndowmentDetailsDto } from '../../../shared/services/services-proxies/service-proxies';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
@@ -30,8 +30,8 @@ export class EndowmenInstantRegistrationInfoComponent   implements OnInit{
   endowmentDeedDate: NgbDateStruct;
   oldDeedAttachmentId: string;
 
-  constructor(private dateHelper: DateFormatterService,private registerWaqfServiceProxy: EndowmentRegistrationServiceServiceProxy,
-    private lookupssrv:LookupApplicationServiceServiceProxy){}
+  constructor(private dateHelper: DateFormatterService,private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private lookupssrv:LookupApplicationServiceProxy){}
 
     ngOnInit(): void {
       this.requestId='06EC682A-9455-476C-94EF-17190CBA3C99'

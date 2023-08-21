@@ -1,6 +1,7 @@
+import { LookupApplicationServiceProxy, EndowmentRegistrationServiceProxy } from './../../../shared/services/services-proxies/service-proxies';
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
-import { ApiException, EndowmentRegistrationServiceProxy, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupApplicationServiceProxy, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
+import { ApiException, InputAssetDto, InputLookUpDto, InputOneAssetDto, InputRemoveAssetDto, LookupDto, OutputAssetDto } from '../../../shared/services/services-proxies/service-proxies';
 //import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
@@ -8,7 +9,6 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { ApiResponse } from 'dist/core-lib/lib/models/apiResponse';
 import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 

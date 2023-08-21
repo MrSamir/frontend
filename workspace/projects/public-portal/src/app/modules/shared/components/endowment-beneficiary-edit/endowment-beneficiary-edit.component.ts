@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AddBeneficiaryInputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, InputApplicationUserDto, LookupApplicationServiceServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
+import { AddBeneficiaryInputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, InputApplicationUserDto, LookupApplicationServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
@@ -56,7 +56,7 @@ export class EndowmentBeneficiaryEditComponent {
   newBeneficiaryOutKsa: BeneficiaryOutKsa;
   isMobileNumberModified: boolean;
 
-  constructor(private modalService: NgbModal,private lookupssrv:LookupApplicationServiceServiceProxy){}
+  constructor(private modalService: NgbModal,private lookupssrv:LookupApplicationServiceProxy){}
 
 
   openLg(content: any) {

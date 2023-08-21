@@ -2,7 +2,7 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountProxy, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import {  RequestApplicationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 import { LazyLoadEvent } from 'primeng/api';
 
