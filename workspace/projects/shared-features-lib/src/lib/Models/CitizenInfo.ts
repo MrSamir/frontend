@@ -17,11 +17,11 @@ const fromPerson = (person: OutputApplicationUserDto): any => {
     idIssueDate: person?.idIssueDate,
     idIssuePlace: person?.idIssuePlace,
     placeOfBirth: person?.placeOfBirth,
-    lifeStatus: person?.isAlive? 0 : 1,
+    lifeStatus: person?.isAlive != undefined && person?.isAlive ? 0 : person?.isAlive != undefined && !person?.isAlive ? 1 : null,
     logId: 1,
     idVersionNumber: 1,
     nationalityId: person?.nationalityId
-    
+
   };
 }
 

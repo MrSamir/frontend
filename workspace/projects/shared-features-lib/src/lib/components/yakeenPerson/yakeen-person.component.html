@@ -78,6 +78,7 @@
         inputmode="numeric" [readOnly]="!mobileEditAllowed"
         [class.is-invalid]="isElementInvalidAnyForm(personAppendixForm,'mobileNumber')">
       <app-validation-messages [ValidationItems]="mobileNumberValidationItems"></app-validation-messages>
+
     </div>
     <div class="form-group col">
       <label class="col-form-label">{{'Common.email' | localize}}<span class="text-danger">*</span></label>
