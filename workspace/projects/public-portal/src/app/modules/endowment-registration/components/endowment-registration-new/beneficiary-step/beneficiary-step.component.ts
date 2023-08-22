@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AddBeneficiaryInputDto, ApiException, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -55,9 +55,9 @@ export class BeneficiaryStepComponent implements OnInit{
   }
 
   getAllBeneficiaries() {
-    this.registerWaqfService.getBeneficiartiesInformationByReqId(this.requestId).subscribe(
-      (res:OutputBeneficiaryDto[]) =>
-        (this.BeneficiaryList = res),
+    this.registerWaqfService.getBeneficiariesInformationByReqId(this.requestId).subscribe(
+      (res:ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto) =>
+       console.log(),
       (err: ApiException) => handleServiceProxyError(err)
     );
   }

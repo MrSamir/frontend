@@ -1,13 +1,12 @@
+import { EndowmentRegistrationServiceProxy, LookupApplicationServiceProxy } from './../../../shared/services/services-proxies/service-proxies';
 import { Component, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
 import {
   ApiException,
-  EndowmentRegistrationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
   InputOneAssetDto,
   InputRemoveAssetDto,
-  LookupApplicationServiceProxy,
   LookupDto,
   OutputAssetDto,
 } from '../../../shared/services/services-proxies/service-proxies';

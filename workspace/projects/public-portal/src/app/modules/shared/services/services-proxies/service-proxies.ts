@@ -10729,6 +10729,54 @@ export interface IOutputSeerDto {
     seerPerson: OutputApplicationUserDto;
 }
 
+export class PagedResultDtoOfEndowmentOutputDto implements IPagedResultDtoOfEndowmentOutputDto {
+    totalCount!: number;
+    items!: EndowmentOutputDto[] | undefined;
+
+    constructor(data?: IPagedResultDtoOfEndowmentOutputDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCount = _data["totalCount"];
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items!.push(EndowmentOutputDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): PagedResultDtoOfEndowmentOutputDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new PagedResultDtoOfEndowmentOutputDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCount"] = this.totalCount;
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IPagedResultDtoOfEndowmentOutputDto {
+    totalCount: number;
+    items: EndowmentOutputDto[] | undefined;
+}
+
 export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
     totalCount!: number;
     items!: LookupDto[] | undefined;
