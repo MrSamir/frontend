@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
-import { AccountProxy, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { AccountProxy, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto,  RequestApplicationServiceProxy,  RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({

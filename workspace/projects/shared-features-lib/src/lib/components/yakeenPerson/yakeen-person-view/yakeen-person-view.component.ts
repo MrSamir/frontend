@@ -20,15 +20,27 @@ export class YakeenPersonViewComponent implements OnInit {
 
   @Input() citizen: CitizenInfoResponse | undefined;
   @Input() alien: AlienInfoResponse | undefined;
-  @Input() person: InputApplicationUserDto;
+  @Input() person: InputApplicationUserDto | undefined;
   @Input() isCitizen: boolean;
   @Input() isHafeza:boolean;
   lookupfliter:InputLookUpDto=new InputLookUpDto();
   @Input() IdTypeLookup:any=[];
   _lookupExtraData:   LookupExtraData=new LookupExtraData();
 
+  idTypeLables = [
+    'هوية وطنية',
+    'إقامة',
+    'حفيظة نفوس',
+    'اخرى'
+  ];
+
   get selectedTypeName() {
-    return this.IdTypeLookup[0]?.name;
+    if(this.isCitizen){
+      return  this.idTypeLables[0] ;
+    }
+    else{
+        return this.idTypeLables[1];
+    }
   }
   get birthDate() {
     if(this.isCitizen){

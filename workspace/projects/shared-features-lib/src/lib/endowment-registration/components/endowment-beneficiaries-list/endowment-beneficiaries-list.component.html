@@ -1,3 +1,76 @@
-<p>
-  endowment-beneficiaries-list works!
-</p>
+<div class="primeng-datatable-container">
+
+    <p-table class="table table-striped table-hover" #dt [value]="primengTableHelper.records"
+        [totalRecords]="primengTableHelper.totalRecordsCount" [loading]="primengTableHelper.isLoading"
+        [rows]="primengTableHelper.defaultRecordsCountPerPage" [paginator]="true"
+        [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+        [responsive]="primengTableHelper.isResponsive" [showCurrentPageReport]="true"
+        [currentPageReportTemplate]="' عدد السطور'+ primengTableHelper.totalRecordsCount.toString()"
+        [resizableColumns]="primengTableHelper.resizableColumns">
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="text-center" pSortableColumn="beneficiaryName" scope="col">
+                    {{'EndowmentModule.EndowmentRgistrationService.BeneficiaryName' |
+                    localize}}
+                    <p-sortIcon field="beneficiaryName"></p-sortIcon>
+                </th>
+                <th class="text-center" pSortableColumn="beneficiaryPerson.idNumber" scope="col">{{'Common.idNumber' |
+                    localize}}
+                    <p-sortIcon field="beneficiaryPerson.idNumber"></p-sortIcon>
+                </th>
+                <th class="text-center" pSortableColumn="beneficiaryPerson.phoneNumber" scope="col">
+                    {{'Common.mobileNumber' |
+                    localize}}
+                    <p-sortIcon field="beneficiaryPerson.phoneNumber"></p-sortIcon>
+                </th>
+                <th class="text-center" scope="col">
+                    {{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}
+                </th>
+                <td class="text-center" scope="col" *ngIf="viewOnly">{{'Common.DeleteLabel' | localize}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+            <tr>
+                <td class="text-center" scope="col">
+                    {{record.beneficiaryName}}
+                </td>
+                <td class="text-center" scope="col">
+                    {{ record.beneficiaryPerson.idNumber}}
+                </td>
+                <td class="text-center" scope="col">
+                    {{ record.beneficiaryPerson.phoneNumber}}
+                </td>
+                <td class="text-center" scope="col" *ngIf="viewOnly" (click)="viewBeneficiary(addData, i)">
+                    <a class="btn btn-sm btn-outline-awq-secondary rounded">
+                        <svg-icon icon="eye"></svg-icon>
+                    </a>
+                </td>
+                <!-- <td class="text-center" scope="col" *ngIf="!viewOnly">
+                <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editBeneficiary(addData, i)">
+                  <svg-icon icon="pencil"></svg-icon>
+                </a>
+              </td>-->
+              <td class="text-center" scope="col" *ngIf="viewOnly">
+                <a class="btn btn-sm btn-outline-danger rounded" (click)="deleteBeneficiary(i)"
+                   *ngIf="viewOnly">
+                  <svg-icon icon="trash-alt"></svg-icon>
+                </a>
+              </td> 
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+
+<ng-template #addData let-modal>
+    <div class="modal-header">
+        <h2>بيانات المستفيد</h2>
+    </div>
+    <div class="modal-body">
+
+        <yakeen-person-view *ngIf="viewOnly" [isCitizen]="isCitizen" [citizen]="citizenToView" [alien]="alienToView"
+            [person]="beneficiaryToEdit?.beneficiaryPerson"></yakeen-person-view>
+    </div>
+
+
+</ng-template>
