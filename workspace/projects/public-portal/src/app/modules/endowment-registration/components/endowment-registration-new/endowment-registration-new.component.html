@@ -15,7 +15,7 @@
     <!--=========================   step one  =========================-->
     <div class="aw-wrpper_content">
       <app-endowment-applicant-CreateOrEdit
-        [RequestId]="requestId" [wizard]="wizard"
+        [RequestId]="requestId" *ngIf="phaseId == undefined || phaseId == '1'"
       ></app-endowment-applicant-CreateOrEdit>
     </div>
 
@@ -27,7 +27,7 @@
     stepId="1"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-info-edit [requestId]="requestId" [wizard]="wizard"></app-endowment-info-edit>
+      <app-endowment-info-edit [requestId]="requestId" *ngIf="phaseId == '2'"></app-endowment-info-edit>
     </div>
 
   </aw-wizard-step>
@@ -39,7 +39,7 @@
     stepId="2"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-shared-asset-edit [requestId]="requestId" [wizard]="wizard"></app-endowment-shared-asset-edit>
+      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="phaseId == '3'"></app-endowment-shared-asset-edit>
     </div>
 
   </aw-wizard-step>
@@ -51,7 +51,7 @@
     stepId="3"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-endowers-list [requestId]="requestId" [wizard]="wizard"></app-endowment-endowers-list>
+      <app-endowment-endowers-list [requestId]="requestId" *ngIf="phaseId == '4'"></app-endowment-endowers-list>
     </div>
 
   </aw-wizard-step>
@@ -64,7 +64,7 @@
   >
     <div class="aw-wrpper_content">
 <!--      <app-endowment-seers-list></app-endowment-seers-list>-->
-      <app-seer-step [requestId]="requestId" [wizard]="wizard"></app-seer-step>
+      <app-seer-step [requestId]="requestId" *ngIf="phaseId == '5'"></app-seer-step>
     </div>
 
   </aw-wizard-step>
@@ -76,7 +76,7 @@
     stepId="5"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-beneficiaries-list [requestId]="requestId" [wizard]="wizard"></app-endowment-beneficiaries-list>
+      <app-endowment-beneficiaries-list [requestId]="requestId" *ngIf="phaseId == '6'"></app-endowment-beneficiaries-list>
     </div>
 
   </aw-wizard-step>

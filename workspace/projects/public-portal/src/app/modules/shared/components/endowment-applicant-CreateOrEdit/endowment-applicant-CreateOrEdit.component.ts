@@ -5,6 +5,7 @@ import {
   Input,
   NO_ERRORS_SCHEMA,
   OnInit,
+  Output,
   forwardRef,
 } from '@angular/core';
 import {
@@ -34,15 +35,14 @@ import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.compon
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 import { NG_VALIDATORS, NgForm } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
-import {WizardComponent} from "angular-archwizard";
+import { WizardComponent } from "angular-archwizard";
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
 })
 export class EndowmentApplicantCreateOrEditComponent
   extends ComponentBase
-  implements OnInit
-{
+  implements OnInit {
   //#region input Lookups Dto
   lookupInput: InputLookUpDto = new InputLookUpDto();
   //#endregion
@@ -60,7 +60,7 @@ export class EndowmentApplicantCreateOrEditComponent
   isAgent = false;
   isSeer = false;
   isEndwowmer = false;
-  @Input() RequestId: string;
+  @Input() @Output() RequestId: string;
   @Input() waqfId: string;
   @Input() public wizard: WizardComponent;
   selectedTypes: LookupDto[];
@@ -97,7 +97,7 @@ export class EndowmentApplicantCreateOrEditComponent
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
-    console.log('🔆',this.requestInfo);
+    console.log('🔆', this.requestInfo);
     /* this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
@@ -105,37 +105,39 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.LoadForm();
   }
-  onNextBtnClicked(form:NgForm)
-  {
+  onNextBtnClicked(form: NgForm) {
 
-     if(this.validateForm(form)){
+    if (this.validateForm(form)) {
+      if (this.RequestId) {
+        this.requestInfo.requestId = this.RequestId;
+      }
       this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
-      .subscribe((result)=>{
-        if(result.isSuccess)
-        {
-          this.message.showMessage(MessageTypeEnum.toast, {
-            closable: true,
-            enableService: true,
-            summary: '',
-            detail: result.message!,
-            severity: MessageSeverity.Success,
-          });
-          this.wizard.goToNextStep();
-        }else
-        {
-                    this.message.showMessage(MessageTypeEnum.toast, {
-                      closable: true,
-                      enableService: true,
-                      summary: '',
-                      detail: result.message!,
-                      severity: MessageSeverity.Warning,
-                    });
-         }
-      });
-     }
+        .subscribe((result) => {
+          if (result.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Success,
+            });
+            // this.wizard.goToNextStep();
+            this.RequestId = result.dto.id;
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Warning,
+            });
+          }
+        });
+    }
   }
   //#region FromAndLookupLoad
   LoadForm() {
+    debugger;
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -158,14 +160,20 @@ export class EndowmentApplicantCreateOrEditComponent
       this.loadCurrentUser();
     } else {
       this.isEditMode = true;
+      this.loadrequest();
     }
+    this.loadEndowmerTypeHint();
+    this.loadSeerTypeHint();
   }
   loadrequest() {
+    debugger;
     this._endowmentRegistrationService
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
+        debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
+          this.selectedTypes = this.applicantTypes.filter((value, index) => { return value.id == parseInt(this.requestInfo.applicantTypes!) })
           if (
             result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
             result.dto.applicantSeer.seedDeedAttachmentId != ''
@@ -207,8 +215,6 @@ export class EndowmentApplicantCreateOrEditComponent
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);
     });
-    this.loadEndowmerTypeHint();
-    this.loadSeerTypeHint();
   }
 
   LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
@@ -245,32 +251,32 @@ export class EndowmentApplicantCreateOrEditComponent
       switch (value.id) {
         case 1:
           this.isEndwowmer = true;
-           this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
+          this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
           break;
         case 2:
           this.isSeer = true;
-           this.requestInfo.applicantSeer = new InputApplicantSeerDto();
+          this.requestInfo.applicantSeer = new InputApplicantSeerDto();
           break;
         case 3:
           this.isAgent = true;
-           this.requestInfo.applicantAgent = new InputApplicantAgentDto();
+          this.requestInfo.applicantAgent = new InputApplicantAgentDto();
           break;
       }
     });
     // check isendowmenr checked.
     if (this.selectedTypes.findIndex((value, index) => value.id == 1) == -1) {
       this.isEndwowmer = false;
-     this.requestInfo.applicantEndowmer=undefined!;
+      this.requestInfo.applicantEndowmer = undefined!;
     }
     //check isSeer checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 2) == -1) {
       this.isSeer = false;
-      this.requestInfo.applicantSeer=undefined!;
+      this.requestInfo.applicantSeer = undefined!;
     }
     //check isAgent checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 3) == -1) {
       this.isAgent = false;
-      this.requestInfo.applicantAgent =undefined!;
+      this.requestInfo.applicantAgent = undefined!;
     }
 
     if (this.isEndwowmer && this.isAgent) {
