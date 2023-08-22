@@ -1,9 +1,7 @@
 import {
-  ApiException,
   EndowmentRegistrationServiceProxy,
   InputLookUpDto,
   LookupApplicationServiceProxy,
-  LookupDto,
   LookupExtraData,
 } from './../../services/services-proxies/service-proxies';
 import {

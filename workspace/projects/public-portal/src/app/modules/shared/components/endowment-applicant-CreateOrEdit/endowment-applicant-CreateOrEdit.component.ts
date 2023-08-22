@@ -1,13 +1,4 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  Component,
-  Injector,
-  Input,
-  NO_ERRORS_SCHEMA,
-  OnInit,
-  Output,
-  forwardRef,
-} from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
   ApplicationUserServiceProxy,
@@ -30,13 +21,14 @@ import {
 } from '../../services/services-proxies/service-proxies';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
-import { fn } from 'moment';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
-import { NG_VALIDATORS, NgForm } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { WizardComponent } from "angular-archwizard";
+
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
@@ -108,11 +100,13 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   onNextBtnClicked(form: NgForm) {
 
+
     if (this.validateForm(form)) {
       if (this.RequestId) {
         this.requestInfo.requestId = this.RequestId;
       }
-      this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
+      this._endowmentRegistrationService
+        .createOrEditEndowmentRegistrationRequest(this.requestInfo)
         .subscribe((result) => {
           if (result.isSuccess) {
             this.message.showMessage(MessageTypeEnum.toast, {
@@ -122,6 +116,7 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
+
             // this.wizard.goToNextStep();
             this.RequestId = result.dto.id;
           } else {
