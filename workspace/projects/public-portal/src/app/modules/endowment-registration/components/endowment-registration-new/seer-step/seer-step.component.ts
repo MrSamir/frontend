@@ -1,11 +1,12 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { AddSeerInputDto, AddSeerOutputDto, ApiException, ApiResponse, EndowmentRegistrationServiceProxy, OutputSeerDto, RemoveSeerInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
-import {WizardComponent} from "angular-archwizard";
+import { WizardComponent } from "angular-archwizard";
+import { wizardNavDto } from '../../../models/wizard-nav-data';
 
 @Component({
   selector: 'app-seer-step',
@@ -17,7 +18,12 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   @Input() public requestId: string;
   @Input() waqfId: string;
   @Input() public wizard: WizardComponent;
+
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+
   seers: OutputSeerDto[] = [];
+  wizardNavDto: wizardNavDto = new wizardNavDto();
   OneRequestSeer: RemoveSeerInputDto;
   constructor(private registerWaqfService: EndowmentRegistrationServiceProxy, private modalService: NgbModal, injector: Injector) {
     super(injector);
@@ -32,6 +38,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   OnAddingNewSeer(newAwqafSeer: AddSeerInputDto) {
     //this.seers?.push(newAwqafSeer);
     //this.setIsAttachmentChanged(newAwqafSeer);
+    newAwqafSeer.requestId = this.requestId;
     this.registerWaqfService.addSeer(
       newAwqafSeer
     ).subscribe(
@@ -212,7 +219,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
       }
     );
   }
-  onNextClicked() {
+  onNextBtnClicked() {
     if (!this.seers || this.seers.length == 0) {
       this.message.showMessage(MessageTypeEnum.toast, {
         severity: MessageSeverity.Error,
@@ -227,11 +234,20 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
       //showError(translations.atLeastOneOwner);
       return;
     }
-    this.wizard.goToNextStep();
+    this.wizardNavDto.isNaviagateToNext = true;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '6';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
-    this.wizard.goToPreviousStep();
+    debugger;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '4';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnPreviousClicked.emit(this.wizardNavDto);
+    // this.wizard.goToPreviousStep();
   }
 }
 

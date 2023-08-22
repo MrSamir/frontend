@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injector, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -15,17 +15,18 @@ import {
 import { MapModel } from '../map/map.model';
 //import { ActivatedRoute } from '@angular/router';
 import { RequestModel } from '../../models/RequestModel';
-import {WizardComponent} from "angular-archwizard";
-import {MessageTypeEnum} from "../../../../../../../core-lib/src/lib/enums/message-type";
-import {MessageSeverity} from "../../../../../../../core-lib/src/lib/enums/message-severity";
-import {ComponentBase} from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { WizardComponent } from "angular-archwizard";
+import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
+import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import { ComponentBase } from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 
 @Component({
   selector: 'app-endowment-shared-asset-edit',
   templateUrl: './endowment-asset-edit.component.html',
   styleUrls: ['./endowment-asset-edit.component.css'],
 })
-export class EndowmentSharedAssetEditComponent extends ComponentBase{
+export class EndowmentSharedAssetEditComponent extends ComponentBase {
   //#region variables
 
   @Input() viewOnly = false;
@@ -40,6 +41,9 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase{
     assetToDelete: OutputAssetDto;
     index: number;
   }>();
+
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   @Output() OnCancelClick = new EventEmitter();
 
   @Input() waqfId: string | undefined;
@@ -66,6 +70,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase{
   assetSubTypes: LookupModel[];
   ePatternValidation: typeof EnumValidation = EnumValidation;
   @Input() public wizard: WizardComponent;
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
   //#endregion
   //assetSubTypes: LookupModel[];
@@ -216,11 +221,20 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase{
     //   });
     //   return;
     // }
-    this.wizard.goToNextStep();
+    this.wizardNavDto.isNaviagateToNext = true;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '4';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
-    this.wizard.goToPreviousStep();
+    debugger;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '2';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnPreviousClicked.emit(this.wizardNavDto);
+    // this.wizard.goToPreviousStep();
   }
   //#endregion
 }

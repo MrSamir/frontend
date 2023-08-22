@@ -1,6 +1,7 @@
 import {
   CUSTOM_ELEMENTS_SCHEMA,
   Component,
+  EventEmitter,
   Injector,
   Input,
   NO_ERRORS_SCHEMA,
@@ -36,6 +37,7 @@ import { AttachementItem } from 'projects/shared-features-lib/src/lib/components
 import { NG_VALIDATORS, NgForm } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { WizardComponent } from "angular-archwizard";
+import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
@@ -62,10 +64,11 @@ export class EndowmentApplicantCreateOrEditComponent
   isEndwowmer = false;
   @Input() @Output() RequestId: string;
   @Input() waqfId: string;
-  @Input() public wizard: WizardComponent;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
   seerTypeHint: HintModel;
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   //#endregion
   yaqeenValidationResult = true;
 
@@ -83,6 +86,7 @@ export class EndowmentApplicantCreateOrEditComponent
   uploadedFiles: OutputFileDto[] = [];
   seerDeadAttachemt: AttachementItem;
   agentDeedAttachment: AttachementItem;
+  wizardNavDto: wizardNavDto = new wizardNavDto();
   seerDeedFile: File;
   AgentDeed: File;
   FileUploadentityName = 'EndowmentAttachment';
@@ -121,7 +125,12 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
-            // this.wizard.goToNextStep();
+            debugger;
+            this.wizardNavDto.isNaviagateToNext = true;
+            this.wizardNavDto.requestId = result.dto.id;
+            this.wizardNavDto.phaseId = '2';
+            this.wizardNavDto.endowmentId = this.waqfId;
+            this.onBtnNextClicked.emit(this.wizardNavDto);
             this.RequestId = result.dto.id;
           } else {
             this.message.showMessage(MessageTypeEnum.toast, {

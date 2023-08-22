@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {WizardComponent} from "angular-archwizard";
+import { Component, Input, OnInit } from '@angular/core';
+import { WizardComponent } from "angular-archwizard";
 
 @Component({
   selector: 'app-endowment-beneficiaries-list',
@@ -16,7 +16,7 @@ export class EndowmentBeneficiariesListComponent implements OnInit {
   ngOnInit() {
   }
   onBackBtnClicked() {
-    this.wizard.goToPreviousStep();
+    // this.wizard.goToPreviousStep();
   }
 
 }

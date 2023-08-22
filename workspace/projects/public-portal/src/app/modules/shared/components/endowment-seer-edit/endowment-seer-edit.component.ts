@@ -347,6 +347,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   addToSeerList() {
+    this.seerToCreate.requestId = this.requestId;
     this.OnAddingNewSeer.emit(this.seerToCreate);
   }
 
