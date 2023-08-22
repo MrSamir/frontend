@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AddBeneficiaryInputDto, ApiException, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputEndowmerDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { wizardNavDto } from '../../../models/wizard-nav-data';
 
@@ -56,13 +56,13 @@ export class BeneficiaryStepComponent implements OnInit {
 
   }
 
-  getAllBeneficiaries() {
-    this.registerWaqfService.getBeneficiartiesInformationByReqId(this.requestId).subscribe(
-      (res: OutputBeneficiaryDto[]) =>
-        (this.BeneficiaryList = res),
-      (err: ApiException) => handleServiceProxyError(err)
-    );
-  }
+  // getAllBeneficiaries() {
+  //   this.registerWaqfService.getBeneficiartiesInformationByReqId(this.requestId).subscribe(
+  //     (res:ApiResponseOfPagedResultDtoOfOutputEndowmerDto) =>
+  //      console.log(),
+  //     (err: ApiException) => handleServiceProxyError(err)
+  //   );
+  // }
 
   onNextBtnClicked() {
     // if (!this.BeneficiaryList || this.BeneficiaryList.length == 0) {
