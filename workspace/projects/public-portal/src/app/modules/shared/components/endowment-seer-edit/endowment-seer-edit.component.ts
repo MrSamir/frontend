@@ -6,7 +6,7 @@ import {
   AlienInfoResponse, ApiResponseOfOutputFileDto,
   CitizenInfoResponse,
   CreateSeerInputDto,
-  EditSeerInputDto, FileLibraryApplicationServiceProxy,
+  EditSeerInputDto, FileByIdDto, FileLibraryApplicationServiceProxy,
   InputApplicationUserDto, InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
@@ -311,8 +311,11 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
         if (result.isSuccess) {
           callback(result.dto);

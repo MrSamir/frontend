@@ -13,6 +13,7 @@ import {
   ApplicationUserServiceProxy,
   AttorneyInquiryInput,
   EndowmentRegistrationServiceProxy,
+  FileByIdDto,
   FileLibraryApplicationServiceProxy,
   InputApplicantAgentDto,
   InputApplicantDto,
@@ -173,7 +174,24 @@ export class EndowmentApplicantCreateOrEditComponent
         debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
-          this.selectedTypes = this.applicantTypes.filter((value, index) => { return value.id == parseInt(this.requestInfo.applicantTypes!) })
+          this.applicantUser.init(result.dto.applicant);
+           let seletedapptypes=this.requestInfo.applicantTypes?.split(',');
+          this.selectedTypes = this.applicantTypes.filter((value, index) => { return seletedapptypes?.includes(value.id.toString()) });
+           this.selectedTypes.forEach((value,index)=>{
+            switch(value.id)
+            {
+              case 1:
+                  this.isEndwowmer = true;
+                break;
+                case 2: 
+                this.isSeer=true;
+                break;
+                case 3:
+                  this.isAgent=true;
+                  break;
+            }
+           });
+         
           if (
             result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
             result.dto.applicantSeer.seedDeedAttachmentId != ''
@@ -191,11 +209,11 @@ export class EndowmentApplicantCreateOrEditComponent
             );
           }
           if (
-            result.dto.applicantAgent.representativeAttachmentId != undefined &&
-            result.dto.applicantAgent.representativeAttachmentId != ''
+            result.dto.applicantAgent?.representativeAttachmentId != undefined &&
+            result.dto.applicantAgent?.representativeAttachmentId != ''
           ) {
             this.getFileById(
-              result.dto.applicantAgent.representativeAttachmentId,
+              result.dto.applicantAgent?.representativeAttachmentId,
               (fileDto) => {
                 this.agentDeedAttachment = {
                   id: fileDto.id,
@@ -424,8 +442,11 @@ export class EndowmentApplicantCreateOrEditComponent
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
         if (result.isSuccess) {
           callback(result.dto);
