@@ -87,7 +87,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   ngOnInit(): void {
-    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     this.LoadLookups('EndowmentPartiesType', (lookups) => {
       this.seerTypeLookup = lookups;
     });
@@ -348,6 +347,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   addToSeerList() {
+    this.seerToCreate.requestId = this.requestId;
     this.OnAddingNewSeer.emit(this.seerToCreate);
   }
 

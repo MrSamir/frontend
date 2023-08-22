@@ -26,7 +26,6 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
   addBenificiaryInputDto: AddBeneficiaryInputDto;
   isCitizen: boolean = false;
   isBeneficiaryInKsaEditView: boolean = true;
-
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
@@ -46,6 +45,9 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
     this.primengTableHelper = new PrimengTableHelper();
     this.requestId = this.activatedRoute.snapshot.queryParamMap.get("requestId");
     this.loadBeneficiaries();
+  }
+  onBackBtnClicked() {
+    // this.wizard.goToPreviousStep();
   }
 
   loadBeneficiaries() {

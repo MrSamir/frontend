@@ -17,11 +17,12 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 import { ActivatedRoute } from '@angular/router';
 import { WizardComponent, WizardStep } from 'angular-archwizard';
+import { wizardNavDto } from '../../models/wizard-nav-data'
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -34,7 +35,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     private lookupssrv: LookupApplicationServiceProxy,
     private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   //constructor(private _serviceProxyEndowmentRegistraion:EndowmentRegistrationServiceProxy) { }
 
   @Input() viewOnly = false;
@@ -67,16 +68,13 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   oldCommercialRegisterAttachmentId: string;
 
   //@Input() public wizard: WizardComponent;
-  @ViewChild(WizardComponent, {static: true}) public wizard: WizardComponent;
+  @ViewChild(WizardComponent, { static: true }) public wizard: WizardComponent;
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   ngOnInit() {
     this.getLoggedInUserData();
-
-    this.requestId="cca4250f-2f09-4f71-aa4c-ca084ef63d21";
-
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
@@ -94,7 +92,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     let count = 0;
     // while( count < this.phaseId ) {
     //   await timeExtensions.sleep(100);
-      this.wizard.goToNextStep();
+    // this.wizard.goToNextStep();
     //   count++;
     // }
   }
@@ -415,5 +413,21 @@ export class EndowmentRegistrationNewComponent implements OnInit {
 
   loadAssetsByWaqfId() {
     throw 'not implemented';
+  }
+  onBtnNextClicked(wizardNavDto: wizardNavDto) {
+    debugger;
+    if (wizardNavDto.isNaviagateToNext) {
+      this.requestId = wizardNavDto.requestId!;
+      this.waqfId = wizardNavDto.endowmentId;
+      this.phaseId = wizardNavDto.phaseId;
+      this.wizard.goToNextStep();
+    }
+  }
+
+  onBackBtnClicked(wizardNavDto: wizardNavDto) {
+    this.requestId = wizardNavDto.requestId!;
+    this.waqfId = wizardNavDto.endowmentId;
+    this.phaseId = wizardNavDto.phaseId;
+    this.wizard.goToPreviousStep();
   }
 }

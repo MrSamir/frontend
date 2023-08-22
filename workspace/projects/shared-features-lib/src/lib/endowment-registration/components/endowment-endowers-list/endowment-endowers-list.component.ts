@@ -19,6 +19,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import Swal from 'sweetalert2';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
+import { wizardNavDto } from 'projects/public-portal/src/app/modules/endowment-registration/models/wizard-nav-data';
 
 
 @Component({
@@ -32,6 +33,8 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   @Input() viewOnly: boolean = false;
   @Input() public wizard: WizardComponent;
   @Output() child_ownertypeid: EventEmitter<number> = new EventEmitter();
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   isCitizen: boolean = false;
   isHafeza: boolean = false;
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -39,7 +42,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   IdTypeLookup: LookupDto[] = [];
   // addHafezaOwnerInputDto:AddHafezaInputDto= undefined;
   // editHafezaOwnerInputDto:EditHafezaInputDto= undefined;
-
   addOwnerInputDto: InputEndowmerDto;
   owners: OutputEndowmerDto[] = [];
   requestedOwnerIndexToEditOrView: number;
@@ -60,6 +62,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   EndowmerTypeHint: HintModel;
 
   lookupInput: InputLookUpDto = new InputLookUpDto();
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -101,7 +104,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.viewOnly;
   }
   init() {
-    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
@@ -542,28 +544,36 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     }
   }
 
-  onNextClicked() {
-    if (this.owners.length == 0) {
-      (error) => {
-        this.message.showMessage(MessageTypeEnum.toast, {
-          severity: MessageSeverity.Error,
-          message: '',
-          closable: true,
-          detail: this.l(
-            'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
-          ),
-          summary: '',
-          enableService: true,
-        });
-      }
+
+  onNextBtnClicked() {
+    if (!this.owners || this.owners.length == 0) {
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: '',
+        closable: true,
+        detail: this.l(
+          'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
+        ),
+        summary: '',
+        enableService: true,
+      });
       //showError(translations.atLeastOneOwner);
       return;
     }
-    this.wizard.goToNextStep();
+    this.wizardNavDto.isNaviagateToNext = true;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '5';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
-    this.wizard.goToPreviousStep();
+    debugger;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '3';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnPreviousClicked.emit(this.wizardNavDto);
+    // this.wizard.goToPreviousStep();
   }
 
   loadEndowmerTypeHint() {

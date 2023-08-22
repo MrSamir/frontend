@@ -86,33 +86,6 @@
                           [citizen]="citizenToView"
                           [alien]="alienToView" [person]="requestedOwnerPerson" [IdTypeLookup]="IdTypeLookup"></yakeen-person-view>
 
-
-
-<!--      <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady && addOwnerInputDto">-->
-<!--        <div class="form-group col">-->
-<!--          <div class="d-flex">-->
-<!--            <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.EndowmerType' | localize}}<span *ngIf="!viewOnly"-->
-<!--                                                                              class="text-danger">*</span></label>-->
-<!--&lt;!&ndash;            <hint [hintContent]="ownertypehint?.hintContentAr" [hintTitle]="ownertypehint?.hintTitleAr"></hint>&ndash;&gt;-->
-<!--          </div>-->
-<!--          <select class="custom-select" #ownerTypeId="ngModel" name="ownerTypeId"-->
-<!--                  [(ngModel)]="addOwnerInputDto.endowmentPartiesTypeId"-->
-<!--                  (change)="changeOwner($event)" [hidden]="viewOnly">-->
-<!--            <option [value]="null" disabled selected></option>-->
-<!--            <option *ngFor="let ownerType of PartiesTypesLookup" [value]="ownerType.id"-->
-<!--                    [attr.data-hintkey]="ownerType.hint">-->
-<!--              {{ownerType?.name}}-->
-<!--            </option>-->
-<!--          </select>-->
-<!--         <label class="col-form-label font-weight-bold" [hidden]="!viewOnly" *ngIf="PartiesTypesLookup && addOwnerInputDto.endowmentPartiesTypeId">&nbsp; {{PartiesTypesLookup[addOwnerInputDto.endowmentPartiesTypeId != undefined ? addOwnerInputDto.endowmentPartiesTypeId + 1 : 0]?.name}} </label>-->
-<!--          <div *ngIf="ownerTypeId.invalid && (ownerTypeId.dirty || ownerTypeId.touched)" class="">-->
-<!--            <p *ngIf="ownerTypeId.errors?.['required']"-->
-<!--               class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.ownerTypeRequired' | localize}}</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-
 <ng-container>
     <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady">
       <div class="form-group col">
@@ -142,6 +115,7 @@
                 )
               "
         ></p-dropdown>
+
         <app-validationMessages
           relatedControlName="endowmerTypes"
           [control]="ownerTypeId"
@@ -183,7 +157,7 @@
   </ng-template>
 
   <div class="aw-btn">
-    <button type="button" class="btn btn-awq-secondary"  (click)="onNextClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+    <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
     <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
   </div>
 </form>

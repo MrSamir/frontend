@@ -6,8 +6,20 @@
   navigateBackward="deny"
   navigateForward="deny"
 >
-  
 
+  <aw-wizard-step
+    stepTitle="معلومات المتقدم"
+    [navigationSymbol]="{ symbol: '1' }"
+    stepId="0"
+  >
+    <!--=========================   step one  =========================-->
+    <div class="aw-wrpper_content">
+      <app-endowment-applicant-CreateOrEdit
+        [RequestId]="requestId" *ngIf="phaseId == undefined || phaseId == '1'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"
+      ></app-endowment-applicant-CreateOrEdit>
+    </div>
+
+  </aw-wizard-step>
   <!--=========================   step Tow  =========================-->
   <aw-wizard-step
     stepTitle="معلومات الوقف"
@@ -15,46 +27,21 @@
     stepId="1"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-info-edit [RequestId]="requestId"></app-endowment-info-edit>
+      <app-endowment-info-edit [requestId]="requestId" *ngIf="phaseId == '2'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-info-edit>
     </div>
 
-    <!-- <div class="aw-btn">
-            <div>
-
-                <button type="button" class="btn btn-outline-awq-secondary" awNextStep>التالي</button>
-            </div>
-            <button type="button" class="btn btn-outline-awq-secondary" awPreviousStep>السابق</button>
-        </div> -->
   </aw-wizard-step>
 
   <!--=========================   step three  =========================-->
-
   <aw-wizard-step
     stepTitle="أصول الوقف"
     [navigationSymbol]="{ symbol: '3' }"
     stepId="2"
   >
     <div class="aw-wrpper_content">
-      <!-- <app-endowment-assets-edit></app-endowment-assets-edit> -->
-      <app-endowment-shared-asset-edit></app-endowment-shared-asset-edit>
+      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="phaseId == '3'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-shared-asset-edit>
     </div>
 
-    <div class="aw-btn">
-      <div>
-        <!-- <button type="button" [disabled]="requestDetails._requestDetailsform?.invalid"
-                class="btn btn-outline-awq-secondary" (click)="setEntityNameForConsent()" awNextStep>التالي</button> -->
-        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
-          التالي
-        </button>
-      </div>
-      <button
-        type="button"
-        class="btn btn-outline-awq-secondary"
-        awPreviousStep
-      >
-        السابق
-      </button>
-    </div>
   </aw-wizard-step>
 
   <!--=========================   step Four  =========================-->
@@ -64,23 +51,9 @@
     stepId="3"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-endowers-list></app-endowment-endowers-list>
+      <app-endowment-endowers-list [requestId]="requestId" *ngIf="phaseId == '4'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-endowers-list>
     </div>
 
-    <div class="aw-btn">
-      <div>
-        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
-          التالي
-        </button>
-      </div>
-      <button
-        type="button"
-        class="btn btn-outline-awq-secondary"
-        awPreviousStep
-      >
-        السابق
-      </button>
-    </div>
   </aw-wizard-step>
 
   <!--=========================   step Five  =========================-->
@@ -90,24 +63,10 @@
     stepId="4"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-seers-list></app-endowment-seers-list>
+<!--      <app-endowment-seers-list></app-endowment-seers-list>-->
+      <app-seer-step [requestId]="requestId" *ngIf="phaseId == '5'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-seer-step>
     </div>
 
-    <div class="aw-btn">
-      <div>
-        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
-          التالي
-        </button>
-      </div>
-
-      <button
-        type="button"
-        class="btn btn-outline-awq-secondary"
-        awPreviousStep
-      >
-        السابق
-      </button>
-    </div>
   </aw-wizard-step>
 
   <!--=========================   step Six  =========================-->
@@ -117,23 +76,8 @@
     stepId="5"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-beneficiaries-list></app-endowment-beneficiaries-list>
+      <app-beneficiary-step [requestId]="requestId" *ngIf="phaseId == '6'"(onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
     </div>
 
-    <div class="aw-btn">
-      <div>
-        <button type="button" class="btn btn-outline-awq-secondary" awNextStep>
-          التالي
-        </button>
-      </div>
-
-      <button
-        type="button"
-        class="btn btn-outline-awq-secondary"
-        awPreviousStep
-      >
-        السابق
-      </button>
-    </div>
   </aw-wizard-step>
 </aw-wizard>

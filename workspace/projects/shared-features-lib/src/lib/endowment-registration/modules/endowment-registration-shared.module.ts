@@ -10,6 +10,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SharecomponentModule } from "../../modules/sharecomponent.module";
 import { TableModule } from 'primeng/table';
 import { SvgIconModule } from '../../modules/svg-icon.module';
+import { Dropdown, DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { SvgIconModule } from '../../modules/svg-icon.module';
     SharecomponentModule,
     FormsModule,
     TableModule,
-    SvgIconModule
+    SvgIconModule,
+    DropdownModule
   ],
   exports: [
     CommonModule,
