@@ -15306,7 +15306,7 @@ a {
 }
 
 .profile {
-  background: #fff url(profile-box.5611018c69c15b01.png) no-repeat left bottom;
+  background: #fff url(images/profile-box.5611018c69c15b01.png) no-repeat left bottom;
 }
 
 .IndexPages .BQ-pageTitle {
@@ -15711,7 +15711,7 @@ ngb-datepicker .btn {
 
 .accordion .accordion-button:after {
   content: "";
-  background-image: url(chevron-down.c6fba98dac6d5c0f.svg);
+  background-image: url(images/svg-icons/chevron-down.svg);
   background-repeat: no-repeat;
   width: 20px;
   height: 20px;
@@ -17599,7 +17599,7 @@ aw-wizard-navigation-bar.vertical.large-empty-symbols
 .awq-custom li.done .step-indicator {
   text-indent: 100px;
   background-color: #f0fdf7;
-  background-image: url(check-wzrd.1d8795b358ee94b4.svg);
+  background-image: url(images/check-wzrd.svg);
   background-repeat: no-repeat;
   background-position: center;
   border-color: #00a95c;
