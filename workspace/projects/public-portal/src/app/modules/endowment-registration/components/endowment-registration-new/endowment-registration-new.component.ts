@@ -75,6 +75,8 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   ngOnInit() {
     this.getLoggedInUserData();
 
+    this.requestId="cca4250f-2f09-4f71-aa4c-ca084ef63d21";
+
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];

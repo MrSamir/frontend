@@ -6,30 +6,7 @@
   navigateBackward="deny"
   navigateForward="deny"
 >
-  <aw-wizard-step
-    stepTitle="معلومات المتقدم"
-    [navigationSymbol]="{ symbol: '1' }"
-    stepId="0"
-  >
-    <!--=========================   step one  =========================-->
-    <div class="aw-wrpper_content">
-      <app-endowment-applicant-CreateOrEdit
-        [RequestId]="requestId"
-      ></app-endowment-applicant-CreateOrEdit>
-    </div>
-
-    <div class="aw-btn">
-      <div>
-        <button
-          type="button"
-          class="btn btn-outline-awq-secondary"
-          awNextStep
-        >
-          التالي
-        </button>
-      </div>
-    </div>
-  </aw-wizard-step>
+  
 
   <!--=========================   step Tow  =========================-->
   <aw-wizard-step
@@ -38,7 +15,7 @@
     stepId="1"
   >
     <div class="aw-wrpper_content">
-      <app-endowment-info-edit></app-endowment-info-edit>
+      <app-endowment-info-edit [RequestId]="requestId"></app-endowment-info-edit>
     </div>
 
     <!-- <div class="aw-btn">
