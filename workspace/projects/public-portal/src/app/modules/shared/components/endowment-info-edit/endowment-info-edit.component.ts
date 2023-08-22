@@ -300,16 +300,16 @@ this.LoadWaqf();
   
     //this._editWaqfInputDto.requestId = this.requestId;
     //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
-    this.InputEndowmentDto.deedNotes = '';
-    this.InputEndowmentDto.endowmentDeedDateHijri = '';
-    this.InputEndowmentDto.endowmentInitialDate = '';
-    this.InputEndowmentDto.seerRules = '';
-    this.InputEndowmentDto.endowmentDeedTypeName = '';
-    this.InputEndowmentDto.endowmentDeedStatusName = '';
-    this.InputEndowmentDto.requestId = this.RequestId;
+    // this.InputEndowmentDto.deedNotes = '';
+    // this.InputEndowmentDto.endowmentDeedDateHijri = '';
+    // this.InputEndowmentDto.endowmentInitialDate = '';
+    // this.InputEndowmentDto.seerRules = '';
+    // this.InputEndowmentDto.endowmentDeedTypeName = '';
+    // this.InputEndowmentDto.endowmentDeedStatusName = '';
+    // this.InputEndowmentDto.requestId = this.RequestId;
 
     this.registerWaqfServiceProxy
-      .getEndowersInformationByReqId(this.RequestId)
+      .getEndowmentDataByRequestId(this.RequestId)
       .subscribe(
           (res: ApiResponse) => {
             debugger
