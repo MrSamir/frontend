@@ -34,7 +34,7 @@ export class FileUploaderComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-
+ 
     this.name=this.name+"[]"
     this.fileSizeIntext = this.Util.formatBytes(
       this.maxFileSizeInMB * 1024 * 1024
