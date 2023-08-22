@@ -9,9 +9,10 @@ import { MyTasksComponent } from "../components/my-tasks/my-tasks.component";
 import { UserDashboardComponent } from "../components/user-dashboard/user-dashboard.component";
 import { UserDashBoardRoutingModule } from "./user-dashboard-routing.module";
 import { PublicPortalSharedModule } from "../../shared/modules/public-portal-shared.module";
+import { MyAwqafsComponent } from "../components/my-awqafs/my-awqafs.component";
 
 @NgModule({
-    declarations: [MyRequestsComponent, MyTasksComponent, UserDashboardComponent],
+    declarations: [MyRequestsComponent, MyTasksComponent, UserDashboardComponent, MyAwqafsComponent],
     imports: [
         PublicPortalSharedModule,
         UserDashBoardRoutingModule,

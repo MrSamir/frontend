@@ -79,9 +79,7 @@ export class EndowmentBeneficiaryEditComponent {
 
     this.newCitizen = event.citizenInfo;
     this.newPerson = event.person;
-    //this.addBenificiaryInputDto = new AddBeneficiaryInputDto();
     this.onNewPersonAvailable(event);
-    //CitizenUtilities.citizenToPerson(this.newCitizen, this.addBenificiaryInputDto.createBeneficiaryPersonInputDto);
   }
 
   onNewAlienAvailable(event: {
@@ -94,9 +92,7 @@ export class EndowmentBeneficiaryEditComponent {
     this.isValidNumber = true;
     this.newAlien = event.alienInfo;
     this.newPerson = event.person;
-    //this.addBenificiaryInputDto = new AddBeneficiaryInputDto();
     this.onNewPersonAvailable(event);
-    //AlienUtilities.alientToPerson(this.newAlien, this.addBenificiaryInputDto.createBeneficiaryPersonInputDto);
   }
 
   onNewBeneficiaryAvailable(event: {
@@ -124,25 +120,17 @@ export class EndowmentBeneficiaryEditComponent {
     person: InputApplicationUserDto;
   }) {
     this.newPerson = event.person;
-    // this.addBenificiaryInputDto.applicationUserId.init(
-    //   this.newPerson
-    // );
+
 
     this.addBenificiaryInputDto.applicationUserId=this.newPerson.id;
     this.addBenificiaryInputDto.createBeneficiaryDto=new CreateBeneficiaryDto();
-    // this.addBenificiaryInputDto.createBeneficiaryPersonInputDto.idTypeId = event.idType;
-    // this.addBenificiaryInputDto.createBeneficiaryPersonInputDto.idNumber = event.idNumber;
-    //this.addBenificiaryInputDto.requestId = this.requestId;   // appended on the parent component
     this.addBenificiaryInputDto.createBeneficiaryDto.isBeneficiaryInsideKsa = this.isBenificiaryInKsa;
     if (this.activeCrudOperation === CrudOperation.Update) {
       this.BeneficiaryList[this.beneficiaryToEditIndex].beneficiaryPerson.phoneNumber = this.newPerson.phoneNumber;
       this.BeneficiaryList[this.beneficiaryToEditIndex].beneficiaryPerson.email = this.newPerson.email;
     }
 
-    // var genderVal =
-    // this.addBenificiaryInputDto.createBeneficiaryDto.gender.toString();
-    // this.addBenificiaryInputDto.createBeneficiaryPersonInputDto.gender =
-    //   genderVal === 'Male' || genderVal === 'M' || genderVal === '0' ? 0 : 1;
+   
 
   }
 
