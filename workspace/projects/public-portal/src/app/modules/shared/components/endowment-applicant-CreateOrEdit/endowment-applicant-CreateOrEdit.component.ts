@@ -130,8 +130,9 @@ export class EndowmentApplicantCreateOrEditComponent
             this.wizardNavDto.requestId = result.dto.id;
             this.wizardNavDto.phaseId = '2';
             this.wizardNavDto.endowmentId = this.waqfId;
-            this.onBtnNextClicked.emit(this.wizardNavDto);
             this.RequestId = result.dto.id;
+            this.onBtnNextClicked.emit(this.wizardNavDto);
+
           } else {
             this.message.showMessage(MessageTypeEnum.toast, {
               closable: true,

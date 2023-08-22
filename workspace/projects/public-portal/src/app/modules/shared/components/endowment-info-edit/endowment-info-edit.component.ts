@@ -41,7 +41,6 @@ import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-
 })
 export class EndowmentInfoEditComponent extends ComponentBase implements OnInit {
   @Input() public IsCreate = true;
-  @Input() public RequestId: string;
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
   @Input() waqfId: string;
   @Input() public requestId: string;
@@ -267,7 +266,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.InputEndowmentDto.seerRules = '';
     this.InputEndowmentDto.endowmentDeedTypeName = '';
     this.InputEndowmentDto.endowmentDeedStatusName = '';
-    this.InputEndowmentDto.requestId = this.RequestId;
+    this.InputEndowmentDto.requestId = this.requestId;
 
     this.registerWaqfServiceProxy
       .createEndowment(this.InputEndowmentDto)
@@ -325,6 +324,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
 
   LoadWaqf() {
+    debugger;
 
     //this._editWaqfInputDto.requestId = this.requestId;
     //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
@@ -337,7 +337,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     // this.InputEndowmentDto.requestId = this.RequestId;
 
     this.registerWaqfServiceProxy
-      .getEndowmentDataByRequestId(this.RequestId)
+      .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
         (res: ApiResponse) => {
           debugger
