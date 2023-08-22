@@ -36,6 +36,11 @@ export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
     FooterComponent,
     LoginComponent,
     LandingComponent,
+    //EndowmentSeerEditComponent,
+
+    //SeerStepComponent
+
+
   ],
   imports: [
     MultiSelectModule,

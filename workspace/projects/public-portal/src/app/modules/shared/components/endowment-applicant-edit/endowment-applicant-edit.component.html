@@ -1,0 +1,202 @@
+<form [formGroup]="applicantForm">
+  <div class="aw-content">
+    <div *ngIf="!yaqeenValidationResult" class="alert alert-danger" role="alert">
+      {{yaqeenErrorMessage}}
+    </div>
+    <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.ApplicantType'|localize}}<span class="text-danger">*</span></label>
+    <div>
+     
+      <div  class="custom-control custom-checkbox custom-control-inline">
+        <input type="checkbox" class="custom-control-input"  id="IsEndowmer" name="IsEndowmer" [value]="1"
+          [checked]="isEndowmer" (change)="ApplicantTypeSelected($event)">
+        <label class="custom-control-label" for="IsEndowmer">{{'CommonModule.Lookups.ApplicantTypes.Endowmer'|localize}}</label>
+      </div>
+        <div class="custom-control custom-checkbox custom-control-inline" >
+          <input type="checkbox" class="custom-control-input" id="isSeer" name="isSeer" [value]="2"
+                 [checked]="isSeer"
+                 (change)="ApplicantTypeSelected($event)">
+          <label class="custom-control-label" for="isSeer">{{'CommonModule.Lookups.ApplicantTypes.Seer'|localize}}</label>
+        </div>
+        <div class="custom-control custom-checkbox custom-control-inline">
+          <input type="checkbox" class="custom-control-input" id="isAgent" name="isAgent" [value]="3" [checked]="isAgent"
+            (change)="ApplicantTypeSelected($event)">
+          <label class="custom-control-label" for="isAgent">{{'CommonModule.Lookups.ApplicantTypes.Agent'|localize}}</label>
+        </div>
+    </div>
+    
+
+    <!-- <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" *ngIf="!!(createRegisterWaqfApplicantDto?.requestor)"> -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.idNumber' | localize}}<span class="text-danger">*</span></label>
+  
+        <input type="text" class="form-control" [value]="" maxLength="10" minlength="10" required formControlName="idNumber" readonly >
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.FirstName' | localize}}<span class="text-danger">*</span></label>
+        <!-- <label class="col-form-label">الإسم الأول<span class="text-danger">*</span></label> -->
+        <input type="text" class="form-control" formControlName="firstNameAr"   readonly >
+      </div>
+      <div class="form-group col">
+       
+        <label class="col-form-label">{{'Common.SecondName' | localize}}<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" formControlName="secondNameAr"  [value]="" readonly >
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.ThirdName' | localize}}<span class="text-danger">*</span></label>
+        <!-- <label class="col-form-label">إسم الجد<span class="text-danger">*</span></label> -->
+        <input type="text" class="form-control" formControlName="thirdNameAr"  [value]="" readonly >
+      </div>
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.LastName' | localize}}<span class="text-danger">*</span></label>
+    
+        <input type="text" class="form-control" formControlName="lastNameAr" [value]="" readonly >
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.dateOfBirth' | localize}}<span class="text-danger">*</span></label>
+        <div class='input-group mr-3 calendar-alt'>
+          <input type="text" class="form-control" formControlName="applicantBirthDate" [value]="applicantBirthDate"   name="wp" 
+                 readonly >
+          <i class="icon" ></i>
+        </div>
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.gender' | localize}} <span class="text-danger">*</span></label>
+        <div>
+          <div class="custom-control custom-radio custom-control-inline" >
+            <input type="radio" class="custom-control-input" id="radio111" formControlName="gender" value="0"  
+                    readonly>
+            <!-- <input type="radio" class="custom-control-input" id="radio111" name="optradio"
+                   [checked]="createRegisterWaqfApplicantDto.requestor.gender==0" disabled> -->
+            <label class="custom-control-label" for="radio111">{{'Common.Male' | localize}}</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline" >
+            <input type="radio" class="custom-control-input" id="radio221" formControlName="gender" value="1"   
+                    readonly>
+            <!-- <input type="radio" class="custom-control-input" id="radio221" name="optradio"
+                   [checked]="createRegisterWaqfApplicantDto.requestor.gender==1" disabled> -->
+            <label class="custom-control-label" for="radio221">{{'Common.Female' | localize}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.nationality' | localize}}<span class="text-danger" >*</span></label>
+        <input type="text" class="form-control" [value]="" readonly  formControlName="nationalityName">
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.lifeStatus' | localize}}</label>
+        <input   type="text" class="form-control" formControlName="isAlive" readonly [value]="">
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.mobileNumber' | localize}}<span class="text-danger">*</span></label>
+        <input type="text" class="form-control" required  name="mobileNumber" formControlName="mobileNumber" readonly
+             
+               mask="^((0|9)|(96{1,2})|(9665)|(05)|(((05)|(9665))\d{1,8}))$"
+               placeholder="05xxxxxxxx | 9665xxxxxxxx"
+               inputmode="numeric"
+                
+        >
+        <!-- <div *ngIf="mobileNumber.invalid && (mobileNumber.dirty || mobileNumber.touched)" class="">
+          <p *ngIf="mobileNumber.errors?.['required']" class="text-danger pt-1 small">رقم الجوال مطلوب</p>
+          <p *ngIf="mobileNumber.errors?.['pattern']" class="text-danger pt-1 small">رقم الجوال غير صحيح</p>
+        </div> -->
+        
+      </div>
+
+      <div class="form-group col">
+        <label class="col-form-label">{{'Common.email' | localize}}<span class="text-danger">*</span></label>
+       
+        <input type="email" class="form-control"   name="email"   required formControlName="email"
+          readonly>
+        <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)" class="">
+          <p *ngIf="email.errors?.['required']" class="text-danger pt-1 small">البريد الإلكتروني مطلوب</p>
+          <p *ngIf="email.errors?.['pattern']" class="text-danger pt-1 small">البريد الإلكتروني غير صحيح</p>
+        </div> -->
+      </div>
+    </div>
+    <form [formGroup]="attorneyForm">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" *ngIf="isAgent">
+        <div class="mt-4 col-12">
+          <h3 class="text-awq-primary my-3">
+            <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
+            {{'EndowmentModule.EndowmentRegistrationService.agencyStatus' | localize}}          </h3>
+        </div>
+  
+        <div class="form-group col">
+          <label class="col-form-label">     {{'EndowmentModule.EndowmentRegistrationService.AttorneyNumber' | localize}}    <span class="text-danger">*</span></label>
+          <input type="number" class="form-control"  formControlName="attorneyNumber" maxlength="20"
+                  
+                 [pattern]="ePatternValidation.pattern_number" required>
+          <div *ngIf="attorneyform['attorneyNumber'].invalid && (attorneyform['attorneyNumber'].dirty || attorneyform['attorneyNumber'].touched)"
+               class="">
+            <p *ngIf="attorneyform['attorneyNumber'].errors?.['required']" class="text-danger pt-1 small">   {{'EndowmentModule.EndowmentRegistrationService.AttorneyNumberRequired' | localize}}  </p>
+            <p *ngIf="attorneyform['attorneyNumber'].errors?.['pattern']" class="text-danger pt-1 small">   {{'EndowmentModule.EndowmentRegistrationService.agentError' | localize}}  </p>
+          </div>
+        </div>
+        <!-- <div class="form-group col">
+          <button type="button" class="btn btn-awq-secondary mt-6"  (click)="fetchAgentDetails()" >تحقق</button>
+        </div> -->
+  
+        <div class="form-group col-12">
+          <div class="d-flex">
+         
+            <label class="col col-form-label">{{'EndowmentModule.EndowmentRegistrationService.agencyDeed' | localize}}<span class="text-danger">*</span></label>
+            <!-- <hint [hintContent]="agencyDeedHint?.hintContentAr" [hintTitle]="agencyDeedHint?.hintTitleAr" ></hint> -->
+          </div>
+ 
+          <div class="input-group mb-3 download p-2">
+            <div class="flex-grow-1">
+  
+ 
+             <lib-file-uploader [showUploadButton]="false" [alllowMultipleFiles]="false" [serviceTypeId]="requestType.EndowmentRegistration" [uploadedFiles]="uploadedFiles"  (_downloadFilesEvent)="downloadFile($event)"  (_chooseFilesEvent)="onFileUpload($event)"></lib-file-uploader>
+               
+
+            </div>
+          </div>
+
+
+
+         
+        
+
+
+
+        </div>
+  
+        <!-- <div class="form-group col-12">
+       
+          <label class="col-form-label">{{'EndowmentModule.EndowmentRegistrationService.agencyStatus' | localize}}</label>
+          <input type="text" class="form-control"  [readonly]="true"   formControlName="agentStatus" required>
+        </div>
+  
+        <div class="form-group col-12">
+    
+          <label class="col-form-label">{{'EndowmentModule.EndowmentRegistrationService.startOfAgency' | localize}}</label>
+          <input type="text" class="form-control"  [readonly]="true"
+         formControlName="agentIssueDateHijri"         required >
+        </div>
+  
+        <div class="form-group col-12">
+    
+          <label class="col-form-label">{{'EndowmentModule.EndowmentRegistrationService.endOfAgency' | localize}}</label>
+          <input type="text" class="form-control"    formControlName="agentIssueDateHijri"  [readonly]="true" required>
+        </div> -->
+      </div>
+    </form>
+ 
+  </div>
+
+
+  <!-- <div class="aw-btn">
+    <div>
+      <button type="button" class="btn btn-outline-awq-secondary" [disabled]="!(isApplicantAsAgent)||applicantForm?.invalid || !isDeedFound() || !yaqeenValidationResult" (click)="onNextBtnClicked()">التالي</button>
+    </div>
+  </div> -->
+</form>

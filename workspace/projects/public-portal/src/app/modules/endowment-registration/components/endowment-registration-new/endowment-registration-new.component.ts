@@ -17,10 +17,12 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
-import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
+import { handleError} from 'projects/core-lib/src/lib/services/alert/alert.service';
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 import { ActivatedRoute } from '@angular/router';
+
+import { WizardComponent, WizardStep } from 'angular-archwizard';
 
 @Component({
   selector: 'app-endowment-registration-new',
@@ -66,13 +68,14 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   oldCommercialRegisterAttachmentId: string;
 
   //@Input() public wizard: WizardComponent;
+  @ViewChild(WizardComponent, {static: true}) public wizard: WizardComponent;
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   ngOnInit() {
-    this.getLoggedInUserData();
-
+   // this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    //this.getLoggedInUserData();
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
@@ -85,6 +88,14 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.loadAssetType();
     this.loadAssetSize();
     this.loadAssetsBy();
+  }
+  async moveWizardToTabOfPhase() {
+    let count = 0;
+    // while( count < this.phaseId ) {
+    //   await timeExtensions.sleep(100);
+      this.wizard.goToNextStep();
+    //   count++;
+    // }
   }
 
   _applicantData: AspNetUser = new AspNetUser();
@@ -162,6 +173,13 @@ export class EndowmentRegistrationNewComponent implements OnInit {
               //     this.modalService.dismissAll();
               //   }
               // )
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
               //this.setOldAttachmentIds();
             }
           }
@@ -182,6 +200,9 @@ export class EndowmentRegistrationNewComponent implements OnInit {
           const resp = data; //as ApiResponse<any>;
           if (resp.isSuccess) {
             this.loadAssetsBy();
+            // showSuccess('تم تعديل الاصل بنجاح', () => {
+            //   this.modalService.dismissAll();
+            // });
             // showSuccess('تم تعديل الاصل بنجاح', () => {
             //   this.modalService.dismissAll();
             // });

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Injector, Input, Output} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -14,13 +14,17 @@ import {
 import { MapModel } from '../map/map.model';
 //import { ActivatedRoute } from '@angular/router';
 import { RequestModel } from '../../models/RequestModel';
+import {WizardComponent} from "angular-archwizard";
+import {MessageTypeEnum} from "../../../../../../../core-lib/src/lib/enums/message-type";
+import {MessageSeverity} from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import {ComponentBase} from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
 
 @Component({
   selector: 'app-endowment-shared-asset-edit',
   templateUrl: './endowment-asset-edit.component.html',
   styleUrls: ['./endowment-asset-edit.component.css'],
 })
-export class EndowmentSharedAssetEditComponent {
+export class EndowmentSharedAssetEditComponent extends ComponentBase{
   //#region variables
 
   @Input() viewOnly = false;
@@ -60,6 +64,7 @@ export class EndowmentSharedAssetEditComponent {
   resolveLookup: any;
   assetSubTypes: LookupModel[];
   ePatternValidation: typeof EnumValidation = EnumValidation;
+  @Input() public wizard: WizardComponent;
 
   //#endregion
   //assetSubTypes: LookupModel[];
@@ -67,8 +72,11 @@ export class EndowmentSharedAssetEditComponent {
   constructor(
     public formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy
-  ) /*private activatedRoute: ActivatedRoute*/ {}
+    private lookupssrv: LookupApplicationServiceProxy,
+    private injector: Injector
+  ) /*private activatedRoute: ActivatedRoute*/ {
+    super(injector);
+  }
 
   //#region Events
 
@@ -196,6 +204,22 @@ export class EndowmentSharedAssetEditComponent {
       console.log(data);
     });
   }
+  onNextBtnClicked() {
+    // if (!this.Assets || this.Assets.length == 0) {
+    //   this.message.showMessage(MessageTypeEnum.toast, {
+    //     closable: true,
+    //     enableService: true,
+    //     summary: '',
+    //     detail: this.l('EndowmentModule.EndowmentRgistrationService.atLeastOneAsset'),
+    //     severity: MessageSeverity.Error,
+    //   });
+    //   return;
+    // }
+    this.wizard.goToNextStep();
+  }
 
+  onBackBtnClicked() {
+    this.wizard.goToPreviousStep();
+  }
   //#endregion
 }

@@ -1,7 +1,6 @@
-
-import {Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {WizardComponent} from "angular-archwizard";
+import { Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { WizardComponent } from "angular-archwizard";
 import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
 import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
 import {
@@ -12,10 +11,14 @@ import {
   LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto,
   OutputEndowmerDto
 } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
-import {EnumValidation} from "../../../components/IDNumberWithValidation/EnumValidation";
+import { EnumValidation } from "../../../components/IDNumberWithValidation/EnumValidation";
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { CitizenUtilities } from '../../../Models/CitizenInfo';
 import { AlienUtilities } from '../../../Models/alienInfo';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import Swal from 'sweetalert2';
+import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 
 
 @Component({
@@ -29,30 +32,33 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   @Input() viewOnly: boolean = false;
   @Input() public wizard: WizardComponent;
   @Output() child_ownertypeid: EventEmitter<number> = new EventEmitter();
-  isCitizen:boolean=false;
-  isHafeza:boolean=false;
+  isCitizen: boolean = false;
+  isHafeza: boolean = false;
   ePatternValidation: typeof EnumValidation = EnumValidation;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
-  IdTypeLookup:  LookupDto[]=[];
+  IdTypeLookup: LookupDto[] = [];
   // addHafezaOwnerInputDto:AddHafezaInputDto= undefined;
   // editHafezaOwnerInputDto:EditHafezaInputDto= undefined;
-
-  addOwnerInputDto: InputEndowmerDto = new InputEndowmerDto();
+  addOwnerInputDto: InputEndowmerDto;
   owners: OutputEndowmerDto[] = [];
   requestedOwnerIndexToEditOrView: number;
   mainApplicantPerson: OutputEndowmerDto | undefined;
-  isAddHafezaValid:boolean=false;
+  isAddHafezaValid: boolean = false;
 
   activeCrudOperation: CrudOperation = CrudOperation.Create;
 
   newCitizen: CitizenInfoResponse | undefined;
-  newAlien: AlienInfoResponse  | undefined;
+  newAlien: AlienInfoResponse | undefined;
   newPerson: InputApplicationUserDto | undefined;    // When we finish yakeen validation we ask the system for the person if found through his IdNumber, if yes, then mobile/email will be readonly
   // newHafeza: HafezaInfoResponse= undefined;
   citizenToView: CitizenInfoResponse | undefined
   alienToView: AlienInfoResponse | undefined;
-  PartiesTypesLookup:any=[];
+  PartiesTypesLookup: any = [];
+  prestigiousAttributeTypes: any = [];
   //ownertypehint: HintEntry;
+  EndowmerTypeHint: HintModel;
+
+  lookupInput: InputLookUpDto = new InputLookUpDto();
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -81,53 +87,48 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   ngOnInit(): void {
-    
+
     this.init();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.init();
   }
 
-  isView():boolean{
+  isView(): boolean {
 
-      return this.viewOnly;
+    return this.viewOnly;
   }
-
-  // loadHint() {
-  //   this.ownertypehint = HintDictionary.getHintByKey("seertype");
-  // }
-
   init() {
-    //this.requestId = '03CB854E-427E-4933-AFCD-A722AAAEC593';
-    if( !this.requestId || this.mainApplicantPerson ) {
+    if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
-        //this.lookupService.fetchOwnerTypeLookups();
+    //this.lookupService.fetchOwnerTypeLookups();
     //this.loadHint();
-    this.LoadPartiesTypes();
+    this.LoadLookups('EndowmentPartiesType', (lookups) => {
+      this.PartiesTypesLookup = lookups;
+    });
+    this.LoadLookups('PrestigiousAttributeType', (lookups) => {
+      this.prestigiousAttributeTypes = lookups;
+    });
     this.processRequest();
   }
-  LoadPartiesTypes()
-  {
-    this.lookupfliter.lookUpName="EndowmentPartiesType";
-    this.lookupfliter.filters=[];
-    this.lookupService.getAllLookups(this.lookupfliter).subscribe(
-      (data) => {
-        this.PartiesTypesLookup=data.dto.items;
-        console.log(data);
-      }
-    );
-
+  LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
+    this.lookupInput.lookUpName = LookupName;
+    this.lookupInput.filters = [];
+    this.lookupService.getAllLookups(this.lookupInput).subscribe((result) => {
+      callback(result.dto.items!);
+    });
   }
   processRequest() {
     this.registerWaqfService.getEndowersInformationByReqId(this.requestId).subscribe(
       (res: any) => {
         this.owners = res.dto.items;
-        this.mainApplicantPerson = this.owners?.find(r=>r.isMainApplicant) ?? new OutputEndowmerDto();
+        this.mainApplicantPerson = this.owners?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();
       },
       (err) => handleError<object>(err.error)
     );
+    this.loadEndowmerTypeHint();
   }
 
   onAddNewWaqif(content: any) {
@@ -145,17 +146,26 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     // this.newHafeza = undefined;
     // this.addHafezaOwnerInputDto = undefined;
     this.addOwnerInputDto.requestId = this.requestId;
-    this.modalService.open(content, { size: 'lg'});
+    this.modalService.open(content, { size: 'lg' });
   }
 
-  CheckDublicateItemInList(idNumber: string | undefined ) {
-    if(idNumber != undefined)
-    {
-      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === idNumber);
+  CheckDublicateItemInList(userName: string | undefined) {
+    if (userName != undefined) {
+      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === userName);
       if (itemindex !== -1) {
         this.modalService.dismissAll();
-        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", {userIdNumber:idNumber });
+        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", { userIdNumber: userName });
         //showError(errMessage);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            errMessage
+          ),
+          summary: '',
+          enableService: true,
+        });
         return true;
       }
     }
@@ -166,7 +176,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   addToWaqifList() {
 
     let duplicated = this.CheckDublicateItemInList(this.addOwnerInputDto?.endowmerPerson?.userName);
-    if(duplicated)return;
+    if (duplicated) return;
 
     // if(this.isAddHafezaValid){
     //   this.registerWaqfService.addHafezaOwner(this.addHafezaOwnerInputDto).subscribe(
@@ -190,53 +200,113 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     //   );
     //   return;
     // }
-this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
+    this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
       (res: ApiResponseOfOutputEndowmerDto) => {
-        if( !res.isSuccess ) {
-          return handleError<object>(res);
+        if (!res.isSuccess) {
+          this.message.showMessage(MessageTypeEnum.toast, {
+            severity: MessageSeverity.Error,
+            message: '',
+            closable: true,
+            detail: res.message!,
+            summary: '',
+            enableService: true,
+          });
         }
         var newOwner = new OutputEndowmerDto();
         newOwner.init(this.addOwnerInputDto);
-        newOwner= res.dto;
+        newOwner = res.dto;
         this.owners?.push(newOwner);
-        // showSuccess(translations.operationSuccess, () => {
-        //   this.modalService.dismissAll()
-        // });
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
         console.log(res.message);
         this.modalService.dismissAll()
       },
+      (error) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       // (apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
 
-  deleteOwner(idNumber: string | undefined, index: number) {
-    if( this.isOwnerMainApplicant(index)) {   // can't delete main applicant: refer to Brs 1.6
+  deleteOwner(userName: string | undefined, index: number) {
+    if (this.isOwnerMainApplicant(index)) {   // can't delete main applicant: refer to Brs 1.6
       return;
     }
     // question(translations.assure, () => {
-      this.removeOwner(index);
+    this.removeOwner(index);
     // });
   }
 
   removeOwner(index: number) {
     let input = new InputEndowmerDto();
-    input.endowmerId = this.owners[index].endowmerId;
-    input.requestId = this.requestId;
-    this.registerWaqfService.deleteEndowmer(input).subscribe(
-      () => {
-        this.owners.splice(index, 1);
-        //showSuccess(translations.operationSuccess);
-      },
-      //(apiException: ApiException) => handleServiceProxyError(apiException)
-    );
+    Swal.fire({
+      title: 'تأكيد حذف واقف ؟',
+      icon: 'question',
+      confirmButtonText: 'متابعة',
+      width: 600,
+      padding: '3em',
+      confirmButtonColor: '#D6BD81',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        input.endowmerId = this.owners[index].endowmerId;
+        input.requestId = this.requestId;
+        this.registerWaqfService.deleteEndowmer(input).subscribe(
+          () => {
+            this.owners.splice(index, 1);
+            this.message.showMessage(MessageTypeEnum.toast, {
+              severity: MessageSeverity.Success,
+              message: '',
+              closable: true,
+              detail: this.l(
+                'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+              ),
+              summary: '',
+              enableService: true,
+            });
+            //showSuccess(translations.operationSuccess);
+          },
+          (error) => {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              severity: MessageSeverity.Error,
+              message: '',
+              closable: true,
+              detail: this.l(
+                'Common.CommonError'
+              ),
+              summary: '',
+              enableService: true,
+            });
+          }
+          //(apiException: ApiException) => handleServiceProxyError(apiException)
+        );
+      }
+    });
+
   }
 
-  viewWaqif(content: any, index: number){
+  viewWaqif(content: any, index: number) {
     this.activeCrudOperation = CrudOperation.Read;
     const owner = this.owners[index];
     this.requestedOwnerIndexToEditOrView = index;
 
-    this.yakeenPersonUtilities[owner.endowmerPerson.idTypeId??0](owner.endowmerPerson);
+    this.yakeenPersonUtilities[owner.endowmerPerson.idTypeId ?? 0](owner.endowmerPerson);
     this.isCitizen = owner.endowmerPerson.idTypeId === 1;
     //this.isHafeza = owner.endowmerPerson.idTypeId === 3;
     //set owner type id
@@ -245,7 +315,7 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(owner.endowmerPerson);
 
-    this.modalService.open(content, { size: 'lg'});
+    this.modalService.open(content, { size: 'lg' });
   }
 
   get isUpdateMode() {
@@ -255,33 +325,31 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
   get isCreateMode() {
     return this.activeCrudOperation === CrudOperation.Create;
   }
-  //createRegisterWaqfApplicantDto.ownerDto.ownerTypeId
   editWaqif(content: any, index: number) {
-
     this.activeCrudOperation = CrudOperation.Update;
     this.requestedOwnerIndexToEditOrView = index;
     const owner = this.owners[index];
     //owner.person.idTypeId = defineIdType(owner.person.idNumber);    // This fix for old data only, for new data idType is already there
 
-  //  if(owner.person.idTypeId === 3 || owner.person.idTypeId === 4){
-  //      this.editHafezaOwnerInputDto = new EditHafezaInputDto();
-  //      this.editHafezaOwnerInputDto.editHafezaPersonInputDto = new EditHafezaPersonInputDto();
+    //  if(owner.person.idTypeId === 3 || owner.person.idTypeId === 4){
+    //      this.editHafezaOwnerInputDto = new EditHafezaInputDto();
+    //      this.editHafezaOwnerInputDto.editHafezaPersonInputDto = new EditHafezaPersonInputDto();
 
-  //      this.editHafezaOwnerInputDto.editHafezaPersonInputDto.init(owner.person);
-  //      this.editHafezaOwnerInputDto.requestId = this.requestId;
-  //      this.editHafezaOwnerInputDto.ownerId = owner.id;
+    //      this.editHafezaOwnerInputDto.editHafezaPersonInputDto.init(owner.person);
+    //      this.editHafezaOwnerInputDto.requestId = this.requestId;
+    //      this.editHafezaOwnerInputDto.ownerId = owner.id;
 
 
-  //  }
-  // else{
+    //  }
+    // else{
     this.addOwnerInputDto = new InputEndowmerDto();
     this.addOwnerInputDto.init(owner);
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(owner.endowmerPerson);
     this.addOwnerInputDto.requestId = this.requestId;
     //set owner type id
-    this.addOwnerInputDto.endowmentPartiesTypeId=owner.endowmentPartiesTypeId;
-   //}
+    this.addOwnerInputDto.endowmentPartiesTypeId = owner.endowmentPartiesTypeId;
+    //}
 
 
 
@@ -293,16 +361,16 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     this.alienToView = undefined;
     this.newAlien = undefined;
     //this.newHafeza = undefined;
-    this.yakeenPersonUtilities[owner.endowmerPerson.idTypeId??0](owner.endowmerPerson);
+    this.yakeenPersonUtilities[owner.endowmerPerson.idTypeId ?? 0](owner.endowmerPerson);
 
-// if(owner.person.idTypeId === 3|| owner.person.idTypeId === 4){
-//   this.newHafeza.ownerTypeId=owner.ownerTypeId;
-//   this.newHafeza.ownerId = owner.id;
-// }
+    // if(owner.person.idTypeId === 3|| owner.person.idTypeId === 4){
+    //   this.newHafeza.ownerTypeId=owner.ownerTypeId;
+    //   this.newHafeza.ownerId = owner.id;
+    // }
 
-    this.isCitizen = owner.endowmerPerson.idTypeId ===1;
+    this.isCitizen = owner.endowmerPerson.idTypeId === 1;
 
-    this.modalService.open(content, { size: 'lg'});
+    this.modalService.open(content, { size: 'lg' });
   }
 
   get requestedOwnerPerson() {
@@ -311,16 +379,16 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
   }
 
   isNewOrEditWaqifValid() {
-    if( this.activeCrudOperation === CrudOperation.Update ) {
+    if (this.activeCrudOperation === CrudOperation.Update) {
       return true;
     }
     const ownerInputDto = this.addOwnerInputDto;
     return !!ownerInputDto.endowmerPerson?.userName &&
-           !!ownerInputDto.endowmerPerson?.fullName &&
-           (!!ownerInputDto.endowmerPerson?.birthDate || !!ownerInputDto.endowmerPerson?.birthDateHijri) &&
-           !!ownerInputDto.endowmerPerson?.phoneNumber &&
-           !!ownerInputDto.endowmerPerson?.email &&
-           !!ownerInputDto.endowmerPerson?.nationalityId;
+      !!ownerInputDto.endowmerPerson?.fullName &&
+      (!!ownerInputDto.endowmerPerson?.birthDate || !!ownerInputDto.endowmerPerson?.birthDateHijri) &&
+      !!ownerInputDto.endowmerPerson?.phoneNumber &&
+      !!ownerInputDto.endowmerPerson?.email &&
+      !!ownerInputDto.endowmerPerson?.nationalityId;
   }
 
 
@@ -354,23 +422,45 @@ this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
     editOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     editOwnerInputDto.endowmerPerson.init(this.addOwnerInputDto.endowmerPerson);
     editOwnerInputDto.requestId = this.requestId;
-    editOwnerInputDto.endowmerId =  this.owners[this.requestedOwnerIndexToEditOrView].endowmerId;
+    editOwnerInputDto.endowmerId = this.owners[this.requestedOwnerIndexToEditOrView].endowmerId;
     editOwnerInputDto.endowmerPerson.email = this.newPerson?.email;
     editOwnerInputDto.endowmerPerson.phoneNumber = this.newPerson?.phoneNumber;
-editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesTypeId;
+    editOwnerInputDto.endowmentPartiesTypeId = this.addOwnerInputDto.endowmentPartiesTypeId;
     this.registerWaqfService.editEndowmer(editOwnerInputDto).subscribe(
       () => {
-      //   showSuccess(translations.editOwnerSuccess, () => {
-          this.owners[this.requestedOwnerIndexToEditOrView].endowmentPartiesTypeId = editOwnerInputDto.endowmentPartiesTypeId;
-          this.child_ownertypeid.emit(editOwnerInputDto.endowmentPartiesTypeId);
-          this.newPerson = undefined;
-          this.newCitizen = undefined;
-          this.newAlien = undefined;
-          this.activeCrudOperation = CrudOperation.Create;
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Success,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.editOwnerSuccess'
+          ),
+          summary: '',
+          enableService: true,
+        });
+        //   showSuccess(translations.editOwnerSuccess, () => {
+        this.owners[this.requestedOwnerIndexToEditOrView].endowmentPartiesTypeId = editOwnerInputDto.endowmentPartiesTypeId;
+        this.child_ownertypeid.emit(editOwnerInputDto.endowmentPartiesTypeId);
+        this.newPerson = undefined;
+        this.newCitizen = undefined;
+        this.newAlien = undefined;
+        this.activeCrudOperation = CrudOperation.Create;
 
-          this.modalService.dismissAll()
-      //   });
-       },
+        this.modalService.dismissAll()
+        //   });
+      },
+      (error) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }
       // (apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
@@ -388,17 +478,100 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
   get isAddPersonReady() {
     return !!this.newCitizen || !!this.newAlien;//|| !!this.addHafezaOwnerInputDto  ;
   }
-  onNewCitizenAvailable(event: { citizenInfo: CitizenInfoResponse; idType: number, userName: string, person: InputApplicationUserDto }) {
-
+  onNewCitizenAvailable(event: {
+    citizenInfo: CitizenInfoResponse;
+    idType: number,
+    userName: string,
+    person: InputApplicationUserDto
+  }) {
     this.newCitizen = event.citizenInfo;
     this.onNewPersonAvailable(event);
   }
 
-  onNewAlienAvailable(event: { alienInfo: AlienInfoResponse; idType: number, userName: string, person: InputApplicationUserDto }) {
+  onNewAlienAvailable(event: {
+    alienInfo: AlienInfoResponse;
+    idType: number,
+    userName: string,
+    person: InputApplicationUserDto
+  }) {
     this.newAlien = event.alienInfo;
     this.onNewPersonAvailable(event);
   }
 
+  onNewPersonAvailable(event: { idType: number, userName: string, person: InputApplicationUserDto }) {
+    debugger;
+    this.newPerson = event.person;
+    this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
+    this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
+    this.addOwnerInputDto.requestId = this.requestId;
+    this.addOwnerInputDto.endowmerId = this.newPerson.id;
+    this.addOwnerInputDto.endowmentId = this.waqfId;
+    if (this.activeCrudOperation === CrudOperation.Update) {
+      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
+      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
+    }
+
+  }
+
+  get hasOwners() {
+    return this.owners.length > 0;
+  }
+
+  isOwnerMainApplicant(index: number) {
+    const owner = this.owners[index];
+    return owner.isMainApplicant;
+  }
+
+  overlay(i: number) {
+    return this.isOwnerMainApplicant(i) ? 'disabledIcon' : '';
+  }
+
+  changeOwner(event: any) {
+    const endowmerType = this.PartiesTypesLookup.filter(
+      (ept, index) => ept.id == event.value
+    )[0];
+    if (endowmerType == undefined) {
+      this.loadEndowmerTypeHint();
+    } else {
+      this.EndowmerTypeHint = {
+        hintHeader: endowmerType?.name || '',
+        hintBody: endowmerType?.hint || '',
+      };
+    }
+  }
+
+  onNextClicked() {
+    if (!this.owners || this.owners.length == 0) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'EndowmentModule.EndowmentRgistrationService.atLeastOneOwner'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      //showError(translations.atLeastOneOwner);
+      return;
+    }
+    this.wizard.goToNextStep();
+  }
+
+  onBackBtnClicked() {
+    this.wizard.goToPreviousStep();
+  }
+
+  loadEndowmerTypeHint() {
+    this.EndowmerTypeHint = {
+      hintBody: this.l(
+        'EndowmentModule.EndowmentRgistrationService.EndowmmentPartyTypeHints'
+      ),
+      hintHeader: this.l(
+        'EndowmentModule.EndowmentRgistrationService.EndowmerType'
+      ),
+    };
+  }
 
 
   // onNewHafezaAvailable(event){
@@ -422,59 +595,4 @@ editOwnerInputDto.endowmentPartiesTypeId=this.addOwnerInputDto.endowmentPartiesT
   //   this.editHafezaOwnerInputDto.requestId= this.requestId;
 
   // }
-
-  onNewPersonAvailable(event: {idType: number, userName: string, person: InputApplicationUserDto}) {
-
-    this.newPerson = event.person;
-    this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
-    this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
-    this.addOwnerInputDto.requestId = this.requestId;
-    this.addOwnerInputDto.endowmerId = this.newPerson.id;
-    this.addOwnerInputDto.endowmentId = this.waqfId;
-    
-    if( this.activeCrudOperation === CrudOperation.Update) {
-      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
-      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
-    }
-    var genderVal=this.addOwnerInputDto.endowmerPerson?.gender?.toString();
-    if(this.addOwnerInputDto.endowmerPerson != undefined)
-    {
-    this.addOwnerInputDto.endowmerPerson.gender=(genderVal==='Male'||genderVal==='M')?0:1;
-  }
-  }
-
-  get hasOwners() {
-    return this.owners.length > 0;
-  }
-
-  isOwnerMainApplicant(index: number) {
-    const owner = this.owners[index];
-    return owner.isMainApplicant;
-  }
-
-  overlay(i: number) {
-    return this.isOwnerMainApplicant(i) ? 'disabledIcon' : '';
-  }
-
-  // get translations() {
-  //   return translations;
-  // }
-
-  changeOwner(event: any) {
-    this.addOwnerInputDto.endowmentPartiesTypeId = event?.target?.value;
-    //this.ownertypehint = HintDictionary.getHintByKey(event?.target?.selectedOptions[0]?.dataset?.hintkey);
-  }
-
-  onNextClicked() {
-    if (this.owners.length == 0) {
-      //showError(translations.atLeastOneOwner);
-      return;
-    }
-    this.wizard.goToNextStep();
-  }
-
-  onBackBtnClicked() {
-    this.wizard.goToPreviousStep();
-  }
-
 }
