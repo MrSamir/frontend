@@ -1,10 +1,15 @@
 import {
   ApiException,
+  ApiResponse,
+  ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
+  FileLibraryApplicationServiceProxy,
+  InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
+  OutputFileDto,
 } from './../../services/services-proxies/service-proxies';
 import {
   Component,
@@ -12,20 +17,21 @@ import {
   EventEmitter,
   Output,
   OnInit,
-  ViewChild, Injector,
+  ViewChild,
+  Injector,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { WizardComponent } from 'angular-archwizard';
 import { EnumValidation } from 'projects/core-lib/src/public-api';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
-
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
 import { ApiResponseModel } from 'projects/core-lib/src/lib/models/ApiResponseModel';
-import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
-import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
-import { ComponentBase } from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 
 @Component({
@@ -35,6 +41,7 @@ import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-
 })
 export class EndowmentInfoEditComponent extends ComponentBase implements OnInit {
   @Input() public IsCreate = true;
+  @Input() public RequestId: string;
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
   @Input() waqfId: string;
   @Input() public requestId: string;
@@ -52,7 +59,16 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   RegioneLookup: any = [];
   CityLookup: any = [];
   IssuanceCourtsLookup: any = [];
+  FileUploadentityName = 'EndowmentAttachment';
 
+
+  alllowMultipleFiles = true;
+
+  uploadedFiles: OutputFileDto[] = [];
+  seerDeadAttachemt: AttachementItem;
+  agentDeedAttachment: AttachementItem;
+  endowmentDeedFile: File;
+  AgentDeed: File;
   _lookupExtraData: LookupExtraData = new LookupExtraData();
 
   wizardNavDto: wizardNavDto = new wizardNavDto();
@@ -67,10 +83,12 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   oldDeedAttachmentId: string;
 
   constructor(
+    injecter: Injector,
+    private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
     private dateHelper: DateFormatterService,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private lookupssrv: LookupApplicationServiceProxy,
-    private injector: Injector
+    injector: Injector
   ) {
     super(injector);
   }
@@ -132,6 +150,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     if (!this.requestId || !!this.endowmentInitialDate) {
       return;
     }
+    this.LoadWaqf();
     this.LoadSpendingCategories();
 
     this.setDateLimits();
@@ -248,7 +267,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.InputEndowmentDto.seerRules = '';
     this.InputEndowmentDto.endowmentDeedTypeName = '';
     this.InputEndowmentDto.endowmentDeedStatusName = '';
-    this.InputEndowmentDto.requestId = this.requestId;
+    this.InputEndowmentDto.requestId = this.RequestId;
 
     this.registerWaqfServiceProxy
       .createEndowment(this.InputEndowmentDto)
@@ -303,4 +322,159 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
         }
       );
   }
+
+
+  LoadWaqf() {
+
+    //this._editWaqfInputDto.requestId = this.requestId;
+    //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
+    // this.InputEndowmentDto.deedNotes = '';
+    // this.InputEndowmentDto.endowmentDeedDateHijri = '';
+    // this.InputEndowmentDto.endowmentInitialDate = '';
+    // this.InputEndowmentDto.seerRules = '';
+    // this.InputEndowmentDto.endowmentDeedTypeName = '';
+    // this.InputEndowmentDto.endowmentDeedStatusName = '';
+    // this.InputEndowmentDto.requestId = this.RequestId;
+
+    this.registerWaqfServiceProxy
+      .getEndowmentDataByRequestId(this.RequestId)
+      .subscribe(
+        (res: ApiResponse) => {
+          debugger
+          this.InputEndowmentDto = res.dto;
+        },
+
+      );
+    (data) => {
+      //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
+      //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
+    };
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  EndowmentDeedFileSelect(event: any) {
+    this.endowmentDeedFile = event.files[0];
+  }
+
+  EndowmentDeedFileUpload(event: any) {
+    this.UploadFile(event.files[0], (response) => {
+      this.seerDeadAttachemt = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.endowmentDeedFile = null!;
+      this.InputEndowmentDto.endowmentDeedAttachmentId = response.id
+
+    });
+  }
+  SeerDeedremoveFile(event: AttachementItem) {
+    this.removeFile(event, (result) => {
+      this.InputEndowmentDto.endowmentDeedAttachmentId = undefined!;
+      this.seerDeadAttachemt = undefined!;
+    });
+  }
+
+  UploadFile(file: File, callback: (response: OutputFileDto) => void) {
+    this._serviceProxyFileLibrary
+      .uploadFile(
+        this.FileUploadentityName,
+        { data: file, fileName: file.name },
+        []
+      )
+      .subscribe(
+        (response: ApiResponseOfOutputFileDto) => {
+          // Handle the successful response here
+
+          if (response.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: this.l('Common.SuccesUploadMessge'),
+              severity: MessageSeverity.Success,
+            });
+            callback(response.dto);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: response.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
+          // Optionally, perform additional actions with the response data
+        },
+        (error: any) => {
+          // Handle the error response here
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: this.l('Common.Upload'),
+            detail: this.l('Common.ErrorInFileUpload'),
+            severity: MessageSeverity.Error,
+          });
+          this.Util.error(error);
+          // Optionally, perform error handling
+        }
+      );
+  }
+
+  removeFile(
+    event: AttachementItem,
+    callback: (item: AttachementItem) => void
+  ) {
+    const input = new InputFileDto();
+    input.entityName = this.FileUploadentityName;
+    input.id = event.id;
+    input.filters = [];
+    this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
+      if (result.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Success,
+        });
+        callback(event);
+      } else {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Error,
+        });
+      }
+    });
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    this._serviceProxyFileLibrary
+      .downloadFileById(this.FileUploadentityName, id)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
+  }
+
+
+
+
+
+
 }

@@ -355,16 +355,15 @@
 
         <div class="input-group mb-3 download p-2">
           <div class="flex-grow-1">
-            <!-- <file-uploader
-                [showDownloadButton]="true"
-                [showDeleteButton]="true"
-                [allowedExtensions]="['.pdf']"
-                [objects]="[ InputEndowmentDto ]"
-                [keys]="['deedAttachmentId']"
-                [fileDisplayName]="'صك الوقفية'"
-                [serviceTypeId]="requestType.NewWaqf"
-              >
-              </file-uploader> -->
+
+            <lib-file-uploader
+            name="seerDeed"
+            [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement')"
+            [showDisclaimer]="true"
+            [MultipleFiles]="true"
+            (OnSelectFile)="EndowmentDeedFileSelect($event)"
+            (OnUploadFile)="EndowmentDeedFileUpload($event)"
+          ></lib-file-uploader>
           </div>
         </div>
       </div>
