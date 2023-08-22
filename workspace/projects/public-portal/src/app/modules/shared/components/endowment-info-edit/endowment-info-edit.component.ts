@@ -12,7 +12,7 @@ import {
   EventEmitter,
   Output,
   OnInit,
-  ViewChild,
+  ViewChild, Injector,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
@@ -23,34 +23,20 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 import { InputEndowmentDto } from '../../services/services-proxies/service-proxies';
 import { hijriDateExtensions } from '../../models/hijri-date-extensions';
 import {  ApiResponseModel } from 'projects/core-lib/src/lib/models/ApiResponseModel';
-//import { showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
-
-// import {WizardComponent} from "angular-archwizard";
-// import {NgForm} from "@angular/forms";
-// import {
-//   InputEndowmentDto,
-//   EditWaqfInputDto,
-//   RegisterWaqfRequestServiceProxy, ServiceResponseOfCreateWaqfOutputDto,ServiceResponseOfGetRegisterWaqfDataByIdOutputDto
-// } from "@app/services/services-proxies/service-proxies";
-// import {EnumValidation} from "@app/enum/EnumValidation";
-// import {LookupModel} from "@app/model/LookupModel";
-// import {LookupService, ReverseLookupMap} from "@app/services/lookup/lookup.service";
-
-// import {MapModel} from "@app/_shared/map/map.model";
-// import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
-
-// import {handleError, handleServiceProxyError, showSuccess} from "@app/services/alert/alert.service";
-//  import { ServiceRequestTypeEnum } from '@app/enum/requestType.enum';
+import {MessageTypeEnum} from "../../../../../../../core-lib/src/lib/enums/message-type";
+import {MessageSeverity} from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import {ComponentBase} from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
 
 @Component({
   selector: 'app-endowment-info-edit',
   templateUrl: './endowment-info-edit.component.html',
   styleUrls: ['./endowment-info-edit.component.css'],
 })
-export class EndowmentInfoEditComponent implements OnInit {
+export class EndowmentInfoEditComponent extends ComponentBase implements OnInit {
   @Input() public IsCreate = true;
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
-
+  @Input() waqfId: string;
+  @Input() public requestId: string;
   @Input() public wizard: WizardComponent;
   @Output() _InputEndowmentDto = new EventEmitter<InputEndowmentDto>();
   @Input() IsDeedDisabled = false;
@@ -79,8 +65,11 @@ export class EndowmentInfoEditComponent implements OnInit {
   constructor(
     private dateHelper: DateFormatterService,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
-    private lookupssrv: LookupApplicationServiceProxy
-  ) {}
+    private lookupssrv: LookupApplicationServiceProxy,
+    private injector: Injector
+  ) {
+    super(injector);
+  }
 
   ngOnInit(): void {
     this.init();
@@ -135,23 +124,23 @@ export class EndowmentInfoEditComponent implements OnInit {
       console.log(data);
     });
   }
-  init() {
-    // if (!this.requestId || !!this.endowmentInitialDate) {
-    //   return;
-    // }
-
+  init(){
+    if (!this.requestId || !!this.endowmentInitialDate) {
+      return;
+    }
+    debugger
     this.LoadSpendingCategories();
 
     this.setDateLimits();
 
-    /* if (this.InputEndowmentDto) {
+    if (this.InputEndowmentDto) {
 
 
     if (!!this.InputEndowmentDto?.endowmentInitialDate) {
        this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
     }
     else {
-      this.InputEndowmentDto.endowmentInitialDate = `${this.endowmentInitialDate.year}/${this.endowmentInitialDate.month}/${this.endowmentInitialDate.day}`
+      //this.InputEndowmentDto.endowmentInitialDate = `${this.endowmentInitialDate.year.year}/${this.endowmentInitialDate.month}/${this.endowmentInitialDate.day}`
       this.InputEndowmentDto.acceptDonations = false;
       this.InputEndowmentDto.acceptGiveaways = false;
     }
@@ -163,7 +152,7 @@ export class EndowmentInfoEditComponent implements OnInit {
     else {
      // this.InputEndowmentDto.endowmentDeedDate = `${this.endowmentDeedDate.year}/${this.endowmentDeedDate.month}/${this.endowmentDeedDate.day}`
     }
-  } */
+  }
   }
 
   ngOnChanges() {
@@ -200,15 +189,15 @@ export class EndowmentInfoEditComponent implements OnInit {
     this.minHijriForWaqf = { year: 100, month: 1, day: 1 };
   }
 
-  // private setOptionsDefaultValues()
-  // {
-  //   this.InputEndowmentDto = new InputEndowmentDto();
-  //   this.InputEndowmentDto.acceptDonations=false;
-  //   this.InputEndowmentDto.acceptGiveaways=false;
-  // }
+  private setOptionsDefaultValues()
+  {
+    this.InputEndowmentDto = new InputEndowmentDto();
+    this.InputEndowmentDto.acceptDonations=false;
+    this.InputEndowmentDto.acceptGiveaways=false;
+  }
   // onChangeMap() {
   //   if (this.map && this.map.longitude && this.map.latitude) {
-
+  //
   //     this.InputEndowmentDto.longitude = this.map.longitude;
   //     this.InputEndowmentDto.latitude = this.map.latitude;
   //   }
@@ -244,7 +233,6 @@ export class EndowmentInfoEditComponent implements OnInit {
     // }
     this.createOrEditWaqf();
   }
-
   createOrEditWaqf() {
     //this._editWaqfInputDto.requestId = this.requestId;
     //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
@@ -254,7 +242,7 @@ export class EndowmentInfoEditComponent implements OnInit {
     this.InputEndowmentDto.seerRules = '';
     this.InputEndowmentDto.endowmentDeedTypeName = '';
     this.InputEndowmentDto.endowmentDeedStatusName = '';
-    this.InputEndowmentDto.requestId = '2106622f-f9fd-4bc3-874d-08db0a91fca1';
+    this.InputEndowmentDto.requestId = this.requestId;
 
     this.registerWaqfServiceProxy
       .createEndowment(this.InputEndowmentDto)
@@ -265,9 +253,44 @@ export class EndowmentInfoEditComponent implements OnInit {
         //   },
         //   (err: ApiException) => handleServiceProxyError(err)
         // );
-        (data) => {
+        (result) => {
+          if(result.isSuccess)
+          {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: this.l(
+                'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+              ),
+              severity: MessageSeverity.Success,
+            });
+            this.wizard.goToNextStep()
+          }else
+          {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Warning,
+            });
+            return;
+          }
           //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
           //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
+        },
+        (error)=>{
+          this.message.showMessage(MessageTypeEnum.toast, {
+            severity: MessageSeverity.Error,
+            message: '',
+            closable: true,
+            detail: this.l(
+              'Common.CommonError'
+            ),
+            summary: '',
+            enableService: true,
+          });
         }
       );
   }

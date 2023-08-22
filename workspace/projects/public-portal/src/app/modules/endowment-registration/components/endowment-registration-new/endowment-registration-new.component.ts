@@ -74,8 +74,8 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   ngOnInit() {
-    this.getLoggedInUserData();
-
+    this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    //this.getLoggedInUserData();
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];

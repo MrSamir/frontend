@@ -39,7 +39,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   IdTypeLookup: LookupDto[] = [];
   // addHafezaOwnerInputDto:AddHafezaInputDto= undefined;
   // editHafezaOwnerInputDto:EditHafezaInputDto= undefined;
-
   addOwnerInputDto: InputEndowmerDto;
   owners: OutputEndowmerDto[] = [];
   requestedOwnerIndexToEditOrView: number;
@@ -101,7 +100,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.viewOnly;
   }
   init() {
-    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
@@ -543,8 +541,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   onNextClicked() {
-    if (this.owners.length == 0) {
-      (error) => {
+    if (!this.owners || this.owners.length == 0) {
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Error,
           message: '',
@@ -555,7 +552,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
           summary: '',
           enableService: true,
         });
-      }
       //showError(translations.atLeastOneOwner);
       return;
     }

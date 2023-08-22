@@ -34,6 +34,7 @@ import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.compon
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 import { NG_VALIDATORS, NgForm } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import {WizardComponent} from "angular-archwizard";
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
@@ -60,6 +61,8 @@ export class EndowmentApplicantCreateOrEditComponent
   isSeer = false;
   isEndwowmer = false;
   @Input() RequestId: string;
+  @Input() waqfId: string;
+  @Input() public wizard: WizardComponent;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
   seerTypeHint: HintModel;
@@ -117,7 +120,7 @@ export class EndowmentApplicantCreateOrEditComponent
             detail: result.message!,
             severity: MessageSeverity.Success,
           });
-          this.router.navigate(['endowmentregistration/registrationform/' + result.dto.id + '/' + 2]);
+          this.wizard.goToNextStep();
         }else
         {
                     this.message.showMessage(MessageTypeEnum.toast, {
