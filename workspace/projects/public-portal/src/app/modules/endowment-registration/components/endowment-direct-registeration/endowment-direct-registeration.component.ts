@@ -12,9 +12,9 @@ import { Component, OnInit, Injector } from '@angular/core';
 })
 export class EndowmentDirectRegisterationComponent extends ComponentBase implements OnInit {
 
-constructor(injector:Injector, private mojDataMigrationApplicationServices: MojDataMigrationApplicationServicesProxy){
-  super(injector);
-}
+  constructor(injector: Injector, private mojDataMigrationApplicationServices: MojDataMigrationApplicationServicesProxy) {
+    super(injector);
+  }
 
   ngOnInit(): void {
   }
@@ -22,7 +22,7 @@ constructor(injector:Injector, private mojDataMigrationApplicationServices: MojD
   deedNumber: number;
 
 
-  directRegisterClicked(form:NgForm){
+  directRegisterClicked(form: NgForm) {
 
     this.mojDataMigrationApplicationServices.registerEndowmentByDeedNumberFromWeb(this.deedNumber, true).subscribe(result => {
       this.message.showMessage(MessageTypeEnum.toast, {
@@ -33,15 +33,14 @@ constructor(injector:Injector, private mojDataMigrationApplicationServices: MojD
         severity: MessageSeverity.Success,
       });
     },
-    (error)=>{
-      debugger;
-      this.message.showMessage(MessageTypeEnum.toast, {
-        closable: true,
-        enableService: true,
-        summary: '',
-        detail: error.message!,
-        severity: MessageSeverity.Error,
+      (error) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: error.message!,
+          severity: MessageSeverity.Error,
+        });
       });
-    });
   }
 }

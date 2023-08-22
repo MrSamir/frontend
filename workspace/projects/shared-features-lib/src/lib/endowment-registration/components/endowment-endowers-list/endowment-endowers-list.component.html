@@ -88,30 +88,79 @@
 
 
 
-      <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady">
-        <div class="form-group col">
-          <div class="d-flex">
-            <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.ownerType' | localize}}<span *ngIf="!viewOnly"
-                                                                              class="text-danger">*</span></label>
-<!--            <hint [hintContent]="ownertypehint?.hintContentAr" [hintTitle]="ownertypehint?.hintTitleAr"></hint>-->
-          </div>
-          <select class="custom-select" #ownerTypeId="ngModel" name="ownerTypeId"
-                  [(ngModel)]="addOwnerInputDto.endowmentPartiesTypeId"
-                  (change)="changeOwner($event)" [hidden]="viewOnly">
-            <option [value]="null" disabled selected></option>
-            <option *ngFor="let ownerType of PartiesTypesLookup" [value]="ownerType.id"
-                    [attr.data-hintkey]="ownerType.hint">
-              {{ownerType?.name}}
-            </option>
-          </select>
-         <label class="col-form-label font-weight-bold" [hidden]="!viewOnly" *ngIf="PartiesTypesLookup && addOwnerInputDto.endowmentPartiesTypeId">&nbsp; {{PartiesTypesLookup[addOwnerInputDto.endowmentPartiesTypeId != undefined ? addOwnerInputDto.endowmentPartiesTypeId + 1 : 0]?.name}} </label>
-          <div *ngIf="ownerTypeId.invalid && (ownerTypeId.dirty || ownerTypeId.touched)" class="">
-            <p *ngIf="ownerTypeId.errors?.['required']"
-               class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.ownerTypeRequired' | localize}}</p>
-          </div>
+<!--      <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady && addOwnerInputDto">-->
+<!--        <div class="form-group col">-->
+<!--          <div class="d-flex">-->
+<!--            <label class="col col-form-label">{{'EndowmentModule.EndowmentRgistrationService.EndowmerType' | localize}}<span *ngIf="!viewOnly"-->
+<!--                                                                              class="text-danger">*</span></label>-->
+<!--&lt;!&ndash;            <hint [hintContent]="ownertypehint?.hintContentAr" [hintTitle]="ownertypehint?.hintTitleAr"></hint>&ndash;&gt;-->
+<!--          </div>-->
+<!--          <select class="custom-select" #ownerTypeId="ngModel" name="ownerTypeId"-->
+<!--                  [(ngModel)]="addOwnerInputDto.endowmentPartiesTypeId"-->
+<!--                  (change)="changeOwner($event)" [hidden]="viewOnly">-->
+<!--            <option [value]="null" disabled selected></option>-->
+<!--            <option *ngFor="let ownerType of PartiesTypesLookup" [value]="ownerType.id"-->
+<!--                    [attr.data-hintkey]="ownerType.hint">-->
+<!--              {{ownerType?.name}}-->
+<!--            </option>-->
+<!--          </select>-->
+<!--         <label class="col-form-label font-weight-bold" [hidden]="!viewOnly" *ngIf="PartiesTypesLookup && addOwnerInputDto.endowmentPartiesTypeId">&nbsp; {{PartiesTypesLookup[addOwnerInputDto.endowmentPartiesTypeId != undefined ? addOwnerInputDto.endowmentPartiesTypeId + 1 : 0]?.name}} </label>-->
+<!--          <div *ngIf="ownerTypeId.invalid && (ownerTypeId.dirty || ownerTypeId.touched)" class="">-->
+<!--            <p *ngIf="ownerTypeId.errors?.['required']"-->
+<!--               class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.ownerTypeRequired' | localize}}</p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<ng-container>
+    <div class="row row-cols-1 row-cols-md-2" *ngIf="isYakeenPersonReady">
+      <div class="form-group col">
+        <div class="d-flex">
+          <label class="col col-form-label"
+          >{{
+            "EndowmentModule.EndowmentRgistrationService.EndowmerType"
+              | localize
+            }}<span class="text-danger">*</span> :
+          </label>
+<!--          <app-hint [hint]="EndowmerTypeHint"> </app-hint>-->
         </div>
+        <p-dropdown
+          [required]="true"
+          [options]="PartiesTypesLookup"
+          [showClear]="true"
+          name="endowmerTypes"
+          #ownerTypeId="ngModel"
+          (onChange)="changeOwner($event)"
+          [(ngModel)]="addOwnerInputDto.endowmentPartiesTypeId"
+          optionLabel="name"
+          optionValue="id"
+          [placeholder]="
+                l(
+                  'Common.Choose',
+                  l('EndowmentModule.EndowmentRgistrationService.EndowmerType')
+                )
+              "
+        ></p-dropdown>
+        <app-validationMessages
+          relatedControlName="endowmerTypes"
+          [control]="ownerTypeId"
+          [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l(
+                      'EndowmentModule.EndowmentRgistrationService.EndowmerType'
+                    )
+                  )
+                }
+              ]"
+        >
+        </app-validationMessages>
       </div>
     </div>
+</ng-container>
     <ng-container   *ngIf="isCreateMode&&!viewOnly">
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-awq-secondary px-6" (click)="addToWaqifList()"  [disabled]="(waqifListForm.form?.invalid||addOwnerInputDto=== undefined || addOwnerInputDto.endowmentPartiesTypeId===undefined)&&!isAddHafezaValid" (click)="addToWaqifList()">
@@ -130,6 +179,7 @@
         </button>
       </div>
     </ng-container>
+    </div>
   </ng-template>
 
   <div class="aw-btn">
