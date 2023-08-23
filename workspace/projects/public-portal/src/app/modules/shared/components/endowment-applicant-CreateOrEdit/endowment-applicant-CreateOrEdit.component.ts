@@ -53,7 +53,7 @@ export class EndowmentApplicantCreateOrEditComponent
   isAgent = false;
   isSeer = false;
   isEndwowmer = false;
-  @Input() @Output() RequestId: string;
+  @Input() RequestId: string;
   @Input() waqfId: string;
   @Input() public wizard: WizardComponent;
   selectedTypes: LookupDto[];

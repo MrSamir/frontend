@@ -7827,6 +7827,7 @@ export class InputApplicantDto implements IInputApplicantDto {
     thirdNameAr!: string | undefined;
     lastNameAr!: string | undefined;
     nationalityId!: number;
+    nationality!: LookupDto;
     isAlive!: boolean | undefined;
     phoneNumber!: string | undefined;
     email!: string | undefined;
@@ -7852,6 +7853,7 @@ export class InputApplicantDto implements IInputApplicantDto {
             this.thirdNameAr = _data["thirdNameAr"];
             this.lastNameAr = _data["lastNameAr"];
             this.nationalityId = _data["nationalityId"];
+            this.nationality = _data["nationality"] ? LookupDto.fromJS(_data["nationality"]) : <any>undefined;
             this.isAlive = _data["isAlive"];
             this.phoneNumber = _data["phoneNumber"];
             this.email = _data["email"];
@@ -7877,6 +7879,7 @@ export class InputApplicantDto implements IInputApplicantDto {
         data["thirdNameAr"] = this.thirdNameAr;
         data["lastNameAr"] = this.lastNameAr;
         data["nationalityId"] = this.nationalityId;
+        data["nationality"] = this.nationality ? this.nationality.toJSON() : <any>undefined;
         data["isAlive"] = this.isAlive;
         data["phoneNumber"] = this.phoneNumber;
         data["email"] = this.email;
@@ -7895,6 +7898,7 @@ export interface IInputApplicantDto {
     thirdNameAr: string | undefined;
     lastNameAr: string | undefined;
     nationalityId: number;
+    nationality: LookupDto;
     isAlive: boolean | undefined;
     phoneNumber: string | undefined;
     email: string | undefined;
