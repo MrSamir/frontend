@@ -1,5 +1,4 @@
 import { Component, Input, Output } from '@angular/core';
-import { LookupModel } from '../../../models/LookupModel';
 import {
   EndowmentRegistrationServiceProxy,
   InputAnimalOrAgriculturalAssetDto,
@@ -10,7 +9,6 @@ import {
   LookupExtraData,
 } from '../../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { EnumLookuptypes } from '../../../models/EnumLookuptypes';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

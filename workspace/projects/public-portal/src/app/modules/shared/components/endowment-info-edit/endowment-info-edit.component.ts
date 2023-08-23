@@ -7,7 +7,6 @@ import {
   InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
-  LookupDto,
   LookupExtraData,
   OutputFileDto,
 } from './../../services/services-proxies/service-proxies';

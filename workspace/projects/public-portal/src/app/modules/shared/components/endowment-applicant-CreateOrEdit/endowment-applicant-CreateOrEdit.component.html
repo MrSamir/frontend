@@ -211,7 +211,7 @@
               (requestInfo.applicant?.birthDate ||
                 requestInfo.applicant?.birthDateHijri) &&
               (applicantUser?.birthDate || applicantUser?.birthDateHijri)
-            "
+            " class="col-form-inline"
           >
             <!-- TODO: use dateConvert Pipe-->
             <label
@@ -255,62 +255,36 @@
           </div>
         </div>
         <div class="form-group col">
-          <label class="col-form-label"
-            >{{ "Common.gender" | localize }}
+          <label class="col-form-label">{{ "Common.gender" | localize }}
             <span class="text-danger">*</span> :
           </label>
-          <div
-            *ngIf="
-              applicantUser?.gender != -1 &&
-              requestInfo?.applicant?.gender !== -1
-            "
-          >
-            <label *ngIf="applicantUser?.gender == 0" class="col-form-label"
-              ><strong>{{ "Common.Male" | localize }}</strong></label
-            >
-            <label *ngIf="applicantUser?.gender == 1" class="col-form-label"
-              ><strong>{{ "Common.Female" | localize }}</strong></label
-            >
-          </div>
-          <div
-            *ngIf="
-              applicantUser?.gender == -1 ||
-              requestInfo?.applicant?.gender == -1
-            "
-            class="d-flex"
-          >
+          <label *ngIf=" applicantUser?.gender != -1 &&
+                      requestInfo?.applicant?.gender !== -1 && applicantUser?.gender == 0" class="col-form-label"><strong>{{
+              "Common.Male" | localize }}</strong></label>
+          <label *ngIf=" applicantUser?.gender != -1 &&
+                      requestInfo?.applicant?.gender !== -1&& applicantUser?.gender == 1" class="col-form-label"><strong>{{
+              "Common.Female" | localize }}</strong></label>
+        
+          <div *ngIf="
+                      applicantUser?.gender == -1 ||
+                      requestInfo?.applicant?.gender == -1
+                    " class="d-flex">
             <div class="mr-3">
-              <p-radioButton
-                name="gender"
-                [value]="0"
-                #application_gender="ngModel"
-                [(ngModel)]="requestInfo.applicant.gender"
-                inputId="male"
-                [ngModelOptions]="{ standalone: true }"
-              ></p-radioButton>
+              <p-radioButton name="gender" [value]="0" #application_gender="ngModel" [(ngModel)]="requestInfo.applicant.gender"
+                inputId="male" [ngModelOptions]="{ standalone: true }"></p-radioButton>
               <label class="ml-2 mb-1">{{ "Common.Male" | localize }}</label>
             </div>
             <div>
-              <p-radioButton
-                name="gender"
-                [value]="1"
-                #application_gender="ngModel"
-                [(ngModel)]="requestInfo.applicant.gender"
-                inputId="female"
-                [ngModelOptions]="{ standalone: true }"
-              ></p-radioButton>
+              <p-radioButton name="gender" [value]="1" #application_gender="ngModel" [(ngModel)]="requestInfo.applicant.gender"
+                inputId="female" [ngModelOptions]="{ standalone: true }"></p-radioButton>
               <label class="ml-2 mb-1">{{ "Common.Female" | localize }}</label>
             </div>
-            <app-validationMessages
-              relatedControlName="gender"
-              [control]="application_gender"
-              [validationMessages]="[
-                {
-                  ruleName: 'required',
-                  ruleMessage: l('Common.Required', l('Common.gender'))
-                }
-              ]"
-            >
+            <app-validationMessages relatedControlName="gender" [control]="application_gender" [validationMessages]="[
+                        {
+                          ruleName: 'required',
+                          ruleMessage: l('Common.Required', l('Common.gender'))
+                        }
+                      ]">
             </app-validationMessages>
           </div>
         </div>
@@ -360,66 +334,32 @@
           </div>
         </div>
         <div class="form-group col">
-          <label class="col-form-label"
-            >{{ "Common.lifeStatus" | localize
+          <label class="col-form-label">{{ "Common.lifeStatus" | localize
             }}<span class="text-danger">*</span> :
           </label>
-          <div
-            *ngIf="applicantUser?.isAlive && requestInfo?.applicant?.isAlive"
-          >
-            <label
-              *ngIf="requestInfo?.applicant?.isAlive == true"
-              class="col-form-label"
-              ><strong>{{ "Common.alive" | localize }}</strong></label
-            >
-            <label
-              *ngIf="requestInfo?.applicant?.isAlive == false"
-              class="col-form-label"
-              ><strong>{{ "Common.dead" | localize }}</strong></label
-            >
-          </div>
-          <div
-            *ngIf="!applicantUser?.isAlive || !requestInfo?.applicant?.isAlive"
-            class="d-flex"
-          >
+          <label *ngIf=" applicantUser?.isAlive && requestInfo?.applicant?.isAlive&&requestInfo?.applicant?.isAlive == true"
+            class="col-form-label"><strong>{{ "Common.alive" | localize }}</strong></label>
+          <label *ngIf="applicantUser?.isAlive && requestInfo?.applicant?.isAlive&& requestInfo?.applicant?.isAlive == false"
+            class="col-form-label"><strong>{{ "Common.dead" | localize }}</strong></label>
+        
+          <div *ngIf="!applicantUser?.isAlive || !requestInfo?.applicant?.isAlive" class="d-flex">
             <div class="mr-3">
-              <p-radioButton
-                name="lifeStatus"
-                [value]="true"
-                #requestInfo_applicant_isAlive="ngModel"
-                [(ngModel)]="requestInfo.applicant.isAlive"
-                inputId="alive"
-              ></p-radioButton>
+              <p-radioButton name="lifeStatus" [value]="true" #requestInfo_applicant_isAlive="ngModel"
+                [(ngModel)]="requestInfo.applicant.isAlive" inputId="alive"></p-radioButton>
               <label class="ml-2 mb-1">{{ "Common.alive" | localize }}</label>
             </div>
             <div>
-              <p-radioButton
-                name="lifeStatus"
-                [value]="false"
-                #requestInfo_applicant_isAlive="ngModel"
-                [(ngModel)]="requestInfo.applicant.isAlive"
-                inputId="dead"
-              ></p-radioButton>
+              <p-radioButton name="lifeStatus" [value]="false" #requestInfo_applicant_isAlive="ngModel"
+                [(ngModel)]="requestInfo.applicant.isAlive" inputId="dead"></p-radioButton>
               <label class="ml-2 mb-1">{{ "Common.dead" | localize }}</label>
             </div>
-            <input
-              type="text"
-              hidden
-              [(ngModel)]="requestInfo.applicant.isAlive"
-              #isAlive="ngModel"
-              required
-              name="isalive"
-            />
-            <app-validationMessages
-              relatedControlName="isalive"
-              [control]="isAlive"
-              [validationMessages]="[
-                {
-                  ruleName: 'required',
-                  ruleMessage: l('Common.Required', l('Common.lifeStatus'))
-                }
-              ]"
-            >
+            <input type="text" hidden [(ngModel)]="requestInfo.applicant.isAlive" #isAlive="ngModel" required name="isalive" />
+            <app-validationMessages relatedControlName="isalive" [control]="isAlive" [validationMessages]="[
+                        {
+                          ruleName: 'required',
+                          ruleMessage: l('Common.Required', l('Common.lifeStatus'))
+                        }
+                      ]">
             </app-validationMessages>
           </div>
         </div>
