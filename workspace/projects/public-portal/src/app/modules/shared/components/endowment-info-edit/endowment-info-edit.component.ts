@@ -339,17 +339,38 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.registerWaqfServiceProxy
       .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
-        (res: ApiResponse) => {
+        (result: ApiResponse) => {
           debugger
-          this.InputEndowmentDto = res.dto;
+        
+
+          if (result.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Success,
+            });
+            debugger;
+            this.InputEndowmentDto = result.dto;
+
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
         },
 
-      );
-    (data) => {
-      //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
-      //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
-    };
 
+
+
+
+      );
+    
   }
 
 
