@@ -26,6 +26,7 @@ import {
 } from "../../../../../../../shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component";
 import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
 import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
@@ -66,7 +67,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   seerDeadAttachemt: AttachementItem;
   FileUploadentityName = 'EndowmentAttachment';
   lookupInput: InputLookUpDto = new InputLookUpDto();
-
+  primengTableHelper: PrimengTableHelper;
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {

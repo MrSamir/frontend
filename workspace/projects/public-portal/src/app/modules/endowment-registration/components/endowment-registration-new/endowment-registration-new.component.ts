@@ -415,7 +415,6 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     throw 'not implemented';
   }
   onBtnNextClicked(wizardNavDto: wizardNavDto) {
-    debugger;
     if (wizardNavDto.isNaviagateToNext) {
       this.requestId = wizardNavDto.requestId!;
       this.waqfId = wizardNavDto.endowmentId;

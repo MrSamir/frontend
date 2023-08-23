@@ -11,7 +11,7 @@ import {
   HttpHeaders,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { ApiResponseModel} from '../models/ApiResponseModel';
+import { ApiResponseModel } from '../models/ApiResponseModel';
 import { AppMessageService } from '../services/message/app-message.service';
 import { MessageTypeEnum } from '../enums/message-type';
 import { MessageSeverity } from '../enums/message-severity';
@@ -25,7 +25,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
     private appMessageService: AppMessageService,
     private utilservice: UtilsService,
     private appconifgsubject: AppConfigSubjectService
-  ) {}
+  ) { }
 
   intercept(
     request: HttpRequest<any>,
@@ -48,7 +48,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
           return event;
         },
         error: (error: HttpErrorResponse) => {
-          
+
           if (error.status === HttpStatusCode.Unauthorized) {
             errorMessage = 'Unauthorized access!';
           } else if (error.status === HttpStatusCode.NotFound) {
@@ -65,7 +65,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
                 })
               )
               .subscribe((response: any) => {
-                  let apiResponse =ApiResponseModel.fromJS(response);
+                let apiResponse = ApiResponseModel.fromJS(response);
                 if (apiResponse.message) {
                   errorMessage = apiResponse.message;
                   if (
@@ -77,7 +77,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
                         verror.validationResultDetails.forEach((vdetail) => {
                           errorMessage = errorMessage
                             ?.concat(
-                                vdetail.errorMessage
+                              vdetail.errorMessage
                             )
                         });
                       }
@@ -138,7 +138,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
       headers: modifiedHeaders,
     });
   }
-  protected handleErrorResponse(error: any) {}
+  protected handleErrorResponse(error: any) { }
 }
 
 /*

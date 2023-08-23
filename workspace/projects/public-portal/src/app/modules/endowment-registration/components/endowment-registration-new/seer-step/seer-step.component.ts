@@ -242,7 +242,6 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   onBackBtnClicked() {
-    debugger;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.phaseId = '4';
     this.wizardNavDto.endowmentId = this.waqfId;

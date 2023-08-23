@@ -125,7 +125,6 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
         const removeBenifiacyInputDto = new RemoveBeneficiaryInputDto();
         removeBenifiacyInputDto.beneficiaryId = beneficiary.beneficiaryId;
         removeBenifiacyInputDto.requestId = this.requestId as string;
-        debugger;
         this.endowmentRegistrationServiceProxy
           .removeBeneficiary(removeBenifiacyInputDto)
           .subscribe(
