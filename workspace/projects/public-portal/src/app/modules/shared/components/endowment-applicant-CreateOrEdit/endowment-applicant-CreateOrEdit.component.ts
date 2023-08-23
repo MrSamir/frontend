@@ -125,7 +125,6 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
-            debugger;
             this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = result.dto.id;
             this.wizardNavDto.phaseId = '2';
@@ -147,7 +146,6 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   //#region FromAndLookupLoad
   LoadForm() {
-    debugger;
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -176,11 +174,9 @@ export class EndowmentApplicantCreateOrEditComponent
     this.loadSeerTypeHint();
   }
   loadrequest() {
-    debugger;
     this._endowmentRegistrationService
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
-        debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.selectedTypes = this.applicantTypes.filter((value, index) => { return value.id == parseInt(this.requestInfo.applicantTypes!) })

@@ -24,7 +24,6 @@ export class YakeenAlienViewComponent implements OnInit {
   ngOnInit(): void {
     // check if NationlaityId has value AND no name, then this case require a manual mapping
     // this case happens when the input param [alienInfo] is being passed as input, not as a response from GetCitizenInfo() API.
-    debugger;
     if (this.alienInfo?.awqafNatinaityId != undefined && this.alienInfo.nationalityNameAr == undefined) {
       this.LoadNationalities(this.alienInfo.awqafNatinaityId);
 

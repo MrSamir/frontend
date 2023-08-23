@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
-import { AccountProxy, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto,  RequestApplicationServiceProxy,  RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { AccountProxy, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -11,10 +11,10 @@ import { LazyLoadEvent } from 'primeng/api';
   templateUrl: './my-awqafs.component.html',
   styleUrls: ['./my-awqafs.component.css']
 })
-export class MyAwqafsComponent extends ComponentBase implements OnInit{
+export class MyAwqafsComponent extends ComponentBase implements OnInit {
 
-  endowmentStatusLookup: LookupDto[]=[];
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
+  endowmentStatusLookup: LookupDto[] = [];
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
   primengTableHelper: PrimengTableHelper;
 
   constructor(
@@ -23,7 +23,7 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit{
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private requestApplicationServiceServiceProxy: RequestApplicationServiceProxy,
-    private lookupssrv:LookupApplicationServiceProxy
+    private lookupssrv: LookupApplicationServiceProxy
   ) {
     super(_injecter);
     this.loadEndowmentStatus();
@@ -32,14 +32,13 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit{
   private loadEndowmentStatus() {
     this.lookupfliter.lookUpName = "EndowmentStatus";
     this.lookupfliter.filters = [];
-    debugger
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
         this.endowmentStatusLookup = data.dto.items!;
 
-        
+
         console.log(data);
-      
+
       });
   }
 
@@ -52,7 +51,7 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit{
     this.requestApplicationServiceServiceProxy.getMyEndowments("RequestNumber", event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
       res => {
         this.primengTableHelper.records = res.dto.items as EndowmentOutputDto[];
-        console.log(res.dto.items );
+        console.log(res.dto.items);
         this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
 
       }
@@ -60,8 +59,8 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit{
     this.primengTableHelper.hideLoadingIndicator();
   }
 
-  getSatus(statusId){
-      return this.endowmentStatusLookup.filter(c=>c.id== 1)[0].name;
+  getSatus(statusId) {
+    return this.endowmentStatusLookup.filter(c => c.id == 1)[0].name;
   }
 
 }

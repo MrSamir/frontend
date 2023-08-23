@@ -229,7 +229,6 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   }
 
   onBackBtnClicked() {
-    debugger;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.phaseId = '2';
     this.wizardNavDto.endowmentId = this.waqfId;
