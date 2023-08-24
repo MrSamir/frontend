@@ -1,4 +1,4 @@
-<form name="form" #waqifListForm="ngForm">
+<form name="form" #waqifListForm="ngForm" *ngIf="!!requestId || !!waqfId">
 
   <div class="d-flex justify-content-center my-6" *ngIf="!viewOnly && !hasOwners" >
     <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewWaqif(addData)">
