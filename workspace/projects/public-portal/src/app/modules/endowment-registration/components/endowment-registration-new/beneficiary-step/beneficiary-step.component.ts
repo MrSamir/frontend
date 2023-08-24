@@ -77,14 +77,14 @@ export class BeneficiaryStepComponent implements OnInit {
     // }
     this.wizardNavDto.isNaviagateToNext = true;
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '4';
+    this.wizardNavDto.step = '4';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '5';
+    this.wizardNavDto.step = '5';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();

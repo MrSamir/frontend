@@ -14,7 +14,7 @@ const routes: Routes = [
 
   // {path: 'wizard', component: EndowmentRegistrationNewComponent, canActivate:[PublicActiveProfileGuard]},
   {
-    path: 'registrationform/:requestId/:pahseId',
+    path: 'registrationform/:requestId/:step',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
@@ -32,9 +32,9 @@ const routes: Routes = [
     title: 'خدمة تسجيل فوري لوقف',
   },
   {
-    path:'beneficiary',
-    component:BeneficiaryStepComponent,
-    title:'المستفيدين'
+    path: 'beneficiary',
+    component: BeneficiaryStepComponent,
+    title: 'المستفيدين'
   }
 ];
 
@@ -42,4 +42,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class EndowmentRegistrationRoutingModule {}
+export class EndowmentRegistrationRoutingModule { }

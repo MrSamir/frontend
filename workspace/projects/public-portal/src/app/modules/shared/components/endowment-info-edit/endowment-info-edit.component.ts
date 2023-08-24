@@ -44,7 +44,6 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
   @Input() waqfId: string;
   @Input() public requestId: string;
-  @Input() public wizard: WizardComponent;
   @Output() _InputEndowmentDto = new EventEmitter<InputEndowmentDto>();
   @Input() IsDeedDisabled = false;
   @Output() publishNewWaqfRegistered = new EventEmitter<string>();
@@ -239,7 +238,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   onBackBtnClicked() {
     this.wizardNavDto.isNaviagateToNext = true;
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '1';
+    this.wizardNavDto.step = '1';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
   }
@@ -290,7 +289,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
             });
             this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = this.requestId
-            this.wizardNavDto.phaseId = '3';
+            this.wizardNavDto.step = '3';
             this.wizardNavDto.endowmentId = this.waqfId;
             this.onBtnNextClicked.emit(this.wizardNavDto);
             // this.wizard.goToNextStep()
@@ -300,7 +299,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
               enableService: true,
               summary: '',
               detail: result.message!,
-              severity: MessageSeverity.Warning,
+              severity: MessageSeverity.Error,
             });
             return;
           }
