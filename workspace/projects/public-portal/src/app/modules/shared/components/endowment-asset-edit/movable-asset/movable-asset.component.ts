@@ -1,6 +1,5 @@
 import { Component, Input, Output } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
-import { LookupModel } from '../../../models/LookupModel';
 import {
   EndowmentRegistrationServiceProxy,
   InputAssetDto,

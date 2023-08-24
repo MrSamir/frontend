@@ -6,7 +6,7 @@ import {
   AlienInfoResponse, ApiResponseOfOutputFileDto,
   CitizenInfoResponse,
   CreateSeerInputDto,
-  EditSeerInputDto, FileLibraryApplicationServiceProxy,
+  EditSeerInputDto, FileByIdDto, FileLibraryApplicationServiceProxy,
   InputApplicationUserDto, InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
@@ -26,6 +26,7 @@ import {
 } from "../../../../../../../shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component";
 import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
 import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 @Component({
   selector: 'app-endowment-shared-seer-edit',
@@ -66,7 +67,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   seerDeadAttachemt: AttachementItem;
   FileUploadentityName = 'EndowmentAttachment';
   lookupInput: InputLookUpDto = new InputLookUpDto();
-
+  primengTableHelper: PrimengTableHelper;
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -87,7 +88,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   ngOnInit(): void {
-    this.requestId = 'F462D0C3-F7D2-48C6-803C-AC965E6C85D2';
     this.LoadLookups('EndowmentPartiesType', (lookups) => {
       this.seerTypeLookup = lookups;
     });
@@ -312,8 +312,11 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
         if (result.isSuccess) {
           callback(result.dto);
@@ -348,6 +351,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   addToSeerList() {
+    this.seerToCreate.requestId = this.requestId;
     this.OnAddingNewSeer.emit(this.seerToCreate);
   }
 

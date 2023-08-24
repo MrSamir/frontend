@@ -13,6 +13,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   updated: boolean = false;
   @Input() public requestId: string;
+  @Input() waqfId: string;
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
   constructor(
@@ -21,9 +24,10 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
-    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private endowmentRegistrationServiceProxy: EndowmentRegistration`1ServiceProxy,
     private activatedRoute: ActivatedRoute
   ) {
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
     super(_injecter);
   }
@@ -51,6 +55,13 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
 
   }
 
+  onBackBtnClicked() {
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '5';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnPreviousClicked.emit(this.wizardNavDto);
+    // this.wizard.goToPreviousStep();
+  }
 }
 function handleServiceProxyError(err: ApiException): void {
   throw new Error('Function not implemented.');

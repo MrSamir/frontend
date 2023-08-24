@@ -1,19 +1,14 @@
-<div  class="form-group">
+<div *ngIf="CalenderType==2" class="form-group">
   <label  [class]="labelcss">{{Label}}</label>
   <input [class]="class"   [placeholder]="placeholder"  [required]="IsRequired" readonly
-  [name]="name"  (blur)="onBlur()"
-    [minDate]="min"
-    [maxDate]="max" [disabled]="IsDisabled"  
-    [(ngModel)]="SelectedDate" 
-    [ngModelOptions]="{standalone:true}" (dateSelect)="onDateSelect()" 
+  [name]="name" [minDate]="min" (blur)="onBlur()"
+    [maxDate]="max" [disabled]="IsDisabled"  [(ngModel)]="SelectedDate" [ngModelOptions]="{standalone:true}" (dateSelect)="onDateSelect()" 
     (click)="ngdatepicker.toggle()" ngbDatepicker #ngdatepicker="ngbDatepicker"  [footerTemplate]="footerTemplate">
 </div>
 
-
- 
-<label  [class]="labelcss">{{Label}}</label>
-<app-hijri-datepicker  [class]="class"   [(SelectedDate)]="SelectedDate" > </app-hijri-datepicker >    
-  
+<hijri-datepicker *ngIf="CalenderType==1" [min]="min" [max]="max" [name]="name"  [placeholder]="placeholder" 
+ [IsRequired]="IsRequired"  [class]="class" [IsDisabled]="IsDisabled" [(SelectedDate)]="SelectedDate" [Label]="Label"
+   (SelectedDateChange)="onDateSelect()" ></hijri-datepicker>
 
 <ng-template #footerTemplate>
   <hr class="my-0">

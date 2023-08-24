@@ -165,18 +165,18 @@
     </div>
     <ng-container *ngIf="!isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-center">
-        <!-- <button type="button" class="btn btn-awq-secondary px-6"
+        <button type="button" class="btn btn-awq-secondary px-6"
           [disabled]="assetForm.form?.invalid" (click)="onAddBtnClicked()">
-          {{'EndowmentModule.EndowmentRgistrationService.AddASubssetBtnLabel' | localize}}</button> -->
+          {{'EndowmentModule.EndowmentRgistrationService.AddASubssetBtnLabel' | localize}}</button>
         <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
       </div>
     </ng-container>
     <ng-container *ngIf="isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-between">
-        <!-- <button type="button" class="btn btn-warning px-6"
+        <button type="button" class="btn btn-warning px-6"
           [disabled]="assetForm.form?.invalid" (click)="onEditBtnClicked()">
           {{'EndowmentModule.EndowmentRgistrationService.EditSubAssetBtnLabel' | localize}}
-        </button> -->
+        </button>
         <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditAssetValid()"
           (click)="onCancelBtnClicked()">
           {{
@@ -185,6 +185,12 @@
           }}
         </button>
       </div>
+
     </ng-container>
   </form>
 </ng-template>
+
+<div class="aw-btn">
+  <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+  <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
+</div>

@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../models/LookupModel';
 import {
-  EndowmentRegistrationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
   InputOneAssetDto,
@@ -15,13 +14,18 @@ import {
 import { MapModel } from '../map/map.model';
 //import { ActivatedRoute } from '@angular/router';
 import { RequestModel } from '../../models/RequestModel';
+import { WizardComponent } from "angular-archwizard";
+import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/message-type";
+import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
+import { ComponentBase } from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 
 @Component({
   selector: 'app-endowment-shared-asset-edit',
   templateUrl: './endowment-asset-edit.component.html',
   styleUrls: ['./endowment-asset-edit.component.css'],
 })
-export class EndowmentSharedAssetEditComponent {
+export class EndowmentSharedAssetEditComponent extends ComponentBase {
   //#region variables
 
   @Input() viewOnly = false;
@@ -36,6 +40,9 @@ export class EndowmentSharedAssetEditComponent {
     assetToDelete: OutputAssetDto;
     index: number;
   }>();
+
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   @Output() OnCancelClick = new EventEmitter();
 
   @Input() waqfId: string | undefined;
@@ -61,6 +68,8 @@ export class EndowmentSharedAssetEditComponent {
   resolveLookup: any;
   assetSubTypes: LookupModel[];
   ePatternValidation: typeof EnumValidation = EnumValidation;
+  @Input() public wizard: WizardComponent;
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
   //#endregion
   //assetSubTypes: LookupModel[];
@@ -68,8 +77,11 @@ export class EndowmentSharedAssetEditComponent {
   constructor(
     public formBuilder: FormBuilder,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy
-  ) /*private activatedRoute: ActivatedRoute*/ {}
+    private lookupssrv: LookupApplicationServiceProxy,
+    private injector: Injector
+  ) /*private activatedRoute: ActivatedRoute*/ {
+    super(injector);
+  }
 
   //#region Events
 
@@ -197,6 +209,30 @@ export class EndowmentSharedAssetEditComponent {
       console.log(data);
     });
   }
+  onNextBtnClicked() {
+    // if (!this.Assets || this.Assets.length == 0) {
+    //   this.message.showMessage(MessageTypeEnum.toast, {
+    //     closable: true,
+    //     enableService: true,
+    //     summary: '',
+    //     detail: this.l('EndowmentModule.EndowmentRgistrationService.atLeastOneAsset'),
+    //     severity: MessageSeverity.Error,
+    //   });
+    //   return;
+    // }
+    this.wizardNavDto.isNaviagateToNext = true;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '4';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnNextClicked.emit(this.wizardNavDto);
+  }
 
+  onBackBtnClicked() {
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.phaseId = '2';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnPreviousClicked.emit(this.wizardNavDto);
+    // this.wizard.goToPreviousStep();
+  }
   //#endregion
 }

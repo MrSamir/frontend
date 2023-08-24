@@ -26,9 +26,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
 import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
-import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
 import { TableModule } from 'primeng/table';
-import { SvgIconModule } from 'projects/shared-features-lib/src/lib/modules/svg-icon.module';
+import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -43,6 +42,24 @@ import { SvgIconModule } from 'projects/shared-features-lib/src/lib/modules/svg-
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
+    EndowmentSeerEditComponent,
+    EndowmentBeneficiaryEditComponent
+  ],
+  exports: [
+    //EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSharedAssetEditComponent,
+    // AnimalOrAgriculturalAssetComponent,
+    // BusinessEntityAssetComponent,
+    // FiscalAssetComponent,
+    // IntellectualPropertyAndTrademarkAssetComponent,
+    // MonetaryAssetComponent,
+    // MovableAssetComponent,
+    // ParticularBenefitAssetComponent,
+    // RealestateAssetComponent
+    EndowmentApplicantCreateOrEditComponent,
+    EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent
   ],
@@ -62,28 +79,8 @@ import { SvgIconModule } from 'projects/shared-features-lib/src/lib/modules/svg-
     PanelModule,
     StepsModule,
     CoreLibModule,
-    CoreLibModule,
     TableModule,
     SvgIconModule
-  ],
-  exports: [
-    //EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    // AnimalOrAgriculturalAssetComponent,
-    // BusinessEntityAssetComponent,
-    // FiscalAssetComponent,
-    // IntellectualPropertyAndTrademarkAssetComponent,
-    // MonetaryAssetComponent,
-    // MovableAssetComponent,
-    // ParticularBenefitAssetComponent,
-    // RealestateAssetComponent
-
-    EndowmentApplicantCreateOrEditComponent,
-    EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent
-  ],
+  ]
 })
 export class PublicPortalSharedModule { }

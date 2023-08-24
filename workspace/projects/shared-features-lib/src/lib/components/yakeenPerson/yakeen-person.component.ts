@@ -41,6 +41,8 @@ import {
   isElementTouched,
 } from 'projects/core-lib/src/lib/Validators/validation-queries';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 
 @Component({
   selector: 'yakeen-person',
@@ -137,7 +139,18 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
         this.personForm.controls.saudiNationalId.disable();
         this.onPersonFetched(this.newCreatedYakeenPerson);
       },
-      (err) => handleError<object>(err.error)
+      (err) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: err.errMessage,
+          closable: true,
+          detail: this.l(
+            err.errMessage
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }//handleError<object>(err.error)
     );
   };
 
@@ -193,6 +206,17 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
       this.personForm.controls.birthdate.disable();
       this.personForm.controls.iqamaId.disable();
       this.onPersonFetched(fetchedPerson.dto);
+    }, (err) => {
+      this.message.showMessage(MessageTypeEnum.toast, {
+        severity: MessageSeverity.Error,
+        message: err.errMessage,
+        closable: true,
+        detail: this.l(
+          err.errMessage
+        ),
+        summary: '',
+        enableService: true,
+      });
     });
   };
   AlienToPerson(alienInfoResponse: AlienInfoResponse): InputApplicationUserDto {
@@ -460,8 +484,18 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
         ](res.dto);
       },
       (err) => {
-        handleError<object>(err.error);
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: err.errMessage,
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
       }
+      //handleError<object>(err.error);
     );
   }
 

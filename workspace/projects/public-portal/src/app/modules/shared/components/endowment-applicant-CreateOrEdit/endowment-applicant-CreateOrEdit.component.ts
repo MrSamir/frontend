@@ -1,17 +1,10 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  Component,
-  Injector,
-  Input,
-  NO_ERRORS_SCHEMA,
-  OnInit,
-  forwardRef,
-} from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
   ApplicationUserServiceProxy,
   AttorneyInquiryInput,
   EndowmentRegistrationServiceProxy,
+  FileByIdDto,
   FileLibraryApplicationServiceProxy,
   InputApplicantAgentDto,
   InputApplicantDto,
@@ -28,20 +21,21 @@ import {
 } from '../../services/services-proxies/service-proxies';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
-import { fn } from 'moment';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
-import { NG_VALIDATORS, NgForm } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { WizardComponent } from "angular-archwizard";
+import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
 })
 export class EndowmentApplicantCreateOrEditComponent
   extends ComponentBase
-  implements OnInit
-{
+  implements OnInit {
   //#region input Lookups Dto
   lookupInput: InputLookUpDto = new InputLookUpDto();
   //#endregion
@@ -60,9 +54,12 @@ export class EndowmentApplicantCreateOrEditComponent
   isSeer = false;
   isEndwowmer = false;
   @Input() RequestId: string;
+  @Input() waqfId: string;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
   seerTypeHint: HintModel;
+  @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
+  @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   //#endregion
   yaqeenValidationResult = true;
 
@@ -80,6 +77,7 @@ export class EndowmentApplicantCreateOrEditComponent
   uploadedFiles: OutputFileDto[] = [];
   seerDeadAttachemt: AttachementItem;
   agentDeedAttachment: AttachementItem;
+  wizardNavDto: wizardNavDto = new wizardNavDto();
   seerDeedFile: File;
   AgentDeed: File;
   FileUploadentityName = 'EndowmentAttachment';
@@ -94,7 +92,7 @@ export class EndowmentApplicantCreateOrEditComponent
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
-    console.log('🔆',this.requestInfo);
+    console.log('🔆', this.requestInfo);
     /* this.requestInfo.applicantAgent = new InputApplicantAgentDto();
     this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
@@ -102,34 +100,42 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.LoadForm();
   }
-  onNextBtnClicked(form:NgForm)
-  {
+  onNextBtnClicked(form: NgForm) {
 
-     if(this.validateForm(form)){
-      this._endowmentRegistrationService.createOrEditEndowmentRegistrationRequest(this.requestInfo)
-      .subscribe((result)=>{
-        if(result.isSuccess)
-        {
-          this.message.showMessage(MessageTypeEnum.toast, {
-            closable: true,
-            enableService: true,
-            summary: '',
-            detail: result.message!,
-            severity: MessageSeverity.Success,
-          });
-          this.router.navigate(['endowmentregistration/registrationform/' + result.dto.id + '/' + 2]);
-        }else
-        {
-                    this.message.showMessage(MessageTypeEnum.toast, {
-                      closable: true,
-                      enableService: true,
-                      summary: '',
-                      detail: result.message!,
-                      severity: MessageSeverity.Warning,
-                    });
-         }
-      });
-     }
+
+    if (this.validateForm(form)) {
+      if (this.RequestId) {
+        this.requestInfo.requestId = this.RequestId;
+      }
+      this._endowmentRegistrationService
+        .createOrEditEndowmentRegistrationRequest(this.requestInfo)
+        .subscribe((result) => {
+          if (result.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Success,
+            });
+            this.wizardNavDto.isNaviagateToNext = true;
+            this.wizardNavDto.requestId = result.dto.id;
+            this.wizardNavDto.phaseId = '2';
+            this.wizardNavDto.endowmentId = this.waqfId;
+            this.RequestId = result.dto.id;
+            this.onBtnNextClicked.emit(this.wizardNavDto);
+
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Warning,
+            });
+          }
+        });
+    }
   }
   //#region FromAndLookupLoad
   LoadForm() {
@@ -155,7 +161,10 @@ export class EndowmentApplicantCreateOrEditComponent
       this.loadCurrentUser();
     } else {
       this.isEditMode = true;
+      this.loadrequest();
     }
+    this.loadEndowmerTypeHint();
+    this.loadSeerTypeHint();
   }
   loadrequest() {
     this._endowmentRegistrationService
@@ -163,6 +172,24 @@ export class EndowmentApplicantCreateOrEditComponent
       .subscribe((result) => {
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
+          this.applicantUser.init(result.dto.applicant);
+           let seletedapptypes=this.requestInfo.applicantTypes?.split(',');
+          this.selectedTypes = this.applicantTypes.filter((value, index) => { return seletedapptypes?.includes(value.id.toString()) });
+           this.selectedTypes.forEach((value,index)=>{
+            switch(value.id)
+            {
+              case 1:
+                  this.isEndwowmer = true;
+                break;
+                case 2: 
+                this.isSeer=true;
+                break;
+                case 3:
+                  this.isAgent=true;
+                  break;
+            }
+           });
+         
           if (
             result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
             result.dto.applicantSeer.seedDeedAttachmentId != ''
@@ -180,11 +207,11 @@ export class EndowmentApplicantCreateOrEditComponent
             );
           }
           if (
-            result.dto.applicantAgent.representativeAttachmentId != undefined &&
-            result.dto.applicantAgent.representativeAttachmentId != ''
+            result.dto.applicantAgent?.representativeAttachmentId != undefined &&
+            result.dto.applicantAgent?.representativeAttachmentId != ''
           ) {
             this.getFileById(
-              result.dto.applicantAgent.representativeAttachmentId,
+              result.dto.applicantAgent?.representativeAttachmentId,
               (fileDto) => {
                 this.agentDeedAttachment = {
                   id: fileDto.id,
@@ -204,8 +231,6 @@ export class EndowmentApplicantCreateOrEditComponent
       this.requestInfo.applicant = new InputApplicantDto();
       this.requestInfo.applicant.init(this.applicantUser);
     });
-    this.loadEndowmerTypeHint();
-    this.loadSeerTypeHint();
   }
 
   LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
@@ -242,32 +267,32 @@ export class EndowmentApplicantCreateOrEditComponent
       switch (value.id) {
         case 1:
           this.isEndwowmer = true;
-           this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
+          this.requestInfo.applicantEndowmer = new InputApplicantEndowmerDto();
           break;
         case 2:
           this.isSeer = true;
-           this.requestInfo.applicantSeer = new InputApplicantSeerDto();
+          this.requestInfo.applicantSeer = new InputApplicantSeerDto();
           break;
         case 3:
           this.isAgent = true;
-           this.requestInfo.applicantAgent = new InputApplicantAgentDto();
+          this.requestInfo.applicantAgent = new InputApplicantAgentDto();
           break;
       }
     });
     // check isendowmenr checked.
     if (this.selectedTypes.findIndex((value, index) => value.id == 1) == -1) {
       this.isEndwowmer = false;
-     this.requestInfo.applicantEndowmer=undefined!;
+      this.requestInfo.applicantEndowmer = undefined!;
     }
     //check isSeer checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 2) == -1) {
       this.isSeer = false;
-      this.requestInfo.applicantSeer=undefined!;
+      this.requestInfo.applicantSeer = undefined!;
     }
     //check isAgent checked
     if (this.selectedTypes.findIndex((value, index) => value.id == 3) == -1) {
       this.isAgent = false;
-      this.requestInfo.applicantAgent =undefined!;
+      this.requestInfo.applicantAgent = undefined!;
     }
 
     if (this.isEndwowmer && this.isAgent) {
@@ -415,8 +440,11 @@ export class EndowmentApplicantCreateOrEditComponent
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
         if (result.isSuccess) {
           callback(result.dto);

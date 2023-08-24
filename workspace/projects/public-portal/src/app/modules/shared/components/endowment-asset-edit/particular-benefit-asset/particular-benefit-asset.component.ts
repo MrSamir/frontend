@@ -1,5 +1,4 @@
 import { Component, Input, Output } from '@angular/core';
-import { LookupModel } from '../../../models/LookupModel';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
   EndowmentRegistrationServiceProxy,

@@ -53,7 +53,9 @@ export class AttachmentViewerComponent extends ComponentBase implements OnInit {
     super(injector);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+ 
+  }
 
   deleteAttachment(event: AttachementItem) {
     this.message.showMessage(MessageTypeEnum.Dialog, {

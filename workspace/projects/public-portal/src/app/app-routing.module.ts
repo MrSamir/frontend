@@ -46,13 +46,15 @@ const routes: Routes = [
   {
     path: 'public-user-profile',
     component: PublicUserProfileComponent,
-    data: { title: 'الملف الشخصي' },
+    data: { title: 'الملف الشخصي', breadcrumb: 'الملف الشخصي' },
+    title: 'الملف الشخصي',
     //canActivate:[AuthGuard]
   },
   {
     path: 'confirm-email/:userId/:confirmationCode',
     component: EmailConfirmationComponent,
-    data: { title: 'تفعيل البريد الألكتروني' },
+    data: { title: 'تفعيل البريد الألكتروني', breadcrumb: 'تفعيل البريد الألكتروني' },
+    title: 'تفعيل البريد الألكتروني',
     canActivate: [],
   },
   // {
@@ -76,14 +78,14 @@ const routes: Routes = [
   //     loadChildren: () => import('@pages/public-portal/ui-create-seer-registration/ui-create-seer-registration.module').then(m => m.UiCreatSeerRegistrationModule)
   //   },
 
-//  {
-//      path: 'seerRequestDetails',
-//     loadChildren: () => import('@pages/public-portal/ui-seer-details/ui-seer-details.module').then(m => m.UiSeerDetailsModule)
-//   },
-//   {
-//     path: 'seerCertifications',
-//     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
-//   },
+  //  {
+  //      path: 'seerRequestDetails',
+  //     loadChildren: () => import('@pages/public-portal/ui-seer-details/ui-seer-details.module').then(m => m.UiSeerDetailsModule)
+  //   },
+  //   {
+  //     path: 'seerCertifications',
+  //     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
+  //   },
 
 
 ];
