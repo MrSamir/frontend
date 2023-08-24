@@ -54,10 +54,10 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
   @Output() OnNewAlienValidated = new EventEmitter<{ alienInfo: AlienInfoResponse, idType: number, userName: string, person: InputApplicationUserDto, isValid: boolean }>();
 
   @Output() OnNewPersonAvailable = new EventEmitter<{
-    idType: number ;
-    userName: string ;
+    idType: number;
+    userName: string;
     person: InputApplicationUserDto;
-    isValid:boolean;
+    isValid: boolean;
   }>();
   // @Output() OnNewHafezaValidated = new EventEmitter<{hafeza:AddHafezaInputDto, isValid:boolean}>();
   // @Output() OnEditHafezaValidated = new EventEmitter<{editHafeza:EditHafezaInputDto, isValid:boolean}>();
@@ -411,9 +411,9 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
               : 0,
             userName: this.newPerson?.userName ?? '',
             person: this.newPerson,
-            isValid:true
+            isValid: true
           });
-        } 
+        }
       });
   }
 
@@ -437,7 +437,8 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     } else {
       this.min = { year: 1870, month: 1, day: 1 };
       this.maxToday = this.dateHelper.GetTodayGregorian();
-      this.maxToday.year -= 18;
+      if (this.maxToday)
+        this.maxToday.year -= 18;
     }
   }
 

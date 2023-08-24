@@ -1,9 +1,11 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
-import { AccountProxy, AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
-import { FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter, Injector } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ComponentBase } from "projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto } from "../../../../shared/services/services-proxies/service-proxies";
+import { wizardNavDto } from "../../../models/wizard-nav-data";
+
 
 @Component({
   selector: 'app-beneficiary-step',
@@ -24,18 +26,20 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
-    private endowmentRegistrationServiceProxy: EndowmentRegistration`1ServiceProxy,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
     private activatedRoute: ActivatedRoute
   ) {
-  wizardNavDto: wizardNavDto = new wizardNavDto();
-
     super(_injecter);
   }
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
+    this.isEditRequested = false;
+    this.updated = false;
+    this.requestId= this.activatedRoute.snapshot.queryParamMap.get('requestId') as string;
   }
 
- 
+
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
   OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto) {
 
@@ -62,8 +66,18 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }
-}
-function handleServiceProxyError(err: ApiException): void {
-  throw new Error('Function not implemented.');
+  isEditRequested:boolean = false;
+  editBeneficiary:AddBeneficiaryInputDto;
+  onEditBeneficiayData(event: AddBeneficiaryInputDto) {
+    debugger
+    this.editBeneficiary = event;
+    this.isEditRequested = true;
+
+  }
+
+  onNextBtnClicked() {
+
+  }
+
 }
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit, Injector } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, Injector, OnChanges, TemplateRef, ViewChild } from '@angular/core';
 import { AccountProxy, AddBeneficiaryInputDto, AddBeneficiaryOutputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, EndowmentRegistrationServiceProxy, InputApplicationUserDto, LookupApplicationServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +17,23 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
   templateUrl: './endowment-beneficiary-edit.component.html',
   styleUrls: ['./endowment-beneficiary-edit.component.css']
 })
-export class EndowmentBeneficiaryEditComponent extends ComponentBase implements OnInit {
+export class EndowmentBeneficiaryEditComponent extends ComponentBase implements OnInit, OnChanges {
+  @ViewChild('addData') templateRef: TemplateRef<any>;
+  ngOnChanges() {
+    debugger
+    if (this.editBenificaryInfo) {
+      this.activeCrudOperation = CrudOperation.Update;
+      this.isEditRequested = true;
+      
+      this.yakeenPersonUtilities[this.editBenificaryInfo.beneficiaryPerson.idTypeId!](this.editBenificaryInfo.beneficiaryPerson);
+      this.newPerson = new InputApplicationUserDto();
+      this.newPerson.init(this.editBenificaryInfo.beneficiaryPerson);
+      this.isCitizen = this.editBenificaryInfo.beneficiaryPerson.idTypeId == 1;
+
+      this.modalService.open(this.templateRef, { size: 'lg' });
+    }
+    this.ngOnInit();
+  }
 
   constructor(
     private modalService: NgbModal,
@@ -33,7 +49,10 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
   }
 
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.requestId = this.activatedRoute.snapshot.params['requestId'];
+    this.OnAddingNewBeneficiary.emit('empty');
+  }
 
   isCitizen: boolean = false;
   addBenificiaryInputDto: AddBeneficiaryInputDto;
@@ -43,7 +62,7 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
   citizenToView: CitizenInfoResponse;
   alienToView: AlienInfoResponse;
   beneficiaryOutKSAToView?: BeneficiaryOutKsa;
-  @Output() OnAddingNewBeneficiary = new EventEmitter<boolean>();
+  @Output() OnAddingNewBeneficiary = new EventEmitter<string>();
   @Output() OnEditingExistingBeneficiary = new EventEmitter<AddBeneficiaryOutputDto>();
   @Output() OnDeletingExistingBeneficiary = new EventEmitter<{
     BeneficiaryToDelete: OutputBeneficiaryDto;
@@ -53,6 +72,8 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
   @Input() BeneficiaryList: OutputBeneficiaryDto[] = [];
   @Input() viewOnly: boolean = false;
   @Input() requestId: string;
+  @Input() beneficiary: AddBeneficiaryInputDto;
+
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
       this.newCitizen = CitizenUtilities.fromPerson(person);
@@ -62,7 +83,8 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     }
   };
   isBenificiaryInKsa: boolean;
-  isEditRequested: boolean;
+  isEditRequested: boolean = false;
+  @Input() editBenificaryInfo: AddBeneficiaryInputDto | undefined;
   isBeneficiaryInKsaEditView: boolean;
   activeCrudOperation: CrudOperation;
   isThereBeneficiaries: any;
@@ -85,6 +107,7 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     this.newCitizen = undefined;
     this.modalService.open(content, { size: 'lg' });
   }
+
   onNewCitizenAvailable(event: {
     citizenInfo: CitizenInfoResponse;
     idType: number;
@@ -144,13 +167,13 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     this.addBenificiaryInputDto.createBeneficiaryDto = new CreateBeneficiaryDto();
     this.addBenificiaryInputDto.createBeneficiaryDto.isBeneficiaryInsideKsa = this.isBenificiaryInKsa;
     this.addBenificiaryInputDto.beneficiaryPerson = this.newPerson;
-    this.addBenificiaryInputDto.requestId = "06EC682A-9455-476C-94EF-17190CBA3C99";
+    this.addBenificiaryInputDto.requestId = this.requestId;
     this.addBenificiaryInputDto.createBeneficiaryDto.beneficiaryName = this.newPerson.fullName;
     this.addBenificiaryInputDto.beneficiaryPerson.nationalityId = this.newPerson.nationalityId;
     this.addBenificiaryInputDto.createBeneficiaryDto.beneficiaryId = this.newPerson.id;
     if (this.activeCrudOperation === CrudOperation.Update) {
-      this.BeneficiaryList[this.beneficiaryToEditIndex].beneficiaryPerson.phoneNumber = this.newPerson.phoneNumber;
-      this.BeneficiaryList[this.beneficiaryToEditIndex].beneficiaryPerson.email = this.newPerson.email;
+      this.addBenificiaryInputDto.beneficiaryPerson.phoneNumber = this.newPerson.phoneNumber;
+      this.addBenificiaryInputDto.beneficiaryPerson.email = this.newPerson.email;
     }
 
 
@@ -191,12 +214,11 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
 
   // Emit Add New beneficiary event to parent component
   addToBenefList() {
-    debugger
 
     this.endowmentRegistrationServiceProxy.addBeneficiary(this.addBenificiaryInputDto).subscribe(
       res => {
         if (res.isSuccess) {
-          this.OnAddingNewBeneficiary.emit(true);
+          this.OnAddingNewBeneficiary.emit(this.addBenificiaryInputDto.beneficiaryPerson.userName);
           this.message.showMessage(MessageTypeEnum.toast,
             {
               severity: MessageSeverity.Success,
@@ -233,7 +255,39 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
   onEditBtnClicked() {
 
     this.activeCrudOperation = CrudOperation.Update;
-    //  this.OnEditingExistingBeneficiary.emit(this.addBenificiaryInputDto);
+    this.endowmentRegistrationServiceProxy.updateBeneficiary(this.addBenificiaryInputDto).subscribe(
+      res => {
+        if (res.isSuccess) {
+          this.OnAddingNewBeneficiary.emit(this.addBenificiaryInputDto.beneficiaryPerson.userName);
+          this.message.showMessage(MessageTypeEnum.toast,
+            {
+              severity: MessageSeverity.Success,
+              message: '',
+              closable: true,
+              detail: this.l(
+                'EndowmentModule.EndowmentRgistrationService.AddBeneficiarySuccess'
+              ),
+              summary: '',
+              enableService: true,
+            });
+        }
+        this.modalService.dismissAll();
+        
+      },
+      (error) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: '',
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+        this.modalService.dismissAll();
+      }
+    )
 
   }
 

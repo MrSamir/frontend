@@ -28,6 +28,7 @@ import { StepsModule } from 'primeng/steps';
 import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
 import { TableModule } from 'primeng/table';
 import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
+import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
