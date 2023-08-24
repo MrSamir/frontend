@@ -1,65 +1,54 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { AccountProxy, AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-beneficiary-step',
   templateUrl: './beneficiary-step.component.html',
   styleUrls: ['./beneficiary-step.component.css']
 })
-export class BeneficiaryStepComponent implements OnInit{
-
+export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
+  updated: boolean = false;
   @Input() public requestId: string;
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
-  constructor(private registerWaqfService:EndowmentRegistrationServiceProxy,private modalService: NgbModal){}
+  constructor(
+    private modalService: NgbModal,
+    _injecter: Injector,
+    private router: Router,
+    private accountServiceProxy: AccountProxy,
+    private formBuilder: FormBuilder,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private activatedRoute: ActivatedRoute
+  ) {
 
-
+    super(_injecter);
+  }
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
   }
 
-  OnAddingNewBeneficiary(newAwqafBeneficiary: AddBeneficiaryInputDto)
-  {
-    this.registerWaqfService.addBeneficiary(
-      newAwqafBeneficiary
-    ).subscribe(
-      (data) => {
-        if (data) {
-          let resSeerData = data;
-          if (resSeerData.isSuccess) {
-            //showSuccess('تم إنشاء الاصل بنجاح', () => {
-              // console.log('res here: ', resSeerData);
-              // this.newSeer.id = resSeerData.data.toString();
-              // let obj = {Seer: resSeerData.data}
-              //this.modalService.dismissAll();
-              //this.getAllBeneficiaries();
-            //});
-          }
-        }
-      },
-      (err: ApiException) => {
-        handleServiceProxyError(err);
-      }
-    );
-  }
+ 
 
-  OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto)
-  {
+  OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto) {
 
   }
 
-  OnDeletingExistingBeneficiary(event: { BeneficiaryToDelete: OutputBeneficiaryDto; index: number })
-  {
+  OnAddingNewBeneficiary(event: any) {
+    this.updated = event;
+  }
+
+
+
+  OnEditingExistingSeer(event: any) {
 
   }
 
-  getAllBeneficiaries() {
-    this.registerWaqfService.getBeneficiariesInformationByReqId(this.requestId).subscribe(
-      (res:ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto) =>
-       console.log(),
-      (err: ApiException) => handleServiceProxyError(err)
-    );
+  OnDeletingExistingAsset(event: any) {
+
   }
 
 }

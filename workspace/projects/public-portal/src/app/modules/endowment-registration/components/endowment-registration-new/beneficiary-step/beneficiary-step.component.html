@@ -1,7 +1,9 @@
-<!-- <app-endowment-shared-beneficiary-edit
-                                (OnAddingNewSeer)="OnAddingNewSeer($event)"
+<app-endowment-shared-beneficiary-edit
+                                (OnAddingNewBeneficiary)="OnAddingNewBeneficiary($event)"
                                 (OnEditingExistingSeer)="OnEditingExistingSeer($event)"
-                                (OnDeletingExistingAsset)="OnDeletingExistingAsset($event)">
+                                (OnDeletingExistingAsset)="OnDeletingExistingAsset($event)" >
 
-</app-endowment-shared-beneficiary-edit> -->
-<app-endowment-beneficiaries-list></app-endowment-beneficiaries-list>
+</app-endowment-shared-beneficiary-edit>
+
+
+<app-endowment-beneficiaries-list [viewOnly]="false" [updated]="updated"></app-endowment-beneficiaries-list>

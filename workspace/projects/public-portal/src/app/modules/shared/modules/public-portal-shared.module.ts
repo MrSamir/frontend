@@ -26,6 +26,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
 import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
+import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
+import { TableModule } from 'primeng/table';
+import { SvgIconModule } from 'projects/shared-features-lib/src/lib/modules/svg-icon.module';
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -40,7 +43,8 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentSeerEditComponent
+    EndowmentSeerEditComponent,
+    EndowmentBeneficiaryEditComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +61,10 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
     DropdownModule,
     PanelModule,
     StepsModule,
- CoreLibModule,
+    CoreLibModule,
+    CoreLibModule,
+    TableModule,
+    SvgIconModule
   ],
   exports: [
     //EndowmentAssetsEditComponent,
@@ -75,7 +82,8 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
-    EndowmentSeerEditComponent
+    EndowmentSeerEditComponent,
+    EndowmentBeneficiaryEditComponent
   ],
 })
-export class PublicPortalSharedModule {}
+export class PublicPortalSharedModule { }
