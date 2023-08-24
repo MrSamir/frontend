@@ -1,4 +1,4 @@
-<form #applicantForm="ngForm" (ngSubmit)="onNextBtnClicked(applicantForm)">
+<form #applicantForm="ngForm" (ngSubmit)="onNextBtnClicked(applicantForm)" *ngIf="requestInfo">
   <div class="aw-content">
     <div
       *ngIf="!yaqeenValidationResult"
@@ -264,7 +264,7 @@
           <label *ngIf=" applicantUser?.gender != -1 &&
                       requestInfo?.applicant?.gender !== -1&& applicantUser?.gender == 1" class="col-form-label"><strong>{{
               "Common.Female" | localize }}</strong></label>
-        
+
           <div *ngIf="
                       applicantUser?.gender == -1 ||
                       requestInfo?.applicant?.gender == -1
@@ -341,7 +341,7 @@
             class="col-form-label"><strong>{{ "Common.alive" | localize }}</strong></label>
           <label *ngIf="applicantUser?.isAlive && requestInfo?.applicant?.isAlive&& requestInfo?.applicant?.isAlive == false"
             class="col-form-label"><strong>{{ "Common.dead" | localize }}</strong></label>
-        
+
           <div *ngIf="!applicantUser?.isAlive || !requestInfo?.applicant?.isAlive" class="d-flex">
             <div class="mr-3">
               <p-radioButton name="lifeStatus" [value]="true" #requestInfo_applicant_isAlive="ngModel"
@@ -469,7 +469,7 @@
               name="endowmerTypes"
               #requestInfo_applicantEndowmer_endowmentPartiesTypeId="ngModel"
               (onChange)="selectEndowmerType($event)"
-              [(ngModel)]="requestInfo.applicantEndowmer.endowmentPartiesTypeId"
+              [(ngModel)]="requestInfo.applicantEndowmer.endowmentPartiesTypeId!"
               optionLabel="name"
               optionValue="id"
               [placeholder]="
