@@ -1,3 +1,4 @@
+import { ApplicationUserServiceProxy, ApplicationUserTasks } from './../modules/shared/services/services-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -17,10 +18,11 @@ import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severit
 })
 export class LoginComponent extends ComponentBase {
   loginmodel: LoginModel = new LoginModel();
+  _applicationUserTasks: ApplicationUserTasks = new ApplicationUserTasks();
   constructor(
     _injecter: Injector,
     private router: Router,
-    private accountServiceProxy: AccountProxy
+    private accountServiceProxy: AccountProxy,private _applicationUserServiceProxy:ApplicationUserServiceProxy
   ) {
     super(_injecter);
   }
@@ -61,25 +63,12 @@ export class LoginComponent extends ComponentBase {
 
 
 UserTasks() {
-    this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
+    this._applicationUserServiceProxy.getCurrentUserTasks().subscribe((result) => {
       if (result.isSuccess) {
-        this.Util.setCookieValue
-        (
-          this.config.getAppConfig().tokenCookieName,
-          result.dto.accessToken!
-        );
-
-        this.Util.setCookieValue(
-          this.config.getAppConfig().refreshTokenName,
-          result.dto.refreshToken.token!
-        );
-
-        this.redirectToLandingPage();
-      } 
-
-      else {
+        this.Util.setCookieValue(this.config.getAppConfig().tokenCookieName,result.dto.totalCountTasks.toString());
+     
         const message: MessageModel = new MessageModel();
-        message.summary = 'Invalid Auntication ';
+        message.summary = '';
         message.detail = result.message!;
         message.severity = MessageSeverity.Error;
 
