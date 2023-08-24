@@ -57,6 +57,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     idType: number;
     userName: string;
     person: InputApplicationUserDto;
+    isValid: boolean;
   }>();
   // @Output() OnNewHafezaValidated = new EventEmitter<{hafeza:AddHafezaInputDto, isValid:boolean}>();
   // @Output() OnEditHafezaValidated = new EventEmitter<{editHafeza:EditHafezaInputDto, isValid:boolean}>();
@@ -191,6 +192,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     this.PersonalInformationServiceProxy.ensureYaqeenPersonalInfo(
       YaqeenPersonInfo
     ).subscribe((fetchedPerson: ApiResponseOfOutputApplicationUserDto) => {
+
       this.OnNewAlienValidated.emit({
         alienInfo: this.alienInfoResponse ?? new AlienInfoResponse(),
         idType: this.personForm.value.selectedTypeId
@@ -402,12 +404,14 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
             this.personAppendixForm.value.email ?? undefined;
           this.newPerson.phoneNumber =
             this.personAppendixForm.value.mobileNumber ?? undefined;
+          debugger
           this.OnNewPersonAvailable.emit({
             idType: this.personForm.value.selectedTypeId
               ? parseInt(this.personForm.value.selectedTypeId)
               : 0,
             userName: this.newPerson?.userName ?? '',
             person: this.newPerson,
+            isValid: true
           });
         }
       });
@@ -433,7 +437,8 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
     } else {
       this.min = { year: 1870, month: 1, day: 1 };
       this.maxToday = this.dateHelper.GetTodayGregorian();
-      this.maxToday.year -= 18;
+      if (this.maxToday)
+        this.maxToday.year -= 18;
     }
   }
 

@@ -424,7 +424,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     }
   }
 
-  onBackBtnClicked(wizardNavDto: wizardNavDto) {
+  onBackBtnClicked(wizardNavDto: any) {
     this.requestId = wizardNavDto.requestId!;
     this.waqfId = wizardNavDto.endowmentId;
     this.phaseId = wizardNavDto.phaseId;

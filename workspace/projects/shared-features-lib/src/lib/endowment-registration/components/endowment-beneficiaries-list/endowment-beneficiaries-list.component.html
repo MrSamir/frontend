@@ -26,36 +26,38 @@
                 <th class="text-center" scope="col">
                     {{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}
                 </th>
-                <td class="text-center" scope="col" *ngIf="viewOnly">{{'Common.DeleteLabel' | localize}}</td>
+                <th class="text-center" scope="col">
+                    {{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}
+                </th>
+                <th class="text-center" scope="col" *ngIf="!viewOnly">{{'Common.DeleteLabel' | localize}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
             <tr>
                 <td class="text-center" scope="col">
-                    {{record.beneficiaryName}}
+                    {{record?.beneficiaryName}}
                 </td>
                 <td class="text-center" scope="col">
-                    {{ record.beneficiaryPerson.idNumber}}
+                    {{ record.beneficiaryPerson?.idNumber}}
                 </td>
                 <td class="text-center" scope="col">
-                    {{ record.beneficiaryPerson.phoneNumber}}
+                    {{ record.beneficiaryPerson?.phoneNumber}}
                 </td>
-                <td class="text-center" scope="col" *ngIf="viewOnly" (click)="viewBeneficiary(addData, i)">
+                <td class="text-center" scope="col" *ngIf="!viewOnly" (click)="viewBeneficiary(addData, i)">
                     <a class="btn btn-sm btn-outline-awq-secondary rounded">
                         <svg-icon icon="eye"></svg-icon>
                     </a>
                 </td>
-                <!-- <td class="text-center" scope="col" *ngIf="!viewOnly">
-                <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editBeneficiary(addData, i)">
-                  <svg-icon icon="pencil"></svg-icon>
-                </a>
-              </td>-->
-              <td class="text-center" scope="col" *ngIf="viewOnly">
-                <a class="btn btn-sm btn-outline-danger rounded" (click)="deleteBeneficiary(i)"
-                   *ngIf="viewOnly">
-                  <svg-icon icon="trash-alt"></svg-icon>
-                </a>
-              </td>
+                <td class="text-center" scope="col" *ngIf="!viewOnly">
+                    <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="editBeneficiary(i)">
+                        <svg-icon icon="pencil"></svg-icon>
+                    </a>
+                </td>
+                <td class="text-center" scope="col" *ngIf="!viewOnly">
+                    <a class="btn btn-sm btn-outline-danger rounded" (click)="deleteBeneficiary(i)" *ngIf="!viewOnly">
+                        <svg-icon icon="trash-alt"></svg-icon>
+                    </a>
+                </td>
             </tr>
         </ng-template>
     </p-table>
@@ -68,7 +70,7 @@
     </div>
     <div class="modal-body">
 
-        <yakeen-person-view *ngIf="viewOnly" [isCitizen]="isCitizen" [citizen]="citizenToView" [alien]="alienToView"
+        <yakeen-person-view [isCitizen]="isCitizen" [citizen]="citizenToView" [alien]="alienToView"
             [person]="beneficiaryToEdit?.beneficiaryPerson"></yakeen-person-view>
     </div>
 

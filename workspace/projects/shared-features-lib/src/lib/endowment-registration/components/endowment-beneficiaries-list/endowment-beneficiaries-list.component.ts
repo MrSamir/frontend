@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
@@ -19,13 +19,16 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
   templateUrl: './endowment-beneficiaries-list.component.html',
   styleUrls: ['./endowment-beneficiaries-list.component.css']
 })
-export class EndowmentBeneficiariesListComponent extends ComponentBase implements OnInit {
+export class EndowmentBeneficiariesListComponent extends ComponentBase implements OnInit, OnChanges {
   primengTableHelper: PrimengTableHelper;
   citizenToView: CitizenInfoResponse | undefined;
   alienToView: AlienInfoResponse | undefined;
   addBenificiaryInputDto: AddBeneficiaryInputDto;
   isCitizen: boolean = false;
   isBeneficiaryInKsaEditView: boolean = true;
+  @Input() updated: boolean = false;
+  @Output() onEditBeneficiayData = new EventEmitter<AddBeneficiaryInputDto>();
+  
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
@@ -38,12 +41,17 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
 
     super(_injecter);
   }
-  requestId: string | null;
+  @Input() requestId: string | null;
   @Input() viewOnly: boolean = true;
+
+  ngOnChanges() {
+    
+    debugger
+    this.ngOnInit();
+  }
 
   ngOnInit() {
     this.primengTableHelper = new PrimengTableHelper();
-    this.requestId = this.activatedRoute.snapshot.queryParamMap.get("requestId");
     this.loadBeneficiaries();
   }
   onBackBtnClicked() {
@@ -56,10 +64,6 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
       (res: ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto) => {
         this.primengTableHelper.records = res.dto.items as OutputBeneficiaryDto[];
         this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
-
-
-
-
       }
     )
 
@@ -105,6 +109,14 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
 
   get isCreateMode() {
     return this.activeCrudOperation === CrudOperation.Create;
+  }
+
+  editBeneficiary(index: number) {
+    debugger
+    const beneficiary =
+      this.primengTableHelper.records[index];
+
+    this.onEditBeneficiayData.emit(beneficiary);
   }
 
   deleteBeneficiary(index: number) {
