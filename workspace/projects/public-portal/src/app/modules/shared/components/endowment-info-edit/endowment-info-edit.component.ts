@@ -3,11 +3,11 @@ import {
   ApiResponse,
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
+  FileByIdDto,
   FileLibraryApplicationServiceProxy,
   InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
-  LookupDto,
   LookupExtraData,
   OutputFileDto,
 } from './../../services/services-proxies/service-proxies';
@@ -278,7 +278,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
         //   (err: ApiException) => handleServiceProxyError(err)
         // );
         (result) => {
-          if (result.isSuccess) {
+          if (result?.isSuccess) {
             this.message.showMessage(MessageTypeEnum.toast, {
               closable: true,
               enableService: true,
@@ -304,8 +304,6 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
             });
             return;
           }
-          //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
-          //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
         },
         (error) => {
           this.message.showMessage(MessageTypeEnum.toast, {
@@ -324,7 +322,6 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
 
   LoadWaqf() {
-    debugger;
 
     //this._editWaqfInputDto.requestId = this.requestId;
     //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
@@ -340,8 +337,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
       .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
         (res: ApiResponse) => {
-          debugger
-          this.InputEndowmentDto = res.dto;
+          ///this.InputEndowmentDto = res.dto;
         },
 
       );
@@ -398,7 +394,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
         (response: ApiResponseOfOutputFileDto) => {
           // Handle the successful response here
 
-          if (response.isSuccess) {
+          if (response?.isSuccess) {
             this.message.showMessage(MessageTypeEnum.toast, {
               closable: true,
               enableService: true,
@@ -442,7 +438,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     input.id = event.id;
     input.filters = [];
     this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
-      if (result.isSuccess) {
+      if (result?.isSuccess) {
         this.message.showMessage(MessageTypeEnum.toast, {
           closable: true,
           enableService: true,
@@ -463,8 +459,11 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
         if (result.isSuccess) {
           callback(result.dto);

@@ -11,7 +11,6 @@ import {
   OutputAssetDto,
 } from '../../../shared/services/services-proxies/service-proxies';
 //import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
-import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { MapModel } from '../../../shared/components/map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 //import { ActivatedRoute } from '@angular/router';
@@ -21,6 +20,7 @@ import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.serv
 //import { handleError, showError, showSuccess } from 'projects/core-lib/src/lib/services/alert/alert.service';
 
 import { ActivatedRoute } from '@angular/router';
+
 import { WizardComponent, WizardStep } from 'angular-archwizard';
 import { wizardNavDto } from '../../models/wizard-nav-data'
 
@@ -74,7 +74,8 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   ngOnInit() {
-    this.getLoggedInUserData();
+   // this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
+    //this.getLoggedInUserData();
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
@@ -415,7 +416,6 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     throw 'not implemented';
   }
   onBtnNextClicked(wizardNavDto: wizardNavDto) {
-    debugger;
     if (wizardNavDto.isNaviagateToNext) {
       this.requestId = wizardNavDto.requestId!;
       this.waqfId = wizardNavDto.endowmentId;
