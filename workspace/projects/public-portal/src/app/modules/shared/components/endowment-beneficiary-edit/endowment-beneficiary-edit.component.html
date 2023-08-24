@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-end my-6" *ngIf="!viewOnly">
+  <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm" (click)="openLg(addData)">
+    <svg-icon styleClass="h1 mr-2" icon="add-user"></svg-icon>
+    <span>إضافة مستفيد آخر</span>
+  </a>
+</div>
+
+
+
+<ng-template #addData let-modal>
+  <div class="modal-header">
+    <h2>بيانات المستفيد</h2>
+  </div>
+  <div class="modal-body">
+
+
+    <yakeen-person *ngIf="isUpdateMode || isCreateMode && !viewOnly"
+      (OnNewPersonAvailable)="onNewPersonAvailable($event)" (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
+      (OnNewAlienValidated)="onNewAlienAvailable($event)"
+      [initialData]="{alien: newAlien, citizen: newCitizen, person: newPerson}">
+    </yakeen-person>
+
+
+    <yakeen-person-view *ngIf="viewOnly" [isCitizen]="isCitizen" [citizen]="citizenToView" [alien]="alienToView"
+      [person]="addBenificiaryInputDto?.beneficiaryPerson"></yakeen-person-view>
+  </div>
+
+  <ng-container *ngIf="!isEditRequested&&!viewOnly">
+    <div class="modal-footer justify-content-center">
+      <button type="button" class="btn btn-awq-secondary px-6" [disabled]="!isValid"
+        (click)="addToBenefList()">
+        إضافة
+        <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon>
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isEditRequested&&!viewOnly">
+    <div class="modal-footer justify-content-between">
+      <button type="button" class="btn btn-warning px-6"
+        [disabled]="(this.newPerson?.emailConfirmed && this.newPerson?.phoneNumberConfirmed)"
+        (click)="onEditBtnClicked()">
+        تعديل
+      </button>
+    </div>
+  </ng-container>
+</ng-template>

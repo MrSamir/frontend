@@ -1,12 +1,17 @@
-<!-- <app-endowment-shared-beneficiary-edit
-                                (OnAddingNewSeer)="OnAddingNewSeer($event)"
-                                (OnEditingExistingSeer)="OnEditingExistingSeer($event)"
-                                (OnDeletingExistingAsset)="OnDeletingExistingAsset($event)">
+<app-endowment-shared-beneficiary-edit (OnAddingNewBeneficiary)="OnAddingNewBeneficiary($event)"
+  (OnEditingExistingSeer)="OnEditingExistingSeer($event)" (OnDeletingExistingAsset)="OnDeletingExistingAsset($event)"
+  [requestId]="requestId" [editBenificaryInfo]="editBeneficiary">
 
-</app-endowment-shared-beneficiary-edit> -->
-<app-endowment-beneficiaries-list></app-endowment-beneficiaries-list>
+</app-endowment-shared-beneficiary-edit>
+
+
+<app-endowment-beneficiaries-list [viewOnly]="false" [updated]="updated" (onEditBeneficiayData)="onEditBeneficiayData($event)"
+  [requestId]="requestId"></app-endowment-beneficiaries-list>
+
+  
 <div class="aw-btn">
-  <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
-  <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
+  <button type="button" class="btn btn-awq-secondary"
+    (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+  <button type="button" class="btn btn-outline-awq-secondary"
+    (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
 </div>
-
