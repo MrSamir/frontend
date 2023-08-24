@@ -26,6 +26,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
 import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/endowment-seer-edit.component';
+import { TableModule } from 'primeng/table';
+import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -40,6 +42,23 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
+    EndowmentSeerEditComponent
+  ],
+  exports: [
+    //EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSharedAssetEditComponent,
+    // AnimalOrAgriculturalAssetComponent,
+    // BusinessEntityAssetComponent,
+    // FiscalAssetComponent,
+    // IntellectualPropertyAndTrademarkAssetComponent,
+    // MonetaryAssetComponent,
+    // MovableAssetComponent,
+    // ParticularBenefitAssetComponent,
+    // RealestateAssetComponent
+    EndowmentApplicantCreateOrEditComponent,
+    EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
     EndowmentSeerEditComponent
   ],
   imports: [
@@ -57,25 +76,9 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
     DropdownModule,
     PanelModule,
     StepsModule,
- CoreLibModule,
-  ],
-  exports: [
-    //EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    // AnimalOrAgriculturalAssetComponent,
-    // BusinessEntityAssetComponent,
-    // FiscalAssetComponent,
-    // IntellectualPropertyAndTrademarkAssetComponent,
-    // MonetaryAssetComponent,
-    // MovableAssetComponent,
-    // ParticularBenefitAssetComponent,
-    // RealestateAssetComponent
-
-    EndowmentApplicantCreateOrEditComponent,
-    EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSeerEditComponent
-  ],
+    CoreLibModule,
+    TableModule,
+    SvgIconModule
+  ]
 })
-export class PublicPortalSharedModule {}
+export class PublicPortalSharedModule { }

@@ -20,6 +20,7 @@ import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severit
 import Swal from 'sweetalert2';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { wizardNavDto } from 'projects/public-portal/src/app/modules/endowment-registration/models/wizard-nav-data';
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 
 @Component({
@@ -43,7 +44,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   // addHafezaOwnerInputDto:AddHafezaInputDto= undefined;
   // editHafezaOwnerInputDto:EditHafezaInputDto= undefined;
   addOwnerInputDto: InputEndowmerDto;
-  owners: OutputEndowmerDto[] = [];
   requestedOwnerIndexToEditOrView: number;
   mainApplicantPerson: OutputEndowmerDto | undefined;
   isAddHafezaValid: boolean = false;
@@ -63,6 +63,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
 
   lookupInput: InputLookUpDto = new InputLookUpDto();
   wizardNavDto: wizardNavDto = new wizardNavDto();
+  primengTableHelper: PrimengTableHelper;
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -104,6 +105,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     return this.viewOnly;
   }
   init() {
+    this.primengTableHelper = new PrimengTableHelper();
     if (!this.requestId || this.mainApplicantPerson) {
       return;
     }
@@ -125,14 +127,32 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     });
   }
   processRequest() {
+    this.loadEndowmers();
+    this.loadEndowmerTypeHint();
+
+  }
+  loadEndowmers() {
+    this.primengTableHelper.showLoadingIndicator();
     this.registerWaqfService.getEndowersInformationByReqId(this.requestId).subscribe(
       (res: any) => {
-        this.owners = res.dto.items;
-        this.mainApplicantPerson = this.owners?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();
+        this.primengTableHelper.records = res.dto.items as OutputEndowmerDto[];
+        this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
+        this.mainApplicantPerson = this.primengTableHelper.records?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();
       },
-      (err) => handleError<object>(err.error)
+      (err) => {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          severity: MessageSeverity.Error,
+          message: err.errMessage,
+          closable: true,
+          detail: this.l(
+            'Common.CommonError'
+          ),
+          summary: '',
+          enableService: true,
+        });
+      }//handleError<object>(err.error)
     );
-    this.loadEndowmerTypeHint();
+    this.primengTableHelper.hideLoadingIndicator();
   }
 
   onAddNewWaqif(content: any) {
@@ -155,10 +175,10 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
 
   CheckDublicateItemInList(userName: string | undefined) {
     if (userName != undefined) {
-      let itemindex = this.owners.findIndex(item => item?.endowmerPerson?.userName === userName);
+      let itemindex = this.primengTableHelper.records.findIndex(item => item?.endowmerPerson?.userName === userName);
       if (itemindex !== -1) {
         this.modalService.dismissAll();
-        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage", { userIdNumber: userName });
+        let errMessage = this.l("EndowmentModule.EndowmentRgistrationService.EndomwerDuplicateValidationMessage");
         //showError(errMessage);
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Error,
@@ -185,7 +205,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     // if(this.isAddHafezaValid){
     //   this.registerWaqfService.addHafezaOwner(this.addHafezaOwnerInputDto).subscribe(
     //     (res: ServiceResponseOfAddOwnerOutputDto) => {
-    //       if( !res.isSuccess ) {
+    //       if( !res?.isSuccess ) {
     //         return handleError<object>(res);
     //       }
 
@@ -195,7 +215,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     //       newOwner.person = new PersonDto();
     //       newOwner.personId=res.data.personId;
     //       newOwner.person.init(this.addHafezaOwnerInputDto.createHafezaPersonInputDto);
-    //       this.owners.push(newOwner);
+    //       this.primengTableHelper.records.push(newOwner);
     //       showSuccess(translations.operationSuccess, () => {
     //         this.modalService.dismissAll()
     //       });
@@ -206,7 +226,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     // }
     this.registerWaqfService.addEndowmer(this.addOwnerInputDto).subscribe(
       (res: ApiResponseOfOutputEndowmerDto) => {
-        if (!res.isSuccess) {
+        if (!res?.isSuccess) {
           this.message.showMessage(MessageTypeEnum.toast, {
             severity: MessageSeverity.Error,
             message: '',
@@ -216,40 +236,43 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
             enableService: true,
           });
         }
-        var newOwner = new OutputEndowmerDto();
-        newOwner.init(this.addOwnerInputDto);
-        newOwner = res.dto;
-        this.owners?.push(newOwner);
-        this.message.showMessage(MessageTypeEnum.toast, {
-          severity: MessageSeverity.Success,
-          message: '',
-          closable: true,
-          detail: this.l(
-            'EndowmentModule.EndowmentRgistrationService.operationSuccess'
-          ),
-          summary: '',
-          enableService: true,
-        });
-        console.log(res.message);
-        this.modalService.dismissAll()
+        else {
+          var newOwner = new OutputEndowmerDto();
+          newOwner.init(this.addOwnerInputDto);
+          newOwner = res.dto;
+          this.loadEndowmers();
+          this.processRequest
+          this.message.showMessage(MessageTypeEnum.toast, {
+            severity: MessageSeverity.Success,
+            message: '',
+            closable: true,
+            detail: this.l(
+              'EndowmentModule.EndowmentRgistrationService.operationSuccess'
+            ),
+            summary: '',
+            enableService: true,
+          });
+          console.log(res.message);
+          this.modalService.dismissAll()
+        }
       },
-      (error) => {
-        this.message.showMessage(MessageTypeEnum.toast, {
-          severity: MessageSeverity.Error,
-          message: '',
-          closable: true,
-          detail: this.l(
-            'Common.CommonError'
-          ),
-          summary: '',
-          enableService: true,
-        });
-      }
+      // (error) => {
+      //   this.message.showMessage(MessageTypeEnum.toast, {
+      //     severity: MessageSeverity.Error,
+      //     message: '',
+      //     closable: true,
+      //     detail: this.l(
+      //       'Common.CommonError'
+      //     ),
+      //     summary: '',
+      //     enableService: true,
+      //   });
+      // }
       // (apiException: ApiException) => handleServiceProxyError(apiException)
     );
   }
 
-  deleteOwner(userName: string | undefined, index: number) {
+  deleteOwner(index: number) {
     if (this.isOwnerMainApplicant(index)) {   // can't delete main applicant: refer to Brs 1.6
       return;
     }
@@ -269,11 +292,11 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
       confirmButtonColor: '#D6BD81',
     }).then((result) => {
       if (result.isConfirmed) {
-        input.endowmerId = this.owners[index].endowmerId;
+        input.endowmerId = this.primengTableHelper.records[index].endowmerId;
         input.requestId = this.requestId;
         this.registerWaqfService.deleteEndowmer(input).subscribe(
           () => {
-            this.owners.splice(index, 1);
+            this.loadEndowmers();
             this.message.showMessage(MessageTypeEnum.toast, {
               severity: MessageSeverity.Success,
               message: '',
@@ -306,8 +329,8 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   viewWaqif(content: any, index: number) {
+    const owner = this.primengTableHelper.records[index];
     this.activeCrudOperation = CrudOperation.Read;
-    const owner = this.owners[index];
     this.requestedOwnerIndexToEditOrView = index;
 
     this.yakeenPersonUtilities[owner.endowmerPerson.idTypeId ?? 0](owner.endowmerPerson);
@@ -332,7 +355,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   editWaqif(content: any, index: number) {
     this.activeCrudOperation = CrudOperation.Update;
     this.requestedOwnerIndexToEditOrView = index;
-    const owner = this.owners[index];
+    const owner = this.primengTableHelper.records[index];
     //owner.person.idTypeId = defineIdType(owner.person.idNumber);    // This fix for old data only, for new data idType is already there
 
     //  if(owner.person.idTypeId === 3 || owner.person.idTypeId === 4){
@@ -378,7 +401,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   get requestedOwnerPerson() {
-    var owner = this.owners[this.requestedOwnerIndexToEditOrView];
+    var owner = this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView];
     return owner.endowmerPerson;
   }
 
@@ -403,8 +426,8 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     //     () => {
     //       showSuccess(translations.editOwnerSuccess, () => {
 
-    //         this.owners[this.requestedOwnerIndexToEditOrView].ownerTypeId = this.editHafezaOwnerInputDto.editHafezaPersonInputDto.ownerTypeId;
-    //         this.owners[this.requestedOwnerIndexToEditOrView].person.init(this.editHafezaOwnerInputDto.editHafezaPersonInputDto);
+    //         this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].ownerTypeId = this.editHafezaOwnerInputDto.editHafezaPersonInputDto.ownerTypeId;
+    //         this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].person.init(this.editHafezaOwnerInputDto.editHafezaPersonInputDto);
     //         this.child_ownertypeid.emit(this.editHafezaOwnerInputDto.editHafezaPersonInputDto.ownerTypeId);
     //         this.newPerson = undefined;
     //         this.newCitizen = undefined;
@@ -426,12 +449,13 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     editOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     editOwnerInputDto.endowmerPerson.init(this.addOwnerInputDto.endowmerPerson);
     editOwnerInputDto.requestId = this.requestId;
-    editOwnerInputDto.endowmerId = this.owners[this.requestedOwnerIndexToEditOrView].endowmerId;
+    editOwnerInputDto.endowmerId = this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].endowmerId;
     editOwnerInputDto.endowmerPerson.email = this.newPerson?.email;
     editOwnerInputDto.endowmerPerson.phoneNumber = this.newPerson?.phoneNumber;
     editOwnerInputDto.endowmentPartiesTypeId = this.addOwnerInputDto.endowmentPartiesTypeId;
     this.registerWaqfService.editEndowmer(editOwnerInputDto).subscribe(
       () => {
+        this.loadEndowmers();
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Success,
           message: '',
@@ -443,7 +467,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
           enableService: true,
         });
         //   showSuccess(translations.editOwnerSuccess, () => {
-        this.owners[this.requestedOwnerIndexToEditOrView].endowmentPartiesTypeId = editOwnerInputDto.endowmentPartiesTypeId;
+        this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].endowmentPartiesTypeId = editOwnerInputDto.endowmentPartiesTypeId;
         this.child_ownertypeid.emit(editOwnerInputDto.endowmentPartiesTypeId);
         this.newPerson = undefined;
         this.newCitizen = undefined;
@@ -503,7 +527,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   onNewPersonAvailable(event: { idType: number, userName: string, person: InputApplicationUserDto }) {
-    debugger;
     this.newPerson = event.person;
     this.addOwnerInputDto.endowmerPerson = new InputApplicationUserDto()
     this.addOwnerInputDto.endowmerPerson.init(this.newPerson);
@@ -511,18 +534,18 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.addOwnerInputDto.endowmerId = this.newPerson.id;
     this.addOwnerInputDto.endowmentId = this.waqfId;
     if (this.activeCrudOperation === CrudOperation.Update) {
-      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
-      this.owners[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
+      this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].endowmerPerson.email = this.newPerson.email;
+      this.primengTableHelper.records[this.requestedOwnerIndexToEditOrView].endowmerPerson.phoneNumber = this.newPerson.phoneNumber;
     }
 
   }
 
   get hasOwners() {
-    return this.owners.length > 0;
+    return this.primengTableHelper.records?.length > 0;
   }
 
   isOwnerMainApplicant(index: number) {
-    const owner = this.owners[index];
+    const owner = this.primengTableHelper.records[index];
     return owner.isMainApplicant;
   }
 
@@ -546,7 +569,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
 
 
   onNextBtnClicked() {
-    if (!this.owners || this.owners.length == 0) {
+    if (!this.primengTableHelper.records || this.primengTableHelper.records?.length == 0) {
       this.message.showMessage(MessageTypeEnum.toast, {
         severity: MessageSeverity.Error,
         message: '',
@@ -568,7 +591,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   }
 
   onBackBtnClicked() {
-    debugger;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.phaseId = '3';
     this.wizardNavDto.endowmentId = this.waqfId;

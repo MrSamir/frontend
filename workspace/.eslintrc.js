@@ -1,21 +1,19 @@
-{
+module.exports = {
   "root": true,
   "ignorePatterns": [
     "**/*.js"
   ],
   "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "tsconfigRootDir": __dirname,
+    "createDefaultProgram": true
+  },
   "overrides": [
     {
       "files": [
         "**/*.ts"
       ],
-      "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "tsconfig.app.json"
-        ],
-        "createDefaultProgram": true
-      },
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -24,10 +22,12 @@
         "plugin:prettier/recommended"
       ],
       "plugins": [
-        "prettier",
-        "unused-imports"
+        "unused-imports",
+        "prettier"
       ],
-      "rules": {}
+      "rules": {
+        "unused-imports/no-unused-imports": "error"
+      }
     },
     {
       "files": [

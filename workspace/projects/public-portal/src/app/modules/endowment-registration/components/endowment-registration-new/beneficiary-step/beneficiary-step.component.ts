@@ -83,7 +83,6 @@ export class BeneficiaryStepComponent implements OnInit {
   }
 
   onBackBtnClicked() {
-    debugger;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.phaseId = '5';
     this.wizardNavDto.endowmentId = this.waqfId;

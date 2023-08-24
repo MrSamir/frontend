@@ -1,18 +1,13 @@
- 
-
-<div  class="form-group">
-
-	<input   [placeholder]="placeholder" [required]="IsRequired" readonly
-	[name]="name"  (blur)="onBlur()"
-	  [minDate]="min"
-	  [maxDate]="max" [disabled]="IsDisabled"  
-	  [(ngModel)]="model" 
-	  [ngModelOptions]="{standalone:true}" 
-	  (click)="dp.toggle()" ngbDatepicker   #dp="ngbDatepicker"  [firstDayOfWeek]="7" >
+<div class="form-group" >
+	<label for="input-birth-Date" [class]="labelcss">{{Label}}</label>
+	<input [class]="class"  [placeholder]="placeholder" [required]="IsRequired" [name]="name" [minDate]="min" [ngModelOptions]="{standalone:true}" readonly
+	  [maxDate]="max" [disabled]="IsDisabled" [(ngModel)]="SelectedDate" (dateSelect)="changeDate()" (blur)="onBlur()" [footerTemplate]="footerTemplate"
+	  (click)="toggleDatepicker()" ngbDatepicker ngbYearSelector #nhdatepicker="ngbDatepicker"
+  >
   </div>
-	
- 
+  <ng-template #footerTemplate>
+	<hr class="my-0">
+	<button class="btn btn-secondary btn-sm m-2 float-right" type="button" (click)="close()">Close</button>
+	<button class="btn btn-primary btn-sm m-2 float-left" type="button" (click)="clear()">Clear</button>
+  </ng-template>
 
-<hr />  
-
-<!-- <pre>Model: {{ model | json }}</pre> -->

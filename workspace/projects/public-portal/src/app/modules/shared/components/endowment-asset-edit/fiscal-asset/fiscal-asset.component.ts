@@ -8,7 +8,6 @@ import {
   LookupDto,
   LookupExtraData,
 } from '../../../services/services-proxies/service-proxies';
-import { LookupModel } from '../../../models/LookupModel';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
 

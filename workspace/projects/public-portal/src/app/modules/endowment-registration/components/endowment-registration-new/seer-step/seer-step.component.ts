@@ -202,8 +202,8 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
 
   getAllSeers() {
     this.registerWaqfService.getSeersInformationByReqId(this.requestId).subscribe(
-      (res: OutputSeerDto[]) => {
-        this.seers = res;
+      (res) => {
+        this.seers = res.dto.items!;
       },
       (error) => {
         this.message.showMessage(MessageTypeEnum.toast, {
@@ -242,7 +242,6 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   onBackBtnClicked() {
-    debugger;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.phaseId = '4';
     this.wizardNavDto.endowmentId = this.waqfId;
