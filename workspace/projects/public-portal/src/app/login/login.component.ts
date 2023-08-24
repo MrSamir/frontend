@@ -34,16 +34,21 @@ export class LoginComponent extends ComponentBase {
   mockedUserLogin() {
     this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
       if (result.isSuccess) {
-        this.Util.setCookieValue(
+        this.Util.setCookieValue
+        (
           this.config.getAppConfig().tokenCookieName,
           result.dto.accessToken!
         );
+
         this.Util.setCookieValue(
           this.config.getAppConfig().refreshTokenName,
           result.dto.refreshToken.token!
         );
+
         this.redirectToLandingPage();
-      } else {
+      } 
+
+      else {
         const message: MessageModel = new MessageModel();
         message.summary = 'Invalid Auntication ';
         message.detail = result.message!;
@@ -53,4 +58,34 @@ export class LoginComponent extends ComponentBase {
       }
     });
   }
+
+
+UserTasks() {
+    this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
+      if (result.isSuccess) {
+        this.Util.setCookieValue
+        (
+          this.config.getAppConfig().tokenCookieName,
+          result.dto.accessToken!
+        );
+
+        this.Util.setCookieValue(
+          this.config.getAppConfig().refreshTokenName,
+          result.dto.refreshToken.token!
+        );
+
+        this.redirectToLandingPage();
+      } 
+
+      else {
+        const message: MessageModel = new MessageModel();
+        message.summary = 'Invalid Auntication ';
+        message.detail = result.message!;
+        message.severity = MessageSeverity.Error;
+
+        this.message.showMessage(MessageTypeEnum.toast, message);
+      }
+    });
+  }
+
 }
