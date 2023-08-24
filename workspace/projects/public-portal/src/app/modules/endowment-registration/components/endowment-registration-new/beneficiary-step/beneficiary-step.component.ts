@@ -1,68 +1,61 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AddBeneficiaryInputDto, ApiException, ApiResponseOfPagedResultDtoOfOutputEndowmerDto, EndowmentRegistrationServiceProxy, OutputBeneficiaryDto, RemoveBeneficiaryInputDto } from '../../../../shared/services/services-proxies/service-proxies';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { wizardNavDto } from '../../../models/wizard-nav-data';
+import { Component, OnInit, Input, Output, EventEmitter, Injector } from "@angular/core";
+import { FormBuilder } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ComponentBase } from "projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component";
+import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto } from "../../../../shared/services/services-proxies/service-proxies";
+import { wizardNavDto } from "../../../models/wizard-nav-data";
+
 
 @Component({
   selector: 'app-beneficiary-step',
   templateUrl: './beneficiary-step.component.html',
   styleUrls: ['./beneficiary-step.component.css']
 })
-export class BeneficiaryStepComponent implements OnInit {
-
+export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
+  updated: boolean = false;
   @Input() public requestId: string;
   @Input() waqfId: string;
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
-  wizardNavDto: wizardNavDto = new wizardNavDto();
-  constructor(private registerWaqfService: EndowmentRegistrationServiceProxy, private modalService: NgbModal) { }
-
-
+  constructor(
+    private modalService: NgbModal,
+    _injecter: Injector,
+    private router: Router,
+    private accountServiceProxy: AccountProxy,
+    private formBuilder: FormBuilder,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private activatedRoute: ActivatedRoute
+  ) {
+    super(_injecter);
+  }
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
+    this.isEditRequested = false;
+    this.updated = false;
+    this.requestId = this.activatedRoute.snapshot.queryParamMap.get('requestId') as string;
   }
 
-  OnAddingNewBeneficiary(newAwqafBeneficiary: AddBeneficiaryInputDto) {
-    this.registerWaqfService.addBeneficiary(
-      newAwqafBeneficiary
-    ).subscribe(
-      (data) => {
-        if (data) {
-          let resSeerData = data;
-          if (resSeerData.isSuccess) {
-            //showSuccess('تم إنشاء الاصل بنجاح', () => {
-            // console.log('res here: ', resSeerData);
-            // this.newSeer.id = resSeerData.data.toString();
-            // let obj = {Seer: resSeerData.data}
-            //this.modalService.dismissAll();
-            //this.getAllBeneficiaries();
-            //});
-          }
-        }
-      },
-      (err: ApiException) => {
-        handleServiceProxyError(err);
-      }
-    );
-  }
+
+  wizardNavDto: wizardNavDto = new wizardNavDto();
 
   OnEditingExistingBeneficiary(updtedAwqafSeer: AddBeneficiaryInputDto) {
 
   }
 
-  OnDeletingExistingBeneficiary(event: { BeneficiaryToDelete: OutputBeneficiaryDto; index: number }) {
+  OnAddingNewBeneficiary(event: any) {
+    this.updated = event;
+  }
+
+
+
+  OnEditingExistingSeer(event: any) {
 
   }
 
-  // getAllBeneficiaries() {
-  //   this.registerWaqfService.getBeneficiartiesInformationByReqId(this.requestId).subscribe(
-  //     (res:ApiResponseOfPagedResultDtoOfOutputEndowmerDto) =>
-  //      console.log(),
-  //     (err: ApiException) => handleServiceProxyError(err)
-  //   );
-  // }
+  OnDeletingExistingAsset(event: any) { }
 
   onNextBtnClicked() {
     // if (!this.BeneficiaryList || this.BeneficiaryList.length == 0) {
@@ -89,8 +82,15 @@ export class BeneficiaryStepComponent implements OnInit {
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }
-}
-function handleServiceProxyError(err: ApiException): void {
-  throw new Error('Function not implemented.');
+  isEditRequested: boolean = false;
+  editBeneficiary: AddBeneficiaryInputDto;
+  onEditBeneficiayData(event: AddBeneficiaryInputDto) {
+    debugger
+    this.editBeneficiary = event;
+    this.isEditRequested = true;
+
+  }
+
+
 }
 

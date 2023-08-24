@@ -492,8 +492,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     }
   }
 
-  onBackBtnClicked(wizardNavDto: wizardNavDto) {
-    debugger;
+  onBackBtnClicked(wizardNavDto: any) {
     this.requestId = wizardNavDto.requestId!;
     this.waqfId = wizardNavDto.endowmentId;
     this.step = wizardNavDto.step;
