@@ -26,8 +26,7 @@ import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.compon
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { WizardComponent } from "angular-archwizard";
+import { ActivatedRoute } from '@angular/router';
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
@@ -88,7 +87,7 @@ export class EndowmentApplicantCreateOrEditComponent
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
     private _MojServiceProxy: MOJApplicationServiceProxy,
-    private router: Router
+    private activatedRoute: ActivatedRoute
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
@@ -98,6 +97,8 @@ export class EndowmentApplicantCreateOrEditComponent
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
   }
   ngOnInit() {
+    debugger;
+    this.RequestId = this.activatedRoute.snapshot.params['requestId'];
     this.LoadForm();
   }
   onNextBtnClicked(form: NgForm) {
@@ -120,7 +121,7 @@ export class EndowmentApplicantCreateOrEditComponent
             });
             this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = result.dto.id;
-            this.wizardNavDto.phaseId = '2';
+            this.wizardNavDto.step = '2';
             this.wizardNavDto.endowmentId = this.waqfId;
             this.RequestId = result.dto.id;
             this.onBtnNextClicked.emit(this.wizardNavDto);
@@ -139,6 +140,7 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   //#region FromAndLookupLoad
   LoadForm() {
+    debugger;
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -167,32 +169,33 @@ export class EndowmentApplicantCreateOrEditComponent
     this.loadSeerTypeHint();
   }
   loadrequest() {
+    debugger;
     this._endowmentRegistrationService
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
+        debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
-           let seletedapptypes=this.requestInfo.applicantTypes?.split(',');
+          let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
           this.selectedTypes = this.applicantTypes.filter((value, index) => { return seletedapptypes?.includes(value.id.toString()) });
-           this.selectedTypes.forEach((value,index)=>{
-            switch(value.id)
-            {
+          this.selectedTypes.forEach((value, index) => {
+            switch (value.id) {
               case 1:
-                  this.isEndwowmer = true;
+                this.isEndwowmer = true;
                 break;
-                case 2: 
-                this.isSeer=true;
+              case 2:
+                this.isSeer = true;
                 break;
-                case 3:
-                  this.isAgent=true;
-                  break;
+              case 3:
+                this.isAgent = true;
+                break;
             }
-           });
-         
+          });
+
           if (
-            result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
-            result.dto.applicantSeer.seedDeedAttachmentId != ''
+            result.dto.applicantSeer?.seedDeedAttachmentId != undefined &&
+            result.dto.applicantSeer?.seedDeedAttachmentId != ''
           ) {
             this.getFileById(
               result.dto.applicantSeer.seedDeedAttachmentId,
