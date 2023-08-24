@@ -3,6 +3,7 @@ import {
   ApiResponse,
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
+  FileByIdDto,
   FileLibraryApplicationServiceProxy,
   InputFileDto,
   InputLookUpDto,
@@ -458,10 +459,13 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
+    var fileinfo:FileByIdDto=new FileByIdDto();
+    fileinfo.entityName=this.FileUploadentityName;
+    fileinfo.id=id;
     this._serviceProxyFileLibrary
-      .downloadFileById(this.FileUploadentityName, id)
+      .downloadFileById(fileinfo)
       .subscribe((result) => {
-        if (result?.isSuccess) {
+        if (result.isSuccess) {
           callback(result.dto);
         }
       });

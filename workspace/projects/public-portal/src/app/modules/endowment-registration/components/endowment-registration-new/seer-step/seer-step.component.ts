@@ -202,8 +202,8 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
 
   getAllSeers() {
     this.registerWaqfService.getSeersInformationByReqId(this.requestId).subscribe(
-      (res: OutputSeerDto[]) => {
-        this.seers = res;
+      (res) => {
+        this.seers = res.dto.items!;
       },
       (error) => {
         this.message.showMessage(MessageTypeEnum.toast, {
