@@ -459,9 +459,9 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
-    var fileinfo:FileByIdDto=new FileByIdDto();
-    fileinfo.entityName=this.FileUploadentityName;
-    fileinfo.id=id;
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
     this._serviceProxyFileLibrary
       .downloadFileById(fileinfo)
       .subscribe((result) => {
