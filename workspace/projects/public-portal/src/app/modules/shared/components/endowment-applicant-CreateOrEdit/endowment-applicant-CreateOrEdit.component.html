@@ -201,20 +201,15 @@
             required
           />
         </div>
-        <div class="form-group col">
+        <div *ngIf="
+              (requestInfo.applicant?.birthDate ||
+                requestInfo.applicant?.birthDateHijri) &&
+              (applicantUser?.birthDate || applicantUser?.birthDateHijri)"  class="form-group col">
           <label class="col-form-label"
             >{{ "Common.dateOfBirth" | localize
             }}<span class="text-danger">*</span> :
           </label>
-          <div
-            *ngIf="
-              (requestInfo.applicant?.birthDate ||
-                requestInfo.applicant?.birthDateHijri) &&
-              (applicantUser?.birthDate || applicantUser?.birthDateHijri)
-            " class="col-form-inline"
-          >
-            <!-- TODO: use dateConvert Pipe-->
-            <label
+                      <label
               *ngIf="requestInfo.applicant?.birthDate"
               class="col-form-label"
               ><strong>{{
@@ -235,6 +230,7 @@
                 requestInfo.applicant.birthDateHijri
               }}</strong></label
             >
+          
           </div>
           <div
             *ngIf="
@@ -242,18 +238,12 @@
                 !requestInfo.applicant?.birthDateHijri) &&
               (!applicantUser?.birthDate || !applicantUser?.birthDateHijri)
             "
-            class="input-group mr-3 calendar-alt"
+            class=""
           >
-            <input
-              type="text"
-              class="form-control"
-              #requestInfo.applicant.birthDate
-              [(ngModel)]="requestInfo.applicant.birthDate"
-              [ngModelOptions]="{ standalone: true }"
-            />
-            <i class="icon"></i>
+          <app-ng-bootstrap-hijri-gregorian-datepicker [Label]='"Common.dateOfBirth" | localize'  [IsRequired]=true [min]="minDate" [max]="maxDate"
+          [(SelectedDate)]="selectedDate" (SelectedDateChange)="onDateChange($event)"></app-ng-bootstrap-hijri-gregorian-datepicker>
           </div>
-        </div>
+        
         <div class="form-group col">
           <label class="col-form-label">{{ "Common.gender" | localize }}
             <span class="text-danger">*</span> :

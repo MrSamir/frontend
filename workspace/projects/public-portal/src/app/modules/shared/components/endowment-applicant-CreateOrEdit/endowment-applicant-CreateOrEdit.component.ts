@@ -24,7 +24,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
-
+import { NgBootstrapHijriGregorianDatepickerComponent } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/ng-bootstrap-hijri-gregorian-datepicker.component';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WizardComponent } from "angular-archwizard";
@@ -35,7 +35,8 @@ import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-
 })
 export class EndowmentApplicantCreateOrEditComponent
   extends ComponentBase
-  implements OnInit {
+  implements OnInit
+{
   //#region input Lookups Dto
   lookupInput: InputLookUpDto = new InputLookUpDto();
   //#endregion
@@ -60,6 +61,9 @@ export class EndowmentApplicantCreateOrEditComponent
   seerTypeHint: HintModel;
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+  selectedDate;
+  minDate;
+  maxDate;
   //#endregion
   yaqeenValidationResult = true;
 
@@ -101,8 +105,6 @@ export class EndowmentApplicantCreateOrEditComponent
     this.LoadForm();
   }
   onNextBtnClicked(form: NgForm) {
-
-
     if (this.validateForm(form)) {
       if (this.RequestId) {
         this.requestInfo.requestId = this.RequestId;
@@ -118,12 +120,12 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
-            this.wizardNavDto.isNaviagateToNext = true;
+             this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = result.dto.id;
             this.wizardNavDto.phaseId = '2';
             this.wizardNavDto.endowmentId = this.waqfId;
             this.RequestId = result.dto.id;
-            this.onBtnNextClicked.emit(this.wizardNavDto);
+            this.onBtnNextClicked.emit(this.wizardNavDto); 
 
           } else {
             this.message.showMessage(MessageTypeEnum.toast, {
@@ -173,26 +175,27 @@ export class EndowmentApplicantCreateOrEditComponent
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
-           let seletedapptypes=this.requestInfo.applicantTypes?.split(',');
-          this.selectedTypes = this.applicantTypes.filter((value, index) => { return seletedapptypes?.includes(value.id.toString()) });
-           this.selectedTypes.forEach((value,index)=>{
-            switch(value.id)
-            {
+          let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
+          this.selectedTypes = this.applicantTypes.filter((value, index) => {
+            return seletedapptypes?.includes(value.id.toString());
+          });
+          this.selectedTypes.forEach((value, index) => {
+            switch (value.id) {
               case 1:
-                  this.isEndwowmer = true;
+                this.isEndwowmer = true;
                 break;
-                case 2: 
-                this.isSeer=true;
+              case 2:
+                this.isSeer = true;
                 break;
-                case 3:
-                  this.isAgent=true;
-                  break;
+              case 3:
+                this.isAgent = true;
+                break;
             }
-           });
-         
+          });
+
           if (
-            result.dto.applicantSeer.seedDeedAttachmentId != undefined &&
-            result.dto.applicantSeer.seedDeedAttachmentId != ''
+            result.dto.applicantSeer?.seedDeedAttachmentId != undefined &&
+            result.dto.applicantSeer?.seedDeedAttachmentId != ''
           ) {
             this.getFileById(
               result.dto.applicantSeer.seedDeedAttachmentId,
@@ -207,7 +210,8 @@ export class EndowmentApplicantCreateOrEditComponent
             );
           }
           if (
-            result.dto.applicantAgent?.representativeAttachmentId != undefined &&
+            result.dto.applicantAgent?.representativeAttachmentId !=
+              undefined &&
             result.dto.applicantAgent?.representativeAttachmentId != ''
           ) {
             this.getFileById(
@@ -440,9 +444,9 @@ export class EndowmentApplicantCreateOrEditComponent
     });
   }
   getFileById(id, callback: (fileDto) => void) {
-    var fileinfo:FileByIdDto=new FileByIdDto();
-    fileinfo.entityName=this.FileUploadentityName;
-    fileinfo.id=id;
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
     this._serviceProxyFileLibrary
       .downloadFileById(fileinfo)
       .subscribe((result) => {
@@ -499,4 +503,6 @@ export class EndowmentApplicantCreateOrEditComponent
       }
     });
   }
+  onDateChange(event) {}
 }
+

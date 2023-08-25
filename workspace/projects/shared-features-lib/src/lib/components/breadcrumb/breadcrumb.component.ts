@@ -20,9 +20,10 @@ export class BreadcrumbComponent implements OnInit {
 
   private createBreadcrumbs(route: ActivatedRoute, breadcrumbs: MenuItem[] = []): MenuItem[] {
     if (route.firstChild) {
+      
       const childRoute = route.firstChild;
       const breadcrumb: MenuItem = {
-        label: childRoute.snapshot.data['breadcrumb'],
+        label: childRoute.snapshot.data['title'],
         url: childRoute.snapshot.url.join('/')
       };
       if (breadcrumb.label) {

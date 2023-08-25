@@ -55,6 +55,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
             errorMessage = 'Not Found';
           }
           if (error.status == HttpStatusCode.BadRequest) {
+            
             this.utilservice
               .blobToText(error.error)
               .pipe(
@@ -95,10 +96,10 @@ export class HttpResponseInterceptor implements HttpInterceptor {
                     MessageTypeEnum.toast,
                     message
                   );
-                }
+          
+                }        
               });
-
-            return;
+             return;
           }
           if (errorMessage) {
             var message = new MessageModel();
@@ -111,6 +112,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
               message
             );
           }
+            
         },
       })
     );

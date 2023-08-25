@@ -42,24 +42,7 @@ import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/mod
     RealestateAssetComponent,
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
-    EndowmentSeerEditComponent
-  ],
-  exports: [
-    //EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    // AnimalOrAgriculturalAssetComponent,
-    // BusinessEntityAssetComponent,
-    // FiscalAssetComponent,
-    // IntellectualPropertyAndTrademarkAssetComponent,
-    // MonetaryAssetComponent,
-    // MovableAssetComponent,
-    // ParticularBenefitAssetComponent,
-    // RealestateAssetComponent
-    EndowmentApplicantCreateOrEditComponent,
-    EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSeerEditComponent
+    EndowmentSeerEditComponent,
   ],
   imports: [
     CommonModule,
@@ -78,7 +61,24 @@ import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/mod
     StepsModule,
     CoreLibModule,
     TableModule,
-    SvgIconModule
-  ]
+    SvgIconModule,
+  ],
+  exports: [
+    //EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSharedAssetEditComponent,
+    // AnimalOrAgriculturalAssetComponent,
+    // BusinessEntityAssetComponent,
+    // FiscalAssetComponent,
+    // IntellectualPropertyAndTrademarkAssetComponent,
+    // MonetaryAssetComponent,
+    // MovableAssetComponent,
+    // ParticularBenefitAssetComponent,
+    // RealestateAssetComponent
+    EndowmentApplicantCreateOrEditComponent,
+    EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSeerEditComponent,
+  ],
 })
-export class PublicPortalSharedModule { }
+export class PublicPortalSharedModule {}

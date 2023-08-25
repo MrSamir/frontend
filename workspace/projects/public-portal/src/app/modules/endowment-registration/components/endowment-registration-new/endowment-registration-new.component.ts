@@ -72,18 +72,21 @@ export class EndowmentRegistrationNewComponent implements OnInit {
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
+ registerUsingendowmentDeedNumber:boolean|undefined =undefined;
 
   ngOnInit() {
    // this.requestId = '562E7F8E-52B6-44D8-B6B5-C91FCE8BC4EE';
     //this.getLoggedInUserData();
+      this.requestId = this.activatedRoute.snapshot.params['requestId'];
+      this.phaseId = this.activatedRoute.snapshot.params['phaseId'];
     if (this.requestId == undefined) {
-      if (this.request == undefined || this.request.id == undefined) {
-        this.requestId = this.activatedRoute.snapshot.params['requestId'];
-        this.phaseId = this.activatedRoute.snapshot.params['phaseId'];
+     this.isEditRequested = false;
+      
       } else {
-        this.requestId = this.request.id;
+        this.isEditRequested=true;
+        this.registerUsingendowmentDeedNumber=false;
       }
-    }
+    
 
     this.loadAssetType();
     this.loadAssetSize();
@@ -91,11 +94,7 @@ export class EndowmentRegistrationNewComponent implements OnInit {
   }
   async moveWizardToTabOfPhase() {
     let count = 0;
-    // while( count < this.phaseId ) {
-    //   await timeExtensions.sleep(100);
-    // this.wizard.goToNextStep();
-    //   count++;
-    // }
+   
   }
 
   _applicantData: AspNetUser = new AspNetUser();
@@ -429,5 +428,9 @@ export class EndowmentRegistrationNewComponent implements OnInit {
     this.waqfId = wizardNavDto.endowmentId;
     this.phaseId = wizardNavDto.phaseId;
     this.wizard.goToPreviousStep();
+  }
+
+  DeedNumberNotFound($event){
+    this.registerUsingendowmentDeedNumber=false;
   }
 }

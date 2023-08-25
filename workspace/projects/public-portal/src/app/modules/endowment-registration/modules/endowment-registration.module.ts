@@ -16,6 +16,8 @@ import { SeerStepComponent } from '../components/endowment-registration-new/seer
 import { BeneficiaryStepComponent } from '../components/endowment-registration-new/beneficiary-step/beneficiary-step.component';
 import { EndowmentDirectRegisterationComponent } from '../components/endowment-direct-registeration/endowment-direct-registeration.component';
 import {PanelModule} from "primeng/panel";
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -33,14 +35,13 @@ import {PanelModule} from "primeng/panel";
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
     PanelModule,
-
-
     PublicPortalSharedModule,
     AccordionModule,
     FormsModule,
     CoreLibModule,
     MultiSelectModule,
-
+    RadioButtonModule,
+    MessagesModule
   ],
   exports: [ /*RouterModule*/]
 })
