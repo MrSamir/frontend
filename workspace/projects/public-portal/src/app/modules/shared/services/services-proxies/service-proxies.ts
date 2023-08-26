@@ -211,6 +211,57 @@ export class ApplicationUserServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getCurrentUserTasks(): Observable<ApiResponseOfApplicationUserTasks> {
+        let url_ = this.baseUrl + "/api/ApplicationUserService/GetCurrentUserTasks";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetCurrentUserTasks(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetCurrentUserTasks(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfApplicationUserTasks>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfApplicationUserTasks>;
+        }));
+    }
+
+    protected processGetCurrentUserTasks(response: HttpResponseBase): Observable<ApiResponseOfApplicationUserTasks> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfApplicationUserTasks.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+
+    /**
      * @param body (optional) 
      * @return Success
      */
@@ -4100,6 +4151,62 @@ export interface IApiResponseOfAlienInfoResponse {
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
+export class ApiResponseOfApplicationUserTasks implements IApiResponseOfApplicationUserTasks {
+    isSuccess!: boolean;
+    dto!: ApplicationUserTasks;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfApplicationUserTasks) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? ApplicationUserTasks.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfApplicationUserTasks {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfApplicationUserTasks();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfApplicationUserTasks {
+    isSuccess: boolean;
+    dto: ApplicationUserTasks;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
 export class ApiResponseOfAttorneyInquiryOutput implements IApiResponseOfAttorneyInquiryOutput {
     isSuccess!: boolean;
     dto!: AttorneyInquiryOutput;
@@ -5598,6 +5705,42 @@ export interface IApplicationUser {
     lockoutEnd: DateTime | undefined;
     lockoutEnabled: boolean;
     accessFailedCount: number;
+}
+
+export class ApplicationUserTasks implements IApplicationUserTasks {
+    totalCountTasks!: number;
+
+    constructor(data?: IApplicationUserTasks) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.totalCountTasks = _data["totalCountTasks"];
+        }
+    }
+
+    static fromJS(data: any): ApplicationUserTasks {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApplicationUserTasks();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["totalCountTasks"] = this.totalCountTasks;
+        return data;
+    }
+}
+
+export interface IApplicationUserTasks {
+    totalCountTasks: number;
 }
 
 export class AttorneyInquiryInput implements IAttorneyInquiryInput {

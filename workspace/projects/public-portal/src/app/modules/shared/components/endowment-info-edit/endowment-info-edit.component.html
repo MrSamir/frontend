@@ -364,6 +364,11 @@
             (OnSelectFile)="EndowmentDeedFileSelect($event)"
             (OnUploadFile)="EndowmentDeedFileUpload($event)"
           ></lib-file-uploader>
+          <app-AttachmentViewer
+          *ngIf="endowmentDeadAttachemt"
+          (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
+          [Attachements]="[endowmentDeadAttachemt]"
+        ></app-AttachmentViewer>
           </div>
         </div>
       </div>

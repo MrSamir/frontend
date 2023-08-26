@@ -1,4 +1,5 @@
 import { AuthenticationService } from './../../../../core-lib/src/lib/services/authentication-service.service';
+import { ApplicationUserServiceProxy, ApplicationUserTasks } from './../modules/shared/services/services-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -19,11 +20,13 @@ import { LoggedInUserInfo } from 'projects/core-lib/src/lib/models/LoggedInUserI
 })
 export class LoginComponent extends ComponentBase {
   loginmodel: LoginModel = new LoginModel();
+  _applicationUserTasks: ApplicationUserTasks = new ApplicationUserTasks();
   constructor(
     _injecter: Injector,
     private router: Router,
     private accountServiceProxy: AccountProxy,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private _applicationUserServiceProxy:ApplicationUserServiceProxy
   ) {
     super(_injecter);
   }
@@ -35,10 +38,12 @@ export class LoginComponent extends ComponentBase {
   mockedUserLogin() {
     this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
       if (result.isSuccess) {
-        this.Util.setCookieValue(
+        this.Util.setCookieValue
+        (
           this.config.getAppConfig().tokenCookieName,
           result.dto.accessToken!
         );
+
         this.Util.setCookieValue(
           this.config.getAppConfig().refreshTokenName,
           result.dto.refreshToken.token!
@@ -56,7 +61,8 @@ export class LoginComponent extends ComponentBase {
           this.authenticationService.redirectToPublicMyProfilePage()
         }
         
-      } else {
+      }  
+      else {
         const message: MessageModel = new MessageModel();
         message.summary = 'Invalid Auntication ';
         message.detail = result.message!;
@@ -66,4 +72,21 @@ export class LoginComponent extends ComponentBase {
       }
     });
   }
+
+
+UserTasks() {
+    this._applicationUserServiceProxy.getCurrentUserTasks().subscribe((result) => {
+      if (result.isSuccess) {
+        this.Util.setCookieValue(this.config.getAppConfig().tokenCookieName,result.dto.totalCountTasks.toString());
+     
+        const message: MessageModel = new MessageModel();
+        message.summary = '';
+        message.detail = result.message!;
+        message.severity = MessageSeverity.Error;
+
+        this.message.showMessage(MessageTypeEnum.toast, message);
+      }
+    });
+  }
+
 }

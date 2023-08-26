@@ -63,7 +63,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   alllowMultipleFiles = true;
 
   uploadedFiles: OutputFileDto[] = [];
-  seerDeadAttachemt: AttachementItem;
+  endowmentDeadAttachemt: AttachementItem;
   agentDeedAttachment: AttachementItem;
   endowmentDeedFile: File;
   AgentDeed: File;
@@ -142,13 +142,14 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.IssuanceCourtsLookup = data.dto.items;
       console.log(data);
+      this.LoadWaqf();
     });
   }
   init() {
     if (!this.requestId || !!this.endowmentInitialDate) {
       return;
     }
-    this.LoadWaqf();
+   
     this.LoadSpendingCategories();
 
     this.setDateLimits();
@@ -322,29 +323,42 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
   LoadWaqf() {
 
-    //this._editWaqfInputDto.requestId = this.requestId;
-    //this.createWaqfInputDto.isDeedAttachmentChanged = (this.createWaqfInputDto != undefined && this.oldDeedAttachmentId != this.createWaqfInputDto.deedAttachmentId);
-    // this.InputEndowmentDto.deedNotes = '';
-    // this.InputEndowmentDto.endowmentDeedDateHijri = '';
-    // this.InputEndowmentDto.endowmentInitialDate = '';
-    // this.InputEndowmentDto.seerRules = '';
-    // this.InputEndowmentDto.endowmentDeedTypeName = '';
-    // this.InputEndowmentDto.endowmentDeedStatusName = '';
-    // this.InputEndowmentDto.requestId = this.RequestId;
-
+    
     this.registerWaqfServiceProxy
       .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
-        (res: ApiResponse) => {
-          ///this.InputEndowmentDto = res.dto;
+        (result: ApiResponse) => {
+          debugger
+        
+
+          if (result.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Success,
+            });
+            debugger;
+            this.InputEndowmentDto = result.dto;
+
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: result.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
         },
 
-      );
-    (data) => {
-      //string={{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}} ;this._localize.transform("EndowmentModule.EndowmentRgistrationService.SuccessMsg")
-      //showSuccess("تمت الإضافة بنجاح", () => this.wizard.goToNextStep());
-    };
 
+
+
+
+      );
+    
   }
 
 
@@ -354,7 +368,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
   EndowmentDeedFileUpload(event: any) {
     this.UploadFile(event.files[0], (response) => {
-      this.seerDeadAttachemt = {
+      this.endowmentDeadAttachemt = {
         id: response.id,
         fileName: response.fileName!,
         fileData: response.fileData!,
@@ -365,10 +379,10 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
     });
   }
-  SeerDeedremoveFile(event: AttachementItem) {
+  EndowmentDeedremoveFile(event: AttachementItem) {
     this.removeFile(event, (result) => {
       this.InputEndowmentDto.endowmentDeedAttachmentId = undefined!;
-      this.seerDeadAttachemt = undefined!;
+      this.endowmentDeadAttachemt = undefined!;
     });
   }
 
