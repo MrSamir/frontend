@@ -348,16 +348,6 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   }
 
 
-
-
-
-
-
-
-
-
-
-
   EndowmentDeedFileSelect(event: any) {
     this.endowmentDeedFile = event.files[0];
   }

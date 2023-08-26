@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../../../core-lib/src/lib/services/authentication-service.service';
 import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -10,6 +11,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 
 import { MessageModel } from 'projects/core-lib/src/lib/models/MessageModel';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { LoggedInUserInfo } from 'projects/core-lib/src/lib/models/LoggedInUserInfo';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,15 +22,14 @@ export class LoginComponent extends ComponentBase {
   constructor(
     _injecter: Injector,
     private router: Router,
-    private accountServiceProxy: AccountProxy
+    private accountServiceProxy: AccountProxy,
+    private authenticationService: AuthenticationService
   ) {
     super(_injecter);
   }
 
   redirectToLandingPage() {
-    // this.authenticationServiceV2.redirectToPublicUserLoginPage();
-
-    this.router.navigate(['landing']);
+    this.authenticationService.redirectToLandingPage();
   }
 
   mockedUserLogin() {
@@ -42,7 +43,19 @@ export class LoginComponent extends ComponentBase {
           this.config.getAppConfig().refreshTokenName,
           result.dto.refreshToken.token!
         );
-        this.redirectToLandingPage();
+        var userInfo = new LoggedInUserInfo();
+        userInfo.isUserConfirmed = result.dto.isUserConfirmed;
+        this.authenticationService.setloggedInUserObservable(userInfo);
+
+        if(userInfo.isUserConfirmed)
+        {
+          this.authenticationService.redirectToLandingPage()
+        }
+        else
+        {
+          this.authenticationService.redirectToPublicMyProfilePage()
+        }
+        
       } else {
         const message: MessageModel = new MessageModel();
         message.summary = 'Invalid Auntication ';

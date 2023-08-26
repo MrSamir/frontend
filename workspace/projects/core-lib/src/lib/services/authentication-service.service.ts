@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from "@angular/router";
 import { LoggedInUserInfo } from '../models/LoggedInUserInfo';
 import { __values } from 'tslib';
+import { UtilsService } from './Utils/Utils.Service';
+import { AppConfigSubjectService } from './appConfigSubjectService';
 
 const JWT_TOKEN_KEY = "jwt";
 const REFRESH_TOKEN_KEY = "refresh-token";
@@ -17,10 +19,11 @@ const CURRENT_USER_TYPE = "current-user-type";
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  public static PUBLIC_USER_LOGIN_PAGE: string = 'public/login';
-  public static PUBLIC_USER_MY_PROFILE_PAGE: string = 'public/my-profile';
-
+  Util:UtilsService;
+  config:AppConfigSubjectService
+  public static PUBLIC_USER_LOGIN_PAGE: string = '';
+  public static PUBLIC_USER_MY_PROFILE_PAGE: string = 'public-user-profile';
+  public static PUBLIC_USER_HOME_PAGE: string = 'landing';
 
   // public loginStateObsevable: BehaviorSubject<NafathLoginState> = new BehaviorSubject<NafathLoginState>({
   //   status: NafathAuthenticationStatusEnum.New,
@@ -35,12 +38,16 @@ export class AuthenticationService {
 
   constructor(
 
-    private router: Router) {
-
+    private router: Router, injector: Injector) {
+      this.Util = injector.get<UtilsService>(UtilsService);
+      this.config=injector.get <AppConfigSubjectService> (AppConfigSubjectService );
   }
 
-  public get isUserConfirmed(): boolean {
-    return this.loggedInUserObservable.getValue().isUserConfirmed;
+  // public get isUserConfirmed(): boolean {
+  //   return this.loggedInUserObservable.getValue().isUserConfirmed;
+  // }
+  public get currentLoggedInUser(): LoggedInUserInfo {
+    return this.loggedInUserObservable.getValue();
   }
 
   public setloggedInUserObservable(loggedInUserInfo: LoggedInUserInfo) {
@@ -53,9 +60,31 @@ export class AuthenticationService {
     });
   }
 
+  redirectToLandingPage() {
+    this.router.navigate([AuthenticationService.PUBLIC_USER_HOME_PAGE]).then(() => {
+    });
+  }
+
   redirectToPublicMyProfilePage() {
     this.router.navigate([AuthenticationService.PUBLIC_USER_MY_PROFILE_PAGE]).then(() => {
     });
   }
+  public get isLoggedIn(): boolean {
+    if (!this.isJwtTokenValid()) return false;
+    return true;
+  }
 
+  private isJwtTokenValid(): boolean {
+    debugger;
+    let token: string = this.Util.getCookieValue(this.config.getAppConfig().tokenCookieName);
+    if (!token) return false;
+    //let isExpired = this.jwtHelper.isTokenExpired(token);
+    return token!= undefined && token!= '';
+  }
+
+  public get IsPublicUserProfileCompleted(): boolean {
+    debugger;
+    if (!this.currentLoggedInUser.isUserConfirmed) return false;
+    return true;
+  }
 }

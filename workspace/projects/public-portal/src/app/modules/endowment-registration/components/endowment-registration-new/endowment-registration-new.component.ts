@@ -126,32 +126,34 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     this.activeIndex = this.step - 1;
   }
   setSteps() {
-    this.activeIndex = this.step ? this.step - 1 : 1;
+    this.activeIndex = this.step ? this.step - 1 : 0;
+    var serviceURL = 'endowmentregistration/registrationform/';
     this.items = [
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.ApplicantInfoStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/1'
+        url: serviceURL + this.requestId + '/' + this.step
+        //url: 'endowmentregistration/registrationform/' + this.requestId + '/1'
 
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentInfoStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/2'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentAssetsStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/3'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmersStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/4'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentSeersStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/5'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentBenificiarisStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/6'
+        url: serviceURL + this.requestId + '/' + this.step
       }
     ];
   }

@@ -7671,9 +7671,6 @@ export interface IEndowmentRegistrationSource {
 export class EndowmentSeerData implements IEndowmentSeerData {
     seerId!: string | undefined;
     endowmentId!: string;
-    seerTypeId!: number | undefined;
-    prestigiousAttributeTypeId!: number | undefined;
-    prestigiousAttributeName!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -7688,6 +7685,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
     applicationUser!: ApplicationUser;
     educationLevel!: EducationLevel;
     endowmentPartiesTypeId!: number | undefined;
+    prestigiousAttributeTypeId!: number | undefined;
     createdBy!: string | undefined;
     creationDate!: DateTime;
     updatedBy!: string | undefined;
@@ -7706,9 +7704,6 @@ export class EndowmentSeerData implements IEndowmentSeerData {
         if (_data) {
             this.seerId = _data["seerId"];
             this.endowmentId = _data["endowmentId"];
-            this.seerTypeId = _data["seerTypeId"];
-            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
-            this.prestigiousAttributeName = _data["prestigiousAttributeName"];
             this.seenDeedId = _data["seenDeedId"];
             this.seedDeedAttachmentId = _data["seedDeedAttachmentId"];
             this.commercialNumber = _data["commercialNumber"];
@@ -7723,6 +7718,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
             this.applicationUser = _data["applicationUser"] ? ApplicationUser.fromJS(_data["applicationUser"]) : <any>undefined;
             this.educationLevel = _data["educationLevel"] ? EducationLevel.fromJS(_data["educationLevel"]) : <any>undefined;
             this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
+            this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
             this.createdBy = _data["createdBy"];
             this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
             this.updatedBy = _data["updatedBy"];
@@ -7741,9 +7737,6 @@ export class EndowmentSeerData implements IEndowmentSeerData {
         data = typeof data === 'object' ? data : {};
         data["seerId"] = this.seerId;
         data["endowmentId"] = this.endowmentId;
-        data["seerTypeId"] = this.seerTypeId;
-        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
-        data["prestigiousAttributeName"] = this.prestigiousAttributeName;
         data["seenDeedId"] = this.seenDeedId;
         data["seedDeedAttachmentId"] = this.seedDeedAttachmentId;
         data["commercialNumber"] = this.commercialNumber;
@@ -7758,6 +7751,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
         data["applicationUser"] = this.applicationUser ? this.applicationUser.toJSON() : <any>undefined;
         data["educationLevel"] = this.educationLevel ? this.educationLevel.toJSON() : <any>undefined;
         data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
+        data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
         data["createdBy"] = this.createdBy;
         data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
         data["updatedBy"] = this.updatedBy;
@@ -7769,9 +7763,6 @@ export class EndowmentSeerData implements IEndowmentSeerData {
 export interface IEndowmentSeerData {
     seerId: string | undefined;
     endowmentId: string;
-    seerTypeId: number | undefined;
-    prestigiousAttributeTypeId: number | undefined;
-    prestigiousAttributeName: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -7786,6 +7777,7 @@ export interface IEndowmentSeerData {
     applicationUser: ApplicationUser;
     educationLevel: EducationLevel;
     endowmentPartiesTypeId: number | undefined;
+    prestigiousAttributeTypeId: number | undefined;
     createdBy: string | undefined;
     creationDate: DateTime;
     updatedBy: string | undefined;
@@ -7795,7 +7787,7 @@ export interface IEndowmentSeerData {
 export class EndowmerData implements IEndowmerData {
     endowmerId!: string | undefined;
     endowmentId!: string;
-    endowmerTypeId!: number | undefined;
+    endowmentPartiesTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
     createdBy!: string | undefined;
@@ -7803,7 +7795,6 @@ export class EndowmerData implements IEndowmerData {
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
     isMainApplicant!: boolean;
-    endowmentPartiesTypeId!: number | undefined;
 
     constructor(data?: IEndowmerData) {
         if (data) {
@@ -7818,7 +7809,7 @@ export class EndowmerData implements IEndowmerData {
         if (_data) {
             this.endowmerId = _data["endowmerId"];
             this.endowmentId = _data["endowmentId"];
-            this.endowmerTypeId = _data["endowmerTypeId"];
+            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
             this.prestigiousAttributeTypeId = _data["prestigiousAttributeTypeId"];
             this.commercialNumber = _data["commercialNumber"];
             this.createdBy = _data["createdBy"];
@@ -7826,7 +7817,6 @@ export class EndowmerData implements IEndowmerData {
             this.updatedBy = _data["updatedBy"];
             this.lastUpdate = _data["lastUpdate"] ? DateTime.fromISO(_data["lastUpdate"].toString()) : <any>undefined;
             this.isMainApplicant = _data["isMainApplicant"];
-            this.endowmentPartiesTypeId = _data["endowmentPartiesTypeId"];
         }
     }
 
@@ -7841,7 +7831,7 @@ export class EndowmerData implements IEndowmerData {
         data = typeof data === 'object' ? data : {};
         data["endowmerId"] = this.endowmerId;
         data["endowmentId"] = this.endowmentId;
-        data["endowmerTypeId"] = this.endowmerTypeId;
+        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
         data["prestigiousAttributeTypeId"] = this.prestigiousAttributeTypeId;
         data["commercialNumber"] = this.commercialNumber;
         data["createdBy"] = this.createdBy;
@@ -7849,7 +7839,6 @@ export class EndowmerData implements IEndowmerData {
         data["updatedBy"] = this.updatedBy;
         data["lastUpdate"] = this.lastUpdate ? this.lastUpdate.toString() : <any>undefined;
         data["isMainApplicant"] = this.isMainApplicant;
-        data["endowmentPartiesTypeId"] = this.endowmentPartiesTypeId;
         return data;
     }
 }
@@ -7857,7 +7846,7 @@ export class EndowmerData implements IEndowmerData {
 export interface IEndowmerData {
     endowmerId: string | undefined;
     endowmentId: string;
-    endowmerTypeId: number | undefined;
+    endowmentPartiesTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
     createdBy: string | undefined;
@@ -7865,7 +7854,6 @@ export interface IEndowmerData {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     isMainApplicant: boolean;
-    endowmentPartiesTypeId: number | undefined;
 }
 
 export class ExperienceYear implements IExperienceYear {
@@ -11999,7 +11987,7 @@ export class Request implements IRequest {
     requestStatusId!: number | undefined;
     workflowInstanceId!: string | undefined;
     submitionDate!: DateTime | undefined;
-    applicationUser!: ApplicationUser;
+    applicant!: ApplicationUser;
     endowmentRegistrationRequest!: EndowmentRegistrationRequest;
     requestType!: RequestType;
     requestStatus!: RequestStatus;
@@ -12026,7 +12014,7 @@ export class Request implements IRequest {
             this.requestStatusId = _data["requestStatusId"];
             this.workflowInstanceId = _data["workflowInstanceId"];
             this.submitionDate = _data["submitionDate"] ? DateTime.fromISO(_data["submitionDate"].toString()) : <any>undefined;
-            this.applicationUser = _data["applicationUser"] ? ApplicationUser.fromJS(_data["applicationUser"]) : <any>undefined;
+            this.applicant = _data["applicant"] ? ApplicationUser.fromJS(_data["applicant"]) : <any>undefined;
             this.endowmentRegistrationRequest = _data["endowmentRegistrationRequest"] ? EndowmentRegistrationRequest.fromJS(_data["endowmentRegistrationRequest"]) : <any>undefined;
             this.requestType = _data["requestType"] ? RequestType.fromJS(_data["requestType"]) : <any>undefined;
             this.requestStatus = _data["requestStatus"] ? RequestStatus.fromJS(_data["requestStatus"]) : <any>undefined;
@@ -12053,7 +12041,7 @@ export class Request implements IRequest {
         data["requestStatusId"] = this.requestStatusId;
         data["workflowInstanceId"] = this.workflowInstanceId;
         data["submitionDate"] = this.submitionDate ? this.submitionDate.toString() : <any>undefined;
-        data["applicationUser"] = this.applicationUser ? this.applicationUser.toJSON() : <any>undefined;
+        data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
         data["endowmentRegistrationRequest"] = this.endowmentRegistrationRequest ? this.endowmentRegistrationRequest.toJSON() : <any>undefined;
         data["requestType"] = this.requestType ? this.requestType.toJSON() : <any>undefined;
         data["requestStatus"] = this.requestStatus ? this.requestStatus.toJSON() : <any>undefined;
@@ -12073,7 +12061,7 @@ export interface IRequest {
     requestStatusId: number | undefined;
     workflowInstanceId: string | undefined;
     submitionDate: DateTime | undefined;
-    applicationUser: ApplicationUser;
+    applicant: ApplicationUser;
     endowmentRegistrationRequest: EndowmentRegistrationRequest;
     requestType: RequestType;
     requestStatus: RequestStatus;
@@ -12483,6 +12471,7 @@ export interface ITemplateParameter {
 export class TokenResponse implements ITokenResponse {
     accessToken!: string | undefined;
     refreshToken!: RefreshToken;
+    isUserConfirmed!: boolean;
 
     constructor(data?: ITokenResponse) {
         if (data) {
@@ -12497,6 +12486,7 @@ export class TokenResponse implements ITokenResponse {
         if (_data) {
             this.accessToken = _data["accessToken"];
             this.refreshToken = _data["refreshToken"] ? RefreshToken.fromJS(_data["refreshToken"]) : <any>undefined;
+            this.isUserConfirmed = _data["isUserConfirmed"];
         }
     }
 
@@ -12511,6 +12501,7 @@ export class TokenResponse implements ITokenResponse {
         data = typeof data === 'object' ? data : {};
         data["accessToken"] = this.accessToken;
         data["refreshToken"] = this.refreshToken ? this.refreshToken.toJSON() : <any>undefined;
+        data["isUserConfirmed"] = this.isUserConfirmed;
         return data;
     }
 }
@@ -12518,6 +12509,7 @@ export class TokenResponse implements ITokenResponse {
 export interface ITokenResponse {
     accessToken: string | undefined;
     refreshToken: RefreshToken;
+    isUserConfirmed: boolean;
 }
 
 export class UpdateUserCityRegionInputDto implements IUpdateUserCityRegionInputDto {

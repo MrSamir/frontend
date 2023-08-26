@@ -1,3 +1,4 @@
+import { PublicActiveProfileGuardService } from './../../../core-lib/src/lib/services/public-active-profile-guard.service';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
@@ -6,6 +7,7 @@ import { AppInitializer } from '../../../core-lib/src/lib/application-configurat
 import { PublicUserProfileComponent } from '../../../shared-features-lib/src/lib/components/public-user-profile/public-user-profile.component';
 import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
 import { environment } from '../environments/environment';
+import { AuthGuardService } from 'projects/core-lib/src/lib/services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -22,6 +24,7 @@ const routes: Routes = [
     path: 'landing',
     component: LandingComponent,
     data: { title: 'الخدمات الالكترونية' },
+    canActivate:[PublicActiveProfileGuardService]
   },
 
   {
@@ -35,7 +38,8 @@ const routes: Routes = [
   {
     path: 'userdashboard',
     loadChildren: () => import('./modules/user-dashboard/modules/user-dashboard.module').then(m => m.UserDashBoardModule),
-    data: { title: 'طلبات' }
+    data: { title: 'طلبات' },
+    canActivate:[PublicActiveProfileGuardService]
   },
   // {
   //   path: 'usertask',
@@ -48,7 +52,7 @@ const routes: Routes = [
     component: PublicUserProfileComponent,
     data: { title: 'الملف الشخصي', breadcrumb: 'الملف الشخصي' },
     title: 'الملف الشخصي',
-    //canActivate:[AuthGuard]
+    canActivate:[AuthGuardService]
   },
   {
     path: 'confirm-email/:userId/:confirmationCode',
