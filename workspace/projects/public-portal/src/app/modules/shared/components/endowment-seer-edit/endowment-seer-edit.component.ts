@@ -180,7 +180,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     userName: string;
     person: InputApplicationUserDto;
   }) {
-    debugger;
     this.newPerson = event.person;
     this.seerToCreate.seerPerson = new InputApplicationUserDto()
     this.seerToCreate.seerPerson.init(this.newPerson);

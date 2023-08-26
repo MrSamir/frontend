@@ -101,7 +101,6 @@ export class EndowmentApplicantCreateOrEditComponent
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
   }
   ngOnInit() {
-    debugger;
     this.RequestId = this.activatedRoute.snapshot.params['requestId'];
     this.LoadForm();
   }
@@ -142,7 +141,6 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   //#region FromAndLookupLoad
   LoadForm() {
-    debugger;
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -171,11 +169,9 @@ export class EndowmentApplicantCreateOrEditComponent
     this.loadSeerTypeHint();
   }
   loadrequest() {
-    debugger;
     this._endowmentRegistrationService
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
-        debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
