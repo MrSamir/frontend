@@ -38,7 +38,8 @@
               "projects/public-portal/src/assets/primeng/autocomplete/css/primeng.autocomplete.css",
               "projects/public-portal/src/assets/primeng/tree/css/primeng.tree.css",
               "projects/public-portal/src/assets/primeng/context-menu/css/primeng.context-menu.css",
-              "projects/public-portal/src/assets/primeng/datatable/css/primeng.datatable.css",
+              "projects/public-portal/src/assets/primeng/datatable/css/primeng.datatable-rtl.css",
+               "projects/public-portal/src/assets/primeng/datatable/css/primeng.datatable.css",
               "projects/public-portal/src/assets/primeng/accordion/accordion.css",
               "projects/public-portal/src/assets/primeng/tabview/primeng.tabview.css"
             ],
@@ -160,7 +161,7 @@
               "projects/employee-portal/src/assets/primeng/autocomplete/css/primeng.autocomplete.css",
               "projects/employee-portal/src/assets/primeng/tree/css/primeng.tree.css",
               "projects/employee-portal/src/assets/primeng/context-menu/css/primeng.context-menu.css",
-              "projects/employee-portal/src/assets/primeng/datatable/css/primeng.datatable.css",
+              "projects/employee-portal/src/assets/primeng/datatable/css/primeng.datatable-rtl.css",
               "projects/employee-portal/src/assets/primeng/accordion/accordion.css",
               "projects/employee-portal/src/assets/primeng/tabview/primeng.tabview.css",
               "styles/styles.css",

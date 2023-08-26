@@ -17,6 +17,8 @@ import { BeneficiaryStepComponent } from '../components/endowment-registration-n
 import { EndowmentDirectRegisterationComponent } from '../components/endowment-direct-registeration/endowment-direct-registeration.component';
 import { PanelModule } from "primeng/panel";
 import { StepsModule } from 'primeng/steps';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { MessagesModule } from 'primeng/messages';
 
 
 @NgModule({
@@ -34,15 +36,14 @@ import { StepsModule } from 'primeng/steps';
     EndowmentRegistrationRoutingModule,
     EndowmentRegistrationSharedModule,
     PanelModule,
-
-
     PublicPortalSharedModule,
     AccordionModule,
     FormsModule,
     CoreLibModule,
     MultiSelectModule,
-    StepsModule
-
+    StepsModule,
+    RadioButtonModule,
+    MessagesModule
   ],
   exports: [ /*RouterModule*/]
 })

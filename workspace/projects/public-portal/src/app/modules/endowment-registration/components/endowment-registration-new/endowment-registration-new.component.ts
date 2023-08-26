@@ -79,6 +79,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
+ registerUsingendowmentDeedNumber:boolean|undefined =undefined;
 
   items: MenuItem[];
 
@@ -102,22 +103,16 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
       .subscribe(() => {
         this.requestId = this.activatedRoute.snapshot.params['requestId'];
         this.step = this.activatedRoute.snapshot.params['step'];
+        if (this.requestId == undefined) {
+          this.isEditRequested = false;
+           
+           } else {
+             this.isEditRequested=true;
+             this.registerUsingendowmentDeedNumber=false;
+           }
         this.setActiveIndex();
       });
-
-  }
-
-  moveWizardToTabOfPhase() {
-    //let count = 0;
-    debugger;
-    if (parseInt(this.step) > 0) {
-      setTimeout(() => {
-        this.wizard.goToStep(this.step - 1);
-      }, 100);
-
-      //count++;
     }
-  }
 
   //#region primeng steps
   setActiveIndex() {
@@ -507,5 +502,9 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     //this.router.navigateByUrl();
     //this.wizard.goToStep(this.step);
     this.router.navigate(["endowmentregistration/registrationform", ...[this.requestId, this.step]], { onSameUrlNavigation: "reload" });
+  }
+
+  DeedNumberNotFound($event){
+    this.registerUsingendowmentDeedNumber=false;
   }
 }

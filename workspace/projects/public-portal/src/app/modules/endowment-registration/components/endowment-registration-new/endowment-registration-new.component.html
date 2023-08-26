@@ -1,3 +1,35 @@
+<p-messages *ngIf="!isEditRequested" severity="warn">
+  <ng-template pTemplate>
+    <i class="pi pi-question-circle mr-2 hintinfoIcon mirror-effect" style="font-size:xx-large;"></i>
+    <div  >
+      <div class="form-group">
+        <label style="font-weight: 700;" class="col-form-label">{{
+          "EndowmentModule.EndowmentRgistrationService.RegisterUsingEndwomentDeedNumber"
+          | localize
+          }}<span class="text-danger">*</span> :
+        </label>
+        <div class=" col-form-inline mr-3">
+          <p-radioButton name="registerUsingDeedNumber" [value]="true" #registerUsingDeedNumber_yes="ngModel"
+            [(ngModel)]="registerUsingendowmentDeedNumber" inputId="yes"></p-radioButton>
+          <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.yes" | localize }}</label>
+        </div>
+        <div class="col-form-inline">
+          <p-radioButton name="registerUsingDeedNumber" [value]="false" #registerUsingDeedNumber_no="ngModel"
+            [(ngModel)]="registerUsingendowmentDeedNumber" inputId="no"></p-radioButton>
+          <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.no" | localize }}</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-messages>
+
+<ng-container *ngIf="!requestId && isEditRequested==false&& registerUsingendowmentDeedNumber;then showDirectRgistration;">
+
+</ng-container>
+<ng-template #showDirectRgistration>
+  <app-endowment-direct-registeration (deedNumberFound)="DeedNumberNotFound($event)"></app-endowment-direct-registeration>
+</ng-template>
+<div *ngIf="registerUsingendowmentDeedNumber==false ||isEditRequested==true">
 
 <div class="awq-custom">
   <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"></p-steps>
@@ -44,5 +76,4 @@
     <div class="aw-wrpper_content" id="6">
       <app-beneficiary-step [requestId]="requestId" *ngIf="step == '6'"(onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
     </div>
-
-
+</div>

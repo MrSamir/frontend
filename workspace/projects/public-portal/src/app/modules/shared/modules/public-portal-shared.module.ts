@@ -81,7 +81,24 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     StepsModule,
     CoreLibModule,
     TableModule,
-    SvgIconModule
-  ]
+    SvgIconModule,
+  ],
+  exports: [
+    //EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSharedAssetEditComponent,
+    // AnimalOrAgriculturalAssetComponent,
+    // BusinessEntityAssetComponent,
+    // FiscalAssetComponent,
+    // IntellectualPropertyAndTrademarkAssetComponent,
+    // MonetaryAssetComponent,
+    // MovableAssetComponent,
+    // ParticularBenefitAssetComponent,
+    // RealestateAssetComponent
+    EndowmentApplicantCreateOrEditComponent,
+    EndowmentAssetsEditComponent,
+    EndowmentInfoEditComponent,
+    EndowmentSeerEditComponent,
+  ],
 })
-export class PublicPortalSharedModule { }
+export class PublicPortalSharedModule {}

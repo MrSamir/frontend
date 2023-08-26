@@ -37,7 +37,19 @@ const routes: Routes = [
   },
   {
     path: 'userdashboard',
-    loadChildren: () => import('./modules/user-dashboard/modules/user-dashboard.module').then(m => m.UserDashBoardModule),
+    loadChildren: () =>
+      import('./modules/user-dashboard/modules/user-dashboard.module').then(
+        (m) => m.UserDashBoardModule
+      ),
+    data: { title: 'طلبات' },
+    canActivate:[PublicActiveProfileGuardService]
+  },
+  {
+    path: 'userdashboard/:activeTab',
+    loadChildren: () =>
+      import('./modules/user-dashboard/modules/user-dashboard.module').then(
+        (m) => m.UserDashBoardModule
+      ),
     data: { title: 'طلبات' },
     canActivate:[PublicActiveProfileGuardService]
   },
@@ -57,7 +69,10 @@ const routes: Routes = [
   {
     path: 'confirm-email/:userId/:confirmationCode',
     component: EmailConfirmationComponent,
-    data: { title: 'تفعيل البريد الألكتروني', breadcrumb: 'تفعيل البريد الألكتروني' },
+    data: {
+      title: 'تفعيل البريد الألكتروني',
+      breadcrumb: 'تفعيل البريد الألكتروني',
+    },
     title: 'تفعيل البريد الألكتروني',
     canActivate: [],
   },
@@ -90,8 +105,6 @@ const routes: Routes = [
   //     path: 'seerCertifications',
   //     loadChildren: () => import('@pages/public-portal/seer-certifications-public-user/seer-certifications-public-user.module').then(m => m.SeerCertificationsPublicUserModule),
   //   },
-
-
 ];
 
 @NgModule({
