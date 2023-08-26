@@ -97,21 +97,21 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     // this.loadAssetsBy();
     this.setActiveIndex();
     this.setSteps();
-
+    this.requestId = this.activatedRoute.snapshot.params['requestId'];
+    this.step = this.activatedRoute.snapshot.params['step'];
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.requestId = this.activatedRoute.snapshot.params['requestId'];
-        this.step = this.activatedRoute.snapshot.params['step'];
-        if (this.requestId == undefined) {
-          this.isEditRequested = false;
-           
-           } else {
-             this.isEditRequested=true;
-             this.registerUsingendowmentDeedNumber=false;
-           }
         this.setActiveIndex();
       });
+      if (this.requestId == undefined) {
+        debugger;
+        this.isEditRequested = false;
+         
+         } else {
+           this.isEditRequested=true;
+           this.registerUsingendowmentDeedNumber=false;
+         }
     }
 
   //#region primeng steps

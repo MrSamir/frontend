@@ -46,24 +46,6 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent
   ],
-  exports: [
-    //EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSharedAssetEditComponent,
-    // AnimalOrAgriculturalAssetComponent,
-    // BusinessEntityAssetComponent,
-    // FiscalAssetComponent,
-    // IntellectualPropertyAndTrademarkAssetComponent,
-    // MonetaryAssetComponent,
-    // MovableAssetComponent,
-    // ParticularBenefitAssetComponent,
-    // RealestateAssetComponent
-    EndowmentApplicantCreateOrEditComponent,
-    EndowmentAssetsEditComponent,
-    EndowmentInfoEditComponent,
-    EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -99,6 +81,7 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSeerEditComponent,
+    EndowmentBeneficiaryEditComponent
   ],
 })
 export class PublicPortalSharedModule {}

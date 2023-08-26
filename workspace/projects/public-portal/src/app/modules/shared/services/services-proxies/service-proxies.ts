@@ -2835,12 +2835,10 @@ export class MojDataMigrationApplicationServicesProxy {
         };
 
         return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            
             return this.processRegisterEndowmentByDeedNumberFromWeb(response_);
         })).pipe(_observableCatch((response_: any) => {
             if (response_ instanceof HttpResponseBase) {
                 try {
-                    
                     return this.processRegisterEndowmentByDeedNumberFromWeb(response_ as any);
                 } catch (e) {
                     return _observableThrow(e) as any as Observable<ApiResponseOfRequestDto>;
