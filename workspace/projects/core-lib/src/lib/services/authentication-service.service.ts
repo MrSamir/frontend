@@ -6,6 +6,7 @@ import { __values } from 'tslib';
 import { UtilsService } from './Utils/Utils.Service';
 import { AppConfigSubjectService } from './appConfigSubjectService';
 import { ApplicationUserServiceProxy } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 const JWT_TOKEN_KEY = "jwt";
 const REFRESH_TOKEN_KEY = "refresh-token";
@@ -20,8 +21,8 @@ const CURRENT_USER_TYPE = "current-user-type";
   providedIn: 'root'
 })
 export class AuthenticationService {
-  Util:UtilsService;
-  config:AppConfigSubjectService
+  Util: UtilsService;
+  config: AppConfigSubjectService
   public static PUBLIC_USER_LOGIN_PAGE: string = '';
   public static PUBLIC_USER_MY_PROFILE_PAGE: string = 'public-user-profile';
   public static PUBLIC_USER_HOME_PAGE: string = 'landing';
@@ -39,9 +40,9 @@ export class AuthenticationService {
 
   constructor(
 
-    private router: Router, injector: Injector, private applicationUserServiceProxy: ApplicationUserServiceProxy) {
-      this.Util = injector.get<UtilsService>(UtilsService);
-      this.config=injector.get <AppConfigSubjectService> (AppConfigSubjectService);
+    private router: Router, injector: Injector, public jwtHelper: JwtHelperService) {
+    this.Util = injector.get<UtilsService>(UtilsService);
+    this.config = injector.get<AppConfigSubjectService>(AppConfigSubjectService);
   }
 
   // public get isUserConfirmed(): boolean {
@@ -49,10 +50,9 @@ export class AuthenticationService {
   // }
   public get currentLoggedInUser(): LoggedInUserInfo {
     var currentUser = this.loggedInUserObservable.getValue();
-    if (currentUser.isUserConfirmed == undefined)
-    {
-          currentUser.isUserConfirmed = Boolean(localStorage.getItem("IsConfirmed"));
-          this.setloggedInUserObservable(currentUser);
+    if (currentUser.isUserConfirmed == undefined) {
+      currentUser.isUserConfirmed = Boolean(localStorage.getItem("IsConfirmed"));
+      this.setloggedInUserObservable(currentUser);
     }
     currentUser = this.loggedInUserObservable.getValue();
     return currentUser
@@ -64,6 +64,7 @@ export class AuthenticationService {
 
 
   redirectToUserLoginLandingPage() {
+    localStorage.setItem("IsConfirmed", "");
     this.router.navigate([AuthenticationService.PUBLIC_USER_LOGIN_PAGE]).then(() => {
     });
   }
@@ -85,8 +86,8 @@ export class AuthenticationService {
   private isJwtTokenValid(): boolean {
     let token: string = this.Util.getCookieValue(this.config.getAppConfig().tokenCookieName);
     if (!token) return false;
-    //let isExpired = this.jwtHelper.isTokenExpired(token);
-    return token!= undefined && token!= '';
+    let isExpired = this.jwtHelper.isTokenExpired(token);
+    return !isExpired;
   }
 
   public get IsPublicUserProfileCompleted(): boolean {

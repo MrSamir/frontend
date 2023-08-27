@@ -27,6 +27,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { PanelModule } from 'primeng/panel';
 import { StepsModule } from 'primeng/steps';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
   ConfigSubject.getAppConfig().baseApiUrl;
 @NgModule({
@@ -65,6 +66,15 @@ export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
     DropdownModule,
     PanelModule,
     StepsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem("jwt");
+        },
+        headerName: 'Authorization',
+        authScheme: 'Bearer ',
+      },
+    }),
   ],
   providers: [
     MessageService,
@@ -75,7 +85,8 @@ export const configApiBaseUrl = (ConfigSubject: AppConfigSubjectService) =>
       useFactory: configApiBaseUrl,
       deps: [AppConfigSubjectService],
     },
+    JwtHelperService
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

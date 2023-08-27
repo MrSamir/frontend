@@ -24,7 +24,7 @@ const routes: Routes = [
     path: 'landing',
     component: LandingComponent,
     data: { title: 'الخدمات الالكترونية' },
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
 
   {
@@ -42,7 +42,7 @@ const routes: Routes = [
         (m) => m.UserDashBoardModule
       ),
     data: { title: 'طلبات' },
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'userdashboard/:activeTab',
@@ -51,7 +51,7 @@ const routes: Routes = [
         (m) => m.UserDashBoardModule
       ),
     data: { title: 'طلبات' },
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
   // {
   //   path: 'usertask',
@@ -64,7 +64,7 @@ const routes: Routes = [
     component: PublicUserProfileComponent,
     data: { title: 'الملف الشخصي', breadcrumb: 'الملف الشخصي' },
     title: 'الملف الشخصي',
-    canActivate:[AuthGuardService]
+    canActivate: [AuthGuardService]
   },
   {
     path: 'confirm-email/:userId/:confirmationCode',
@@ -75,6 +75,7 @@ const routes: Routes = [
     },
     title: 'تفعيل البريد الألكتروني',
     canActivate: [],
+
   },
   // {
   //   path: 'dashboard',
