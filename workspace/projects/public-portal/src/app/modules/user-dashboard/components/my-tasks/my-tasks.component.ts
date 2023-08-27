@@ -7,6 +7,7 @@ import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTab
 import { AccountProxy, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
 import { ActionTypes, NavigationDetail } from 'projects/core-lib/src/lib/enums/navigationDetail.model';
 import { ServiceRequestTypeEnum } from '../../../shared/models/ServiceRequestTypeEnum';
+import { InboxTask } from '../../models/InboxTask';
 
 @Component({
   selector: 'app-my-tasks',
@@ -15,7 +16,7 @@ import { ServiceRequestTypeEnum } from '../../../shared/models/ServiceRequestTyp
 })
 export class MyTasksComponent extends ComponentBase implements OnInit {
   primengTableHelper: PrimengTableHelper;
-
+  inboxTask: InboxTask = new InboxTask();
   constructor(
     _injecter: Injector,
     private router: Router,
@@ -48,9 +49,7 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
 
 
-  CompleteRequestMissingData(currentTaskNumber: string, currentRequestNumber: string, currentUserName: string,
-    currentStatus: string, currentRequestId: string, requestType: string, requestId: string)
-
+  CompleteRequestMissingData(currentTaskNumber: string, step: string,currentRequestId: string,serialNumber: string)
   {
     debugger;
 
@@ -60,23 +59,13 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
     let actionType:ActionTypes =ActionTypes.Returned;// this.userType == UserTypeEnum.Employee? ActionTypes.Details:ActionTypes.Returned;
 
- 
-
     paramsValues.push(currentRequestId);
 
- 
-
-    if (currentTaskNumber != undefined && currentTaskNumber != null && currentTaskNumber != '') {
-
-      paramsValues.push(currentTaskNumber);
-
- 
-
-     
-
+    if (serialNumber != undefined && serialNumber != null && serialNumber != '') {
+      paramsValues.push(serialNumber);
       }
-
  
+      paramsValues.push(step);
 
     return this.redirectServiceAction(reqTypeId, actionType, paramsValues);
 
@@ -121,4 +110,40 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
    
 
  ];
+
+
+
+
+
+
+
+
+
+
+
+ LoadRequests(event?: LazyLoadEvent) {
+
+  this.primengTableHelper.showLoadingIndicator();
+
+  if (event != undefined) {
+    this.inboxTask.pageNumber = event["page"] + 1;
+    this.inboxTask.pageSize = event.rows;
+  } else {
+    this.inboxTask.pageSize = this.primengTableHelper.defaultRecordsCountPerPage;
+  }
+
+
+  // this.taskManagementService.getTasks(this.inboxTask).subscribe((res) => {
+
+
+  //   //this.taskInfoList = res.data.worklistItems;
+  //   this.primengTableHelper.totalRecordsCount = res.data.totalCount;
+    
+
+  //   this.primengTableHelper.records = res.data.worklistItems.sort((a,b)=>b.requestNumber.localeCompare(a.requestNumber));
+  //   this.primengTableHelper.hideLoadingIndicator();
+ 
+
+  // });
+}
 }
