@@ -5,6 +5,8 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { FormBuilder } from '@angular/forms';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 import { AccountProxy, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { ActionTypes, NavigationDetail } from 'projects/core-lib/src/lib/enums/navigationDetail.model';
+import { ServiceRequestTypeEnum } from '../../../shared/models/ServiceRequestTypeEnum';
 
 @Component({
   selector: 'app-my-tasks',
@@ -42,4 +44,81 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
     );
     this.primengTableHelper.hideLoadingIndicator();
   }
+
+
+
+
+  CompleteRequestMissingData(currentTaskNumber: string, currentRequestNumber: string, currentUserName: string,
+    currentStatus: string, currentRequestId: string, requestType: string, requestId: string)
+
+  {
+    debugger;
+
+    let paramsValues:string[]=[];
+
+    const reqTypeId = 1;// this.requestTypes.find(req => req.requestTypeNameAr === requestType).id;
+
+    let actionType:ActionTypes =ActionTypes.Returned;// this.userType == UserTypeEnum.Employee? ActionTypes.Details:ActionTypes.Returned;
+
+ 
+
+    paramsValues.push(currentRequestId);
+
+ 
+
+    if (currentTaskNumber != undefined && currentTaskNumber != null && currentTaskNumber != '') {
+
+      paramsValues.push(currentTaskNumber);
+
+ 
+
+     
+
+      }
+
+ 
+
+    return this.redirectServiceAction(reqTypeId, actionType, paramsValues);
+
+  }
+
+ 
+
+ 
+
+ 
+
+  redirectServiceAction(reqTypeId,actionTypeVal:ActionTypes, paramsValues:string[]){
+
+    const url:string | undefined = this.requestTypeDetailsNavigations.find(c=>c.requestTypeId === reqTypeId&& c.actionType === actionTypeVal )?.url;
+
+    return this.router.navigate([url, ...paramsValues]);
+
+ }
+
+ 
+
+ 
+
+ 
+
+ requestTypeDetailsNavigations :NavigationDetail[]=
+
+ [
+
+     {
+
+         "requestTypeId": ServiceRequestTypeEnum.NewWaqf,
+
+         "userType":"",
+
+         "url": "/endowmentregistration/registrationform",
+
+         "actionType":ActionTypes.Returned
+
+     },
+
+   
+
+ ];
 }
