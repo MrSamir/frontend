@@ -8,6 +8,8 @@ import { PublicUserProfileComponent } from '../../../shared-features-lib/src/lib
 import { EmailConfirmationComponent } from 'projects/shared-features-lib/src/lib/components/email-confirmation/email-confirmation.component';
 import { environment } from '../environments/environment';
 import { AuthGuardService } from 'projects/core-lib/src/lib/services/auth-guard.service';
+import { UpdateMissingSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/update-missing-success-message/update-missing-success-message.component';
+import { AddRequestSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/add-request-success-message/add-request-success-message.component';
 
 const routes: Routes = [
   {
@@ -77,6 +79,8 @@ const routes: Routes = [
     canActivate: [],
 
   },
+  { path: 'success/:reqnumber', component: AddRequestSuccessMessageComponent, canActivate: [PublicActiveProfileGuardService] },
+  { path: 'success-message-return/:reqnumber', component: UpdateMissingSuccessMessageComponent },
   // {
   //   path: 'dashboard',
   //   component: HomePageComponent,

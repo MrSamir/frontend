@@ -141,6 +141,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     this.seerToCreate = new AddSeerInputDto();
     this.seerToCreate.seerPerson = new OutputApplicationUserDto();
     this.seerToCreate.createSeerInputDto = new CreateSeerInputDto();
+    this.seerToCreate.createSeerInputDto.endowmentPartiesTypeId
     this.isAddRequested = true;
     this.seerToCreate.requestId = this.requestId;
   }
@@ -311,9 +312,9 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     });
   }
   getFileById(id, callback: (fileDto) => void) {
-    var fileinfo:FileByIdDto=new FileByIdDto();
-    fileinfo.entityName=this.FileUploadentityName;
-    fileinfo.id=id;
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
     this._serviceProxyFileLibrary
       .downloadFileById(fileinfo)
       .subscribe((result) => {

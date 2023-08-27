@@ -27,6 +27,9 @@ import { EmailConfirmationComponent } from '../components/email-confirmation/ema
 import { AttachmentViewerComponent } from '../components/AttachmentViewer/AttachmentViewer.component';
 import { GalleriaModule } from 'primeng/galleria';
 import { CustomYearSelectComponent } from '../components/ng-bootstrap-hijri-gregorian-datepicker/hijri-datepicker/custom-year-select/custom-year-select.component';
+import { AddRequestSuccessMessageComponent } from '../endowment-registration/components/add-request-success-message/add-request-success-message.component';
+import { UpdateMissingSuccessMessageComponent } from '../endowment-registration/components/update-missing-success-message/update-missing-success-message.component';
+import { SvgIconModule } from "./svg-icon.module";
 
 @NgModule({
   declarations: [
@@ -47,18 +50,8 @@ import { CustomYearSelectComponent } from '../components/ng-bootstrap-hijri-greg
     ViewHafezaComponent,
     EmailConfirmationComponent,
     CustomYearSelectComponent,
-  ],
-  imports: [
-    BreadcrumbModule,
-    FormsModule,
-    NgbDatepickerModule,
-    ReactiveFormsModule,
-    FileUploadModule,
-    ToastModule,
-    CommonModule,
-    TableModule,
-    GalleriaModule,
-    CoreLibModule,
+    AddRequestSuccessMessageComponent,
+    UpdateMissingSuccessMessageComponent
   ],
   exports: [
     BreadcrumbComponent,
@@ -77,11 +70,26 @@ import { CustomYearSelectComponent } from '../components/ng-bootstrap-hijri-greg
     ViewHafezaComponent,
     EmailConfirmationComponent,
     CustomYearSelectComponent,
+    AddRequestSuccessMessageComponent,
+    UpdateMissingSuccessMessageComponent
   ],
   providers: [
     // { provide: NgbCalendar, useClass: NgbCalendarIslamicCivil },
     // { provide: NgbDatepickerI18n, useClass: IslamicI18n },
     DateFormatterService,
   ],
+  imports: [
+    BreadcrumbModule,
+    FormsModule,
+    NgbDatepickerModule,
+    ReactiveFormsModule,
+    FileUploadModule,
+    ToastModule,
+    CommonModule,
+    TableModule,
+    GalleriaModule,
+    CoreLibModule,
+    SvgIconModule
+  ]
 })
 export class SharecomponentModule { }
