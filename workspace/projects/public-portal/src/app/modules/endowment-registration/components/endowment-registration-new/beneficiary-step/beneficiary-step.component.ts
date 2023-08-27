@@ -3,10 +3,12 @@ import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentBase } from "projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component";
-import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto } from "../../../../shared/services/services-proxies/service-proxies";
+import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto, RequestModelDto, RequestDto } from "../../../../shared/services/services-proxies/service-proxies";
 import { wizardNavDto } from "../../../models/wizard-nav-data";
 import { MessageTypeEnum } from "projects/core-lib/src/lib/enums/message-type";
 import { MessageSeverity } from "projects/core-lib/src/lib/enums/message-severity";
+import Swal from "sweetalert2";
+import { AuthenticationService } from "projects/core-lib/src/lib/services/authentication-service.service";
 
 
 @Component({
@@ -22,6 +24,7 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
+  taskNumber: string;
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
@@ -29,13 +32,16 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService
   ) {
     super(_injecter);
   }
   ngOnInit(): void {
     //throw new Error('Method not implemented.');
     this.isEditRequested = false;
+    this.requestId = this.activatedRoute.snapshot.params['requestId'];
+    this.taskNumber = this.activatedRoute.snapshot.params['tasknumber'];
     this.updated = false;
   }
 
@@ -60,6 +66,8 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
 
   onNextBtnClicked() {
     debugger;
+    this.submit();
+
     // if (!this.updated || String(this.updated) == "empty") {
     //   this.message.showMessage(MessageTypeEnum.toast, {
     //     closable: true,
@@ -92,84 +100,45 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
 
   }
 
-  // onSubmitBankForm() {
-  //   const req = new WaqfNewRegistrationRequestSubmitDto(); // || (!this.isRequired)
+  onSubmitBankForm() {
+    var requestModelDto: RequestModelDto = new RequestModelDto()
+    var request: RequestDto = new RequestDto();
+    request.id = this.requestId;
+    requestModelDto.requestDto = new RequestDto();
+    requestModelDto.requestDto.init(request)
+    this.endowmentRegistrationServiceProxy.submitRequest(requestModelDto).subscribe(res => {
+      debugger;
+      this.message.showMessage(MessageTypeEnum.toast, {
+        closable: true,
+        enableService: true,
+        summary: '',
+        detail: this.l('Common.DataSavedSuccessfully'),
+        severity: MessageSeverity.Success,
+      });
+      this.authService.redirectToLandingPage();
+      //this.router.navigate(['/success-message', res.dto.requestDto.requestNumber]);
+      // this.router.navigate(['/success-message', response.data]);
+      return;
+    });
+  }
 
-  //   if ((this.bankForm.valid && this.isRequired) || !this.isRequired) {
-  //     req.accountName = this.bankForm.value.accountName;
-  //     req.bankId = this.bankForm.value.bankName;
-  //     req.iban = this.bankForm.value.iban;
-  //     req.beneficiaryCategoryId = this.bankForm.value.beneficiaryCategory;
-  //     req.beneficiaryName = this.bankForm.value.beneficiaryName;
-  //   }
-
-  //   req.id = this.requestId;
-  //   req.waqfId = this.essentialInfoForBeneficiaryTab.waqfId;
-
-  //   if (
-  //     this.essentialInfoForBeneficiaryTab.status === 'MissingInfo' ||
-  //     this.essentialInfoForBeneficiaryTab.status ===
-  //     'PendingIBANAndBeneficiaryCompletionFromApplicant'
-  //   ) {
-  //     this.assignTaskInfoModel.actionName = 'Complete';
-  //     this.assignTaskInfoModel.actionDisplayName =
-  //       'تم تزويد المعلومات من المتقدم';
-  //     this.assignTaskInfoModel.uiOnly = true;
-  //     this.assignTaskInfoModel.requestStatus = this.taskStatus;
-  //     this.assignTaskInfoModel.requestNumber = this.requestNumber;
-  //     this.assignTaskInfoModel.serialNumber = this.taskNumber;
-  //     this.assignTaskInfoModel.impersonateUserName = this.userName;
-  //     this.assignTaskInfoModel.displayName = this.displayName;
-  //     this.assignTaskInfoModel.requestId = this.requestId;
-  //     req.actionInput = new ActionInput();
-  //     req.actionInput = this.assignTaskInfoModel;
-  //   }
-
-  //   if (this.essentialInfoForBeneficiaryTab.waqfTypeId == 2) {
-  //     this.bankForm.get('beneficiaryName').clearValidators();
-  //     this.bankForm.get('beneficiaryName').updateValueAndValidity();
-  //     this.bankForm.get('beneficiaryCategory').clearValidators();
-  //     this.bankForm.get('beneficiaryCategory').updateValueAndValidity();
-  //   }
-
-  //   if ((this.isRequired && this.bankForm.valid) || !this.isRequired) {
-  //     this.registerWaqfService.submitRequest(req).subscribe(
-  //       (response: ServiceResponse<RequestModel>) => {
-  //         // response.data
-  //         if (
-  //           this.essentialInfoForBeneficiaryTab.status === 'MissingInfo' ||
-  //           this.essentialInfoForBeneficiaryTab.status ===
-  //           'PendingIBANAndBeneficiaryCompletionFromApplicant'
-  //         ) {
-  //           this.router.navigate([
-  //             '/success-message-return',
-  //             this.requestNumber,
-  //           ]);
-  //         } else {
-  //           this.router.navigate(['/success-message', response.data]);
-  //         }
-  //       },
-  //       (err: ApiException) => {
-  //         handleServiceProxyError(err);
-  //         this.isFinalApproval = false;
-  //       }
-  //     );
-  //     this.isFinalApproval = false;
-  //   }
-  // }
-
-  // submit() {
-  //   confirm(
-  //     translations.endorsement,
-  //     () => {
-  //       (this.isFinalApproval = true), this.onSubmitBankForm();
-  //     },
-  //     () => (this.isFinalApproval = false),
-  //     'question',
-  //     translations.ok,
-  //     translations.cancel
-  //   );
-  // }
+  submit() {
+    Swal.fire({
+      title: this.l('EndowmentModule.EndowmentRgistrationService.Endorsement'),
+      showCancelButton: true,
+      confirmButtonText: 'نعم',
+      cancelButtonText: 'لا',
+      icon: 'question',
+      width: 600,
+      padding: '3em',
+      confirmButtonColor: '#D6BD81',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onSubmitBankForm();
+        return;
+      }
+    });
+  }
 
   // UpdateRequestInfo() {
   //   this.userType = this.authenticationServiceV2.currentLoggedInUser.UserType;

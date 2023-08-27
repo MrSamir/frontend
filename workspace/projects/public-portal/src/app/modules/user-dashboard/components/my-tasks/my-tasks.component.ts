@@ -49,101 +49,100 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
 
 
-  CompleteRequestMissingData(currentTaskNumber: string, step: string,currentRequestId: string,serialNumber: string)
-  {
+  CompleteRequestMissingData(serialNumber: string, step: string, currentRequestId: string) {
     debugger;
 
-    let paramsValues:string[]=[];
+    let paramsValues: string[] = [];
 
     const reqTypeId = 1;// this.requestTypes.find(req => req.requestTypeNameAr === requestType).id;
 
-    let actionType:ActionTypes =ActionTypes.Returned;// this.userType == UserTypeEnum.Employee? ActionTypes.Details:ActionTypes.Returned;
+    let actionType: ActionTypes = ActionTypes.Returned;// this.userType == UserTypeEnum.Employee? ActionTypes.Details:ActionTypes.Returned;
 
     paramsValues.push(currentRequestId);
 
     if (serialNumber != undefined && serialNumber != null && serialNumber != '') {
       paramsValues.push(serialNumber);
-      }
- 
-      paramsValues.push(step);
+    }
+
+    paramsValues.push(step);
 
     return this.redirectServiceAction(reqTypeId, actionType, paramsValues);
 
   }
 
- 
 
- 
 
- 
 
-  redirectServiceAction(reqTypeId,actionTypeVal:ActionTypes, paramsValues:string[]){
 
-    const url:string | undefined = this.requestTypeDetailsNavigations.find(c=>c.requestTypeId === reqTypeId&& c.actionType === actionTypeVal )?.url;
+
+
+  redirectServiceAction(reqTypeId, actionTypeVal: ActionTypes, paramsValues: string[]) {
+    debugger;
+    const url: string | undefined = this.requestTypeDetailsNavigations.find(c => c.requestTypeId === reqTypeId && c.actionType === actionTypeVal)?.url;
 
     return this.router.navigate([url, ...paramsValues]);
 
- }
-
- 
-
- 
-
- 
-
- requestTypeDetailsNavigations :NavigationDetail[]=
-
- [
-
-     {
-
-         "requestTypeId": ServiceRequestTypeEnum.NewWaqf,
-
-         "userType":"",
-
-         "url": "/endowmentregistration/registrationform",
-
-         "actionType":ActionTypes.Returned
-
-     },
-
-   
-
- ];
-
-
-
-
-
-
-
-
-
-
-
- LoadRequests(event?: LazyLoadEvent) {
-
-  this.primengTableHelper.showLoadingIndicator();
-
-  if (event != undefined) {
-    this.inboxTask.pageNumber = event["page"] + 1;
-    this.inboxTask.pageSize = event.rows;
-  } else {
-    this.inboxTask.pageSize = this.primengTableHelper.defaultRecordsCountPerPage;
   }
 
 
-  // this.taskManagementService.getTasks(this.inboxTask).subscribe((res) => {
 
 
-  //   //this.taskInfoList = res.data.worklistItems;
-  //   this.primengTableHelper.totalRecordsCount = res.data.totalCount;
-    
 
-  //   this.primengTableHelper.records = res.data.worklistItems.sort((a,b)=>b.requestNumber.localeCompare(a.requestNumber));
-  //   this.primengTableHelper.hideLoadingIndicator();
- 
 
-  // });
-}
+
+  requestTypeDetailsNavigations: NavigationDetail[] =
+
+    [
+
+      {
+
+        "requestTypeId": ServiceRequestTypeEnum.NewWaqf,
+
+        "userType": "",
+
+        "url": "/endowmentregistration/registrationform",
+
+        "actionType": ActionTypes.Returned
+
+      },
+
+
+
+    ];
+
+
+
+
+
+
+
+
+
+
+
+  LoadRequests(event?: LazyLoadEvent) {
+
+    this.primengTableHelper.showLoadingIndicator();
+
+    if (event != undefined) {
+      this.inboxTask.pageNumber = event["page"] + 1;
+      this.inboxTask.pageSize = event.rows;
+    } else {
+      this.inboxTask.pageSize = this.primengTableHelper.defaultRecordsCountPerPage;
+    }
+
+
+    // this.taskManagementService.getTasks(this.inboxTask).subscribe((res) => {
+
+
+    //   //this.taskInfoList = res.data.worklistItems;
+    //   this.primengTableHelper.totalRecordsCount = res.data.totalCount;
+
+
+    //   this.primengTableHelper.records = res.data.worklistItems.sort((a,b)=>b.requestNumber.localeCompare(a.requestNumber));
+    //   this.primengTableHelper.hideLoadingIndicator();
+
+
+    // });
+  }
 }

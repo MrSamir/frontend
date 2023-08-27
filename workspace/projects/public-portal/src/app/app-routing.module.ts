@@ -79,8 +79,6 @@ const routes: Routes = [
     canActivate: [],
 
   },
-  { path: 'success/:reqnumber', component: AddRequestSuccessMessageComponent, canActivate: [PublicActiveProfileGuardService] },
-  { path: 'success-message-return/:reqnumber', component: UpdateMissingSuccessMessageComponent },
   // {
   //   path: 'dashboard',
   //   component: HomePageComponent,
