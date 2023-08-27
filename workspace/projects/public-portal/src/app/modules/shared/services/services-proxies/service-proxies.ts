@@ -12264,6 +12264,7 @@ export interface IRequestDto {
 }
 
 export class RequestOutputDto implements IRequestOutputDto {
+    id!: string;
     requestNumber!: number;
     applicantId!: string | undefined;
     requestTypeId!: number | undefined;
@@ -12286,6 +12287,7 @@ export class RequestOutputDto implements IRequestOutputDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.requestNumber = _data["requestNumber"];
             this.applicantId = _data["applicantId"];
             this.requestTypeId = _data["requestTypeId"];
@@ -12308,6 +12310,7 @@ export class RequestOutputDto implements IRequestOutputDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["requestNumber"] = this.requestNumber;
         data["applicantId"] = this.applicantId;
         data["requestTypeId"] = this.requestTypeId;
@@ -12323,6 +12326,7 @@ export class RequestOutputDto implements IRequestOutputDto {
 }
 
 export interface IRequestOutputDto {
+    id: string;
     requestNumber: number;
     applicantId: string | undefined;
     requestTypeId: number | undefined;
