@@ -234,9 +234,9 @@
           </div>
           <div
             *ngIf="
-              (!requestInfo.applicant?.birthDate ||
-                !requestInfo.applicant?.birthDateHijri) &&
-              (!applicantUser?.birthDate || !applicantUser?.birthDateHijri)
+              (!requestInfo.applicant?.birthDate &&
+                !requestInfo.applicant?.birthDateHijri) ||
+              (!applicantUser?.birthDate && !applicantUser?.birthDateHijri)
             "
             class=""
           >
