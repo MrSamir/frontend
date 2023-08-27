@@ -46,6 +46,25 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent
   ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharecomponentModule,
+    MultiSelectModule,
+    FileUploadModule,
+    ToastModule,
+    CheckboxModule,
+    RadioButtonModule,
+    InputSwitchModule,
+    SelectButtonModule,
+    DropdownModule,
+    PanelModule,
+    StepsModule,
+    CoreLibModule,
+    TableModule,
+    SvgIconModule,
+  ],
   exports: [
     //EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
@@ -64,24 +83,5 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharecomponentModule,
-    MultiSelectModule,
-    FileUploadModule,
-    ToastModule,
-    CheckboxModule,
-    RadioButtonModule,
-    InputSwitchModule,
-    SelectButtonModule,
-    DropdownModule,
-    PanelModule,
-    StepsModule,
-    CoreLibModule,
-    TableModule,
-    SvgIconModule
-  ]
 })
-export class PublicPortalSharedModule { }
+export class PublicPortalSharedModule {}

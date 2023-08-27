@@ -79,13 +79,12 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
+ registerUsingendowmentDeedNumber:boolean|undefined =undefined;
 
   items: MenuItem[];
 
   activeIndex: number = 0;
   ngOnInit() {
-    debugger;
-
 
     // if (this.requestId && this.step) {
     //   this.moveWizardToTabOfPhase();
@@ -96,28 +95,21 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     // this.loadAssetsBy();
     this.setActiveIndex();
     this.setSteps();
-
+    this.requestId = this.activatedRoute.snapshot.params['requestId'];
+    this.step = this.activatedRoute.snapshot.params['step'];
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
-        this.requestId = this.activatedRoute.snapshot.params['requestId'];
-        this.step = this.activatedRoute.snapshot.params['step'];
         this.setActiveIndex();
       });
-
-  }
-
-  moveWizardToTabOfPhase() {
-    //let count = 0;
-    debugger;
-    if (parseInt(this.step) > 0) {
-      setTimeout(() => {
-        this.wizard.goToStep(this.step - 1);
-      }, 100);
-
-      //count++;
+      if (this.requestId == undefined) {
+        this.isEditRequested = false;
+         
+         } else {
+           this.isEditRequested=true;
+           this.registerUsingendowmentDeedNumber=false;
+         }
     }
-  }
 
   //#region primeng steps
   setActiveIndex() {
@@ -126,32 +118,34 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     this.activeIndex = this.step - 1;
   }
   setSteps() {
-    this.activeIndex = this.step ? this.step - 1 : 1;
+    this.activeIndex = this.step ? this.step - 1 : 0;
+    var serviceURL = 'endowmentregistration/registrationform/';
     this.items = [
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.ApplicantInfoStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/1'
+        url: serviceURL + this.requestId + '/' + this.step
+        //url: 'endowmentregistration/registrationform/' + this.requestId + '/1'
 
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentInfoStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/2'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentAssetsStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/3'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmersStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/4'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentSeersStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/5'
+        url: serviceURL + this.requestId + '/' + this.step
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentBenificiarisStepTitle'),
-        url: 'endowmentregistration/registrationform/' + this.requestId + '/6'
+        url: serviceURL + this.requestId + '/' + this.step
       }
     ];
   }
@@ -475,7 +469,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     throw 'not implemented';
   }
   onBtnNextClicked(wizardNavDto: wizardNavDto) {
-    debugger;
     if (wizardNavDto.isNaviagateToNext) {
       this.requestId = wizardNavDto.requestId!;
       this.waqfId = wizardNavDto.endowmentId;
@@ -505,5 +498,9 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     //this.router.navigateByUrl();
     //this.wizard.goToStep(this.step);
     this.router.navigate(["endowmentregistration/registrationform", ...[this.requestId, this.step]], { onSameUrlNavigation: "reload" });
+  }
+
+  DeedNumberNotFound($event){
+    this.registerUsingendowmentDeedNumber=false;
   }
 }

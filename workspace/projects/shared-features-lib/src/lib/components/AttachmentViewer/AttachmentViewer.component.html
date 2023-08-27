@@ -12,14 +12,14 @@
   <div class="attachementViewer-raw">
     <div  class="attachment-col"  ><label> {{ item.fileName }} </label></div>
     <div class="attachment-col">
-      <button class="btn btn-awq-primary" (click)="ViewAttachment(item)" *ngIf="item.ContentType.startsWith('image/') || item.ContentType.endsWith('/pdf')"><i class="pi pi-eye mr-1"></i>{{ViewButtonLabel}}</button>
+      <button class="btn btn-awq-primary" type="button" (click)="ViewAttachment(item)" *ngIf="item.ContentType.startsWith('image/') || item.ContentType.endsWith('/pdf')"><i class="pi pi-eye mr-1"></i>{{ViewButtonLabel}}</button>
       
     </div >
     <div class="attachment-col">
-  <button *ngIf="ShowDownloadButton" class="btn btn-outline-awq-secondary" (click)="DownLoadAttachment(item)" ><i class="pi pi-arrow-down"></i> {{DownloadButtonLabel}}</button>
+  <button *ngIf="ShowDownloadButton" type="button" class="btn btn-outline-awq-secondary" (click)="DownLoadAttachment(item)" ><i class="pi pi-arrow-down"></i> {{DownloadButtonLabel}}</button>
     </div>
     <div class="attachment-col">
-  <button *ngIf="showDeleteButton" class="btn btn-outline-danger" (click)="deleteAttachment(item)"><i class="pi pi-times"></i> {{DeleteButtonLabel}}</button>
+  <button *ngIf="showDeleteButton" type="button" class="btn btn-outline-danger" (click)="deleteAttachment(item)"><i class="pi pi-times"></i> {{DeleteButtonLabel}}</button>
     </div>
   </div>
 </ng-template>

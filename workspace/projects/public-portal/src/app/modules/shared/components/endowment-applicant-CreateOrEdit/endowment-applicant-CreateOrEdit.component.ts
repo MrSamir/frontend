@@ -24,7 +24,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { HintModel } from 'projects/core-lib/src/lib/components/hint/hint.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
-
+import { NgBootstrapHijriGregorianDatepickerComponent } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/ng-bootstrap-hijri-gregorian-datepicker.component';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
@@ -34,7 +34,8 @@ import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-
 })
 export class EndowmentApplicantCreateOrEditComponent
   extends ComponentBase
-  implements OnInit {
+  implements OnInit
+{
   //#region input Lookups Dto
   lookupInput: InputLookUpDto = new InputLookUpDto();
   //#endregion
@@ -59,6 +60,9 @@ export class EndowmentApplicantCreateOrEditComponent
   seerTypeHint: HintModel;
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+  selectedDate;
+  minDate;
+  maxDate;
   //#endregion
   yaqeenValidationResult = true;
 
@@ -97,13 +101,10 @@ export class EndowmentApplicantCreateOrEditComponent
     this.requestInfo.applicantSeer = new InputApplicantSeerDto(); */
   }
   ngOnInit() {
-    debugger;
     this.RequestId = this.activatedRoute.snapshot.params['requestId'];
     this.LoadForm();
   }
   onNextBtnClicked(form: NgForm) {
-
-
     if (this.validateForm(form)) {
       if (this.RequestId) {
         this.requestInfo.requestId = this.RequestId;
@@ -119,12 +120,12 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
-            this.wizardNavDto.isNaviagateToNext = true;
+             this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = result.dto.id;
             this.wizardNavDto.step = '2';
             this.wizardNavDto.endowmentId = this.waqfId;
             this.RequestId = result.dto.id;
-            this.onBtnNextClicked.emit(this.wizardNavDto);
+            this.onBtnNextClicked.emit(this.wizardNavDto); 
 
           } else {
             this.message.showMessage(MessageTypeEnum.toast, {
@@ -140,7 +141,6 @@ export class EndowmentApplicantCreateOrEditComponent
   }
   //#region FromAndLookupLoad
   LoadForm() {
-    debugger;
     this.LoadLookups('ApplicantType', (lookups) => {
       this.applicantTypes = lookups;
     });
@@ -169,16 +169,16 @@ export class EndowmentApplicantCreateOrEditComponent
     this.loadSeerTypeHint();
   }
   loadrequest() {
-    debugger;
     this._endowmentRegistrationService
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
-        debugger;
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
           let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
-          this.selectedTypes = this.applicantTypes.filter((value, index) => { return seletedapptypes?.includes(value.id.toString()) });
+          this.selectedTypes = this.applicantTypes.filter((value, index) => {
+            return seletedapptypes?.includes(value.id.toString());
+          });
           this.selectedTypes.forEach((value, index) => {
             switch (value.id) {
               case 1:
@@ -210,7 +210,8 @@ export class EndowmentApplicantCreateOrEditComponent
             );
           }
           if (
-            result.dto.applicantAgent?.representativeAttachmentId != undefined &&
+            result.dto.applicantAgent?.representativeAttachmentId !=
+              undefined &&
             result.dto.applicantAgent?.representativeAttachmentId != ''
           ) {
             this.getFileById(
@@ -502,4 +503,6 @@ export class EndowmentApplicantCreateOrEditComponent
       }
     });
   }
+  onDateChange(event) {}
 }
+

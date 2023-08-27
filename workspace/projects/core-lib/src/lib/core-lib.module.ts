@@ -1,4 +1,4 @@
- 
+
 import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 
 import { LoacalizationBaseComponent } from './loacalization-base/loacalization-base.component';
@@ -20,6 +20,7 @@ import { ValidationMessagesComponent } from './components/validationMessages/val
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { HintComponent } from './components/hint/hint.component';
 import { PanelModule } from 'primeng/panel';
+import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { PanelModule } from 'primeng/panel';
     ToastModule,
     ConfirmDialogModule,
     OverlayPanelModule,
-    PanelModule
+    PanelModule,
   ],
   exports: [
     LocalizePipe,
@@ -69,4 +70,4 @@ import { PanelModule } from 'primeng/panel';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
 })
-export class CoreLibModule {}
+export class CoreLibModule { }

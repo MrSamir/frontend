@@ -3,3 +3,4 @@
 ################################################################################
 
 /workspace/projects/.vs
+/workspace/projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies.ts
