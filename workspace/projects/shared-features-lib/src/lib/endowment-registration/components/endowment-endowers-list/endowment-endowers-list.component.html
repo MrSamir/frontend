@@ -17,19 +17,19 @@
     [resizableColumns]="primengTableHelper.resizableColumns">
     <ng-template pTemplate="header">
         <tr>
-            <th class="text-center" pSortableColumn="owner?.endowmerPerson?.fullName" scope="col">
+            <th class="text-center" pSortableColumn="record?.endowmerPerson?.fullName" scope="col">
                 {{'EndowmentModule.EndowmentRgistrationService.EnodwomerName' |
                 localize}}
-                <p-sortIcon field="owner?.endowmerPerson?.fullName"></p-sortIcon>
+                <p-sortIcon field="record?.endowmerPerson?.fullName"></p-sortIcon>
             </th>
-            <th class="text-center" pSortableColumn="owner?.endowmerPerson?.userName" scope="col">{{'Common.idNumber' |
+            <th class="text-center" pSortableColumn="record?.endowmerPerson?.userName" scope="col">{{'Common.idNumber' |
                 localize}}
-                <p-sortIcon field="owner?.endowmerPerson?.userName"></p-sortIcon>
+                <p-sortIcon field="record?.endowmerPerson?.userName"></p-sortIcon>
             </th>
-            <th class="text-center" pSortableColumn="owner?.endowmerPerson?.phoneNumber" scope="col">
+            <th class="text-center" pSortableColumn="record?.endowmerPerson?.phoneNumber" scope="col">
                 {{'Common.mobileNumber' |
                 localize}}
-                <p-sortIcon field="owner?.endowmerPerson?.phoneNumber"></p-sortIcon>
+                <p-sortIcon field="record?.endowmerPerson?.phoneNumber"></p-sortIcon>
             </th>
             <th class="text-center" scope="col" *ngIf="!viewOnly">
               {{'Common.EditLabel' | localize}}

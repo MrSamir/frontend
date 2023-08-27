@@ -7,6 +7,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { WizardComponent } from "angular-archwizard";
 import { wizardNavDto } from '../../../models/wizard-nav-data';
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 @Component({
   selector: 'app-seer-step',
@@ -22,21 +23,22 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
 
-  seers: OutputSeerDto[] = [];
   wizardNavDto: wizardNavDto = new wizardNavDto();
   OneRequestSeer: RemoveSeerInputDto;
+  primengTableHelper : PrimengTableHelper;
   constructor(private registerWaqfService: EndowmentRegistrationServiceProxy, private modalService: NgbModal, injector: Injector) {
     super(injector);
   }
 
   ngOnInit(): void {
+    this.primengTableHelper = new PrimengTableHelper();
     this.getAllSeers();
     //throw new Error('Method not implemented.');
   }
 
   // Passed new Seer from Common Seers Component in order to add it through calling API from Parent component
   OnAddingNewSeer(newAwqafSeer: AddSeerInputDto) {
-    //this.seers?.push(newAwqafSeer);
+    //this.primengTableHelper.records?.push(newAwqafSeer);
     //this.setIsAttachmentChanged(newAwqafSeer);
     newAwqafSeer.requestId = this.requestId;
     this.registerWaqfService.addSeer(
@@ -201,14 +203,17 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   }
 
   getAllSeers() {
+    this.primengTableHelper.showLoadingIndicator();
     this.registerWaqfService.getSeersInformationByReqId(this.requestId).subscribe(
-      (res) => {
-        this.seers = res.dto.items!;
+      (res: any) => {
+        this.primengTableHelper.records = res.dto.items as OutputSeerDto[];
+        this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
+        //this.mainApplicantPerson = this.primengTableHelper.records?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();
       },
-      (error) => {
+      (err) => {
         this.message.showMessage(MessageTypeEnum.toast, {
           severity: MessageSeverity.Error,
-          message: '',
+          message: err.errMessage,
           closable: true,
           detail: this.l(
             'Common.CommonError'
@@ -216,11 +221,12 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
           summary: '',
           enableService: true,
         });
-      }
+      }//handleError<object>(err.error)
     );
+    this.primengTableHelper.hideLoadingIndicator();
   }
   onNextBtnClicked() {
-    if (!this.seers || this.seers.length == 0) {
+    if (!this.primengTableHelper.records || this.primengTableHelper.records.length == 0) {
       this.message.showMessage(MessageTypeEnum.toast, {
         severity: MessageSeverity.Error,
         message: '',

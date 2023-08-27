@@ -35,7 +35,6 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     //throw new Error('Method not implemented.');
     this.isEditRequested = false;
     this.updated = false;
-    this.requestId = this.activatedRoute.snapshot.queryParamMap.get('requestId') as string;
   }
 
 
@@ -85,7 +84,6 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   isEditRequested: boolean = false;
   editBeneficiary: AddBeneficiaryInputDto;
   onEditBeneficiayData(event: AddBeneficiaryInputDto) {
-    debugger
     this.editBeneficiary = event;
     this.isEditRequested = true;
 

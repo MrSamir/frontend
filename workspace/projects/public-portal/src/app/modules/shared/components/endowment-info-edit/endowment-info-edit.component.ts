@@ -8,6 +8,7 @@ import {
   InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
+  LookupDto,
   LookupExtraData,
   OutputFileDto,
 } from './../../services/services-proxies/service-proxies';
@@ -33,6 +34,7 @@ import { ApiResponseModel } from 'projects/core-lib/src/lib/models/ApiResponseMo
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-endowment-info-edit',
@@ -43,7 +45,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   @Input() public IsCreate = true;
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
   @Input() waqfId: string;
-  @Input() public requestId: string;
+  requestId: string;
   @Output() _InputEndowmentDto = new EventEmitter<InputEndowmentDto>();
   @Input() IsDeedDisabled = false;
   @Output() publishNewWaqfRegistered = new EventEmitter<string>();
@@ -79,6 +81,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   endowmentInitialDate: NgbDateStruct;
   endowmentDeedDate: NgbDateStruct;
   oldDeedAttachmentId: string;
+  lookupInput: InputLookUpDto = new InputLookUpDto();
 
   constructor(
     injecter: Injector,
@@ -86,7 +89,8 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     private dateHelper: DateFormatterService,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private lookupssrv: LookupApplicationServiceProxy,
-    injector: Injector
+    private activatedRoute: ActivatedRoute,
+    injector: Injector,
   ) {
     super(injector);
   }
@@ -95,39 +99,9 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.init();
   }
 
-  LoadSpendingCategories() {
-    this.lookupfliter.lookUpName = 'SpendingCategory';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.spendingCategoriesLookup = data.dto.items;
-      console.log(data);
-      this.LoadEndowmentType();
-    });
-  }
-
-  LoadEndowmentType() {
-    this.lookupfliter.lookUpName = 'EndowmentType';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.EndowmentTypeLookup = data.dto.items;
-      console.log(data);
-      this.LoadRegion();
-    });
-  }
-
-  LoadRegion() {
-    this.lookupfliter.lookUpName = 'Region';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.RegioneLookup = data.dto.items;
-      console.log(data);
-      this.LoadIssuanceCourt();
-    });
-  }
-
   LoadCitiesByRegion(RegionId: number) {
     this._lookupExtraData.dataName = 'RegionId';
-    this._lookupExtraData.dataValue = RegionId.toString();
+    this._lookupExtraData.dataValue = RegionId?.toString();
     this.lookupfliter.lookUpName = 'City';
     this.lookupfliter.filters = [this._lookupExtraData];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
@@ -136,26 +110,30 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     });
   }
 
-  LoadIssuanceCourt() {
-    this.lookupfliter.lookUpName = 'IssuanceCourt';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.IssuanceCourtsLookup = data.dto.items;
-      console.log(data);
-      this.LoadWaqf();
-    });
-  }
   init() {
+    this.requestId = this.activatedRoute.snapshot.params['requestId'];
     if (!this.requestId || !!this.endowmentInitialDate) {
       return;
     }
+    this.LoadLookups('SpendingCategory', (lookups) => {
+      this.spendingCategoriesLookup = lookups;
+    });
+    this.LoadLookups('EndowmentType', (lookups) => {
+      this.EndowmentTypeLookup = lookups;
+    });
+    this.LoadLookups('Region', (lookups) => {
+      this.RegioneLookup = lookups;
+    });
+    
+    this.LoadLookups('IssuanceCourt', (lookups) => {
+      this.IssuanceCourtsLookup = lookups;
+    });
    
-    this.LoadSpendingCategories();
-
+    this.LoadWaqf();
     this.setDateLimits();
 
     if (this.InputEndowmentDto) {
-
+      this.LoadCitiesByRegion(this.InputEndowmentDto?.endowmentDeedRegionId!);
 
       if (!!this.InputEndowmentDto?.endowmentInitialDate) {
         this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
@@ -174,6 +152,13 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
         // this.InputEndowmentDto.endowmentDeedDate = `${this.endowmentDeedDate.year}/${this.endowmentDeedDate.month}/${this.endowmentDeedDate.day}`
       }
     }
+  }
+  LoadLookups(LookupName: string, callback: (Lookups: LookupDto[]) => void) {
+    this.lookupInput.lookUpName = LookupName;
+    this.lookupInput.filters = [];
+    this.lookupssrv.getAllLookups(this.lookupInput).subscribe((result) => {
+      callback(result.dto.items!);
+    });
   }
 
   ngOnChanges() {
@@ -214,6 +199,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.InputEndowmentDto = new InputEndowmentDto();
     this.InputEndowmentDto.acceptDonations = false;
     this.InputEndowmentDto.acceptGiveaways = false;
+    this.InputEndowmentDto
   }
   // onChangeMap() {
   //   if (this.map && this.map.longitude && this.map.latitude) {
@@ -244,7 +230,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
   }
 
-  onNextBtnClicked() {
+  onNextBtnClicked(form: NgForm) {
     // if (this.IsCreate) {
     //   this._InputEndowmentDto.emit(this.InputEndowmentDto);
     //   this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
@@ -255,7 +241,10 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     //   this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
 
     // }
+    if(this.validateForm(form))
+    {
     this.createOrEditWaqf();
+  }
   }
   createOrEditWaqf() {
     //this._editWaqfInputDto.requestId = this.requestId;
@@ -322,54 +311,50 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
 
   LoadWaqf() {
-
     
     this.registerWaqfServiceProxy
       .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
         (result: ApiResponse) => {
-          debugger
-        
-
           if (result.isSuccess) {
-            this.message.showMessage(MessageTypeEnum.toast, {
-              closable: true,
-              enableService: true,
-              summary: '',
-              detail: result.message!,
-              severity: MessageSeverity.Success,
-            });
-            debugger;
             this.InputEndowmentDto = result.dto;
-
-          } else {
-            this.message.showMessage(MessageTypeEnum.toast, {
-              closable: true,
-              enableService: true,
-              summary: '',
-              detail: result.message!,
-              severity: MessageSeverity.Error,
-            });
-          }
+            if(this.InputEndowmentDto.endowmentDeedRegionId)
+            {
+              this.LoadCitiesByRegion(this.InputEndowmentDto.endowmentDeedRegionId);
+            }
+            if (
+              this.InputEndowmentDto?.endowmentDeedAttachmentId !=
+                undefined &&
+                this.InputEndowmentDto?.endowmentDeedAttachmentId != ''
+            ) {
+              this.getFileById(
+                this.InputEndowmentDto?.endowmentDeedAttachmentId,
+                (fileDto) => {
+                  this.endowmentDeadAttachemt = {
+                    id: fileDto.id,
+                    fileName: fileDto.fileName!,
+                    fileData: fileDto.fileData!,
+                    ContentType: fileDto.contentType!,
+                  };
+                }
+              );
+            }
+          } 
         },
-
-
-
-
-
+(error)=>{
+  this.message.showMessage(MessageTypeEnum.toast, {
+    closable: true,
+    enableService: true,
+    summary: '',
+    detail: this.l(
+      'Common.CommonError'
+    ),
+    severity: MessageSeverity.Error,
+  });
+}
       );
     
   }
-
-
-
-
-
-
-
-
-
-
 
 
   EndowmentDeedFileSelect(event: any) {

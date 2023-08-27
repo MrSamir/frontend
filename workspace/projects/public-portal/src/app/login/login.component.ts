@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../../../core-lib/src/lib/services/authentication-service.service';
 import { ApplicationUserServiceProxy, ApplicationUserTasks } from './../modules/shared/services/services-proxies/service-proxies';
 import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,6 +12,7 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 
 import { MessageModel } from 'projects/core-lib/src/lib/models/MessageModel';
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { LoggedInUserInfo } from 'projects/core-lib/src/lib/models/LoggedInUserInfo';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -22,15 +24,15 @@ export class LoginComponent extends ComponentBase {
   constructor(
     _injecter: Injector,
     private router: Router,
-    private accountServiceProxy: AccountProxy,private _applicationUserServiceProxy:ApplicationUserServiceProxy
+    private accountServiceProxy: AccountProxy,
+    private authenticationService: AuthenticationService,
+    private _applicationUserServiceProxy:ApplicationUserServiceProxy
   ) {
     super(_injecter);
   }
 
   redirectToLandingPage() {
-    // this.authenticationServiceV2.redirectToPublicUserLoginPage();
-
-    this.router.navigate(['landing']);
+    this.authenticationService.redirectToLandingPage();
   }
 
   mockedUserLogin() {
@@ -46,10 +48,21 @@ export class LoginComponent extends ComponentBase {
           this.config.getAppConfig().refreshTokenName,
           result.dto.refreshToken.token!
         );
+        var userInfo = new LoggedInUserInfo();
+        userInfo.isUserConfirmed = result.dto.isUserConfirmed;
+        localStorage.setItem("IsConfirmed", String(userInfo.isUserConfirmed));
+        this.authenticationService.setloggedInUserObservable(userInfo);
 
-        this.redirectToLandingPage();
-      } 
-
+        if(userInfo.isUserConfirmed)
+        {
+          this.authenticationService.redirectToLandingPage()
+        }
+        else
+        {
+          this.authenticationService.redirectToPublicMyProfilePage()
+        }
+        
+      }  
       else {
         const message: MessageModel = new MessageModel();
         message.summary = 'Invalid Auntication ';

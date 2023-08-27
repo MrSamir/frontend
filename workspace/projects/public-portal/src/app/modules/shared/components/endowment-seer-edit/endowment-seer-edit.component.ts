@@ -40,7 +40,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   @Output() OnEditingExistingSeer = new EventEmitter<AddSeerInputDto>();
   @Output() OnDeletingExistingSeer = new EventEmitter<OutputSeerDto>();
   @Output() OnCancelClick = new EventEmitter();
-  @Input() seers: OutputSeerDto[] = [];
 
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionsLookups: LookupDto[] = [];
@@ -67,7 +66,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   seerDeadAttachemt: AttachementItem;
   FileUploadentityName = 'EndowmentAttachment';
   lookupInput: InputLookUpDto = new InputLookUpDto();
-  primengTableHelper: PrimengTableHelper;
+  @Input() primengTableHelper = new PrimengTableHelper();
 
   yakeenPersonUtilities = {
     1: (person: OutputApplicationUserDto) => {
@@ -112,7 +111,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     this.reset();
     this.isEditRequested = true;
     this.seerToEditIndex = index;
-    const seerToEdit = this.seers[this.seerToEditIndex];
+    const seerToEdit = this.primengTableHelper.records[this.seerToEditIndex];
     this.seerToCreate.createSeerInputDto.init(seerToEdit);
     this.seerToCreate.seerPerson.init(seerToEdit.seerPerson);
     //this.setOldAttachmentIds();
@@ -147,7 +146,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   }
 
   deleteSeer(index: number) {
-    const seerToDelete = this.seers[index];
+    const seerToDelete = this.primengTableHelper.records[index];
     // if (seerToDelete.seerId == this.mainApplicantPerson.applicantPersonId) {
     //   return;
     // }
@@ -181,7 +180,6 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
     userName: string;
     person: InputApplicationUserDto;
   }) {
-    debugger;
     this.newPerson = event.person;
     this.seerToCreate.seerPerson = new InputApplicationUserDto()
     this.seerToCreate.seerPerson.init(this.newPerson);
@@ -359,7 +357,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
   onEditBtnClicked() {
     let input = new EditSeerInputDto();
     input.createSeerInputDto = new CreateSeerInputDto();
-    input.createSeerInputDto.init(this.seers[this.seerToEditIndex]),
+    input.createSeerInputDto.init(this.primengTableHelper.records[this.seerToEditIndex]),
       input.requestId = this.requestId,
       input.seerPerson = new InputApplicationUserDto();
     input.seerPerson.init(this.seerToCreate.seerPerson);
@@ -377,7 +375,7 @@ export class EndowmentSeerEditComponent extends ComponentBase implements OnInit 
 
 
   get hasSeers() {
-    return ArrayExtensions.notEmpty(this.seers);
+    return ArrayExtensions.notEmpty(this.primengTableHelper.records);
   }
 
   get isYakeenPersonReady() {

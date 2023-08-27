@@ -46,7 +46,6 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
 
   ngOnChanges() {
     
-    debugger
     this.ngOnInit();
   }
 
@@ -112,7 +111,6 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
   }
 
   editBeneficiary(index: number) {
-    debugger
     const beneficiary =
       this.primengTableHelper.records[index];
 
