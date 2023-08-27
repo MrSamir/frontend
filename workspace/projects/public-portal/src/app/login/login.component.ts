@@ -50,11 +50,13 @@ export class LoginComponent extends ComponentBase {
         );
         var userInfo = new LoggedInUserInfo();
         userInfo.isUserConfirmed = result.dto.isUserConfirmed;
+
         localStorage.setItem("IsConfirmed", String(userInfo.isUserConfirmed));
         this.authenticationService.setloggedInUserObservable(userInfo);
 
         if(userInfo.isUserConfirmed)
         {
+          this.UserTasks();
           this.authenticationService.redirectToLandingPage()
         }
         else
@@ -78,15 +80,23 @@ export class LoginComponent extends ComponentBase {
 UserTasks() {
     this._applicationUserServiceProxy.getCurrentUserTasks().subscribe((result) => {
       if (result.isSuccess) {
-        this.Util.setCookieValue(this.config.getAppConfig().tokenCookieName,result.dto.totalCountTasks.toString());
+        debugger
+        this.Util.setCookieValue("PendingTasksCount",result.dto.totalCountTasks.toString());
      
+       if (result.dto.totalCountTasks>0) {
+        
+      
+        
+
+
         const message: MessageModel = new MessageModel();
-        message.summary = '';
+        message.summary = this.l('Common.CompleteDataValidation');
         message.detail = result.message!;
-        message.severity = MessageSeverity.Error;
+        message.severity = MessageSeverity.Warning;
 
         this.message.showMessage(MessageTypeEnum.toast, message);
       }
+    }
     });
   }
 

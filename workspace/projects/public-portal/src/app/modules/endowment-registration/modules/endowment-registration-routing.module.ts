@@ -22,7 +22,7 @@ const routes: Routes = [
     canActivate:[PublicActiveProfileGuardService]
   },
   {
-    path: 'registrationform/:requestId/:step/:tasknumber',
+    path: 'registrationform/:requestId/:serialnumber/:step',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
