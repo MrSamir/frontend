@@ -85,8 +85,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   activeIndex: number = 0;
   ngOnInit() {
-    debugger;
-
 
     // if (this.requestId && this.step) {
     //   this.moveWizardToTabOfPhase();
@@ -105,7 +103,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
         this.setActiveIndex();
       });
       if (this.requestId == undefined) {
-        debugger;
         this.isEditRequested = false;
          
          } else {
@@ -472,7 +469,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     throw 'not implemented';
   }
   onBtnNextClicked(wizardNavDto: wizardNavDto) {
-    debugger;
     if (wizardNavDto.isNaviagateToNext) {
       this.requestId = wizardNavDto.requestId!;
       this.waqfId = wizardNavDto.endowmentId;

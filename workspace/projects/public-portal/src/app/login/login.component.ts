@@ -50,6 +50,7 @@ export class LoginComponent extends ComponentBase {
         );
         var userInfo = new LoggedInUserInfo();
         userInfo.isUserConfirmed = result.dto.isUserConfirmed;
+        localStorage.setItem("IsConfirmed", String(userInfo.isUserConfirmed));
         this.authenticationService.setloggedInUserObservable(userInfo);
 
         if(userInfo.isUserConfirmed)

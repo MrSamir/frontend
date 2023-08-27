@@ -5,6 +5,7 @@ import { LoggedInUserInfo } from '../models/LoggedInUserInfo';
 import { __values } from 'tslib';
 import { UtilsService } from './Utils/Utils.Service';
 import { AppConfigSubjectService } from './appConfigSubjectService';
+import { ApplicationUserServiceProxy } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 
 const JWT_TOKEN_KEY = "jwt";
 const REFRESH_TOKEN_KEY = "refresh-token";
@@ -38,16 +39,23 @@ export class AuthenticationService {
 
   constructor(
 
-    private router: Router, injector: Injector) {
+    private router: Router, injector: Injector, private applicationUserServiceProxy: ApplicationUserServiceProxy) {
       this.Util = injector.get<UtilsService>(UtilsService);
-      this.config=injector.get <AppConfigSubjectService> (AppConfigSubjectService );
+      this.config=injector.get <AppConfigSubjectService> (AppConfigSubjectService);
   }
 
   // public get isUserConfirmed(): boolean {
   //   return this.loggedInUserObservable.getValue().isUserConfirmed;
   // }
   public get currentLoggedInUser(): LoggedInUserInfo {
-    return this.loggedInUserObservable.getValue();
+    var currentUser = this.loggedInUserObservable.getValue();
+    if (currentUser.isUserConfirmed == undefined)
+    {
+          currentUser.isUserConfirmed = Boolean(localStorage.getItem("IsConfirmed"));
+          this.setloggedInUserObservable(currentUser);
+    }
+    currentUser = this.loggedInUserObservable.getValue();
+    return currentUser
   }
 
   public setloggedInUserObservable(loggedInUserInfo: LoggedInUserInfo) {
@@ -75,7 +83,6 @@ export class AuthenticationService {
   }
 
   private isJwtTokenValid(): boolean {
-    debugger;
     let token: string = this.Util.getCookieValue(this.config.getAppConfig().tokenCookieName);
     if (!token) return false;
     //let isExpired = this.jwtHelper.isTokenExpired(token);
@@ -83,7 +90,7 @@ export class AuthenticationService {
   }
 
   public get IsPublicUserProfileCompleted(): boolean {
-    debugger;
+
     if (!this.currentLoggedInUser.isUserConfirmed) return false;
     return true;
   }

@@ -5,8 +5,6 @@ import { EndowmentRegistrationStartServiceComponent } from '../components/endowm
 import { EndowmentRegistrationNewComponent } from '../components/endowment-registration-new/endowment-registration-new.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { EndowmentRegistrationSharedModule } from 'projects/shared-features-lib/src/lib/endowment-registration/modules/endowment-registration-shared.module';
-import { EndowmenInstantRegistrationEditComponent } from '../components/endowmen-instant-registration-edit/endowmen-instant-registration-edit.component';
-import { EndowmenInstantRegistrationInfoComponent } from '../components/endowmen-instant-registration-info/endowmen-instant-registration-info.component';
 import { AccordionModule } from 'primeng/accordion';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FormsModule } from '@angular/forms';
@@ -26,8 +24,6 @@ import { PublicPortalSharedModule } from '../../shared/modules/public-portal-sha
   declarations: [
     EndowmentRegistrationStartServiceComponent,
     EndowmentRegistrationNewComponent,
-    EndowmenInstantRegistrationEditComponent,
-    EndowmenInstantRegistrationInfoComponent,
     SeerStepComponent,
     BeneficiaryStepComponent,
     EndowmentDirectRegisterationComponent,

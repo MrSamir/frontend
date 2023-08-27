@@ -19,14 +19,14 @@ const routes: Routes = [
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    //canActivate:[PublicActiveProfileGuardService]
+    canActivate:[PublicActiveProfileGuardService]
   },
   {
     path: 'registrationform',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    //canActivate:[PublicActiveProfileGuardService]
+    canActivate:[PublicActiveProfileGuardService]
   },
   /* {
     path: 'directregistrationform',
@@ -38,7 +38,7 @@ const routes: Routes = [
     path: 'beneficiary',
     component: BeneficiaryStepComponent,
     title: 'المستفيدين',
-    //canActivate:[PublicActiveProfileGuardService]
+    canActivate:[PublicActiveProfileGuardService]
   }
 ];
 
