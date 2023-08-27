@@ -90,7 +90,7 @@ UserTasks() {
 
 
         const message: MessageModel = new MessageModel();
-        message.summary = this.l('Common.CompleteDataValidation');
+        message.summary = 'الرجاء التوجه الي لوحة التحكم لإكمال الطلبات الخاصة بك';// this.l('Common.CompleteDataValidation');
         message.detail = result.message!;
         message.severity = MessageSeverity.Warning;
 
