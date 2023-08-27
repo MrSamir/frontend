@@ -35,7 +35,6 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     //throw new Error('Method not implemented.');
     this.isEditRequested = false;
     this.updated = false;
-    this.requestId= this.activatedRoute.snapshot.queryParamMap.get('requestId') as string;
   }
 
 
@@ -55,29 +54,41 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
 
   }
 
-  OnDeletingExistingAsset(event: any) {
+  OnDeletingExistingAsset(event: any) { }
 
+  onNextBtnClicked() {
+    // if (!this.BeneficiaryList || this.BeneficiaryList.length == 0) {
+    //   this.message.showMessage(MessageTypeEnum.toast, {
+    //     closable: true,
+    //     enableService: true,
+    //     summary: '',
+    //     detail: this.l('EndowmentModule.EndowmentRgistrationService.atLeastOneAsset'),
+    //     severity: MessageSeverity.Error,
+    //   });
+    //   return;
+    // }
+    this.wizardNavDto.isNaviagateToNext = true;
+    this.wizardNavDto.requestId = this.requestId;
+    this.wizardNavDto.step = '4';
+    this.wizardNavDto.endowmentId = this.waqfId;
+    this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '5';
+    this.wizardNavDto.step = '5';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }
-  isEditRequested:boolean = false;
-  editBeneficiary:AddBeneficiaryInputDto;
+  isEditRequested: boolean = false;
+  editBeneficiary: AddBeneficiaryInputDto;
   onEditBeneficiayData(event: AddBeneficiaryInputDto) {
-    debugger
     this.editBeneficiary = event;
     this.isEditRequested = true;
 
   }
 
-  onNextBtnClicked() {
-
-  }
 
 }
 

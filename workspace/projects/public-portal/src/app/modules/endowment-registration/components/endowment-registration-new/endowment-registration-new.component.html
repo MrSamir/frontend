@@ -1,83 +1,79 @@
-<aw-wizard
-  #wizard
-  [disableNavigationBar]="true"
-  class="awq-custom"
-  [navBarLayout]="'large-empty'"
-  navigateBackward="deny"
-  navigateForward="deny"
->
+<p-messages *ngIf="!isEditRequested" severity="warn">
+  <ng-template pTemplate>
+    <i class="pi pi-question-circle mr-2 hintinfoIcon mirror-effect" style="font-size:xx-large;"></i>
+    <div  >
+      <div class="form-group">
+        <label style="font-weight: 700;" class="col-form-label">{{
+          "EndowmentModule.EndowmentRgistrationService.RegisterUsingEndwomentDeedNumber"
+          | localize
+          }}<span class="text-danger">*</span> :
+        </label>
+        <div class=" col-form-inline mr-3">
+          <p-radioButton name="registerUsingDeedNumber" [value]="true" #registerUsingDeedNumber_yes="ngModel"
+            [(ngModel)]="registerUsingendowmentDeedNumber" inputId="yes"></p-radioButton>
+          <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.yes" | localize }}</label>
+        </div>
+        <div class="col-form-inline">
+          <p-radioButton name="registerUsingDeedNumber" [value]="false" #registerUsingDeedNumber_no="ngModel"
+            [(ngModel)]="registerUsingendowmentDeedNumber" inputId="no"></p-radioButton>
+          <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.no" | localize }}</label>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-messages>
 
-  <aw-wizard-step
-    stepTitle="معلومات المتقدم"
-    [navigationSymbol]="{ symbol: '1' }"
-    stepId="0"
-  >
+<ng-container *ngIf="!requestId && isEditRequested==false&& registerUsingendowmentDeedNumber;then showDirectRgistration;">
+
+</ng-container>
+<ng-template #showDirectRgistration>
+  <app-endowment-direct-registeration (deedNumberFound)="DeedNumberNotFound($event)"></app-endowment-direct-registeration>
+</ng-template>
+<div *ngIf="registerUsingendowmentDeedNumber==false ||isEditRequested==true">
+
+<div class="awq-custom">
+  <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"></p-steps>
+</div>
+<br>
+<!-- <router-outlet></router-outlet> -->
     <!--=========================   step one  =========================-->
-    <div class="aw-wrpper_content">
+    <div class="aw-wrpper_content" id="1">
       <app-endowment-applicant-CreateOrEdit
-        [RequestId]="requestId" *ngIf="phaseId == undefined || phaseId == '1'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"
+        [RequestId]="requestId" *ngIf="step == undefined || step == '1'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"
       ></app-endowment-applicant-CreateOrEdit>
     </div>
 
-  </aw-wizard-step>
+
   <!--=========================   step Tow  =========================-->
-  <aw-wizard-step
-    stepTitle="معلومات الوقف"
-    [navigationSymbol]="{ symbol: '2' }"
-    stepId="1"
-  >
-    <div class="aw-wrpper_content">
-      <app-endowment-info-edit [requestId]="requestId" *ngIf="phaseId == '2'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-info-edit>
+
+    <div class="aw-wrpper_content" id="2">
+      <app-endowment-info-edit *ngIf="step == '2'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-info-edit>
     </div>
 
-  </aw-wizard-step>
 
   <!--=========================   step three  =========================-->
-  <aw-wizard-step
-    stepTitle="أصول الوقف"
-    [navigationSymbol]="{ symbol: '3' }"
-    stepId="2"
-  >
-    <div class="aw-wrpper_content">
-      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="phaseId == '3'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-shared-asset-edit>
-    </div>
 
-  </aw-wizard-step>
+    <div class="aw-wrpper_content" id="3">
+      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="step == '3'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-shared-asset-edit>
+    </div>
 
   <!--=========================   step Four  =========================-->
-  <aw-wizard-step
-    stepTitle="الواقفين"
-    [navigationSymbol]="{ symbol: '4' }"
-    stepId="3"
-  >
-    <div class="aw-wrpper_content">
-      <app-endowment-endowers-list [requestId]="requestId" *ngIf="phaseId == '4'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-endowers-list>
-    </div>
 
-  </aw-wizard-step>
+    <div class="aw-wrpper_content" id="4">
+      <app-endowment-endowers-list [requestId]="requestId" *ngIf="step == '4'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-endowers-list>
+    </div>
 
   <!--=========================   step Five  =========================-->
-  <aw-wizard-step
-    stepTitle="النظارة"
-    [navigationSymbol]="{ symbol: '5' }"
-    stepId="4"
-  >
-    <div class="aw-wrpper_content">
+
+    <div class="aw-wrpper_content" id="5">
 <!--      <app-endowment-seers-list></app-endowment-seers-list>-->
-      <app-seer-step [requestId]="requestId" *ngIf="phaseId == '5'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-seer-step>
+      <app-seer-step [requestId]="requestId" *ngIf="step == '5'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-seer-step>
     </div>
 
-  </aw-wizard-step>
 
   <!--=========================   step Six  =========================-->
-  <aw-wizard-step
-    stepTitle="المستفيدين"
-    [navigationSymbol]="{ symbol: '6' }"
-    stepId="5"
-  >
-    <div class="aw-wrpper_content">
-      <app-beneficiary-step [requestId]="requestId" *ngIf="phaseId == '6'"(onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
-    </div>
 
-  </aw-wizard-step>
-</aw-wizard>
+    <div class="aw-wrpper_content" id="6">
+      <app-beneficiary-step [requestId]="requestId" *ngIf="step == '6'"(onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
+    </div>
+</div>

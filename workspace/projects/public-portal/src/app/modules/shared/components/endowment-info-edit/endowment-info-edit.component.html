@@ -1,4 +1,4 @@
-<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html">
+<form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" *ngIf="!!requestId || !!waqfId" (ngSubmit)="onNextBtnClicked(waqfForm)">
   <div class="aw-content">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
       <div class="form-group col">
@@ -354,31 +354,70 @@
         </div>
 
         <div class="input-group mb-3 download p-2">
-          <div class="flex-grow-1">
-
+        <div
+            *ngIf="!InputEndowmentDto.endowmentDeedAttachmentId"
+            class="form-group col-12"
+          >
             <lib-file-uploader
-            name="seerDeed"
             [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement')"
-            [showDisclaimer]="true"
-            [MultipleFiles]="true"
-            (OnSelectFile)="EndowmentDeedFileSelect($event)"
+              [showDisclaimer]="true"
+              (OnSelectFile)="EndowmentDeedFileSelect($event)"
             (OnUploadFile)="EndowmentDeedFileUpload($event)"
-          ></lib-file-uploader>
+            ></lib-file-uploader>
+            <input
+              type="text"
+              hidden
+              [(ngModel)]="
+              InputEndowmentDto.endowmentDeedAttachmentId
+              "
+              #_endowmentDeadAttachemt="ngModel"
+              required
+              name="endowmentdeedAttachmentId"
+            />
+            <app-validationMessages
+              relatedControlName="endowmentdeedAttachmentId"
+              [control]="_endowmentDeadAttachemt"
+              [validationMessages]="[
+                {
+                  ruleName: 'required',
+                  ruleMessage: l(
+                    'Common.Required',
+                    l('EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement')
+                  )
+                }
+              ]"
+            >
+            </app-validationMessages>
           </div>
-        </div>
+          <div
+            *ngIf="InputEndowmentDto.endowmentDeedAttachmentId"
+            class="form-group col-12"
+          >
+            <app-AttachmentViewer
+              *ngIf="endowmentDeadAttachemt"
+              (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
+              [Attachements]="[endowmentDeadAttachemt]"
+            ></app-AttachmentViewer>
+          </div>
+      </div>
       </div>
     </div>
   </div>
 
   <div class="aw-btn">
     <div>
-      <button
+      <!-- <button
         type="button"
         class="btn btn-outline-awq-secondary"
         [disabled]="navigationButtonsDisabled"
         (click)="onNextBtnClicked()"
       >
         {{ "EndowmentModule.EndowmentRgistrationService.ButtonNext" | localize }}
+      </button> -->
+      <button type="submit" class="btn btn-outline-awq-secondary">
+        {{
+          "EndowmentModule.EndowmentRgistrationService.ButtonNext" | localize
+        }}
       </button>
     </div>
     <button

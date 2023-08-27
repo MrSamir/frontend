@@ -403,8 +403,7 @@ export class YakeenPersonComponent extends ComponentBase implements OnInit, OnDe
           this.newPerson.email =
             this.personAppendixForm.value.email ?? undefined;
           this.newPerson.phoneNumber =
-            this.personAppendixForm.value.mobileNumber ?? undefined;
-          debugger
+            this.personAppendixForm.value.mobileNumber ?? undefined;         
           this.OnNewPersonAvailable.emit({
             idType: this.personForm.value.selectedTypeId
               ? parseInt(this.personForm.value.selectedTypeId)

@@ -20,7 +20,6 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 export class EndowmentBeneficiaryEditComponent extends ComponentBase implements OnInit, OnChanges {
   @ViewChild('addData') templateRef: TemplateRef<any>;
   ngOnChanges() {
-    debugger
     if (this.editBenificaryInfo) {
       this.activeCrudOperation = CrudOperation.Update;
       this.isEditRequested = true;
@@ -191,7 +190,6 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     ) {
       this.isMobileNumberModified = true;
     }
-    debugger
     this.isValidNumber = true; //event.isValid;
     this.addBenificiaryInputDto.beneficiaryPerson.phoneNumber =
       event.alienInfoNumber;

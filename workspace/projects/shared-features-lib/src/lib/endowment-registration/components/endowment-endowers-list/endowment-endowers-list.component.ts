@@ -585,14 +585,14 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     }
     this.wizardNavDto.isNaviagateToNext = true;
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '5';
+    this.wizardNavDto.step = '5';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
   onBackBtnClicked() {
     this.wizardNavDto.requestId = this.requestId;
-    this.wizardNavDto.phaseId = '3';
+    this.wizardNavDto.step = '3';
     this.wizardNavDto.endowmentId = this.waqfId;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
