@@ -2112,6 +2112,62 @@ export class EndowmentRegistrationServiceProxy {
         }
         return _observableOf(null as any);
     }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    submitRequest(body: RequestModelDto | undefined): Observable<ApiResponseOfRequestModelDto> {
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/SubmitRequest";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processSubmitRequest(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processSubmitRequest(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfRequestModelDto>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfRequestModelDto>;
+        }));
+    }
+
+    protected processSubmitRequest(response: HttpResponseBase): Observable<ApiResponseOfRequestModelDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfRequestModelDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
 }
 
 @Injectable()
@@ -3561,6 +3617,94 @@ export class YaqeenApplicationServiceProxy {
         }
         return _observableOf(null as any);
     }
+}
+
+export class ActionInput implements IActionInput {
+    serialNumber!: string;
+    requestId!: string | undefined;
+    actionName!: string;
+    dataFields!: DataFieldAction;
+    impersonateUserName!: string | undefined;
+    requestNumber!: string | undefined;
+    internalNote!: string | undefined;
+    externalNote!: string | undefined;
+    rejectionReason!: string | undefined;
+    rejectionReasonValue!: string | undefined;
+    uiOnly!: boolean | undefined;
+    requestStatus!: string | undefined;
+    displayName!: string | undefined;
+    actionDisplayName!: string | undefined;
+
+    constructor(data?: IActionInput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.serialNumber = _data["serialNumber"];
+            this.requestId = _data["requestId"];
+            this.actionName = _data["actionName"];
+            this.dataFields = _data["dataFields"] ? DataFieldAction.fromJS(_data["dataFields"]) : <any>undefined;
+            this.impersonateUserName = _data["impersonateUserName"];
+            this.requestNumber = _data["requestNumber"];
+            this.internalNote = _data["internalNote"];
+            this.externalNote = _data["externalNote"];
+            this.rejectionReason = _data["rejectionReason"];
+            this.rejectionReasonValue = _data["rejectionReasonValue"];
+            this.uiOnly = _data["uiOnly"];
+            this.requestStatus = _data["requestStatus"];
+            this.displayName = _data["displayName"];
+            this.actionDisplayName = _data["actionDisplayName"];
+        }
+    }
+
+    static fromJS(data: any): ActionInput {
+        data = typeof data === 'object' ? data : {};
+        let result = new ActionInput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["serialNumber"] = this.serialNumber;
+        data["requestId"] = this.requestId;
+        data["actionName"] = this.actionName;
+        data["dataFields"] = this.dataFields ? this.dataFields.toJSON() : <any>undefined;
+        data["impersonateUserName"] = this.impersonateUserName;
+        data["requestNumber"] = this.requestNumber;
+        data["internalNote"] = this.internalNote;
+        data["externalNote"] = this.externalNote;
+        data["rejectionReason"] = this.rejectionReason;
+        data["rejectionReasonValue"] = this.rejectionReasonValue;
+        data["uiOnly"] = this.uiOnly;
+        data["requestStatus"] = this.requestStatus;
+        data["displayName"] = this.displayName;
+        data["actionDisplayName"] = this.actionDisplayName;
+        return data;
+    }
+}
+
+export interface IActionInput {
+    serialNumber: string;
+    requestId: string | undefined;
+    actionName: string;
+    dataFields: DataFieldAction;
+    impersonateUserName: string | undefined;
+    requestNumber: string | undefined;
+    internalNote: string | undefined;
+    externalNote: string | undefined;
+    rejectionReason: string | undefined;
+    rejectionReasonValue: string | undefined;
+    uiOnly: boolean | undefined;
+    requestStatus: string | undefined;
+    displayName: string | undefined;
+    actionDisplayName: string | undefined;
 }
 
 export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
@@ -5215,6 +5359,62 @@ export interface IApiResponseOfRequestDto {
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
+export class ApiResponseOfRequestModelDto implements IApiResponseOfRequestModelDto {
+    isSuccess!: boolean;
+    dto!: RequestModelDto;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfRequestModelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? RequestModelDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfRequestModelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfRequestModelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfRequestModelDto {
+    isSuccess: boolean;
+    dto: RequestModelDto;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
 export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfSentNotificationMessagesDto {
     isSuccess!: boolean;
     dto!: SentNotificationMessagesDto;
@@ -6545,6 +6745,66 @@ export interface ICreateSeerInputDto {
     endSeerReasonTypeId: number | undefined;
     endowmentPartiesTypeId: number | undefined;
     id: string;
+}
+
+export class DataFieldAction implements IDataFieldAction {
+    officerUserName!: string | undefined;
+    reviewerUserName!: string | undefined;
+    auditorUserName!: string | undefined;
+    certifierUserName!: string | undefined;
+    assignedGroupName!: string | undefined;
+    taskAssignedToUser!: string | undefined;
+    updatedBy!: string | undefined;
+
+    constructor(data?: IDataFieldAction) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.officerUserName = _data["officerUserName"];
+            this.reviewerUserName = _data["reviewerUserName"];
+            this.auditorUserName = _data["auditorUserName"];
+            this.certifierUserName = _data["certifierUserName"];
+            this.assignedGroupName = _data["assignedGroupName"];
+            this.taskAssignedToUser = _data["taskAssignedToUser"];
+            this.updatedBy = _data["updatedBy"];
+        }
+    }
+
+    static fromJS(data: any): DataFieldAction {
+        data = typeof data === 'object' ? data : {};
+        let result = new DataFieldAction();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["officerUserName"] = this.officerUserName;
+        data["reviewerUserName"] = this.reviewerUserName;
+        data["auditorUserName"] = this.auditorUserName;
+        data["certifierUserName"] = this.certifierUserName;
+        data["assignedGroupName"] = this.assignedGroupName;
+        data["taskAssignedToUser"] = this.taskAssignedToUser;
+        data["updatedBy"] = this.updatedBy;
+        return data;
+    }
+}
+
+export interface IDataFieldAction {
+    officerUserName: string | undefined;
+    reviewerUserName: string | undefined;
+    auditorUserName: string | undefined;
+    certifierUserName: string | undefined;
+    assignedGroupName: string | undefined;
+    taskAssignedToUser: string | undefined;
+    updatedBy: string | undefined;
 }
 
 export class EditSeerInputDto implements IEditSeerInputDto {
@@ -12232,6 +12492,7 @@ export interface IRequest {
 }
 
 export class RequestDto implements IRequestDto {
+    requestNumber!: number;
     id!: string;
 
     constructor(data?: IRequestDto) {
@@ -12245,6 +12506,7 @@ export class RequestDto implements IRequestDto {
 
     init(_data?: any) {
         if (_data) {
+            this.requestNumber = _data["requestNumber"];
             this.id = _data["id"];
         }
     }
@@ -12258,13 +12520,55 @@ export class RequestDto implements IRequestDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["requestNumber"] = this.requestNumber;
         data["id"] = this.id;
         return data;
     }
 }
 
 export interface IRequestDto {
+    requestNumber: number;
     id: string;
+}
+
+export class RequestModelDto implements IRequestModelDto {
+    requestDto!: RequestDto;
+    actionInput!: ActionInput;
+
+    constructor(data?: IRequestModelDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestDto = _data["requestDto"] ? RequestDto.fromJS(_data["requestDto"]) : <any>undefined;
+            this.actionInput = _data["actionInput"] ? ActionInput.fromJS(_data["actionInput"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): RequestModelDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RequestModelDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestDto"] = this.requestDto ? this.requestDto.toJSON() : <any>undefined;
+        data["actionInput"] = this.actionInput ? this.actionInput.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IRequestModelDto {
+    requestDto: RequestDto;
+    actionInput: ActionInput;
 }
 
 export class RequestOutputDto implements IRequestOutputDto {

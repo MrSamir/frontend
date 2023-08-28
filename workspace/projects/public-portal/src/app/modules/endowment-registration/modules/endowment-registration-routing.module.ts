@@ -4,13 +4,15 @@ import { EndowmentRegistrationNewComponent } from '../components/endowment-regis
 import { EndowmentRegistrationStartServiceComponent } from '../components/endowment-registration-start-service/endowment-registration-start-service.component';
 import { BeneficiaryStepComponent } from '../components/endowment-registration-new/beneficiary-step/beneficiary-step.component';
 import { PublicActiveProfileGuardService } from 'projects/core-lib/src/lib/services/public-active-profile-guard.service';
+import { AddRequestSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/add-request-success-message/add-request-success-message.component';
+import { UpdateMissingSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/update-missing-success-message/update-missing-success-message.component';
 
 const routes: Routes = [
   {
     path: '',
     component: EndowmentRegistrationStartServiceComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
 
   // {path: 'wizard', component: EndowmentRegistrationNewComponent, canActivate:[PublicActiveProfileGuard]},
@@ -19,21 +21,21 @@ const routes: Routes = [
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'registrationform/:requestId/:serialnumber/:step',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'registrationform',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate:[PublicActiveProfileGuardService]
+    canActivate: [PublicActiveProfileGuardService]
   },
   /* {
     path: 'directregistrationform',
@@ -45,9 +47,14 @@ const routes: Routes = [
     path: 'beneficiary',
     component: BeneficiaryStepComponent,
     title: 'المستفيدين',
-    canActivate:[PublicActiveProfileGuardService]
-  }
+    canActivate: [PublicActiveProfileGuardService]
+  },
+  //{ path: 'success/:reqnumber', component: AddRequestSuccessMessageComponent, canActivate: [PublicActiveProfileGuardService] },
+  { path: 'success-message-return/:reqnumber', component: UpdateMissingSuccessMessageComponent },
+
+  { path: 'success-message/:reqnumber', component: AddRequestSuccessMessageComponent },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

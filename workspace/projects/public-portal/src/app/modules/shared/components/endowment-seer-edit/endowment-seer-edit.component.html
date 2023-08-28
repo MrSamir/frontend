@@ -365,7 +365,7 @@
       <ng-container *ngIf="isCreateMode&&!viewOnly">
         <div class="modal-footer justify-content-center">
           <button type="button" class="btn btn-awq-secondary px-6"
-                  [disabled]="(seerListForm.form?.invalid||addData=== undefined)" (click)="addToSeerList()">
+                  [disabled]="(seerListForm.form?.invalid|| seerToCreate.createSeerInputDto.endowmentPartiesTypeId == undefined)" (click)="addToSeerList()">
                   {{'EndowmentModule.EndowmentRgistrationService.AddSeerInfoBton' | localize}}
             <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
           </button>
