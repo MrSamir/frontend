@@ -44,7 +44,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   @Output() OnCancelClick = new EventEmitter();
-
+  @Input() serialNumber: string | undefined;
   @Input() waqfId: string | undefined;
   @Input() requestId: string;
   @Input() Assets: OutputAssetDto[] = [];
@@ -224,6 +224,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '4';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
@@ -231,6 +232,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '2';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }

@@ -128,6 +128,7 @@
                   )
                 )
               "
+              [disabled]="viewOnly"
             ></p-dropdown>
             <app-validationMessages
               relatedControlName="EducationLevel"
@@ -172,6 +173,7 @@
                   l('EndowmentModule.EndowmentRgistrationService.SeerType')
                 )
               "
+              [disabled]="viewOnly"
             ></p-dropdown>
             <app-validationMessages
               relatedControlName="SeerTypes"
@@ -216,6 +218,7 @@
                   )
                 )
               "
+              [disabled]="viewOnly"
             ></p-dropdown>
             <app-validationMessages
               relatedControlName="seerprestigiousAttributeType"
@@ -257,6 +260,7 @@
               [(ngModel)]="seerToCreate.createSeerInputDto.commercialNumber"
               [ngModelOptions]="{ standalone: true }"
               required
+              [disabled]="viewOnly"
             />
             <app-validationMessages
               relatedControlName="seercommercialNumber"
@@ -291,6 +295,7 @@
               [(ngModel)]="seerToCreate.createSeerInputDto.seenDeedId"
               [pattern]="EnumValidation.pattern_number"
               required
+              [disabled]="viewOnly"
             />
             <app-validationMessages
               relatedControlName="representativeNumber"
@@ -334,6 +339,7 @@
               #seedDeedAttachmentId="ngModel"
               required
               name="seedDeedAttachmentId"
+              [disabled]="viewOnly"
             />
             <app-validationMessages
               relatedControlName="seedDeedAttachmentId"

@@ -79,11 +79,12 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
- registerUsingendowmentDeedNumber:boolean|undefined =undefined;
+  registerUsingendowmentDeedNumber: boolean | undefined = undefined;
 
   items: MenuItem[];
 
   activeIndex: number = 0;
+  serialNumber: string | undefined;
   ngOnInit() {
 
     // if (this.requestId && this.step) {
@@ -93,59 +94,63 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     // this.loadAssetType();
     // this.loadAssetSize();
     // this.loadAssetsBy();
-    this.setActiveIndex();
-    this.setSteps();
     this.requestId = this.activatedRoute.snapshot.params['requestId'];
     this.step = this.activatedRoute.snapshot.params['step'];
+    this.serialNumber = this.activatedRoute.snapshot.params['serialnumber'];
+    this.setActiveIndex();
+    this.setSteps();
+
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(() => {
         this.setActiveIndex();
       });
-      if (this.requestId == undefined) {
-        this.isEditRequested = false;
-         
-         } else {
-           this.isEditRequested=true;
-           this.registerUsingendowmentDeedNumber=false;
-         }
+    if (this.requestId == undefined) {
+      this.isEditRequested = false;
+
+    } else {
+      this.isEditRequested = true;
+      this.registerUsingendowmentDeedNumber = false;
     }
+  }
 
   //#region primeng steps
   setActiveIndex() {
-    this.requestId = this.activatedRoute.snapshot.params['requestId'];
-    this.step = this.activatedRoute.snapshot.params['step'];
     this.activeIndex = this.step - 1;
   }
   setSteps() {
     this.activeIndex = this.step ? this.step - 1 : 0;
     var serviceURL = 'endowmentregistration/registrationform/';
+    var serviceStepUrl = serviceURL + this.requestId + '/' + this.step;
+    if (!this.serialNumber) {
+      serviceStepUrl = serviceURL + this.requestId + '/' + this.step + '/' + this.serialNumber;
+    }
     this.items = [
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.ApplicantInfoStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
         //url: 'endowmentregistration/registrationform/' + this.requestId + '/1'
 
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentInfoStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentAssetsStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmersStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentSeersStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
       },
       {
         label: this.l('EndowmentModule.EndowmentRgistrationService.EndowmentBenificiarisStepTitle'),
-        url: serviceURL + this.requestId + '/' + this.step
+        url: serviceStepUrl
       }
     ];
   }
@@ -470,37 +475,30 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   }
   onBtnNextClicked(wizardNavDto: wizardNavDto) {
     if (wizardNavDto.isNaviagateToNext) {
-      this.requestId = wizardNavDto.requestId!;
-      this.waqfId = wizardNavDto.endowmentId;
-      this.step = wizardNavDto.step;
-      this.activatedRoute.params.subscribe(params => {
-        requestId: this.requestId;
-        step: this.step
-        // React to changes in params here
-      });
-      //this.wizard.goToStep(this.step);
-      //this.router.navigate(["endowmentregistration/registrationform"],  new { requestId: this.requestId, pahseId: this.step });
-      this.router.navigate(["endowmentregistration/registrationform", ...[this.requestId, this.step]], { onSameUrlNavigation: "reload" });
-      //this.wizard.goToNextStep();
+      this.redirectToStep(wizardNavDto);
     }
   }
 
   onBackBtnClicked(wizardNavDto: any) {
+    this.redirectToStep(wizardNavDto);
+  }
+  redirectToStep(wizardNavDto: wizardNavDto) {
     this.requestId = wizardNavDto.requestId!;
     this.waqfId = wizardNavDto.endowmentId;
     this.step = wizardNavDto.step;
-    this.activatedRoute.params.subscribe(params => {
-      requestId: this.requestId;
-      step: this.step
-      // React to changes in params here
-    });
-    //this.wizard.goToPreviousStep();
-    //this.router.navigateByUrl();
-    //this.wizard.goToStep(this.step);
-    this.router.navigate(["endowmentregistration/registrationform", ...[this.requestId, this.step]], { onSameUrlNavigation: "reload" });
+    this.serialNumber = wizardNavDto.serialNumber;
+    debugger;
+    var params: string[] = [];
+    params.push(this.requestId);
+    params.push(this.step)
+    if (this.serialNumber != undefined && this.serialNumber != '') {
+      params.push(this.serialNumber!)
+    }
+    this.router.navigate(["endowmentregistration/registrationform", ...params], { onSameUrlNavigation: "reload" });
+
   }
 
-  DeedNumberNotFound($event){
-    this.registerUsingendowmentDeedNumber=false;
+  DeedNumberNotFound($event) {
+    this.registerUsingendowmentDeedNumber = false;
   }
 }

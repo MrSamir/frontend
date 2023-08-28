@@ -28,14 +28,14 @@ import { NgBootstrapHijriGregorianDatepickerComponent } from 'projects/shared-fe
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-endowment-applicant-CreateOrEdit',
   templateUrl: './endowment-applicant-CreateOrEdit.component.html',
 })
 export class EndowmentApplicantCreateOrEditComponent
   extends ComponentBase
-  implements OnInit
-{
+  implements OnInit {
   //#region input Lookups Dto
   lookupInput: InputLookUpDto = new InputLookUpDto();
   //#endregion
@@ -54,6 +54,7 @@ export class EndowmentApplicantCreateOrEditComponent
   isSeer = false;
   isEndwowmer = false;
   @Input() RequestId: string;
+  @Input() serialNumber: string | undefined;
   @Input() waqfId: string;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
@@ -91,7 +92,8 @@ export class EndowmentApplicantCreateOrEditComponent
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
     private _MojServiceProxy: MOJApplicationServiceProxy,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {
     super(injecter);
     this.requestInfo.applicant = new InputApplicantDto();
@@ -103,6 +105,7 @@ export class EndowmentApplicantCreateOrEditComponent
   ngOnInit() {
     this.RequestId = this.activatedRoute.snapshot.params['requestId'];
     this.LoadForm();
+    this.cdRef.detectChanges();
   }
   onNextBtnClicked(form: NgForm) {
     if (this.validateForm(form)) {
@@ -120,12 +123,14 @@ export class EndowmentApplicantCreateOrEditComponent
               detail: result.message!,
               severity: MessageSeverity.Success,
             });
-             this.wizardNavDto.isNaviagateToNext = true;
+            this.wizardNavDto.isNaviagateToNext = true;
             this.wizardNavDto.requestId = result.dto.id;
             this.wizardNavDto.step = '2';
             this.wizardNavDto.endowmentId = this.waqfId;
+            this.wizardNavDto.serialNumber = this.serialNumber;
             this.RequestId = result.dto.id;
-            this.onBtnNextClicked.emit(this.wizardNavDto); 
+            debugger;
+            this.onBtnNextClicked.emit(this.wizardNavDto);
 
           } else {
             this.message.showMessage(MessageTypeEnum.toast, {
@@ -176,7 +181,7 @@ export class EndowmentApplicantCreateOrEditComponent
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
           let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
-          this.selectedTypes = this.applicantTypes.filter((value, index) => {
+          this.selectedTypes = this.applicantTypes?.filter((value, index) => {
             return seletedapptypes?.includes(value.id.toString());
           });
           this.selectedTypes.forEach((value, index) => {
@@ -211,7 +216,7 @@ export class EndowmentApplicantCreateOrEditComponent
           }
           if (
             result.dto.applicantAgent?.representativeAttachmentId !=
-              undefined &&
+            undefined &&
             result.dto.applicantAgent?.representativeAttachmentId != ''
           ) {
             this.getFileById(
@@ -503,6 +508,6 @@ export class EndowmentApplicantCreateOrEditComponent
       }
     });
   }
-  onDateChange(event) {}
+  onDateChange(event) { }
 }
 

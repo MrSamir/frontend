@@ -19,13 +19,14 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   @Input() public requestId: string;
   @Input() waqfId: string;
   @Input() public wizard: WizardComponent;
+  @Input() viewOnly: boolean = false;
 
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
-
+  @Input() serialNumber: string | undefined;
   wizardNavDto: wizardNavDto = new wizardNavDto();
   OneRequestSeer: RemoveSeerInputDto;
-  primengTableHelper : PrimengTableHelper;
+  primengTableHelper: PrimengTableHelper;
   constructor(private registerWaqfService: EndowmentRegistrationServiceProxy, private modalService: NgbModal, injector: Injector) {
     super(injector);
   }
@@ -244,6 +245,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '6';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
@@ -251,6 +253,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '4';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }

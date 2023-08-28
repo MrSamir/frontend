@@ -4,4 +4,5 @@ export class wizardNavDto {
   requestId: string | undefined;
   endowmentId: string | undefined;
   step: string | undefined;
+  serialNumber: string | undefined;
 }
