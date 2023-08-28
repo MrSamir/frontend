@@ -12140,6 +12140,7 @@ export class Request implements IRequest {
     applicantId!: string | undefined;
     requestTypeId!: number | undefined;
     requestStatusId!: number | undefined;
+    serialNumber!: string | undefined;
     workflowInstanceId!: string | undefined;
     submitionDate!: DateTime | undefined;
     applicant!: ApplicationUser;
@@ -12167,6 +12168,7 @@ export class Request implements IRequest {
             this.applicantId = _data["applicantId"];
             this.requestTypeId = _data["requestTypeId"];
             this.requestStatusId = _data["requestStatusId"];
+            this.serialNumber = _data["serialNumber"];
             this.workflowInstanceId = _data["workflowInstanceId"];
             this.submitionDate = _data["submitionDate"] ? DateTime.fromISO(_data["submitionDate"].toString()) : <any>undefined;
             this.applicant = _data["applicant"] ? ApplicationUser.fromJS(_data["applicant"]) : <any>undefined;
@@ -12194,6 +12196,7 @@ export class Request implements IRequest {
         data["applicantId"] = this.applicantId;
         data["requestTypeId"] = this.requestTypeId;
         data["requestStatusId"] = this.requestStatusId;
+        data["serialNumber"] = this.serialNumber;
         data["workflowInstanceId"] = this.workflowInstanceId;
         data["submitionDate"] = this.submitionDate ? this.submitionDate.toString() : <any>undefined;
         data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
@@ -12214,6 +12217,7 @@ export interface IRequest {
     applicantId: string | undefined;
     requestTypeId: number | undefined;
     requestStatusId: number | undefined;
+    serialNumber: string | undefined;
     workflowInstanceId: string | undefined;
     submitionDate: DateTime | undefined;
     applicant: ApplicationUser;
@@ -12264,11 +12268,13 @@ export interface IRequestDto {
 }
 
 export class RequestOutputDto implements IRequestOutputDto {
+    id!: string;
     requestNumber!: number;
     applicantId!: string | undefined;
     requestTypeId!: number | undefined;
     requestStatusId!: number | undefined;
     workflowInstanceId!: string | undefined;
+    serialNumber!: string | undefined;
     submitionDate!: DateTime | undefined;
     applicationUser!: ApplicationUser;
     endowmentRegistrationRequest!: EndowmentRegistrationRequest;
@@ -12286,11 +12292,13 @@ export class RequestOutputDto implements IRequestOutputDto {
 
     init(_data?: any) {
         if (_data) {
+            this.id = _data["id"];
             this.requestNumber = _data["requestNumber"];
             this.applicantId = _data["applicantId"];
             this.requestTypeId = _data["requestTypeId"];
             this.requestStatusId = _data["requestStatusId"];
             this.workflowInstanceId = _data["workflowInstanceId"];
+            this.serialNumber = _data["serialNumber"];
             this.submitionDate = _data["submitionDate"] ? DateTime.fromISO(_data["submitionDate"].toString()) : <any>undefined;
             this.applicationUser = _data["applicationUser"] ? ApplicationUser.fromJS(_data["applicationUser"]) : <any>undefined;
             this.endowmentRegistrationRequest = _data["endowmentRegistrationRequest"] ? EndowmentRegistrationRequest.fromJS(_data["endowmentRegistrationRequest"]) : <any>undefined;
@@ -12308,11 +12316,13 @@ export class RequestOutputDto implements IRequestOutputDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
         data["requestNumber"] = this.requestNumber;
         data["applicantId"] = this.applicantId;
         data["requestTypeId"] = this.requestTypeId;
         data["requestStatusId"] = this.requestStatusId;
         data["workflowInstanceId"] = this.workflowInstanceId;
+        data["serialNumber"] = this.serialNumber;
         data["submitionDate"] = this.submitionDate ? this.submitionDate.toString() : <any>undefined;
         data["applicationUser"] = this.applicationUser ? this.applicationUser.toJSON() : <any>undefined;
         data["endowmentRegistrationRequest"] = this.endowmentRegistrationRequest ? this.endowmentRegistrationRequest.toJSON() : <any>undefined;
@@ -12323,11 +12333,13 @@ export class RequestOutputDto implements IRequestOutputDto {
 }
 
 export interface IRequestOutputDto {
+    id: string;
     requestNumber: number;
     applicantId: string | undefined;
     requestTypeId: number | undefined;
     requestStatusId: number | undefined;
     workflowInstanceId: string | undefined;
+    serialNumber: string | undefined;
     submitionDate: DateTime | undefined;
     applicationUser: ApplicationUser;
     endowmentRegistrationRequest: EndowmentRegistrationRequest;
