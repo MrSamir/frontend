@@ -80,9 +80,8 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(
-          assetInfoModel.monetaryAsset.assetSubTypeId,
-          assetSubTypes
+        getSubAssets(
+          assetInfoModel.monetaryAsset.assetSubTypeId
         )
       }}
     </label>

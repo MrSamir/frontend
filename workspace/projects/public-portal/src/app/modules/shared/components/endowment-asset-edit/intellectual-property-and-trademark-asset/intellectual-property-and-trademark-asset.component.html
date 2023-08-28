@@ -158,10 +158,10 @@
     >
       <option [ngValue]="undefined"></option>
       <option [ngValue]="true">
-        {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
       </option>
       <option [ngValue]="false">
-        {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
       </option>
     </select>
     <label
@@ -170,7 +170,7 @@
         assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
       "
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
     </label>
     <label
       class="col-form-label font-weight-bold"
@@ -178,7 +178,7 @@
         !assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
       "
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
     </label>
     <div
       *ngIf="

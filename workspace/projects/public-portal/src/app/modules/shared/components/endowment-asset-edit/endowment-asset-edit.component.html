@@ -120,19 +120,10 @@
             </option>
           </select>
 
-          <!-- <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetTypeId,AssetTypeLookup)}} </label> -->
-
-          <!-- <div *ngIf="assetTypeId.invalid && (assetTypeId.dirty || assetTypeId.touched)" class=""> -->
-          <!-- <p *ngIf="assetTypeId.errors" class="text-danger pt-1 small">نوع الأصل مطلوب</p> -->
-          <!-- <p *ngIf="assetTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RequiredAssetTypeValidationlabel' | localize}}</p>
-          </div> -->
+         
         </div>
 
-        <!-- <div *ngIf="viewOnly" class="form-group col col-12">
-          <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetSizeId,AssetSizeLookup)}} </label>
-        </div> -->
+    
       </div>
 
       <app-shared-business-entity-asset #businessEntityAsset *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly"

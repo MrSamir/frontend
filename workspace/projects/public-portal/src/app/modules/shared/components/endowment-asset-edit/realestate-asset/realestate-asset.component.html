@@ -9,7 +9,6 @@
     <select
       class="custom-select"
       #assetSubTypeId="ngModel"
-      name="assetSubTypeId"
       [(ngModel)]="assetInfoModel.realEstateAsset.assetSubTypeId"
       [hidden]="viewOnly"
       required
@@ -23,9 +22,8 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(
-          assetInfoModel.realEstateAsset.assetSubTypeId,
-          assetSubTypes
+        getSubAssetsById(
+          assetInfoModel.assetTypeId
         )
       }}
     </label>
@@ -55,7 +53,6 @@
     <select
       class="custom-select"
       #regionId="ngModel"
-      name="regionId"
       [(ngModel)]="assetInfoModel.realEstateAsset.regionId"
       [hidden]="viewOnly"
       required
@@ -66,9 +63,7 @@
         {{ region.name }}
       </option>
     </select>
-    <!-- <label class="col-form-label font-weight-bold"
-        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.regionId,regionLookup)}} </label> -->
-
+ 
     <div
       *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)"
       class=""
@@ -91,7 +86,6 @@
       class="custom-select"
       [disabled]="cityDisabled"
       #cityId="ngModel"
-      name="cityId"
       [(ngModel)]="assetInfoModel.realEstateAsset.cityId"
       [hidden]="viewOnly"
       required
@@ -103,7 +97,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(assetInfoModel.realEstateAsset.cityId, cityLookup)
+        getCityById(assetInfoModel.realEstateAsset.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
@@ -139,7 +133,6 @@
       [maxLength]="14"
       #estimatedAmount="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
-      name="estimatedAmount"
       [(ngModel)]="assetInfoModel.realEstateAsset.estimatedAmount"
       [pattern]="ePatternValidation.pattern_decimal_values"
       required
@@ -197,7 +190,6 @@
     <input
       type="hidden"
       #ownershipDeedAttachementId
-      name="ownershipDeedAttachementId"
       [(ngModel)]="assetInfoModel.realEstateAsset.ownershipDeedAttachementId"
       required
     />

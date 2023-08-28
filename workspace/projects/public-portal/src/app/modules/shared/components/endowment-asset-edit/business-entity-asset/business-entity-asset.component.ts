@@ -25,7 +25,7 @@ export class BusinessEntityAssetComponent {
   // regionLookup: LookupModel[];
   // cityLookup: LookupModel[];
   // assetSubTypes: LookupModel[];
-
+  debugger;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
@@ -33,23 +33,22 @@ export class BusinessEntityAssetComponent {
   _lookupExtraData: LookupExtraData;
 
   map: MapModel = new MapModel();
-  resolveLookup: any;
+
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  // hint key
-  //registrationDocumentNumberhint: HintEntry;
-  //cityDisabled = true;
+
   cityDisabled = false;
   combinedPattern: RegExp;
 
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy /*, private utilityService: UtilityService*/
+    private lookupssrv: LookupApplicationServiceProxy
   ) {
-    //this.resolveLookup = this.utilityService.resolveLookup;
+
   }
 
   ngOnInit() {
+
     const patternDecimalValues =
       /^([0-9]{1,10})$|^([0-9]{1,10})(\.)[0-9]{1,4}$/;
     const patternWaqfResponserPortion =
@@ -82,6 +81,9 @@ export class BusinessEntityAssetComponent {
       console.log(data);
     });
 
+
+    debugger
+    this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();
     this.lookupfliter.lookUpName = 'AssetSubType';
@@ -110,6 +112,8 @@ export class BusinessEntityAssetComponent {
     // this.loadHints();
   }
   getcityLookup(value: any) {
+    this._lookupExtraData =new LookupExtraData();
+
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
     this.lookupfliter.lookUpName = 'City';
@@ -143,4 +147,20 @@ export class BusinessEntityAssetComponent {
   get requestType() {
     return ServiceRequestTypeEnum;
   }
+
+  getLookUpValue(assetSubTypeId: number) {    
+    return this.assetSubTypes.find(
+      (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
+    )?.name as string;
+  }
+
+
+  getCityLookUpValue(cityId: number) {
+    return this.cityLookup.find(c => c.id == cityId)?.name as string;
+  }
+
+  getBusinessEntityAssetLookUpValue(businessEntity: number) {
+    return this.regionLookup.find(c => c.id == businessEntity)?.name as string;
+  }
+
 }

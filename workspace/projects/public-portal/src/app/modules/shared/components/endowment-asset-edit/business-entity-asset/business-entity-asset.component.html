@@ -71,17 +71,16 @@
     >
       <option [value]="null" selected disabled></option>
       <option
-        *ngFor="let assetSubType of assetSubTypes"
-        value="{{ assetSubType.id }}"
+        *ngFor="let asset of assetSubTypes"
+        value="{{ asset.id }}"
       >
-        {{ assetSubType.name }}
+        {{ asset.name }}
       </option>
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(
-          assetInfoModel.businessEntityAsset.assetSubTypeId,
-          assetSubTypes
+        getLookUpValue(
+          assetInfoModel.businessEntityAsset.assetSubTypeId
         )
       }}
     </label>
@@ -104,7 +103,7 @@
   <div class="form-group col">
     <label class="col-form-label"
       >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetBusinessRegion"
+        "EndowmentModule.EndowmentRgistrationService.RealeStateRegion"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
@@ -124,7 +123,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(assetInfoModel.businessEntityAsset.regionId, regionLookup)
+        getBusinessEntityAssetLookUpValue(assetInfoModel.businessEntityAsset.regionId)
       }}
     </label>
 
@@ -143,7 +142,7 @@
   <div class="form-group col">
     <label class="col-form-label"
       >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetBusinessCity"
+        "EndowmentModule.EndowmentRgistrationService.RealeStateCity"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
@@ -164,7 +163,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(assetInfoModel.businessEntityAsset.cityId, cityLookup)
+        getCityLookUpValue(assetInfoModel.businessEntityAsset.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">

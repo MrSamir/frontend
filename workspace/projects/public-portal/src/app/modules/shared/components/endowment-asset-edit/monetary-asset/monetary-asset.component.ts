@@ -20,14 +20,13 @@ export class MonetaryAssetComponent {
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  resolveLookup: any;
+ 
   @Input() assetSubTypes: LookupModel[];
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy /*private utilityService:UtilityService*/
   ) {
-    //this.resolveLookup = this.utilityService.resolveLookup;
   }
 
   ngOnInit() {
@@ -50,4 +49,10 @@ export class MonetaryAssetComponent {
     //       });
     //     });
   }
+
+  getSubAssets(subassetId:number){
+      return this.assetSubTypes.find(c=>c.value == subassetId)?.name as string;
+  }
+
+
 }

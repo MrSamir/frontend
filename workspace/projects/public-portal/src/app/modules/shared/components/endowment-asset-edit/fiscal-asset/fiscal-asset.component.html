@@ -24,7 +24,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(assetInfoModel.fiscalAsset.assetSubTypeId, assetSubTypes)
+        getLookUpValue(assetInfoModel.fiscalAsset.assetSubTypeId)
       }}
     </label>
 

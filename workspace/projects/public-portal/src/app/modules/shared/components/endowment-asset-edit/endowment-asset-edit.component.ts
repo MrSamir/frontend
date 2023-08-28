@@ -65,7 +65,6 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   assetTypeMap: { [value: number]: string } = {};
   assetToEditIndex: number;
   isEditRequested = false;
-  resolveLookup: any;
   assetSubTypes: LookupModel[];
   ePatternValidation: typeof EnumValidation = EnumValidation;
   @Input() public wizard: WizardComponent;

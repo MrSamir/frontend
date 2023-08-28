@@ -28,7 +28,6 @@ export class RealestateAssetComponent {
   assetSubTypes: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
   map: MapModel = new MapModel();
-  resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
   cityDisabled = true;
   // hint key
@@ -39,16 +38,33 @@ export class RealestateAssetComponent {
     private modalService: NgbModal,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy
   ) {
-    //this.resolveLookup = this.utilityService.resolveLookup;
+
   }
 
   ngOnInit() {
+
+
+
+
+
     if (this.assetInfoModel.realEstateAsset == undefined) {
       this.assetInfoModel.realEstateAsset = new InputRealEstateAssetDto();
     } else {
       this.map.latitude = this.assetInfoModel.realEstateAsset.latitude;
       this.map.longitude = this.assetInfoModel.realEstateAsset.longitude;
     }
+    this._lookupExtraData = new LookupExtraData();
+    debugger
+    this._lookupExtraData.dataName = 'AssetTypeId';
+    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
+    this.lookupfliter.lookUpName = 'AssetSubType';
+    this.lookupfliter.filters = [this._lookupExtraData];
+
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
+      debugger
+      this.assetSubTypes = data.dto.items!;
+      console.log(data);
+    });
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
@@ -61,18 +77,11 @@ export class RealestateAssetComponent {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.cityLookup = data.dto.items!;
+      this.cityDisabled = false;
       console.log(data);
     });
 
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
 
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
     //  this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result) => {
     //    result.subscribe((assetsSubTypes: LookupModel[]) => {
     //      this.assetSubTypes = assetsSubTypes;
@@ -81,6 +90,7 @@ export class RealestateAssetComponent {
     //this.loadHints();
   }
   getcityLookup(value: any) {
+    this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
     this.lookupfliter.lookUpName = 'City';
@@ -88,6 +98,7 @@ export class RealestateAssetComponent {
 
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.cityLookup = data.dto.items!;
+      this.cityDisabled = false;
       console.log(data);
     });
 
@@ -109,4 +120,13 @@ export class RealestateAssetComponent {
   get requestType() {
     return ServiceRequestTypeEnum;
   }
+
+  getSubAssetsById(assetId: number) {
+    return this.assetSubTypes.filter(c => c.id == assetId).map(c => c.name);
+  }
+
+  getCityById(cityId: number) {
+    return this.cityLookup.find(c => c.id == cityId)?.name as string;
+  }
+
 }

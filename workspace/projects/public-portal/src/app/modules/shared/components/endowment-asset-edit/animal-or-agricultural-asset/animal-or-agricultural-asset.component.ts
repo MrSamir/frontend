@@ -27,14 +27,14 @@ export class AnimalOrAgriculturalAssetComponent {
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
-  resolveLookup: any;
   cityDisabled = true;
   constructor(
     private lookupssrv: LookupApplicationServiceProxy,
     private modalService: NgbModal,
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy /*,private utilityService:UtilityService,*/
+    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy
+ 
   ) {
-    //this.resolveLookup = this.utilityService.resolveLookup;
+ 
   }
 
   ngOnInit() {
@@ -54,10 +54,12 @@ export class AnimalOrAgriculturalAssetComponent {
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.cityLookup = data.dto.items!;
-      console.log(data);
+      this.cityDisabled = false;
+
     });
   }
   getcityLookup(value: any) {
+    this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
     this.lookupfliter.lookUpName = 'City';
@@ -68,4 +70,9 @@ export class AnimalOrAgriculturalAssetComponent {
       console.log(data);
     });
   }
+
+  getCityValue(value:number){
+    return this.cityLookup.find(c=>c.id == value)?.name as string;
+  }
+
 }

@@ -7241,6 +7241,7 @@ export class EndowmentData implements IEndowmentData {
     endowmentRegistrationSource!: EndowmentRegistrationSource;
     issuanceCourt!: IssuanceCourt;
     endowmentSeersData!: EndowmentSeerData[] | undefined;
+    spendingCategories!: SpendingCategory[] | undefined;
     endowmentDeedCity!: City;
     endowmentDeedRegion!: Region;
     createdBy!: string | undefined;
@@ -7312,6 +7313,11 @@ export class EndowmentData implements IEndowmentData {
                 this.endowmentSeersData = [] as any;
                 for (let item of _data["endowmentSeersData"])
                     this.endowmentSeersData!.push(EndowmentSeerData.fromJS(item));
+            }
+            if (Array.isArray(_data["spendingCategories"])) {
+                this.spendingCategories = [] as any;
+                for (let item of _data["spendingCategories"])
+                    this.spendingCategories!.push(SpendingCategory.fromJS(item));
             }
             this.endowmentDeedCity = _data["endowmentDeedCity"] ? City.fromJS(_data["endowmentDeedCity"]) : <any>undefined;
             this.endowmentDeedRegion = _data["endowmentDeedRegion"] ? Region.fromJS(_data["endowmentDeedRegion"]) : <any>undefined;
@@ -7385,6 +7391,11 @@ export class EndowmentData implements IEndowmentData {
             for (let item of this.endowmentSeersData)
                 data["endowmentSeersData"].push(item.toJSON());
         }
+        if (Array.isArray(this.spendingCategories)) {
+            data["spendingCategories"] = [];
+            for (let item of this.spendingCategories)
+                data["spendingCategories"].push(item.toJSON());
+        }
         data["endowmentDeedCity"] = this.endowmentDeedCity ? this.endowmentDeedCity.toJSON() : <any>undefined;
         data["endowmentDeedRegion"] = this.endowmentDeedRegion ? this.endowmentDeedRegion.toJSON() : <any>undefined;
         data["createdBy"] = this.createdBy;
@@ -7426,6 +7437,7 @@ export interface IEndowmentData {
     endowmentRegistrationSource: EndowmentRegistrationSource;
     issuanceCourt: IssuanceCourt;
     endowmentSeersData: EndowmentSeerData[] | undefined;
+    spendingCategories: SpendingCategory[] | undefined;
     endowmentDeedCity: City;
     endowmentDeedRegion: Region;
     createdBy: string | undefined;
@@ -12569,6 +12581,74 @@ export class Setting implements ISetting {
 
 export interface ISetting {
     appSettings: string | undefined;
+}
+
+export class SpendingCategory implements ISpendingCategory {
+    localizedKey!: string | undefined;
+    isEnabled!: boolean;
+    name!: string | undefined;
+    hintLoclizedKey!: string | undefined;
+    createdBy!: string | undefined;
+    creationDate!: DateTime;
+    updatedBy!: string | undefined;
+    lastUpdate!: DateTime | undefined;
+    id!: number;
+
+    constructor(data?: ISpendingCategory) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.localizedKey = _data["localizedKey"];
+            this.isEnabled = _data["isEnabled"];
+            this.name = _data["name"];
+            this.hintLoclizedKey = _data["hintLoclizedKey"];
+            this.createdBy = _data["createdBy"];
+            this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
+            this.updatedBy = _data["updatedBy"];
+            this.lastUpdate = _data["lastUpdate"] ? DateTime.fromISO(_data["lastUpdate"].toString()) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): SpendingCategory {
+        data = typeof data === 'object' ? data : {};
+        let result = new SpendingCategory();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["localizedKey"] = this.localizedKey;
+        data["isEnabled"] = this.isEnabled;
+        data["name"] = this.name;
+        data["hintLoclizedKey"] = this.hintLoclizedKey;
+        data["createdBy"] = this.createdBy;
+        data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
+        data["updatedBy"] = this.updatedBy;
+        data["lastUpdate"] = this.lastUpdate ? this.lastUpdate.toString() : <any>undefined;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface ISpendingCategory {
+    localizedKey: string | undefined;
+    isEnabled: boolean;
+    name: string | undefined;
+    hintLoclizedKey: string | undefined;
+    createdBy: string | undefined;
+    creationDate: DateTime;
+    updatedBy: string | undefined;
+    lastUpdate: DateTime | undefined;
+    id: number;
 }
 
 export class TemplateParameter implements ITemplateParameter {

@@ -26,7 +26,7 @@ export class FiscalAssetComponent {
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   _lookupExtraData: LookupExtraData;
 
-  resolveLookup: any;
+
   ePatternValidation: typeof EnumValidation = EnumValidation;
   currentassetvalueLabel = 'القيمة الحالية للأصل';
   assetAttachementLable = 'الأصل';
@@ -35,7 +35,7 @@ export class FiscalAssetComponent {
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private lookupssrv: LookupApplicationServiceProxy /*private utilityService:UtilityService*/
   ) {
-    //this.resolveLookup = this.utilityService.resolveLookup;
+    
   }
 
   ngOnInit() {
@@ -43,13 +43,7 @@ export class FiscalAssetComponent {
       this.assetInfoModel.fiscalAsset = new InputFiscalAssetDto();
     }
 
-    // this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result)=>{
-    //   result.subscribe((assetsSubTypes: LookupModel[])=>{
-    //     this.assetSubTypes=assetsSubTypes;
-    //     this.subTypeChanged();
-    //   });
-    // });
-
+    this._lookupExtraData =new LookupExtraData();
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();
     this.lookupfliter.lookUpName = 'AssetSubType';
@@ -66,27 +60,22 @@ export class FiscalAssetComponent {
       this.assetInfoModel.fiscalAsset.assetSubTypeId >= 10 &&
       this.assetInfoModel.fiscalAsset.assetSubTypeId < 13
     ) {
-      this.currentassetvalueLabel = 'القيمة الحالية ل{0}'.replace(
-        '{0}',
-        this.resolveLookup(
-          this.assetInfoModel.fiscalAsset.assetSubTypeId,
-          this.assetSubTypes
-        )
-      );
-      this.numberOfshareLable = 'عدد ال{0}'.replace(
-        '{0}',
-        this.resolveLookup(
-          this.assetInfoModel.fiscalAsset.assetSubTypeId,
-          this.assetSubTypes
-        )
-      );
-      this.assetAttachementLable = ' ال{0}'.replace(
-        '{0}',
-        this.resolveLookup(
-          this.assetInfoModel.fiscalAsset.assetSubTypeId,
-          this.assetSubTypes
-        )
-      );
+      this.currentassetvalueLabel = `القيمة الحالية ل${
+        this.assetSubTypes.find(
+          (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
+        )?.name as string
+      }`;
+
+      this.numberOfshareLable = `${
+        this.assetSubTypes.find(
+          (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
+        )?.name as string
+      }عدد ال`;
+      this.assetAttachementLable = `${
+        this.assetSubTypes.find(
+          (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
+        )?.name as string
+      }ال`;
     } else {
       this.currentassetvalueLabel = 'القيمة الحالية للأصل';
       this.numberOfshareLable = 'عدد الأصول';
@@ -96,4 +85,11 @@ export class FiscalAssetComponent {
   get requestType() {
     return ServiceRequestTypeEnum;
   }
+
+  getLookUpValue(assetSubTypeId: number) {
+    return this.assetSubTypes.find(
+      (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
+    )?.name as string;
+  }
+  
 }

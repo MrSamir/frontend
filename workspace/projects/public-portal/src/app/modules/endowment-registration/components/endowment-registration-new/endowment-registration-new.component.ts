@@ -77,7 +77,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   //@Input() public wizard: WizardComponent;
   @ViewChild(WizardComponent, { static: true }) public wizard: WizardComponent;
 
-  resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
  registerUsingendowmentDeedNumber:boolean|undefined =undefined;
 
