@@ -84,7 +84,7 @@ import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-rea
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent
+    EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent
   ],
 })
 export class PublicPortalSharedModule { }
