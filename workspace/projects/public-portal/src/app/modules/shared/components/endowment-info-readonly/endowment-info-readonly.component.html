@@ -4,7 +4,7 @@
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
       <div class="form-group col">
         <label class="col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentName" | localize }}<span class="text-danger">*</span></label>
-        <input type="text" class="form-control" #endowmentName="ngModel" name="endowmentName"
+        <input type="text" class="form-control" #endowmentName="ngModel" name="endowmentName" [disabled]="true"
           [(ngModel)]="InputEndowmentDto.endowmentName" required />
         <div *ngIf="endowmentName.invalid && (endowmentName.dirty || endowmentName.touched)" class="">
           <p *ngIf="endowmentName.errors" class="text-danger pt-1 small">
@@ -53,20 +53,7 @@
         </div>
       </div>
 
-      <!-- <div class="form-group col">
-          <ng-bootstrap-hijri-gregorian-datepicker
-            [Label]={{'EndowmentModule.EndowmentRgistrationService.EndowmentSpendingCategories'}}
-            [IsRequired]=true
-            [min]="minDeedDate"
-            [max]="maxDeedDate"
-            [(SelectedDate)]="waqfInitialDate"
-
-            (SelectedDateChange)="onWaqfDateChange($event)"  [IsDisabled]="IsDeedDisabled"
-            #datePicker
-          >
-          </ng-bootstrap-hijri-gregorian-datepicker>
-
-        </div> -->
+      
 
       <div class="form-group col">
         <div class="d-flex">
@@ -74,7 +61,7 @@
             }}<span class="text-danger">*</span></label>
         </div>
         <!-- pattern_number  [pattern]="ePatternValidation.pattern_number"-->
-        <input type="text" class="form-control" #revenue="ngModel" name="revenue" placeholder="{{
+        <input type="text" class="form-control" #revenue="ngModel" name="revenue" [disabled]="true" placeholder="{{
             'EndowmentModule.EndowmentRgistrationService.EndowmentRevenuePlaceHolder' | localize
           }}" [(ngModel)]="InputEndowmentDto.endowmentRevenue" required />
         <div *ngIf="revenue.invalid && (revenue.dirty || revenue.touched)" class="">
@@ -144,7 +131,7 @@
         <label class="col-form-label">
           {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumber" | localize }}
           <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="IsDeedDisabled"
+        <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="true" 
           [(ngModel)]="InputEndowmentDto.endowmentDeedNumber"
           [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required />
         <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
@@ -161,7 +148,7 @@
         <label class="col-form-label">
           {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedRegion" | localize }}
           <span class="text-danger">*</span></label>
-        <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="IsDeedDisabled"
+        <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="true"
           [(ngModel)]="InputEndowmentDto.endowmentDeedRegionId" required
           (change)="LoadCitiesByRegion(deedRegionId.value)">
           <option [value]="null" disabled selected></option>
@@ -226,7 +213,8 @@
 
 
           <div *ngIf="InputEndowmentDto.endowmentDeedAttachmentId" class="form-group col-12">
-            <app-AttachmentViewer *ngIf="endowmentDeadAttachemt" (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
+            <app-AttachmentViewer *ngIf="endowmentDeadAttachemt" [showDeleteButton]="false"
+             (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
               [Attachements]="[endowmentDeadAttachemt]"></app-AttachmentViewer>
           </div>
         </div>
@@ -234,25 +222,5 @@
     </div>
   </div>
 
-  <div class="aw-btn">
-    <div>
-      <!-- <button
-        type="button"
-        class="btn btn-outline-awq-secondary"
-        [disabled]="navigationButtonsDisabled"
-        (click)="onNextBtnClicked()"
-      >
-        {{ "EndowmentModule.EndowmentRgistrationService.ButtonNext" | localize }}
-      </button> -->
-      <button type="submit" class="btn btn-outline-awq-secondary">
-        {{
-        "EndowmentModule.EndowmentRgistrationService.ButtonNext" | localize
-        }}
-      </button>
-    </div>
-    <button type="button" class="btn btn-outline-awq-secondary" [hidden]="!IsCreate" (click)="onBackBtnClicked()"
-      awPreviousStep>
-      {{ "EndowmentModule.EndowmentRgistrationService.ButtonPreviouse" | localize }}
-    </button>
-  </div>
+ 
 </form>
