@@ -39,7 +39,7 @@
     <!--=========================   step one  =========================-->
     <div class="aw-wrpper_content" id="1">
       <app-endowment-applicant-CreateOrEdit
-        [RequestId]="requestId" *ngIf="step == undefined || step == '1'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"
+        [RequestId]="requestId" *ngIf="step == undefined || step == '1'" [serialNumber]="serialNumber" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"
       ></app-endowment-applicant-CreateOrEdit>
     </div>
 
@@ -47,33 +47,33 @@
   <!--=========================   step Tow  =========================-->
 
     <div class="aw-wrpper_content" id="2">
-      <app-endowment-info-edit *ngIf="step == '2'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-info-edit>
+      <app-endowment-info-edit *ngIf="step == '2'" [serialNumber]="serialNumber" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-info-edit>
     </div>
 
 
   <!--=========================   step three  =========================-->
 
     <div class="aw-wrpper_content" id="3">
-      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="step == '3'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-shared-asset-edit>
+      <app-endowment-shared-asset-edit [requestId]="requestId" *ngIf="step == '3'" [serialNumber]="serialNumber" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-shared-asset-edit>
     </div>
 
   <!--=========================   step Four  =========================-->
 
     <div class="aw-wrpper_content" id="4">
-      <app-endowment-endowers-list [requestId]="requestId" *ngIf="step == '4'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-endowers-list>
+      <app-endowment-endowers-list [requestId]="requestId" *ngIf="step == '4'" [serialNumber]="serialNumber" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-endowment-endowers-list>
     </div>
 
   <!--=========================   step Five  =========================-->
 
     <div class="aw-wrpper_content" id="5">
 <!--      <app-endowment-seers-list></app-endowment-seers-list>-->
-      <app-seer-step [requestId]="requestId" *ngIf="step == '5'" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-seer-step>
+      <app-seer-step [requestId]="requestId" *ngIf="step == '5'" [serialNumber]="serialNumber" (onBtnNextClicked)="onBtnNextClicked($event)" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-seer-step>
     </div>
 
 
   <!--=========================   step Six  =========================-->
 
     <div class="aw-wrpper_content" id="6">
-      <app-beneficiary-step [requestId]="requestId" *ngIf="step == '6'"(onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
+      <app-beneficiary-step [requestId]="requestId" *ngIf="step == '6'" [serialNumber]="serialNumber" (onBtnPreviousClicked)="onBackBtnClicked($event)"></app-beneficiary-step>
     </div>
 </div>

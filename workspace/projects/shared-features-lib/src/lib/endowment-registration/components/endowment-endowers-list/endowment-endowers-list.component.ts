@@ -36,6 +36,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   @Output() child_ownertypeid: EventEmitter<number> = new EventEmitter();
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+  @Input() serialNumber: string | undefined;
   isCitizen: boolean = false;
   isHafeza: boolean = false;
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -135,22 +136,11 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.primengTableHelper.showLoadingIndicator();
     this.registerWaqfService.getEndowersInformationByReqId(this.requestId).subscribe(
       (res: any) => {
+        debugger;
         this.primengTableHelper.records = res.dto.items as OutputEndowmerDto[];
         this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
         this.mainApplicantPerson = this.primengTableHelper.records?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();
       },
-      (err) => {
-        this.message.showMessage(MessageTypeEnum.toast, {
-          severity: MessageSeverity.Error,
-          message: err.errMessage,
-          closable: true,
-          detail: this.l(
-            'Common.CommonError'
-          ),
-          summary: '',
-          enableService: true,
-        });
-      }//handleError<object>(err.error)
     );
     this.primengTableHelper.hideLoadingIndicator();
   }
@@ -587,6 +577,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '5';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnNextClicked.emit(this.wizardNavDto);
   }
 
@@ -594,6 +585,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '3';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }
