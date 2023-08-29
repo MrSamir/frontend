@@ -1,3 +1,4 @@
+import { EndowmentRegistrationReadonlyComponent } from './../../endowment-registration/components/endowment-registration-readonly/endowment-registration-readonly.component';
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -29,6 +30,8 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
 import { TableModule } from 'primeng/table';
 import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
 import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
+import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-readonly/endowment-info-readonly.component';
+import { EditorModule } from 'primeng/editor';
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -44,7 +47,7 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
     EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent
+    EndowmentBeneficiaryEditComponent,EndowmentInfoReadonlyComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +66,7 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     StepsModule,
     CoreLibModule,
     TableModule,
-    SvgIconModule,
+    SvgIconModule,EditorModule
   ],
   exports: [
     //EndowmentAssetsEditComponent,
