@@ -6,6 +6,7 @@ import { BeneficiaryStepComponent } from '../components/endowment-registration-n
 import { PublicActiveProfileGuardService } from 'projects/core-lib/src/lib/services/public-active-profile-guard.service';
 import { AddRequestSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/add-request-success-message/add-request-success-message.component';
 import { UpdateMissingSuccessMessageComponent } from 'projects/shared-features-lib/src/lib/endowment-registration/components/update-missing-success-message/update-missing-success-message.component';
+import { EndowmentRegistrationReadonlyComponent } from '../components/endowment-registration-readonly/endowment-registration-readonly.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,13 @@ const routes: Routes = [
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
+    canActivate: [PublicActiveProfileGuardService]
+  },
+  {
+    path: 'details/:requestId',
+    component: EndowmentRegistrationReadonlyComponent,
+    data: { title: 'تفاصيل الطلب', breadcrumb: 'تفاصيل الطلب' },
+    title: 'تفاصيل الطلب',
     canActivate: [PublicActiveProfileGuardService]
   },
   /* {

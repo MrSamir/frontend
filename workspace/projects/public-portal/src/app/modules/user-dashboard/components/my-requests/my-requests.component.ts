@@ -2,7 +2,7 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import {  AccountProxy, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { AccountProxy, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 import { LazyLoadEvent } from 'primeng/api';
 
@@ -41,6 +41,30 @@ export class MyRequestsComponent extends ComponentBase implements OnInit {
     this.primengTableHelper.hideLoadingIndicator();
   }
 
+  ShowRequestData(currentRequestId: string) {
 
+    let paramsValues: string[] = [];
+
+    const reqTypeId = 1;// this.requestTypes.find(req => req.requestTypeNameAr === requestType).id;
+
+
+    paramsValues.push(currentRequestId);
+
+    return this.redirectServiceDetails(reqTypeId, paramsValues);
+
+  }
+
+
+
+
+
+
+
+  redirectServiceDetails(reqTypeId, paramsValues: string[]) {
+    const url: string = '/endowmentregistration/details'
+
+    return this.router.navigate([url, ...paramsValues]);
+
+  }
 
 }

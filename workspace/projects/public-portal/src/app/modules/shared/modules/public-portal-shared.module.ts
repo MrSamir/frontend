@@ -1,4 +1,3 @@
-import { EndowmentRegistrationReadonlyComponent } from './../../endowment-registration/components/endowment-registration-readonly/endowment-registration-readonly.component';
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -33,6 +32,7 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
 import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-readonly/endowment-info-readonly.component';
 import { EndowmentApplicantReadonlyComponent } from '../components/endowment-applicant-readonly/endowment-applicant-readonly.component';
 
+
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -48,7 +48,7 @@ import { EndowmentApplicantReadonlyComponent } from '../components/endowment-app
     EndowmentApplicantCreateOrEditComponent,
     EndowmentAssetsEditComponent,
     EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent
+    EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent,
     EndowmentApplicantReadonlyComponent,
   ],
   imports: [
@@ -68,7 +68,7 @@ import { EndowmentApplicantReadonlyComponent } from '../components/endowment-app
     StepsModule,
     CoreLibModule,
     TableModule,
-    SvgIconModule
+    SvgIconModule,
   ],
   exports: [
     //EndowmentAssetsEditComponent,
@@ -86,8 +86,9 @@ import { EndowmentApplicantReadonlyComponent } from '../components/endowment-app
     EndowmentAssetsEditComponent,
     EndowmentInfoEditComponent,
     EndowmentSeerEditComponent,
-    EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent
-    EndowmentApplicantReadonlyComponent
+    EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent,
+    EndowmentApplicantReadonlyComponent,
+    EndowmentInfoReadonlyComponent
   ],
 })
 export class PublicPortalSharedModule { }

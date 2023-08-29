@@ -136,7 +136,6 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
     this.primengTableHelper.showLoadingIndicator();
     this.registerWaqfService.getEndowersInformationByReqId(this.requestId).subscribe(
       (res: any) => {
-        debugger;
         this.primengTableHelper.records = res.dto.items as OutputEndowmerDto[];
         this.primengTableHelper.totalRecordsCount = res.dto.totalCount;
         this.mainApplicantPerson = this.primengTableHelper.records?.find(r => r.isMainApplicant) ?? new OutputEndowmerDto();

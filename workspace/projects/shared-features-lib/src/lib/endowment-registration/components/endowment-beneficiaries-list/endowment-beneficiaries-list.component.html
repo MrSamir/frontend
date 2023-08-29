@@ -23,10 +23,10 @@
                     localize}}
                     <p-sortIcon field="beneficiaryPerson.phoneNumber"></p-sortIcon>
                 </th>
-                <th class="text-center" scope="col">
+                <th class="text-center" scope="col" *ngIf="viewOnly">
                     {{'EndowmentModule.EndowmentRgistrationService.ReviewSeerInfoBton' | localize}}
                 </th>
-                <th class="text-center" scope="col">
+                <th class="text-center" scope="col" *ngIf="!viewOnly">
                     {{'EndowmentModule.EndowmentRgistrationService.EditSeerInfoBton' | localize}}
                 </th>
                 <th class="text-center" scope="col" *ngIf="!viewOnly">{{'Common.DeleteLabel' | localize}}</th>
@@ -43,7 +43,7 @@
                 <td class="text-center" scope="col">
                     {{ record.beneficiaryPerson?.phoneNumber}}
                 </td>
-                <td class="text-center" scope="col" *ngIf="!viewOnly" (click)="viewBeneficiary(addData, i)">
+                <td class="text-center" scope="col" *ngIf="viewOnly" (click)="viewBeneficiary(addData, i)">
                     <a class="btn btn-sm btn-outline-awq-secondary rounded">
                         <svg-icon icon="eye"></svg-icon>
                     </a>

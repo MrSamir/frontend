@@ -131,7 +131,6 @@ export class EndowmentApplicantCreateOrEditComponent
             this.wizardNavDto.endowmentId = this.waqfId;
             this.wizardNavDto.serialNumber = this.serialNumber;
             this.RequestId = result.dto.id;
-            debugger;
             this.onBtnNextClicked.emit(this.wizardNavDto);
 
           } else {

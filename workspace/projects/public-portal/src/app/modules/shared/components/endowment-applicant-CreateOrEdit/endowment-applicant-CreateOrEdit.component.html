@@ -17,7 +17,7 @@
           | localize
           }}<span class="text-danger">*</span> :
         </label>
-  
+
         <div class="form-group col form-inline">
           <div *ngFor="let item of applicantTypes">
             <p-checkbox name="applicantTypeGroup" [value]="item" [label]="item.name!"
@@ -37,7 +37,7 @@
             }
           ]">
         </app-validationMessages>
-  
+
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           <div class="form-group col">
             <label class="col-form-label">{{ "Common.idNumber" | localize
@@ -45,11 +45,11 @@
             </label>
             <input type="text" name="idTypeId" hidden #requestInfoapplicant_idTypeId
               [(ngModel)]="requestInfo.applicant.idTypeId" [ngModelOptions]="{ standalone: true }" />
-  
+
             <label *ngIf="requestInfo.applicant?.idNumber && applicantUser?.idNumber" class="col-form-label"><strong>{{
                 requestInfo.applicant.idNumber }}</strong>
             </label>
-  
+
             <div *ngIf="!requestInfo.applicant?.idNumber || !applicantUser?.idNumber">
               <input type="text" class="form-control" name="idNumber" #requestInfo_applicant_idNumber="ngModel"
                 [(ngModel)]="requestInfo.applicant.idNumber" [ngModelOptions]="{ standalone: true }" maxLength="10"
@@ -130,7 +130,7 @@
             <label *ngIf="requestInfo.applicant?.birthDateHijri" class="col-form-label"><strong>{{
                 requestInfo.applicant.birthDateHijri
                 }}</strong></label>
-  
+
           </div>
           <div *ngIf="
                 (!requestInfo.applicant?.birthDate &&
@@ -141,7 +141,7 @@
               [min]="minDate" [max]="maxDate" [(SelectedDate)]="selectedDate"
               (SelectedDateChange)="onDateChange($event)"></app-ng-bootstrap-hijri-gregorian-datepicker>
           </div>
-  
+
           <div class="form-group col">
             <label class="col-form-label">{{ "Common.gender" | localize }}
               <span class="text-danger">*</span> :
@@ -154,7 +154,7 @@
                         requestInfo?.applicant?.gender !== -1&& applicantUser?.gender == 1"
               class="col-form-label"><strong>{{
                 "Common.Female" | localize }}</strong></label>
-  
+
             <div *ngIf="
                         applicantUser?.gender == -1 ||
                         requestInfo?.applicant?.gender == -1
@@ -216,7 +216,7 @@
             <label
               *ngIf="applicantUser?.isAlive && requestInfo?.applicant?.isAlive&& requestInfo?.applicant?.isAlive == false"
               class="col-form-label"><strong>{{ "Common.dead" | localize }}</strong></label>
-  
+
             <div *ngIf="!applicantUser?.isAlive || !requestInfo?.applicant?.isAlive" class="d-flex">
               <div class="mr-3">
                 <p-radioButton name="lifeStatus" [value]="true" #requestInfo_applicant_isAlive="ngModel"
@@ -254,7 +254,7 @@
                 [(ngModel)]="requestInfo.applicant.phoneNumber" required
                 [pattern]="EnumValidation.pattern_full_mobile_number" placeholder="05xxxxxxxx | 9665xxxxxxxx"
                 maxlength="12" inputmode="numeric" />
-  
+
               <app-validationMessages relatedControlName="phoneNumber" [control]="requestInfo_applicant_phoneNumber"
                 [validationMessages]="[
                   {
@@ -331,7 +331,7 @@
                 | localize
                 }}<span class="text-danger">*</span> :
               </label>
-  
+
               <p-dropdown [required]="true" [options]="prestigiousAttributeTypes" [showClear]="true"
                 name="prestigiousAttributeType" #requestInfo_applicantEndowmer_prestigiousAttributeTypeId="ngModel"
                 [(ngModel)]="
@@ -493,7 +493,7 @@
                 | localize
                 }}<span class="text-danger">*</span> :
               </label>
-  
+
               <p-dropdown [required]="true" [options]="prestigiousAttributeTypes" [showClear]="true"
                 name="seerprestigiousAttributeType" #requestInfo_applicantSeer_prestigiousAttributeTypeId="ngModel"
                 [(ngModel)]="requestInfo.applicantSeer.prestigiousAttributeTypeId" optionLabel="name" optionValue="id"
