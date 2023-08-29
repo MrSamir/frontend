@@ -1,50 +1,63 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output } from '@angular/core';
 import {
+  ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
+  FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputBusinessEntityAssetDto,
+  InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
+  OutputFileDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute } from '@angular/router';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 
 @Component({
   selector: 'app-shared-business-entity-asset',
   templateUrl: './business-entity-asset.component.html',
   styleUrls: ['./business-entity-asset.component.css'],
 })
-export class BusinessEntityAssetComponent {
+export class BusinessEntityAssetComponent extends ComponentBase implements OnInit {
   @Input() @Output() assetInfoModel: InputAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   // regionLookup: LookupModel[];
   // cityLookup: LookupModel[];
   // assetSubTypes: LookupModel[];
-  debugger;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
   assetSubTypes: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
-
   map: MapModel = new MapModel();
-
   ePatternValidation: typeof EnumValidation = EnumValidation;
-
+  businessEntityAssetFile: File;
   cityDisabled = false;
   combinedPattern: RegExp;
+  businessEntityAssetAttachemt: AttachementItem;
 
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy
+    private lookupssrv: LookupApplicationServiceProxy,
+    injecter: Injector,
+    private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
+    private dateHelper: DateFormatterService,
+    private activatedRoute: ActivatedRoute,
+    injector: Injector,
   ) {
-
+    super(injecter);
   }
 
   ngOnInit() {
@@ -112,7 +125,7 @@ export class BusinessEntityAssetComponent {
     // this.loadHints();
   }
   getcityLookup(value: any) {
-    this._lookupExtraData =new LookupExtraData();
+    this._lookupExtraData = new LookupExtraData();
 
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
@@ -148,19 +161,135 @@ export class BusinessEntityAssetComponent {
     return ServiceRequestTypeEnum;
   }
 
-  getLookUpValue(assetSubTypeId: number) {    
-    return this.assetSubTypes.find(
-      (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
-    )?.name as string;
+  getLookUpValue(assetSubTypeId: number) {
+    if (assetSubTypeId !== undefined)
+      return this.assetSubTypes.find(
+        (c) => c.id == assetSubTypeId
+      )?.name as string;
+    else {
+      return undefined;
+    }
   }
 
 
   getCityLookUpValue(cityId: number) {
-    return this.cityLookup.find(c => c.id == cityId)?.name as string;
+    if (cityId !== undefined)
+      return this.cityLookup.find(c => c.id == cityId)?.name as string;
+    else
+      return undefined;
   }
 
   getBusinessEntityAssetLookUpValue(businessEntity: number) {
-    return this.regionLookup.find(c => c.id == businessEntity)?.name as string;
+    if (businessEntity !== undefined)
+      return this.regionLookup.find(c => c.id == businessEntity)?.name as string;
+    else
+      return undefined;
   }
+
+  businessEntityAssetSelect(event: any) {
+    this.businessEntityAssetFile = event.files[0];
+  }
+
+  businessEntityAssetUpload(event) {
+    this.UploadFile(event.files[0], (response) => {
+      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = response.id;
+      this.businessEntityAssetAttachemt = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.businessEntityAssetFile = null;
+    });
+  }
+
+  FileUploadentityName = 'EndowmentAttachment';
+  UploadFile(file: File, callback: (response: OutputFileDto) => void) {
+    this._serviceProxyFileLibrary
+      .uploadFile(
+        this.FileUploadentityName,
+        { data: file, fileName: file.name },
+        []
+      )
+      .subscribe(
+        (response: ApiResponseOfOutputFileDto) => {
+          // Handle the successful response here
+
+          if (response?.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: this.l('Common.SuccesUploadMessge'),
+              severity: MessageSeverity.Success,
+            });
+            callback(response.dto);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: response.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
+          // Optionally, perform additional actions with the response data
+        },
+        (error: any) => {
+          // Handle the error response here
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: this.l('Common.Upload'),
+            detail: this.l('Common.ErrorInFileUpload'),
+            severity: MessageSeverity.Error,
+          });
+          this.Util.error(error);
+          // Optionally, perform error handling
+        }
+      );
+  }
+
+
+
+  businessEntityAssetRemoveFile(event) {
+    this.removeFile(event, (result) => {
+      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = undefined!;
+      this.businessEntityAssetFile = undefined!;
+    });
+  }
+
+
+
+  removeFile(
+    event: AttachementItem,
+    callback: (item: AttachementItem) => void
+  ) {
+    const input = new InputFileDto();
+    input.entityName = this.FileUploadentityName;
+    input.id = event.id;
+    input.filters = [];
+    this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
+      if (result.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Success,
+        });
+        callback(event);
+      } else {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Error,
+        });
+      }
+    });
+  }
+
 
 }

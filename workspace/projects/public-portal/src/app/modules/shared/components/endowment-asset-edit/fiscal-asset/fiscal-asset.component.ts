@@ -66,11 +66,11 @@ export class FiscalAssetComponent {
         )?.name as string
       }`;
 
-      this.numberOfshareLable = `${
+      this.numberOfshareLable = `عدد ال${
         this.assetSubTypes.find(
           (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId
         )?.name as string
-      }عدد ال`;
+      }`;
       this.assetAttachementLable = `${
         this.assetSubTypes.find(
           (c) => c.id == this.assetInfoModel.fiscalAsset.assetSubTypeId

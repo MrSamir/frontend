@@ -1,3 +1,4 @@
+import { MapModule } from './../components/map/map.module';
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -29,6 +30,7 @@ import { EndowmentSeerEditComponent } from '../components/endowment-seer-edit/en
 import { TableModule } from 'primeng/table';
 import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
 import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
+
 @NgModule({
   declarations: [
     EndowmentInfoEditComponent,
@@ -64,6 +66,8 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
     CoreLibModule,
     TableModule,
     SvgIconModule,
+    MapModule
+  
   ],
   exports: [
     //EndowmentAssetsEditComponent,

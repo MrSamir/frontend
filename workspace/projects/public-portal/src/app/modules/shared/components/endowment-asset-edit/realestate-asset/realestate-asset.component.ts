@@ -1,24 +1,34 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
+  ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
+  FileLibraryApplicationServiceProxy,
   InputAssetDto,
+  InputFileDto,
   InputLookUpDto,
   InputRealEstateAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
+  OutputFileDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
+import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
+import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
+import { ActivatedRoute } from '@angular/router';
+import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 
 @Component({
   selector: 'app-shared-realestate-asset',
   templateUrl: './realestate-asset.component.html',
   styleUrls: ['./realestate-asset.component.css'],
 })
-export class RealestateAssetComponent {
+export class RealestateAssetComponent extends ComponentBase implements OnInit  {
   @Input() @Output() assetInfoModel: InputAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
@@ -34,11 +44,15 @@ export class RealestateAssetComponent {
   //estimatedValuehint:HintEntry;
 
   constructor(
-    private lookupssrv: LookupApplicationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy
+    private lookupssrv: LookupApplicationServiceProxy,
+    injecter: Injector,
+    private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
+    private dateHelper: DateFormatterService,
+    private activatedRoute: ActivatedRoute,
   ) {
-
+    super(injecter);
   }
 
   ngOnInit() {
@@ -128,5 +142,111 @@ export class RealestateAssetComponent {
   getCityById(cityId: number) {
     return this.cityLookup.find(c => c.id == cityId)?.name as string;
   }
+
+  realestateAssetSelect(event: any) {
+    this.realestateAssetFile = event.files[0];
+  }
+
+  realestateAssetAttachemt: AttachementItem;
+  realestateAssetUpload(event) {
+    this.UploadFile(event.files[0], (response) => {
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = response.id;
+      this.realestateAssetAttachemt = {
+        id: response.id,
+        fileName: response.fileName!,
+        fileData: response.fileData!,
+        ContentType: response.contentType!,
+      };
+      this.realestateAssetFile = null;
+    });
+  }
+
+  FileUploadentityName = 'EndowmentAttachment';
+  UploadFile(file: File, callback: (response: OutputFileDto) => void) {
+    this._serviceProxyFileLibrary
+      .uploadFile(
+        this.FileUploadentityName,
+        { data: file, fileName: file.name },
+        []
+      )
+      .subscribe(
+        (response: ApiResponseOfOutputFileDto) => {
+          // Handle the successful response here
+
+          if (response?.isSuccess) {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: this.l('Common.SuccesUploadMessge'),
+              severity: MessageSeverity.Success,
+            });
+            callback(response.dto);
+          } else {
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: this.l('Common.Upload'),
+              detail: response.message!,
+              severity: MessageSeverity.Error,
+            });
+          }
+          // Optionally, perform additional actions with the response data
+        },
+        (error: any) => {
+          // Handle the error response here
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: this.l('Common.Upload'),
+            detail: this.l('Common.ErrorInFileUpload'),
+            severity: MessageSeverity.Error,
+          });
+          this.Util.error(error);
+          // Optionally, perform error handling
+        }
+      );
+  }
+
+  realestateAssetFile: File;
+  realestateAssetRemoveFile(event) {
+    this.removeFile(event, (result) => {
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = undefined!;
+      this.realestateAssetFile = undefined!;
+    });
+  }
+
+
+  removeFile(
+    event: AttachementItem,
+    callback: (item: AttachementItem) => void
+  ) {
+    const input = new InputFileDto();
+    input.entityName = this.FileUploadentityName;
+    input.id = event.id;
+    input.filters = [];
+    this._serviceProxyFileLibrary.deleteFile(input).subscribe((result) => {
+      if (result.isSuccess) {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Success,
+        });
+        callback(event);
+      } else {
+        this.message.showMessage(MessageTypeEnum.toast, {
+          closable: true,
+          enableService: true,
+          summary: '',
+          detail: result.message!,
+          severity: MessageSeverity.Error,
+        });
+      }
+    });
+  }
+
+
 
 }

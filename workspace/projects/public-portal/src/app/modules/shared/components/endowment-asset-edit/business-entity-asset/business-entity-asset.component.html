@@ -133,7 +133,7 @@
     >
       <p *ngIf="regionId.errors" class="text-danger pt-1 small">
         {{
-          "EndowmentModule.EndowmentRgistrationService.RequiredAssetBusinessRegionValidationlabel"
+          "EndowmentModule.EndowmentRgistrationService.RequiredRealeStateAssetRegionValidationlabel"
             | localize
         }}
       </p>
@@ -169,7 +169,7 @@
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
       <p *ngIf="cityId.errors" class="text-danger pt-1 small">
         {{
-          "EndowmentModule.EndowmentRgistrationService.AssetBusinessCityRequiredValidationlabel"
+          "EndowmentModule.EndowmentRgistrationService.RealeStateAssetCityRequiredValidationlabel"
             | localize
         }}
       </p>
@@ -179,12 +179,12 @@
   <div class="form-group col-12">
     <label class="col-form-label"
       >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetBusinessLocation"
+        "EndowmentModule.EndowmentRgistrationService.RealeStateAssetLocation"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
     <div class="col-sm-12 px-0">
-      <!-- <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map> -->
+      <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map>
     </div>
   </div>
   <div class="form-group col">
@@ -331,17 +331,48 @@
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
 
+    
+    <div class="input-group mb-3 download p-2">
+      <div class="flex-grow-1">
+        <lib-file-uploader
+        name="commercialRegisterAttachment"
+        [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.AssetBusinesscommercialRegisterAttachment')"
+        [showDisclaimer]="true"
+        (OnSelectFile)="businessEntityAssetSelect($event)"
+        (OnUploadFile)="businessEntityAssetUpload($event)"
+      ></lib-file-uploader>
     <input
       type="hidden"
-      #commercialRegisterAttachmentId
+      #commercialRegisterAttachmentId="ngModel"
       name="commercialRegisterAttachmentId"
       [(ngModel)]="
         assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId
       "
       required
     />
-    <div class="input-group mb-3 download p-2">
-      <div class="flex-grow-1">
+    <app-validationMessages
+      relatedControlName="commercialRegisterAttachmentId"
+      [control]="commercialRegisterAttachmentId"
+      [validationMessages]="[
+        {
+          ruleName: 'required',
+          ruleMessage: l(
+            'Common.Required',
+            l('EndowmentModule.EndowmentRgistrationService.seenDeed')
+          )
+        }
+      ]"
+    >
+    </app-validationMessages>
+    <div
+    *ngIf="assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId"
+    class="form-group col-12"
+  >
+    <app-AttachmentViewer
+      *ngIf="businessEntityAssetAttachemt"
+      (OnAttachementRemove)="businessEntityAssetRemoveFile($event)"
+      [Attachements]="[businessEntityAssetAttachemt]"
+    ></app-AttachmentViewer>
         <!-- <file-uploader [showDownloadButton]="true" [showDeleteButton]="!viewOnly" [allowedExtensions]="['.pdf' ]"
             [objects]="[assetInfoModel.businessEntityAsset]" [keys]="['commercialRegisterAttachmentId']"
             [fileDisplayName]="'السجل التجاري'" [serviceTypeId]="requestType.NewWaqf">

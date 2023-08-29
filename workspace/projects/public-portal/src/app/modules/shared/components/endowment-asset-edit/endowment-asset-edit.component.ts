@@ -191,6 +191,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   }
 
   loadassetSubTypeforEdit(_assetTypeId: number, _content: any) {
+    debugger
     this.lookupfliter.lookUpName = 'AssetSubType';
     //this.lookupfliter.filters = [assetTypeId];
     this.lookupfliter.filters = [];
