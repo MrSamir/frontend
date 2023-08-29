@@ -224,6 +224,9 @@
           [(ngModel)]="InputEndowmentDto.endowmentConditions"
         >
         </textarea>
+
+        <!-- <p-editor  #condition="ngModel" name="condition"
+        [(ngModel)]="InputEndowmentDto.endowmentConditions"  class="form-control" [style]="{ height: '320px' }"></p-editor> -->
         <div
           *ngIf="condition.invalid && (condition.dirty || condition.touched)"
           class=""
