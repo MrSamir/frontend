@@ -137,7 +137,6 @@ export class EndowmentInfoReadonlyComponent  extends ComponentBase implements On
         this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
       }
       else {
-        //this.InputEndowmentDto.endowmentInitialDate = `${this.endowmentInitialDate.year.year}/${this.endowmentInitialDate.month}/${this.endowmentInitialDate.day}`
         this.InputEndowmentDto.acceptDonations = false;
         this.InputEndowmentDto.acceptGiveaways = false;
       }
@@ -197,8 +196,6 @@ export class EndowmentInfoReadonlyComponent  extends ComponentBase implements On
   }
 
   onNextBtnClicked(form: NgForm) {
- 
-     
   }
    
 
@@ -250,7 +247,8 @@ export class EndowmentInfoReadonlyComponent  extends ComponentBase implements On
   }
 
 
-  EndowmentDeedFileSelect(event: any) {
+  EndowmentDeedFileSelect(event: any) 
+  {
     this.endowmentDeedFile = event.files[0];
   }
 
