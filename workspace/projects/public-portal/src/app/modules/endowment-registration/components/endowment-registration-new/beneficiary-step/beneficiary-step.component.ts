@@ -3,7 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentBase } from "projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component";
-import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto, RequestModelDto, RequestDto } from "../../../../shared/services/services-proxies/service-proxies";
+import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto, RequestModelDto, RequestDto, ActionInput } from "../../../../shared/services/services-proxies/service-proxies";
 import { wizardNavDto } from "../../../models/wizard-nav-data";
 import { MessageTypeEnum } from "projects/core-lib/src/lib/enums/message-type";
 import { MessageSeverity } from "projects/core-lib/src/lib/enums/message-severity";
@@ -22,9 +22,11 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   @Input() waqfId: string;
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+  @Input() serialNumber: string | undefined;
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
   taskNumber: string;
+  actionInput: ActionInput = new ActionInput()
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
@@ -41,7 +43,7 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     //throw new Error('Method not implemented.');
     this.isEditRequested = false;
     this.requestId = this.activatedRoute.snapshot.params['requestId'];
-    this.taskNumber = this.activatedRoute.snapshot.params['tasknumber'];
+    this.taskNumber = this.activatedRoute.snapshot.params['serialnumber'];
     this.updated = false;
   }
 
@@ -65,9 +67,12 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   OnDeletingExistingAsset(event: any) { }
 
   onNextBtnClicked() {
-    debugger;
-    this.submit();
-
+    if (this.serialNumber != undefined && this.serialNumber != '') {
+      this.UpdateRequestInfo();
+    }
+    else {
+      this.submit();
+    }
     // if (!this.updated || String(this.updated) == "empty") {
     //   this.message.showMessage(MessageTypeEnum.toast, {
     //     closable: true,
@@ -89,6 +94,7 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '5';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
     // this.wizard.goToPreviousStep();
   }
@@ -105,7 +111,13 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     var request: RequestDto = new RequestDto();
     request.id = this.requestId;
     requestModelDto.requestDto = new RequestDto();
-    requestModelDto.requestDto.init(request)
+    requestModelDto.requestDto.init(request);
+    if (this.serialNumber != undefined && this.serialNumber != '') {
+      requestModelDto.actionInput = new ActionInput();
+
+      requestModelDto.actionInput.init(this.actionInput)
+    }
+
     this.endowmentRegistrationServiceProxy.submitRequest(requestModelDto).subscribe(res => {
       debugger;
       this.message.showMessage(MessageTypeEnum.toast, {
@@ -140,27 +152,27 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     });
   }
 
-  // UpdateRequestInfo() {
-  //   this.userType = this.authenticationServiceV2.currentLoggedInUser.UserType;
-  //   this.userName = this.authenticationServiceV2.currentLoggedInUser.username; // Reviewer1 Officer1 Auditor1 AQF:2256756789
-  //   this.displayName =
-  //     this.authenticationServiceV2.currentLoggedInUser.displayname;
-  //   this.taskStatus = this.essentialInfoForBeneficiaryTab.status;
-  //   Swal.fire({
-  //     title: 'هل انت متأكد من اتخاذ القرار؟',
-  //     showCancelButton: true,
-  //     confirmButtonText: 'نعم',
-  //     cancelButtonText: 'لا',
-  //     icon: 'question',
-  //     width: 600,
-  //     padding: '3em',
-  //     confirmButtonColor: '#D6BD81',
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       this.onSubmitBankForm();
-  //       return;
-  //     }
-  //   });
-  // }
+  UpdateRequestInfo() {
+    this.actionInput.actionName = "Resubmit";
+    this.actionInput.actionDisplayName = "تم تزويد المعلومات من المتقدم";
+    this.actionInput.serialNumber = this.taskNumber;
+    this.actionInput.requestId = this.requestId;
+    this.actionInput.uiOnly = true;
+    Swal.fire({
+      title: 'هل انت متأكد من اتخاذ القرار؟',
+      showCancelButton: true,
+      confirmButtonText: 'نعم',
+      cancelButtonText: 'لا',
+      icon: 'question',
+      width: 600,
+      padding: '3em',
+      confirmButtonColor: '#D6BD81',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.onSubmitBankForm();
+        return;
+      }
+    });
+  }
 }
 

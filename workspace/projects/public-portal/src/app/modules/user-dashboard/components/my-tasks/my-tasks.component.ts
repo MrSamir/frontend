@@ -59,12 +59,12 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
     let actionType: ActionTypes = ActionTypes.Returned;// this.userType == UserTypeEnum.Employee? ActionTypes.Details:ActionTypes.Returned;
 
     paramsValues.push(currentRequestId);
+    paramsValues.push(step);
 
     if (serialNumber != undefined && serialNumber != null && serialNumber != '') {
       paramsValues.push(serialNumber);
     }
 
-    paramsValues.push(step);
 
     return this.redirectServiceAction(reqTypeId, actionType, paramsValues);
 

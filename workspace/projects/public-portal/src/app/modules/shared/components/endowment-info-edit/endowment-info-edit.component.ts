@@ -52,6 +52,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
   @ViewChild(NgForm, { static: false }) form: NgForm;
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
+  @Input() serialNumber: string | undefined;
   ePatternValidation = EnumValidation;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   spendingCategoriesLookup: any = [];
@@ -124,16 +125,19 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.LoadLookups('Region', (lookups) => {
       this.RegioneLookup = lookups;
     });
-    
+
     this.LoadLookups('IssuanceCourt', (lookups) => {
       this.IssuanceCourtsLookup = lookups;
     });
-   
+
     this.LoadWaqf();
     this.setDateLimits();
 
     if (this.InputEndowmentDto) {
-      this.LoadCitiesByRegion(this.InputEndowmentDto?.endowmentDeedRegionId!);
+      if (this.InputEndowmentDto?.endowmentDeedRegionId != undefined && this.InputEndowmentDto?.endowmentDeedRegionId != null) {
+        this.LoadCitiesByRegion(this.InputEndowmentDto?.endowmentDeedRegionId!);
+      }
+
 
       if (!!this.InputEndowmentDto?.endowmentInitialDate) {
         this.endowmentInitialDate = hijriDateExtensions.parseHijriString(this.InputEndowmentDto.endowmentInitialDate);
@@ -227,6 +231,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '1';
     this.wizardNavDto.endowmentId = this.waqfId;
+    this.wizardNavDto.serialNumber = this.serialNumber;
     this.onBtnPreviousClicked.emit(this.wizardNavDto);
   }
 
@@ -241,10 +246,9 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     //   this.onNewWaqfRegistered.emit(this.InputEndowmentDto.waqfTypeId.toString());
 
     // }
-    if(this.validateForm(form))
-    {
-    this.createOrEditWaqf();
-  }
+    if (this.validateForm(form)) {
+      this.createOrEditWaqf();
+    }
   }
   createOrEditWaqf() {
     //this._editWaqfInputDto.requestId = this.requestId;
@@ -281,6 +285,7 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
             this.wizardNavDto.requestId = this.requestId
             this.wizardNavDto.step = '3';
             this.wizardNavDto.endowmentId = this.waqfId;
+            this.wizardNavDto.serialNumber = this.serialNumber;
             this.onBtnNextClicked.emit(this.wizardNavDto);
             // this.wizard.goToNextStep()
           } else {
@@ -311,21 +316,20 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
 
 
   LoadWaqf() {
-    
+
     this.registerWaqfServiceProxy
       .getEndowmentDataByRequestId(this.requestId)
       .subscribe(
         (result: ApiResponse) => {
           if (result.isSuccess) {
             this.InputEndowmentDto = result.dto;
-            if(this.InputEndowmentDto.endowmentDeedRegionId)
-            {
+            if (this.InputEndowmentDto.endowmentDeedRegionId) {
               this.LoadCitiesByRegion(this.InputEndowmentDto.endowmentDeedRegionId);
             }
             if (
               this.InputEndowmentDto?.endowmentDeedAttachmentId !=
-                undefined &&
-                this.InputEndowmentDto?.endowmentDeedAttachmentId != ''
+              undefined &&
+              this.InputEndowmentDto?.endowmentDeedAttachmentId != ''
             ) {
               this.getFileById(
                 this.InputEndowmentDto?.endowmentDeedAttachmentId,
@@ -339,21 +343,21 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
                 }
               );
             }
-          } 
+          }
         },
-(error)=>{
-  this.message.showMessage(MessageTypeEnum.toast, {
-    closable: true,
-    enableService: true,
-    summary: '',
-    detail: this.l(
-      'Common.CommonError'
-    ),
-    severity: MessageSeverity.Error,
-  });
-}
+        (error) => {
+          this.message.showMessage(MessageTypeEnum.toast, {
+            closable: true,
+            enableService: true,
+            summary: '',
+            detail: this.l(
+              'Common.CommonError'
+            ),
+            severity: MessageSeverity.Error,
+          });
+        }
       );
-    
+
   }
 
 
