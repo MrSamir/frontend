@@ -31,6 +31,7 @@ import { TableModule } from 'primeng/table';
 import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/modules/svg-icon.module";
 import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
 import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-readonly/endowment-info-readonly.component';
+import { EndowmentApplicantReadonlyComponent } from '../components/endowment-applicant-readonly/endowment-applicant-readonly.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-rea
     EndowmentAssetsEditComponent,
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent
+    EndowmentApplicantReadonlyComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +87,7 @@ import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-rea
     EndowmentInfoEditComponent,
     EndowmentSeerEditComponent,
     EndowmentBeneficiaryEditComponent, EndowmentInfoReadonlyComponent
+    EndowmentApplicantReadonlyComponent
   ],
 })
 export class PublicPortalSharedModule { }

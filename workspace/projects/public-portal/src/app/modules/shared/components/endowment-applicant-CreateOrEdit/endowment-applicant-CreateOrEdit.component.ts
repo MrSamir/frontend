@@ -18,6 +18,7 @@ import {
   MOJApplicationServiceProxy,
   OutputApplicationUserDto,
   OutputFileDto,
+  RequestStatusEnum,
 } from '../../services/services-proxies/service-proxies';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
@@ -56,6 +57,7 @@ export class EndowmentApplicantCreateOrEditComponent
   @Input() RequestId: string;
   @Input() serialNumber: string | undefined;
   @Input() waqfId: string;
+  @Input() ViewOnly:boolean=false;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
   seerTypeHint: HintModel;
@@ -167,7 +169,7 @@ export class EndowmentApplicantCreateOrEditComponent
     if (this.RequestId == undefined || this.RequestId == '') {
       this.loadCurrentUser();
     } else {
-      this.isEditMode = true;
+     
       this.loadrequest();
     }
     this.loadEndowmerTypeHint();
@@ -180,6 +182,10 @@ export class EndowmentApplicantCreateOrEditComponent
         if (result.isSuccess) {
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
+          this.isEditMode=
+          (result.dto.requestStatusId== RequestStatusEnum.Draft ||
+          result.dto.requestStatusId== RequestStatusEnum.CompleteRequiredData ||
+          result.dto.requestStatusId== RequestStatusEnum.ReturnedToApplicant);
           let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
           this.selectedTypes = this.applicantTypes?.filter((value, index) => {
             return seletedapptypes?.includes(value.id.toString());
