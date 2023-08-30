@@ -4,7 +4,7 @@ import { MessageTypeEnum } from '../../../../../../../core-lib/src/lib/enums/mes
 import { MessageSeverity } from '../../../../../../../core-lib/src/lib/enums/message-severity';
 import { MojDataMigrationApplicationServicesProxy } from '../../../shared/services/services-proxies/service-proxies'
 import { Component, OnInit, Injector, Output, EventEmitter } from '@angular/core';
-import {Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-endowment-direct-registeration',
@@ -13,17 +13,16 @@ import {Router } from '@angular/router';
 })
 export class EndowmentDirectRegisterationComponent
   extends ComponentBase
-  implements OnInit
-{
+  implements OnInit {
   constructor(
     injector: Injector,
     private mojDataMigrationApplicationServices: MojDataMigrationApplicationServicesProxy,
-    private route:Router
+    private route: Router
   ) {
     super(injector);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   deedNumber: number;
   @Output() deedNumberFound = new EventEmitter<boolean>();
@@ -33,6 +32,7 @@ export class EndowmentDirectRegisterationComponent
       .registerEndowmentByDeedNumberFromWeb(this.deedNumber, true)
       .subscribe(
         (result) => {
+          debugger;
           this.message.showMessage(MessageTypeEnum.toast, {
             closable: true,
             enableService: true,
@@ -42,7 +42,13 @@ export class EndowmentDirectRegisterationComponent
             ),
             severity: MessageSeverity.Success,
           });
-           this.route.navigate(['userdashboard/', 3]);
+          if (result.dto.serialNumber == undefined || result.dto.serialNumber == '') {
+            this.route.navigate(['userdashboard/', 3]);
+          }
+          else {
+            this.route.navigate(['/endowmentregistration/registrationform/', ...[result.dto.id, '1', result.dto.serialNumber]]);
+          }
+
         },
         (error) => {
           this.deedNumberFound.emit(false);

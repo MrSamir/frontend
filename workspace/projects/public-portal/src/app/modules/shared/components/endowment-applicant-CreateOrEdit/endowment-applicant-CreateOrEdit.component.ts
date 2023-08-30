@@ -57,7 +57,7 @@ export class EndowmentApplicantCreateOrEditComponent
   @Input() RequestId: string;
   @Input() serialNumber: string | undefined;
   @Input() waqfId: string;
-  @Input() ViewOnly:boolean=false;
+  @Input() ViewOnly: boolean = false;
   selectedTypes: LookupDto[];
   EndowmerTypeHint: HintModel;
   seerTypeHint: HintModel;
@@ -168,7 +168,7 @@ export class EndowmentApplicantCreateOrEditComponent
     if (this.RequestId == undefined || this.RequestId == '') {
       this.loadCurrentUser();
     } else {
-     
+
       this.loadrequest();
     }
     this.loadEndowmerTypeHint();
@@ -179,30 +179,37 @@ export class EndowmentApplicantCreateOrEditComponent
       .getEndowmentRegistrationApplicant(this.RequestId)
       .subscribe((result) => {
         if (result.isSuccess) {
+          if (result.dto.applicantSeer?.seedDeedAttachmentId === "00000000-0000-0000-0000-000000000000") {
+            result.dto.applicantSeer.seedDeedAttachmentId = '';
+          }
+          if (result.dto.applicantAgent?.representativeAttachmentId === "00000000-0000-0000-0000-000000000000") {
+            result.dto.applicantAgent.representativeAttachmentId = '';
+          }
           this.requestInfo.init(result.dto);
           this.applicantUser.init(result.dto.applicant);
-          this.isEditMode=
-          (result.dto.requestStatusId== RequestStatusEnum.Draft ||
-          result.dto.requestStatusId== RequestStatusEnum.CompleteRequiredData ||
-          result.dto.requestStatusId== RequestStatusEnum.ReturnedToApplicant);
+          this.isEditMode =
+            (result.dto.requestStatusId == RequestStatusEnum.Draft ||
+              result.dto.requestStatusId == RequestStatusEnum.CompleteRequiredData ||
+              result.dto.requestStatusId == RequestStatusEnum.ReturnedToApplicant);
           let seletedapptypes = this.requestInfo.applicantTypes?.split(',');
           this.selectedTypes = this.applicantTypes?.filter((value, index) => {
             return seletedapptypes?.includes(value.id.toString());
           });
-          this.selectedTypes.forEach((value, index) => {
-            switch (value.id) {
-              case 1:
-                this.isEndwowmer = true;
-                break;
-              case 2:
-                this.isSeer = true;
-                break;
-              case 3:
-                this.isAgent = true;
-                break;
-            }
-          });
-
+          if (this.selectedTypes != undefined) {
+            this.selectedTypes.forEach((value, index) => {
+              switch (value.id) {
+                case 1:
+                  this.isEndwowmer = true;
+                  break;
+                case 2:
+                  this.isSeer = true;
+                  break;
+                case 3:
+                  this.isAgent = true;
+                  break;
+              }
+            });
+          }
           if (
             result.dto.applicantSeer?.seedDeedAttachmentId != undefined &&
             result.dto.applicantSeer?.seedDeedAttachmentId != ''
