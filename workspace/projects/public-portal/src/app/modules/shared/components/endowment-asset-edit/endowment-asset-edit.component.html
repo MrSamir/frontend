@@ -126,32 +126,32 @@
     
       </div>
 
-      <app-shared-business-entity-asset #businessEntityAsset *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly"
+      <app-shared-business-entity-asset #businessEntityAsset="ngModel" name="businessEntityAsset" *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly"
         [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.businessEntityAsset" [assetInfoModel]="newAsset!">
       </app-shared-business-entity-asset>
-      <app-shared-realestate-asset #realEstateAsset *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAsset"
+      <app-shared-realestate-asset #realEstateAsset="ngModel" *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAsset"  name="realEstateAsset"
         [assetInfoModel]="newAsset!"></app-shared-realestate-asset>
-      <app-shared-fiscal-asset #fiscalAsset *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAsset"
+      <app-shared-fiscal-asset #fiscalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAsset"   name="fiscalAsset"
         [assetInfoModel]="newAsset!"></app-shared-fiscal-asset>
-      <app-shared-movable-asset #movableAsset *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAsset"
+      <app-shared-movable-asset #movableAsset="ngModel" *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAsset"  name="movableAsset"
         [assetInfoModel]="newAsset!"></app-shared-movable-asset>
-      <app-shared-monetary-asset #monetaryAsset *ngIf="newAsset?.assetTypeId == 5" [assetSubTypes]="assetSubTypes"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAsset"
+      <app-shared-monetary-asset #monetaryAsset="ngModel" *ngIf="newAsset?.assetTypeId == 5" 
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAsset" name="monetaryAsset"
         [assetInfoModel]="newAsset!"></app-shared-monetary-asset>
 
-      <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset *ngIf="newAsset?.assetTypeId == 6"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAsset"
+      <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 6"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAsset" name="animalOrAgriculturalAsset"
         [assetInfoModel]="newAsset!"></app-shared-animal-or-agricultural-asset>
 
-      <app-shared-particular-benefit-asset #particularBenefitAsset *ngIf="newAsset?.assetTypeId == 7"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAsset"
+      <app-shared-particular-benefit-asset #particularBenefitAsset="ngModel" *ngIf="newAsset?.assetTypeId == 7"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAsset"  name="particularBenefitAsset"
         [assetInfoModel]="newAsset!"></app-shared-particular-benefit-asset>
-      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset
+      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset="ngModel"
         *ngIf="newAsset?.assetTypeId == 8" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
-        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAsset"
+        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAsset"  name="intellectualPropertyAndTrademarkAsset"
         [assetInfoModel]="newAsset!"></app-shared-intellectual-property-and-trademark-asset>
     </div>
     <ng-container *ngIf="!isEditRequested && !viewOnly">

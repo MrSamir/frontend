@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
   ApiResponseOfOutputFileDto,
@@ -22,13 +22,17 @@ import { AttachementItem } from 'projects/shared-features-lib/src/lib/components
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { ActivatedRoute } from '@angular/router';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
 
 @Component({
   selector: 'app-shared-realestate-asset',
   templateUrl: './realestate-asset.component.html',
   styleUrls: ['./realestate-asset.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => RealestateAssetComponent) }]
 })
-export class RealestateAssetComponent extends ComponentBase implements OnInit  {
+export class RealestateAssetComponent extends ComponentBase implements OnInit {
   @Input() @Output() assetInfoModel: InputAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
@@ -136,11 +140,17 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit  {
   }
 
   getSubAssetsById(assetId: number) {
-    return this.assetSubTypes.filter(c => c.id == assetId).map(c => c.name);
+    if (assetId !== undefined)
+      return this.assetSubTypes.filter(c => c.id == assetId).map(c => c.name);
+    else
+      return undefined;
   }
 
   getCityById(cityId: number) {
-    return this.cityLookup.find(c => c.id == cityId)?.name as string;
+    if (cityId !== undefined)
+      return this.cityLookup.find(c => c.id == cityId)?.name as string;
+    else
+      return undefined;
   }
 
   realestateAssetSelect(event: any) {

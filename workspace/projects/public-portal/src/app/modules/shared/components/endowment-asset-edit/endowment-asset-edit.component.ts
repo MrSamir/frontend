@@ -4,9 +4,19 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../models/LookupModel';
 import {
+  ApiException,
+  EndowmentRegistrationServiceProxy,
+  InputAnimalOrAgriculturalAssetDto,
   InputAssetDto,
+  InputBusinessEntityAssetDto,
+  InputFiscalAssetDto,
+  InputIntellectualPropertyAndTrademarkAssetDto,
   InputLookUpDto,
+  InputMonetaryAssetDto,
+  InputMovableAssetDto,
   InputOneAssetDto,
+  InputParticularBenefitAssetDto,
+  InputRealEstateAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   OutputAssetDto,
@@ -77,7 +87,8 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
     public formBuilder: FormBuilder,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
-    private injector: Injector
+    private injector: Injector,
+    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
   ) /*private activatedRoute: ActivatedRoute*/ {
     super(injector);
   }
@@ -94,7 +105,37 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   }
 
   onAddBtnClicked() {
-    this.OnAddingNewAsset.emit(this.newAsset);
+    this._serviceProxyEndowmentRegistraion
+    .createWaqfRequestAsset(this.newAsset)
+    .subscribe(
+      (data) => {
+        if (data) {
+          const resAssetData = data;
+          if (resAssetData.isSuccess) {
+           // this.loadAssetsBy();
+            this.modalService.dismissAll();
+            // showSuccess('تم إنشاء الاصل بنجاح',
+            //   () => {
+            //     this.newAsset.id = resAssetData.dto.toString();
+            //     let obj = { asset: resAssetData.dto }
+            //     this.modalService.dismissAll();
+            //   }
+            // )
+            // showSuccess('تم إنشاء الاصل بنجاح',
+            //   () => {
+            //     this.newAsset.id = resAssetData.dto.toString();
+            //     let obj = { asset: resAssetData.dto }
+            //     this.modalService.dismissAll();
+            //   }
+            // )
+            //this.setOldAttachmentIds();
+          }
+        }
+      },
+      (err: ApiException) => {
+        //handleServiceProxyError(err);
+      }
+    );    //this.OnAddingNewAsset.emit(this.newAsset);
   }
 
   async onAddNewAssetClicked(data: any) {
@@ -106,7 +147,19 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
         this.requestId = this.request.id;
       }
     }
+
     this.newAsset = new InputAssetDto();
+    this.newAsset.businessEntityAsset = new InputBusinessEntityAssetDto();
+    this.newAsset.realEstateAsset = new InputRealEstateAssetDto();
+    this.newAsset.monetaryAsset = new InputMonetaryAssetDto();
+    this.newAsset.fiscalAsset = new InputFiscalAssetDto();
+    this.newAsset.animalOrAgriculturalAsset = new InputAnimalOrAgriculturalAssetDto();
+    this.newAsset.particularBenefitAsset = new InputParticularBenefitAssetDto()
+    this.newAsset.movableAsset = new InputMovableAssetDto();
+    this.newAsset.particularBenefitAsset = new InputParticularBenefitAssetDto();
+    this.newAsset.intellectualPropertyAndTrademarkAsset = new InputIntellectualPropertyAndTrademarkAssetDto();
+
+
     this.newAsset.requestId = this.requestId;
     // this.newAsset.isDirectlyBenefited = true;
     await this.loadAssetType();

@@ -280,6 +280,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   // Passed new Asset from Common Assets Component in order to add it through calling API from Parent component
   OnAddingNewAsset(newAwqafAsset: InputAssetDto) {
+    debugger
     //this.setIsAttachmentChanged(newAwqafAsset);
     this._serviceProxyEndowmentRegistraion
       .createWaqfRequestAsset(newAwqafAsset)

@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Input, Output, forwardRef } from '@angular/core';
 import {
   EndowmentRegistrationServiceProxy,
   InputAnimalOrAgriculturalAssetDto,
@@ -10,11 +10,15 @@ import {
 } from '../../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
 
 @Component({
   selector: 'app-shared-animal-or-agricultural-asset',
   templateUrl: './animal-or-agricultural-asset.component.html',
   styleUrls: ['./animal-or-agricultural-asset.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => AnimalOrAgriculturalAssetComponent) }]
 })
 export class AnimalOrAgriculturalAssetComponent {
   @Input() @Output() assetInfoModel: InputAssetDto;
@@ -32,9 +36,9 @@ export class AnimalOrAgriculturalAssetComponent {
     private lookupssrv: LookupApplicationServiceProxy,
     private modalService: NgbModal,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy
- 
+
   ) {
- 
+
   }
 
   ngOnInit() {
@@ -71,8 +75,11 @@ export class AnimalOrAgriculturalAssetComponent {
     });
   }
 
-  getCityValue(value:number){
-    return this.cityLookup.find(c=>c.id == value)?.name as string;
+  getCityValue(value: number) {
+    if (value !== undefined)
+      return this.cityLookup.find(c => c.id == value)?.name as string;
+    else
+      return undefined
   }
 
 }

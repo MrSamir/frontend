@@ -24,7 +24,7 @@
       <div class="form-group col form-inline">
         <div *ngFor="let item of applicantTypes">
           <p-checkbox
-            name="applicantTypeGroup"
+            name="selectedTypes"
             [value]="item"
             [label]="item.name!"
             (onChange)="ApplicantTypeSelected($event)"
@@ -40,7 +40,7 @@
         [(ngModel)]="requestInfo.applicantTypes"
         #requestInfo_applicantTypes="ngModel"
         required
-        name="selectedTypes"
+        name="applicantTypes"
       />
       <app-validationMessages
         relatedControlName="selectedTypes"

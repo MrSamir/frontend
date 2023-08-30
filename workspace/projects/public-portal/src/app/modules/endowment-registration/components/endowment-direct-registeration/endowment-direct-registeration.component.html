@@ -5,7 +5,7 @@
       <div class="form-group col">
         <label class="col-form-label">{{'EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumber' | localize}}<span class="text-danger">*</span> : </label>
 
-          <input type="text" class="form-control" name="deed_Number" #deed_Number="ngModel" [pattern]="EnumValidation.pattern_number"
+          <input type="text" class="form-control" name="deedNumber" #deed_Number="ngModel" [pattern]="EnumValidation.pattern_number"
           [(ngModel)]="deedNumber" [ngModelOptions]="{standalone: true}" 
             required>
           <app-validationMessages relatedControlName="deed_Number" [control]="deed_Number"

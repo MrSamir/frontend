@@ -9,12 +9,12 @@
           }}<span class="text-danger">*</span> :
         </label>
         <div class=" col-form-inline mr-3">
-          <p-radioButton name="registerUsingDeedNumber" [value]="true" #registerUsingDeedNumber_yes="ngModel"
+          <p-radioButton name="registerUsingendowmentDeedNumber" [value]="true" #registerUsingDeedNumber_yes="ngModel"
             [(ngModel)]="registerUsingendowmentDeedNumber" inputId="yes"></p-radioButton>
           <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.yes" | localize }}</label>
         </div>
         <div class="col-form-inline">
-          <p-radioButton name="registerUsingDeedNumber" [value]="false" #registerUsingDeedNumber_no="ngModel"
+          <p-radioButton name="registerUsingendowmentDeedNumber" [value]="false" #registerUsingDeedNumber_no="ngModel"
             [(ngModel)]="registerUsingendowmentDeedNumber" inputId="no"></p-radioButton>
           <label style="font-weight: 700;" class="ml-2 mb-1">{{ "Common.no" | localize }}</label>
         </div>

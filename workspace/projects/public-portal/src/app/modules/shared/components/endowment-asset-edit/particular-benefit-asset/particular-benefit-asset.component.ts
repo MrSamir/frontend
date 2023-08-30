@@ -24,14 +24,15 @@ export class ParticularBenefitAssetComponent {
   //assetSubTypes:LookupDto[]=[];
   assetSubTypes: LookupDto[] = [];
   lookupfliter: InputLookUpDto = new InputLookUpDto();
-  _lookupExtraData: LookupExtraData;
+  _lookupExtraData: LookupExtraData = new LookupExtraData();
+
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.assetInfoModel.particularBenefitAsset == undefined) {

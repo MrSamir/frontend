@@ -3631,7 +3631,7 @@ export class ActionInput implements IActionInput {
     rejectionReason!: string | undefined;
     rejectionReasonValue!: string | undefined;
     uiOnly!: boolean | undefined;
-    requestStatus!: string | undefined;
+    requestStatusId!: number | undefined;
     displayName!: string | undefined;
     actionDisplayName!: string | undefined;
 
@@ -3657,7 +3657,7 @@ export class ActionInput implements IActionInput {
             this.rejectionReason = _data["rejectionReason"];
             this.rejectionReasonValue = _data["rejectionReasonValue"];
             this.uiOnly = _data["uiOnly"];
-            this.requestStatus = _data["requestStatus"];
+            this.requestStatusId = _data["requestStatusId"];
             this.displayName = _data["displayName"];
             this.actionDisplayName = _data["actionDisplayName"];
         }
@@ -3683,7 +3683,7 @@ export class ActionInput implements IActionInput {
         data["rejectionReason"] = this.rejectionReason;
         data["rejectionReasonValue"] = this.rejectionReasonValue;
         data["uiOnly"] = this.uiOnly;
-        data["requestStatus"] = this.requestStatus;
+        data["requestStatusId"] = this.requestStatusId;
         data["displayName"] = this.displayName;
         data["actionDisplayName"] = this.actionDisplayName;
         return data;
@@ -3702,7 +3702,7 @@ export interface IActionInput {
     rejectionReason: string | undefined;
     rejectionReasonValue: string | undefined;
     uiOnly: boolean | undefined;
-    requestStatus: string | undefined;
+    requestStatusId: number | undefined;
     displayName: string | undefined;
     actionDisplayName: string | undefined;
 }
@@ -6232,6 +6232,7 @@ export interface ICertificate {
 }
 
 export class CertificateStatus implements ICertificateStatus {
+    certificates!: Certificate[] | undefined;
     localizedKey!: string | undefined;
     isEnabled!: boolean;
     name!: string | undefined;
@@ -6253,6 +6254,11 @@ export class CertificateStatus implements ICertificateStatus {
 
     init(_data?: any) {
         if (_data) {
+            if (Array.isArray(_data["certificates"])) {
+                this.certificates = [] as any;
+                for (let item of _data["certificates"])
+                    this.certificates!.push(Certificate.fromJS(item));
+            }
             this.localizedKey = _data["localizedKey"];
             this.isEnabled = _data["isEnabled"];
             this.name = _data["name"];
@@ -6274,6 +6280,11 @@ export class CertificateStatus implements ICertificateStatus {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.certificates)) {
+            data["certificates"] = [];
+            for (let item of this.certificates)
+                data["certificates"].push(item.toJSON());
+        }
         data["localizedKey"] = this.localizedKey;
         data["isEnabled"] = this.isEnabled;
         data["name"] = this.name;
@@ -6288,6 +6299,7 @@ export class CertificateStatus implements ICertificateStatus {
 }
 
 export interface ICertificateStatus {
+    certificates: Certificate[] | undefined;
     localizedKey: string | undefined;
     isEnabled: boolean;
     name: string | undefined;
@@ -7866,7 +7878,6 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
     endowmentRegistrationSourceId!: number | undefined;
     dataStateId!: number | undefined;
     tobeVisitedStep!: number | undefined;
-    applicantType!: ApplicantType;
     request!: Request;
     createdBy!: string | undefined;
     creationDate!: DateTime;
@@ -7923,7 +7934,6 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
             this.endowmentRegistrationSourceId = _data["endowmentRegistrationSourceId"];
             this.dataStateId = _data["dataStateId"];
             this.tobeVisitedStep = _data["tobeVisitedStep"];
-            this.applicantType = _data["applicantType"] ? ApplicantType.fromJS(_data["applicantType"]) : <any>undefined;
             this.request = _data["request"] ? Request.fromJS(_data["request"]) : <any>undefined;
             this.createdBy = _data["createdBy"];
             this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
@@ -7980,7 +7990,6 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
         data["endowmentRegistrationSourceId"] = this.endowmentRegistrationSourceId;
         data["dataStateId"] = this.dataStateId;
         data["tobeVisitedStep"] = this.tobeVisitedStep;
-        data["applicantType"] = this.applicantType ? this.applicantType.toJSON() : <any>undefined;
         data["request"] = this.request ? this.request.toJSON() : <any>undefined;
         data["createdBy"] = this.createdBy;
         data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
@@ -8006,7 +8015,6 @@ export interface IEndowmentRegistrationRequest {
     endowmentRegistrationSourceId: number | undefined;
     dataStateId: number | undefined;
     tobeVisitedStep: number | undefined;
-    applicantType: ApplicantType;
     request: Request;
     createdBy: string | undefined;
     creationDate: DateTime;
@@ -11470,6 +11478,7 @@ export interface IOutputEndowmerDto {
 export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRegistrationRequestDto {
     requestId!: string | undefined;
     applicantTypes!: string | undefined;
+    requestStatusId!: RequestStatusEnum;
     applicant!: InputApplicantDto;
     applicantEndowmer!: InputApplicantEndowmerDto;
     applicantSeer!: InputApplicantSeerDto;
@@ -11489,6 +11498,7 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
         if (_data) {
             this.requestId = _data["requestId"];
             this.applicantTypes = _data["applicantTypes"];
+            this.requestStatusId = _data["requestStatusId"];
             this.applicant = _data["applicant"] ? InputApplicantDto.fromJS(_data["applicant"]) : <any>undefined;
             this.applicantEndowmer = _data["applicantEndowmer"] ? InputApplicantEndowmerDto.fromJS(_data["applicantEndowmer"]) : <any>undefined;
             this.applicantSeer = _data["applicantSeer"] ? InputApplicantSeerDto.fromJS(_data["applicantSeer"]) : <any>undefined;
@@ -11508,6 +11518,7 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
         data = typeof data === 'object' ? data : {};
         data["requestId"] = this.requestId;
         data["applicantTypes"] = this.applicantTypes;
+        data["requestStatusId"] = this.requestStatusId;
         data["applicant"] = this.applicant ? this.applicant.toJSON() : <any>undefined;
         data["applicantEndowmer"] = this.applicantEndowmer ? this.applicantEndowmer.toJSON() : <any>undefined;
         data["applicantSeer"] = this.applicantSeer ? this.applicantSeer.toJSON() : <any>undefined;
@@ -11520,6 +11531,7 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
 export interface IOutputEndwomentRegistrationRequestDto {
     requestId: string | undefined;
     applicantTypes: string | undefined;
+    requestStatusId: RequestStatusEnum;
     applicant: InputApplicantDto;
     applicantEndowmer: InputApplicantEndowmerDto;
     applicantSeer: InputApplicantSeerDto;
@@ -12733,6 +12745,17 @@ export interface IRequestStatus {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     id: number;
+}
+
+export enum RequestStatusEnum {
+    Draft = 1,
+    New = 2,
+    CompleteRequiredData = 3,
+    PendingLvl1Reviewer = 4,
+    PendingLvl2Reviewer = 5,
+    ReturnedToApplicant = 6,
+    ReturnToLvl1 = 7,
+    ReSubmitTolvl1 = 8,
 }
 
 export class RequestType implements IRequestType {

@@ -25,7 +25,7 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
 
   assetSubTypes: LookupDto[] = [];
   lookupfliter: InputLookUpDto = new InputLookUpDto();
-  _lookupExtraData: LookupExtraData;
+  _lookupExtraData: LookupExtraData = new LookupExtraData();
 
   ePatternValidation: typeof EnumValidation = EnumValidation;
   constructor(
@@ -51,15 +51,8 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
       this.assetSubTypes = data.dto.items!;
       console.log(data);
     });
-
-    //   this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result) => {
-    //   result.subscribe((assetsSubTypes: LookupModel[]) => {
-    //     this.assetSubTypes = assetsSubTypes;
-    //   });
-    // });
     this.loadHints();
   }
   loadHints() {
-    //this.Typehint = HintDictionary.getHintByKey("particularBenefitAsset.benefitType");
   }
 }

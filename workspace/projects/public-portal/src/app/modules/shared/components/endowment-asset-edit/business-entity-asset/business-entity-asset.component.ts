@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit, Output } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationServiceProxy,
@@ -22,11 +22,17 @@ import { DateFormatterService } from 'projects/shared-features-lib/src/lib/compo
 import { MessageSeverity } from 'projects/core-lib/src/lib/enums/message-severity';
 import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
+import { ChangeDetectorRef } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-business-entity-asset',
   templateUrl: './business-entity-asset.component.html',
-  styleUrls: ['./business-entity-asset.component.css'],
+  styleUrls: ['./business-entity-asset.component.css'],  
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => BusinessEntityAssetComponent) }]
 })
 export class BusinessEntityAssetComponent extends ComponentBase implements OnInit {
   @Input() @Output() assetInfoModel: InputAssetDto;
@@ -48,6 +54,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   businessEntityAssetAttachemt: AttachementItem;
 
   constructor(
+    private cdRef: ChangeDetectorRef,
     private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
@@ -61,7 +68,9 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   }
 
   ngOnInit() {
-
+   
+    //this.cdRef.detectChanges();
+    //this.assetInfoModel.businessEntityAsset = new InputBusinessEntityAssetDto()
     const patternDecimalValues =
       /^([0-9]{1,10})$|^([0-9]{1,10})(\.)[0-9]{1,4}$/;
     const patternWaqfResponserPortion =

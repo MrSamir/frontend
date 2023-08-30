@@ -15,9 +15,9 @@
       [pattern]="
         ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
       "
-      #businessEntityAsset_businessEntityName="ngModel"
-      name="businessEntityAsset.businessEntityName"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.businessEntityName"
+      #businessEntityName="ngModel"
+      name="businessEntityName"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.businessEntityName"
       required
     />
 
@@ -27,14 +27,14 @@
 
     <div
       *ngIf="
-        businessEntityAsset_businessEntityName.invalid &&
-        (businessEntityAsset_businessEntityName.dirty ||
-          businessEntityAsset_businessEntityName.touched)
+      businessEntityName.invalid &&
+        (businessEntityName.dirty ||
+        businessEntityName.touched)
       "
       class=""
     >
       <p
-        *ngIf="businessEntityAsset_businessEntityName.errors?.['required']"
+        *ngIf="businessEntityName.errors?.['required']"
         class="text-danger pt-1 small"
       >
         {{
@@ -44,7 +44,7 @@
       </p>
 
       <p
-        *ngIf="businessEntityAsset_businessEntityName.errors?.['pattern']"
+        *ngIf="businessEntityName.errors?.['pattern']"
         class="text-danger pt-1 small"
       >
         {{
@@ -65,7 +65,7 @@
       class="custom-select"
       #assetSubTypeId="ngModel"
       name="assetSubTypeId"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.assetSubTypeId"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.assetSubTypeId"
       [hidden]="viewOnly"
       required
     >
@@ -111,7 +111,7 @@
       class="custom-select"
       #regionId="ngModel"
       name="regionId"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.regionId"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.regionId"
       [hidden]="viewOnly"
       required
       (change)="getcityLookup(regionId.value)"
@@ -151,7 +151,7 @@
       #cityId="ngModel"
       [disabled]="cityDisabled"
       name="cityId"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.cityId"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.cityId"
       [hidden]="viewOnly"
       required
       (change)="ChangeCityLookup(cityId.value)"
@@ -212,13 +212,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
       name="registrationDocumentNumber"
       [(ngModel)]="
-        assetInfoModel.businessEntityAsset.registrationDocumentNumber
+        assetInfoModel!.businessEntityAsset!.registrationDocumentNumber
       "
       [pattern]="ePatternValidation.pattern_number"
       required
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAsset.registrationDocumentNumber }}
+      >&nbsp;{{ assetInfoModel!.businessEntityAsset!.registrationDocumentNumber }}
     </label>
     <div
       *ngIf="
@@ -261,7 +261,7 @@
       #waqfResponserPortion="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfResponserPortion"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.waqfResponserPortion"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfResponserPortion"
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
@@ -299,7 +299,7 @@
       #waqfPercentageFromAsset="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfPercentageFromAsset"
-      [(ngModel)]="assetInfoModel.businessEntityAsset.waqfPercentageFromAsset"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfPercentageFromAsset"
       [pattern]="ePatternValidation.pattern_percentage"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
@@ -335,7 +335,7 @@
     <div class="input-group mb-3 download p-2">
       <div class="flex-grow-1">
         <lib-file-uploader
-        name="commercialRegisterAttachment"
+        name="commercialRegisterAttachmentId"
         [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.AssetBusinesscommercialRegisterAttachment')"
         [showDisclaimer]="true"
         (OnSelectFile)="businessEntityAssetSelect($event)"
@@ -346,7 +346,7 @@
       #commercialRegisterAttachmentId="ngModel"
       name="commercialRegisterAttachmentId"
       [(ngModel)]="
-        assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId
+        assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId
       "
       required
     />
@@ -365,7 +365,7 @@
     >
     </app-validationMessages>
     <div
-    *ngIf="assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId"
+    *ngIf="assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId"
     class="form-group col-12"
   >
     <app-AttachmentViewer
