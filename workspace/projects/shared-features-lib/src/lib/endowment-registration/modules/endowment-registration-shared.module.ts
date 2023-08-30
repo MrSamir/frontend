@@ -22,7 +22,7 @@ import { DropdownModule } from 'primeng/dropdown';
     FormsModule,
     TableModule,
     SvgIconModule,
-    DropdownModule
+    DropdownModule,
   ],
   exports: [
     CommonModule,
@@ -30,7 +30,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
     EndowmentEndowersListComponent,
     EndowmentBeneficiariesListComponent,
-    EndowmentSeersListComponent
+    EndowmentSeersListComponent,
 
 
 

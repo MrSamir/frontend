@@ -1,15 +1,15 @@
 <app-endowment-shared-beneficiary-edit (OnAddingNewBeneficiary)="OnAddingNewBeneficiary($event)"
   (OnEditingExistingSeer)="OnEditingExistingSeer($event)" (OnDeletingExistingAsset)="OnDeletingExistingAsset($event)"
-  [requestId]="requestId" [editBenificaryInfo]="editBeneficiary">
+  [requestId]="requestId" [editBenificaryInfo]="editBeneficiary" *ngIf="!viewOnly">
 
 </app-endowment-shared-beneficiary-edit>
 
 
-<app-endowment-beneficiaries-list [viewOnly]="false" [updated]="updated" (onEditBeneficiayData)="onEditBeneficiayData($event)"
+<app-endowment-beneficiaries-list [viewOnly]="viewOnly" [updated]="updated" (onEditBeneficiayData)="onEditBeneficiayData($event)"
   [requestId]="requestId"></app-endowment-beneficiaries-list>
 
-  
-<div class="aw-btn">
+
+<div class="aw-btn" *ngIf="!viewOnly">
   <button type="button" class="btn btn-awq-secondary"
     (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonSave' | localize}}</button>
   <button type="button" class="btn btn-outline-awq-secondary"
