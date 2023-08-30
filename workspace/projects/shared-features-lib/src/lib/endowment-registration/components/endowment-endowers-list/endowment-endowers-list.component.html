@@ -57,13 +57,13 @@
                 </a>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
-            <a class="btn btn-sm btn-outline-awq-secondary rounded" [ngClass]="overlay(i)" (click)="deleteOwner(i)">
+            <a class="btn btn-sm btn-outline-danger rounded" [ngClass]="overlay(i)" (click)="deleteOwner(i)">
               <svg-icon icon="trash-alt"></svg-icon>
 
             </a>
           </td>
           <td class="text-center" scope="col" *ngIf="viewOnly">
-            <a class="btn btn-sm btn-outline-danger rounded" (click)="viewWaqif(addData, i)"
+            <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewWaqif(addData, i)"
                *ngIf="viewOnly">
                <svg-icon icon="eye"></svg-icon>
             </a>
@@ -172,8 +172,8 @@
     </div>
   </ng-template>
 
-  <div class="aw-btn">
-    <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
-    <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()" *ngIf="!viewOnly">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
+  <div class="aw-btn" *ngIf="!viewOnly">
+    <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+    <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
   </div>
 </form>

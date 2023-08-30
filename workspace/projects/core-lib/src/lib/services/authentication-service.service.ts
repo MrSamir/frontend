@@ -51,7 +51,7 @@ export class AuthenticationService {
   public get currentLoggedInUser(): LoggedInUserInfo {
     var currentUser = this.loggedInUserObservable.getValue();
     if (currentUser.isUserConfirmed == undefined) {
-      currentUser.isUserConfirmed = Boolean(localStorage.getItem("IsConfirmed"));
+      currentUser.isUserConfirmed = Boolean(this.Util.getCookieValue("IsUserConfirmed"));
       this.setloggedInUserObservable(currentUser);
     }
     currentUser = this.loggedInUserObservable.getValue();
@@ -64,7 +64,7 @@ export class AuthenticationService {
 
 
   redirectToUserLoginLandingPage() {
-    localStorage.setItem("IsConfirmed", "");
+    this.Util.deleteCookie("IsUserConfirmed");
     this.router.navigate([AuthenticationService.PUBLIC_USER_LOGIN_PAGE]).then(() => {
     });
   }

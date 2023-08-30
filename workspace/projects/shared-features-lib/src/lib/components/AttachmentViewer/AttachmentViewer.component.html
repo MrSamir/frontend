@@ -29,10 +29,11 @@
   [containerStyle]="{ 'max-width': '850px' }" [numVisible]="7" [circular]="true" [fullScreen]="true"
   [showItemNavigators]="true" [showThumbnails]="false">
   <ng-template pTemplate="item" let-item>
-    <img [src]="item" style="width: 100%; display: block;" />
+    <img 
+    alt=""
+    [title]="item.fileName"
+    [src]="item"
+     style="width: 100%; display: block;" />
   </ng-template>
 </p-galleria>
 </ng-template>
-<!--  
-  TODO: Create attachement view create images,video and pdf files.
--->

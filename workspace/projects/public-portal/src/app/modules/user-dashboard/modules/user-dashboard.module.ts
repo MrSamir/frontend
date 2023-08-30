@@ -10,16 +10,18 @@ import { UserDashboardComponent } from "../components/user-dashboard/user-dashbo
 import { UserDashBoardRoutingModule } from "./user-dashboard-routing.module";
 import { PublicPortalSharedModule } from "../../shared/modules/public-portal-shared.module";
 import { MyAwqafsComponent } from "../components/my-awqafs/my-awqafs.component";
+import { SvgIconModule } from "projects/shared-features-lib/src/lib/modules/svg-icon.module";
 
 @NgModule({
-    declarations: [MyRequestsComponent, MyTasksComponent, UserDashboardComponent, MyAwqafsComponent],
-    imports: [
-        PublicPortalSharedModule,
-        UserDashBoardRoutingModule,
-        TableModule,
-        FormsModule, CommonModule, TableModule,
-        CoreLibModule, NgbModule
-    ],
-    exports: [MyRequestsComponent]
+  declarations: [MyRequestsComponent, MyTasksComponent, UserDashboardComponent, MyAwqafsComponent],
+  imports: [
+    PublicPortalSharedModule,
+    UserDashBoardRoutingModule,
+    TableModule,
+    FormsModule, CommonModule, TableModule,
+    CoreLibModule, NgbModule,
+    SvgIconModule
+  ],
+  exports: [MyRequestsComponent]
 })
 export class UserDashBoardModule { }

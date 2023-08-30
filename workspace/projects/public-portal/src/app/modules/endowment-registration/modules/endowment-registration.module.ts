@@ -18,6 +18,8 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { MessagesModule } from 'primeng/messages';
 import { EndowmentBeneficiaryEditComponent } from '../../shared/components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
 import { PublicPortalSharedModule } from '../../shared/modules/public-portal-shared.module';
+import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { EndowmentRegistrationReadonlyComponent } from '../components/endowment-registration-readonly/endowment-registration-readonly.component';
 
 
 @NgModule({
@@ -27,6 +29,9 @@ import { PublicPortalSharedModule } from '../../shared/modules/public-portal-sha
     SeerStepComponent,
     BeneficiaryStepComponent,
     EndowmentDirectRegisterationComponent,
+    EndowmentRegistrationReadonlyComponent,
+
+
   ],
   imports: [
     ArchwizardModule,
@@ -40,7 +45,8 @@ import { PublicPortalSharedModule } from '../../shared/modules/public-portal-sha
     MultiSelectModule,
     StepsModule,
     RadioButtonModule,
-    MessagesModule
+    MessagesModule,
+    NgbAccordionModule
   ],
   exports: [ /*RouterModule*/]
 })

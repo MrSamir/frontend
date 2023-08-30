@@ -57,13 +57,13 @@
                 </a>
             </td>
             <td class="text-center" scope="col" *ngIf="!viewOnly">
-            <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="deleteSeer(i)">
+            <a class="btn btn-sm btn-outline-danger rounded" (click)="deleteSeer(i)">
               <svg-icon icon="trash-alt"></svg-icon>
 
             </a>
           </td>
           <td class="text-center" scope="col" *ngIf="viewOnly">
-            <a class="btn btn-sm btn-outline-danger rounded" (click)="viewSeer(addData, i)"
+            <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="viewSeer(addData, i)"
                *ngIf="viewOnly">
                <svg-icon icon="eye"></svg-icon>
             </a>
@@ -87,7 +87,7 @@
       </div>
       <div class="modal-body fixed-modal-body pt-0">
 
-        <yakeen-person *ngIf="isUpdateMode || isCreateMode"
+        <yakeen-person *ngIf="(isUpdateMode || isCreateMode) && !viewOnly"
                        (OnNewPersonAvailable)="onNewPersonAvailable($event)"
                        (OnNewCitizenValidated)="onNewCitizenAvailable($event)"
                        (OnNewAlienValidated)="onNewAlienAvailable($event)"
@@ -323,6 +323,7 @@
             class="form-group col-12"
           >
             <lib-file-uploader
+            *ngIf="!viewOnly"
               name="seerDeed"
               [fileLabel]="
                 l('EndowmentModule.EndowmentRgistrationService.seenDeed')

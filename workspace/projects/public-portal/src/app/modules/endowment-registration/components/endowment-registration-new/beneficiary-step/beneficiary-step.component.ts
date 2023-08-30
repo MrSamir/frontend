@@ -23,6 +23,7 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   @Output() onBtnNextClicked = new EventEmitter<wizardNavDto>();
   @Output() onBtnPreviousClicked = new EventEmitter<wizardNavDto>();
   @Input() serialNumber: string | undefined;
+  @Input() viewOnly: boolean = false;
   BeneficiaryList: OutputBeneficiaryDto[] = [];
   OneRequestSeer: RemoveBeneficiaryInputDto;
   taskNumber: string;
@@ -119,7 +120,6 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     }
 
     this.endowmentRegistrationServiceProxy.submitRequest(requestModelDto).subscribe(res => {
-      debugger;
       this.message.showMessage(MessageTypeEnum.toast, {
         closable: true,
         enableService: true,

@@ -1,0 +1,282 @@
+
+  <div class="aw-content">
+    <p-panel [header]="
+        'EndowmentModule.EndowmentRgistrationService.ApplicantPersonalInfo'
+          | localize
+      ">
+      <label class="col-form-label">{{
+        "EndowmentModule.EndowmentRgistrationService.ApplicantType"
+        | localize
+        }} :
+      </label>
+
+      <div class="form-group col form-inline">
+        <div *ngFor="let item of applicantTypes">
+         <label class="col-form-label">{{item.name}}</label>
+      </div>
+      </div>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.idNumber" | localize
+            }}:
+          </label>
+          <label class="col-form-label"><strong>{{
+              applicantRequestInfo.applicant.idNumber }}</strong>
+          </label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.FirstName" | localize
+            }}:
+          </label>
+          <label class="col-form-label"><strong>{{ applicantRequestInfo.applicant.firstNameAr }}</strong></label>
+        </div>
+          <div class="form-group col">
+          <label class="col-form-label">{{ "Common.SecondName" | localize
+            }}:
+          </label>
+          <label class="col-form-label"><strong>{{ applicantRequestInfo.applicant.secondNameAr }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.ThirdName" | localize
+            }}:
+          </label>
+          <label class="col-form-label"><strong>{{ applicantRequestInfo.applicant.thirdNameAr }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.LastName" | localize
+            }}:
+          </label>
+          <label class="col-form-label"><strong>{{ applicantRequestInfo.applicant.lastNameAr }}</strong></label>
+         </div>
+        <div  class="form-group col">
+          <label class="col-form-label">{{ "Common.dateOfBirth" | localize
+            }}:
+          </label>
+          <label  class="col-form-label"><strong>{{
+              applicantRequestInfo.applicant.birthDate?.toString() | date: "yyyy/MM/dd"
+              }}</strong></label>
+          <span *ngIf="
+                applicantRequestInfo.applicant?.birthDate &&
+                applicantRequestInfo.applicant?.birthDateHijri
+              ">-</span>
+          <label *ngIf="applicantRequestInfo.applicant?.birthDateHijri" class="col-form-label"><strong>{{
+              applicantRequestInfo.applicant.birthDateHijri
+              }}</strong></label>
+
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.gender" | localize }}
+            :
+          </label>
+          <label *ngIf=" applicantRequestInfo.applicant?.gender == 0"
+            class="col-form-label"><strong>{{
+              "Common.Male" | localize }}</strong></label>
+          <label *ngIf="applicantRequestInfo.applicant?.gender == 1"
+            class="col-form-label"><strong>{{
+              "Common.Female" | localize }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.nationality" | localize
+            }}:
+          </label>
+          <label *ngIf="applicantRequestInfo.applicant?.nationalityId 
+            " class="col-form-label"><strong>{{ applicantRequestInfo.applicant.nationality.name }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.lifeStatus" | localize
+            }}:
+          </label>
+          <label
+            *ngIf=" applicantRequestInfo?.applicant?.isAlive&&applicantRequestInfo?.applicant?.isAlive == true"
+            class="col-form-label"><strong>{{ "Common.alive" | localize }}</strong></label>
+          <label
+            *ngIf="applicantRequestInfo?.applicant?.isAlive&& applicantRequestInfo?.applicant?.isAlive == false"
+            class="col-form-label"><strong>{{ "Common.dead" | localize }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.mobileNumber" | localize
+            }}:
+          </label>
+          <label *ngIf="applicantRequestInfo?.applicant?.phoneNumber
+            " class="col-form-label"><strong>{{ applicantRequestInfo.applicant.phoneNumber }}</strong></label>
+        </div>
+        <div class="form-group col">
+          <label class="col-form-label">{{ "Common.email" | localize }}:
+          </label>
+          <label *ngIf="applicantRequestInfo?.applicant?.email" class="col-form-label"><strong>{{
+              applicantRequestInfo.applicant.email }}</strong></label>
+        </div>
+      </div>
+    </p-panel>
+    <br />
+    <div *ngIf="applicantRequestInfo?.applicantEndowmer">
+      <p-panel [header]="
+          'EndowmentModule.EndowmentRgistrationService.EndowmerDataTitle'
+            | localize
+        ">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+          <div class="form-group col">
+          
+              <label class="col col-form-label">{{
+                "EndowmentModule.EndowmentRgistrationService.EndowmerType"
+                | localize
+                }}:
+              </label>
+              <label *ngIf="applicantRequestInfo.applicantEndowmer.endowmentPartiesTypeId
+                          " class="col-form-label"><strong>{{ loadendowmentPartType(applicantRequestInfo.applicantEndowmer.endowmentPartiesTypeId) }}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo.applicantEndowmer.endowmentPartiesTypeId == 2" class="form-group col">
+            <label class="col col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.PrestigiousAttributeType"
+              | localize
+              }}:
+            </label>
+         <label *ngIf="applicantRequestInfo.applicantEndowmer.prestigiousAttributeTypeId
+                            " class="col-form-label"><strong>{{
+      loadprestigiousAttributeType(applicantRequestInfo.applicantEndowmer.prestigiousAttributeTypeId) }}</strong></label>
+          </div>
+          <div *ngIf="
+              applicantRequestInfo.applicantEndowmer?.endowmentPartiesTypeId == 2 &&
+              applicantRequestInfo?.applicantEndowmer?.prestigiousAttributeTypeId &&
+              applicantRequestInfo.applicantEndowmer.prestigiousAttributeTypeId != 5 &&
+              applicantRequestInfo.applicantEndowmer.prestigiousAttributeTypeId != 3
+            " class="form-group col">
+            <label class="col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo"
+              | localize
+              }}:
+            </label>
+              <label  class="col-form-label"><strong>{{
+                  applicantRequestInfo.applicantEndowmer.commercialNumber}}</strong></label>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <br />
+    <div *ngIf=" applicantRequestInfo?.applicantSeer">
+      <p-panel [header]="
+          'EndowmentModule.EndowmentRgistrationService.SeeringInformationHeader'
+            | localize
+        ">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+          <div class="form-group col">
+            <label class="col col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.EducationLevel"
+              | localize
+              }}</label>
+            <label class="col-form-label"><strong>{{
+                loadeducationLevel(applicantRequestInfo.applicantSeer.educationLevelId) }}</strong></label>
+          </div>
+          <div class="form-group col">
+            <label class="col col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.SeerexperienceYears"
+              | localize
+              }}</label>
+              <label class="col-form-label"><strong>{{
+                  loadexperienceYear(applicantRequestInfo.applicantSeer.experienceYearId) }}</strong></label>
+          </div>
+          <div class="form-group col">
+            
+              <label class="col col-form-label">{{
+                "EndowmentModule.EndowmentRgistrationService.SeerType"
+                | localize
+                }}:
+              </label>
+              <label *ngIf="applicantRequestInfo.applicantSeer.endowmentPartiesTypeId
+                                        " class="col-form-label"><strong>{{
+                  loadendowmentPartType(applicantRequestInfo.applicantSeer.endowmentPartiesTypeId) }}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo?.applicantSeer?.endowmentPartiesTypeId == 2" class="form-group col">
+            <label class="col col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.PrestigiousAttributeType"
+              | localize
+              }}:
+            </label>
+  <label *ngIf="applicantRequestInfo.applicantSeer.prestigiousAttributeTypeId
+                              " class="col-form-label"><strong>{{
+      loadprestigiousAttributeType(applicantRequestInfo.applicantSeer.prestigiousAttributeTypeId) }}</strong></label>
+          </div>
+          <div *ngIf="
+              applicantRequestInfo.applicantSeer.endowmentPartiesTypeId == 2 &&
+              applicantRequestInfo?.applicantSeer?.prestigiousAttributeTypeId &&
+              applicantRequestInfo.applicantSeer.prestigiousAttributeTypeId != 5 &&
+              applicantRequestInfo.applicantSeer.prestigiousAttributeTypeId != 3
+            " class="form-group col">
+            <label class="col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.RegisterationCommercialNo"
+              | localize
+              }}:
+            </label>
+              <label class="col-form-label"><strong>{{
+                applicantRequestInfo.applicantSeer.commercialNumber}}</strong></label>
+          </div>
+          <div class="form-group col">
+            <label class="col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.SeerDeedId"
+              | localize
+              }}:
+            </label>
+              <label class="col-form-label"><strong>{{
+                  applicantRequestInfo.applicantSeer.seenDeedId}}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo.applicantSeer.seedDeedAttachmentId"  class="form-group col-12">
+            <app-AttachmentViewer *ngIf="seerDeadAttachemt" [AttachmenetLabel]="l('EndowmentModule.EndowmentRgistrationService.seenDeed')" [showDeleteButton]="false"
+              [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+    <br />
+    <div *ngIf="applicantRequestInfo.applicantAgent">
+      <p-panel [header]="
+          'EndowmentModule.EndowmentRgistrationService.AttorneyHeaderInfo'
+            | localize
+        ">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+          <div class="form-group col">
+            <label class="col-form-label">{{
+              "EndowmentModule.EndowmentRgistrationService.AttorneyNumber"
+              | localize
+              }}:
+            </label>
+              <label class="col-form-label"><strong>{{
+                applicantRequestInfo.applicantAgent.representativeNumber}}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
+            <app-AttachmentViewer *ngIf="agentDeedAttachment" [AttachmenetLabel]=" l('EndowmentModule.EndowmentRgistrationService.agencyDeed')" [showDeleteButton]="false"
+              [Attachements]="[agentDeedAttachment]"></app-AttachmentViewer>
+          </div>
+          <div *ngIf="applicantRequestInfo?.applicantAgent?.statusName" class="form-group col">
+            <label for="">{{
+              "EndowmentModule.EndowmentRgistrationService.agencyStatus"
+              | localize
+              }}:</label>
+            <label class="col-form-label"><strong>{{
+                applicantRequestInfo.applicantAgent.statusName
+                }}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
+            <label for="">{{
+              "EndowmentModule.EndowmentRgistrationService.startOfAgency"
+              | localize
+              }}:</label>
+            <label class="col-form-label"><strong>{{
+                applicantRequestInfo.applicantAgent.issueDateHijri
+                }}</strong></label>
+          </div>
+          <div *ngIf="applicantRequestInfo?.applicantAgent?.issueDateHijri" class="form-group col">
+            <label for="">{{
+              "EndowmentModule.EndowmentRgistrationService.endOfAgency"
+              | localize
+              }}:</label>
+            <label class="col-form-label"><strong>{{
+                applicantRequestInfo.applicantAgent.endDateHijri
+                }}</strong></label>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+  </div>
+
+
+

@@ -1,1 +1,55 @@
-<p>endowment-registration-readonly works!</p>
+<!-- <div class="card flex justify-content-center">
+  <p-accordion [activeIndex]="0">
+      <p-accordionTab header="Header I">
+            <app-endowment-endowers-list [requestId]="requestId" [viewOnly]="true"></app-endowment-endowers-list>
+      </p-accordionTab>
+      <p-accordionTab header="Header II">
+        <app-endowment-endowers-list [requestId]="requestId" [viewOnly]="true"></app-endowment-endowers-list>
+      </p-accordionTab>
+      <p-accordionTab header="Header III">
+          <p>
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa
+              qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+          </p>
+      </p-accordionTab>
+  </p-accordion>
+</div> -->
+
+
+<div class="bg-white p-5" *ngIf="!!requestId">
+
+  <ngb-accordion [closeOthers]="false">
+    <ngb-panel id="static-1" title="معلومات المتقدم">
+      <ng-template ngbPanelContent>
+        <app-endowment-applicant-CreateOrEdit [ViewOnly]="true"></app-endowment-applicant-CreateOrEdit>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-2" title="معلومات الوقف">
+      <ng-template ngbPanelContent>
+        <app-endowment-info-readonly></app-endowment-info-readonly>
+      </ng-template>
+    </ngb-panel>
+    <!-- <ngb-panel id="static-3" title="أصول الوقف">
+      <ng-template ngbPanelContent>
+        <app-step-three [waqfId]="waqfId" [requestId]="inputInfo.inputRequestId" [viewOnly]="viewOnly"></app-step-three>
+      </ng-template>
+    </ngb-panel> -->
+    <ngb-panel id="static-8" title="{{'EndowmentModule.EndowmentRgistrationService.EndowmersStepTitle' | localize}}">
+      <ng-template ngbPanelContent>
+        <app-endowment-endowers-list [requestId]="requestId" [viewOnly]="true"></app-endowment-endowers-list>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-9" title="{{'EndowmentModule.EndowmentRgistrationService.EndowmentSeersStepTitle' | localize}}">
+      <ng-template ngbPanelContent>
+        <app-seer-step [requestId]="requestId" [viewOnly]="true"></app-seer-step>
+      </ng-template>
+    </ngb-panel>
+    <ngb-panel id="static-10" title="{{'EndowmentModule.EndowmentRgistrationService.EndowmentBenificiarisStepTitle' | localize}}">
+      <ng-template ngbPanelContent>
+        <app-beneficiary-step [requestId]="requestId" [viewOnly]="true"></app-beneficiary-step>
+      </ng-template>
+    </ngb-panel>
+
+  </ngb-accordion>
+</div>
+

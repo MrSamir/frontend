@@ -26,7 +26,7 @@ export class LoginComponent extends ComponentBase {
     private router: Router,
     private accountServiceProxy: AccountProxy,
     private authenticationService: AuthenticationService,
-    private _applicationUserServiceProxy:ApplicationUserServiceProxy
+    private _applicationUserServiceProxy: ApplicationUserServiceProxy
   ) {
     super(_injecter);
   }
@@ -39,10 +39,10 @@ export class LoginComponent extends ComponentBase {
     this.accountServiceProxy.login(this.loginmodel).subscribe((result) => {
       if (result.isSuccess) {
         this.Util.setCookieValue
-        (
-          this.config.getAppConfig().tokenCookieName,
-          result.dto.accessToken!
-        );
+          (
+            this.config.getAppConfig().tokenCookieName,
+            result.dto.accessToken!
+          );
 
         this.Util.setCookieValue(
           this.config.getAppConfig().refreshTokenName,
@@ -50,21 +50,18 @@ export class LoginComponent extends ComponentBase {
         );
         var userInfo = new LoggedInUserInfo();
         userInfo.isUserConfirmed = result.dto.isUserConfirmed;
-
-        localStorage.setItem("IsConfirmed", String(userInfo.isUserConfirmed));
+        this.Util.setCookieValue("IsUserConfirmed", result.dto.isUserConfirmed.toString());
         this.authenticationService.setloggedInUserObservable(userInfo);
 
-        if(userInfo.isUserConfirmed)
-        {
+        if (userInfo.isUserConfirmed) {
           this.UserTasks();
           this.authenticationService.redirectToLandingPage()
         }
-        else
-        {
+        else {
           this.authenticationService.redirectToPublicMyProfilePage()
         }
-        
-      }  
+
+      }
       else {
         const message: MessageModel = new MessageModel();
         message.summary = 'Invalid Auntication ';
@@ -77,26 +74,25 @@ export class LoginComponent extends ComponentBase {
   }
 
 
-UserTasks() {
+  UserTasks() {
     this._applicationUserServiceProxy.getCurrentUserTasks().subscribe((result) => {
       if (result.isSuccess) {
-        debugger
-        this.Util.setCookieValue("PendingTasksCount",result.dto.totalCountTasks.toString());
-     
-       if (result.dto.totalCountTasks>0) {
-        
-      
-        
+        this.Util.setCookieValue("PendingTasksCount", result.dto.totalCountTasks.toString());
+
+        if (result.dto.totalCountTasks > 0) {
 
 
-        const message: MessageModel = new MessageModel();
-        message.summary = 'الرجاء التوجه الي لوحة التحكم لإكمال الطلبات الخاصة بك';// this.l('Common.CompleteDataValidation');
-        message.detail = result.message!;
-        message.severity = MessageSeverity.Warning;
 
-        this.message.showMessage(MessageTypeEnum.toast, message);
+
+
+          const message: MessageModel = new MessageModel();
+          message.summary = 'الرجاء التوجه الي لوحة التحكم لإكمال الطلبات الخاصة بك';// this.l('Common.CompleteDataValidation');
+          message.detail = result.message!;
+          message.severity = MessageSeverity.Warning;
+
+          this.message.showMessage(MessageTypeEnum.toast, message);
+        }
       }
-    }
     });
   }
 

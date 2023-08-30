@@ -50,7 +50,6 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
 
   CompleteRequestMissingData(serialNumber: string, step: string, currentRequestId: string) {
-    debugger;
 
     let paramsValues: string[] = [];
 
@@ -77,7 +76,6 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
 
 
   redirectServiceAction(reqTypeId, actionTypeVal: ActionTypes, paramsValues: string[]) {
-    debugger;
     const url: string | undefined = this.requestTypeDetailsNavigations.find(c => c.requestTypeId === reqTypeId && c.actionType === actionTypeVal)?.url;
 
     return this.router.navigate([url, ...paramsValues]);

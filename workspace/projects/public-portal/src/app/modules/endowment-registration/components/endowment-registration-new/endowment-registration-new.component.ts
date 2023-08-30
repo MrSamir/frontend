@@ -487,7 +487,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     this.waqfId = wizardNavDto.endowmentId;
     this.step = wizardNavDto.step;
     this.serialNumber = wizardNavDto.serialNumber;
-    debugger;
     var params: string[] = [];
     params.push(this.requestId);
     params.push(this.step)
