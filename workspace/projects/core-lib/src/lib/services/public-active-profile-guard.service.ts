@@ -7,20 +7,20 @@ import { AuthenticationService } from './authentication-service.service';
   providedIn: 'root'
 })
 export class PublicActiveProfileGuardService implements CanActivate {
-  constructor(private authenticationService: AuthenticationService){
+  constructor(private authenticationService: AuthenticationService) {
 
   }
   canActivate(
-    ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  if(!this.authenticationService.isLoggedIn){
-    this.authenticationService.redirectToUserLoginLandingPage();
-    return false;
-  }
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (!this.authenticationService.isLoggedIn) {
+      this.authenticationService.redirectToUserLoginLandingPage();
+      return false;
+    }
 
-  if(!this.authenticationService.IsPublicUserProfileCompleted){
-    this.authenticationService.redirectToPublicMyProfilePage();
-    return false;
-  }
+    if (!this.authenticationService.IsPublicUserProfileCompleted) {
+      this.authenticationService.redirectToPublicMyProfilePage();
+      return false;
+    }
     return true;
 
   }

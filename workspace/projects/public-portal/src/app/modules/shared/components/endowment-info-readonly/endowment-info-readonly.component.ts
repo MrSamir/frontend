@@ -163,9 +163,9 @@ export class EndowmentInfoReadonlyComponent extends ComponentBase implements OnI
     });
   }
 
-  ngOnChanges() {
-    this.init();
-  }
+  // ngOnChanges() {
+  //   this.init();
+  // }
 
   // onWaqfDateChange(date: NgbDateStruct) {
 
@@ -320,7 +320,6 @@ export class EndowmentInfoReadonlyComponent extends ComponentBase implements OnI
       .subscribe(
         (result: ApiResponse) => {
           if (result.isSuccess) {
-            debugger;
             this.InputEndowmentDto = result.dto;
             if (this.InputEndowmentDto.endowmentDeedAttachmentId == '00000000-0000-0000-0000-000000000000') {
               this.InputEndowmentDto.endowmentDeedAttachmentId = undefined;

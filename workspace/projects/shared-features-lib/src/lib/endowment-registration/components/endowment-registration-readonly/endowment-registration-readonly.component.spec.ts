@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EndowmentRegistrationReadonlyComponent } from 'projects/public-portal/src/app/modules/endowment-registration/components/endowment-registration-readonly/endowment-registration-readonly.component';
 
-import { EndowmentRegistrationReadonlyComponent } from './endowment-registration-readonly.component';
 
 describe('EndowmentRegistrationReadonlyComponent', () => {
   let component: EndowmentRegistrationReadonlyComponent;
@@ -8,9 +8,9 @@ describe('EndowmentRegistrationReadonlyComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EndowmentRegistrationReadonlyComponent ]
+      declarations: [EndowmentRegistrationReadonlyComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(EndowmentRegistrationReadonlyComponent);
     component = fixture.componentInstance;

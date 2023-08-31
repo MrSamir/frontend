@@ -13,7 +13,6 @@ const routes: Routes = [
     path: '',
     component: EndowmentRegistrationStartServiceComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
-    canActivate: [PublicActiveProfileGuardService]
   },
 
   // {path: 'wizard', component: EndowmentRegistrationNewComponent, canActivate:[PublicActiveProfileGuard]},
@@ -22,28 +21,24 @@ const routes: Routes = [
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'registrationform/:requestId/:step/:serialnumber',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'registrationform',
     component: EndowmentRegistrationNewComponent,
     data: { title: 'خدمة تسجيل وقف', breadcrumb: 'خدمة تسجيل وقف' },
     title: 'خدمة تسجيل وقف',
-    canActivate: [PublicActiveProfileGuardService]
   },
   {
     path: 'details/:requestId',
     component: EndowmentRegistrationReadonlyComponent,
     data: { title: 'تفاصيل الطلب', breadcrumb: 'تفاصيل الطلب' },
     title: 'تفاصيل الطلب',
-    canActivate: [PublicActiveProfileGuardService]
   },
   /* {
     path: 'directregistrationform',
@@ -55,7 +50,6 @@ const routes: Routes = [
     path: 'beneficiary',
     component: BeneficiaryStepComponent,
     title: 'المستفيدين',
-    canActivate: [PublicActiveProfileGuardService]
   },
   //{ path: 'success/:reqnumber', component: AddRequestSuccessMessageComponent, canActivate: [PublicActiveProfileGuardService] },
   { path: 'success-message-return/:reqnumber', component: UpdateMissingSuccessMessageComponent },

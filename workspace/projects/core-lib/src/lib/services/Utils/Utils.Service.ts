@@ -1,5 +1,6 @@
 
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,20 +17,24 @@ export class UtilsService {
     return target as U;
   } */
   //#endregion
+  public cookieService: CookieService;
+  constructor(private _cookieService: CookieService) {
+    this.cookieService = _cookieService
+  }
 
-   blobToText(blob: any): Observable<string> {
+  blobToText(blob: any): Observable<string> {
     return new Observable<string>((observer: any) => {
-        if (!blob) {
-            observer.next("");
-            observer.complete();
-        } else {
-            let reader = new FileReader();
-            reader.onload = event => {
-                observer.next((event.target as any).result);
-                observer.complete();
-            };
-            reader.readAsText(blob);
-        }
+      if (!blob) {
+        observer.next("");
+        observer.complete();
+      } else {
+        let reader = new FileReader();
+        reader.onload = event => {
+          observer.next((event.target as any).result);
+          observer.complete();
+        };
+        reader.readAsText(blob);
+      }
     });
   }
   //#region  Cookies
@@ -56,23 +61,24 @@ export class UtilsService {
   }
 
   getCookieValue(key: string): string {
-    var equalities = document.cookie.split('; ');
-    for (var i = 0; i < equalities.length; i++) {
-      if (!equalities[i]) {
-        continue;
-      }
+    // var equalities = document.cookie.split('; ');
+    // for (var i = 0; i < equalities.length; i++) {
+    //   if (!equalities[i]) {
+    //     continue;
+    //   }
 
-      var splitted = equalities[i].split('=');
-      if (splitted.length != 2) {
-        continue;
-      }
+    //   var splitted = equalities[i].split('=');
+    //   if (splitted.length != 2) {
+    //     continue;
+    //   }
 
-      if (decodeURIComponent(splitted[0]) === key) {
-        return decodeURIComponent(splitted[1] || '');
-      }
-    }
+    //   if (decodeURIComponent(splitted[0]) === key) {
+    //     return decodeURIComponent(splitted[1] || '');
+    //   }
+    // }
 
-    return '';
+    // return '';
+    return this.cookieService.get(key);
   }
 
   setCookieValue(
@@ -83,53 +89,57 @@ export class UtilsService {
     domain?,
     attributes?
   ): void {
-    var cookieValue = encodeURIComponent(key) + '=';
+    // debugger;
+    // var cookieValue = encodeURIComponent(key) + '=';
 
-    if (value) {
-      cookieValue = cookieValue + encodeURIComponent(value);
-    }
+    // if (value) {
+    //   cookieValue = cookieValue + encodeURIComponent(value);
+    // }
 
-    if (expireDate) {
-      cookieValue = cookieValue + '; expires=' + expireDate.toUTCString();
-    }
+    // if (expireDate) {
+    //   cookieValue = cookieValue + '; expires=' + expireDate.toUTCString();
+    // }
 
-    if (path) {
-      cookieValue = cookieValue + '; path=' + path;
-    }
+    // if (path) {
+    //   cookieValue = cookieValue + '; path=' + path;
+    // }
 
-    if (domain) {
-      cookieValue = cookieValue + '; domain=' + domain;
-    }
+    // if (domain) {
+    //   cookieValue = cookieValue + '; domain=' + domain;
+    // }
 
-    for (var name in attributes) {
-      if (!attributes[name]) {
-        continue;
-      }
+    // for (var name in attributes) {
+    //   if (!attributes[name]) {
+    //     continue;
+    //   }
 
-      cookieValue += '; ' + name;
-      if (attributes[name] === true) {
-        continue;
-      }
+    //   cookieValue += '; ' + name;
+    //   if (attributes[name] === true) {
+    //     continue;
+    //   }
 
-      cookieValue += '=' + attributes[name].split(';')[0];
-    }
-    this.deleteCookie(key, path);
-    document.cookie = cookieValue;
+    //   cookieValue += '=' + attributes[name].split(';')[0];
+    // }
+    // this.deleteCookie(key);
+    // document.cookie = cookieValue;
+    this.cookieService.delete(key)
+    this.cookieService.set(key, value, expireDate, '/');
   }
 
   deleteCookie(key: string, path?: string): void {
-    var cookieValue = encodeURIComponent(key) + '=';
+    // var cookieValue = encodeURIComponent(key) + '=';
 
-    cookieValue =
-      cookieValue +
-      '; expires=' +
-      new Date(new Date().getTime() - 86400000).toUTCString();
+    // cookieValue =
+    //   cookieValue +
+    //   '; expires=' +
+    //   new Date(new Date().getTime() - 86400000).toUTCString();
 
-    if (path) {
-      cookieValue = cookieValue + '; path=' + path;
-    }
+    // if (path) {
+    //   cookieValue = cookieValue + '; path=' + path;
+    // }
 
-    document.cookie = cookieValue;
+    // document.cookie = cookieValue;
+    this.cookieService.delete(key);
   }
   //#endregion
   //#region  Strings
@@ -137,7 +147,7 @@ export class UtilsService {
     var fix = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return str.replace(new RegExp(fix, 'g'), replacement);
   }
-  formatString(str,args?:any) {
+  formatString(str, args?: any) {
     if (args.length < 1) {
       return '';
     }
