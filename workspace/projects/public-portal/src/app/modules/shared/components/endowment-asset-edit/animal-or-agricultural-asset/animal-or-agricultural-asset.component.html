@@ -5,7 +5,7 @@
       | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <select class="custom-select" #regionId="ngModel" name="regionId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.regionId" [hidden]="viewOnly" required
+      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.regionId" [hidden]="viewOnly" required
       (change)="getcityLookup(regionId.value)">
       <option [value]="null" selected></option>
       <option *ngFor="let region of regionLookup" value="{{ region.id }}">
@@ -28,14 +28,14 @@
       | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.cityId" [hidden]="viewOnly" required>
+      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.cityId" [hidden]="viewOnly" required>
       <option [value]="null" selected></option>
       <option *ngFor="let city of cityLookup" value="{{ city.id }}">
         {{ city.name }}
       </option>
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      getCityValue(assetInfoModel.animalOrAgriculturalAsset.cityId)
+      getCityValue(assetInfoModel.animalOrAgriculturalAssetObj.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
@@ -55,11 +55,11 @@
     <textarea [rows]="5" cols="10" class="form-control" [pattern]="
         ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
       " #animalOrAgriculturaDescription="ngModel" name="animalOrAgriculturaDescription" [(ngModel)]="
-        assetInfoModel.animalOrAgriculturalAsset.animalOrAgriculturaDescription
+        assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
       " [hidden]="viewOnly">
     </textarea>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      assetInfoModel.animalOrAgriculturalAsset.animalOrAgriculturaDescription
+      assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
       }}
     </label>
   </div>

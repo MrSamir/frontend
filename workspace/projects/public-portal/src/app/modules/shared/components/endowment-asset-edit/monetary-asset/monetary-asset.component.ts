@@ -62,13 +62,11 @@ export class MonetaryAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnChanges() {
-    this.assetInfoModel.monetaryAsset;
+    this.assetInfoModel.monetaryAssetObj;
   }
 
   loadingdata() {
-    if (this.assetInfoModel.monetaryAsset == undefined) {
-      this.assetInfoModel.monetaryAsset = new InputMonetaryAssetDto();
-    }
+    
   }
 
   getSubAssets(subassetId: number) {

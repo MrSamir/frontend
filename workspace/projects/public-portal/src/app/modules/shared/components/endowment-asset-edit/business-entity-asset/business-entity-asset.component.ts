@@ -69,8 +69,6 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
   ngOnInit() {
    
-    //this.cdRef.detectChanges();
-    //this.assetInfoModel.businessEntityAsset = new InputBusinessEntityAssetDto()
     const patternDecimalValues =
       /^([0-9]{1,10})$|^([0-9]{1,10})(\.)[0-9]{1,4}$/;
     const patternWaqfResponserPortion =
@@ -81,13 +79,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
     //this.combinedPattern = EnumValidation.pattern_CombinedWaqfResponserPortion; //new RegExp(`${EnumValidation.pattern_decimal_values} +"|"+ ${EnumValidation.pattern_WaqfResponserPortion}`);
 
-    if (this.assetInfoModel.businessEntityAsset == undefined) {
-      this.assetInfoModel.businessEntityAsset =
-        new InputBusinessEntityAssetDto();
-    } else {
-      this.map.latitude = this.assetInfoModel.businessEntityAsset.latitude;
-      this.map.longitude = this.assetInfoModel.businessEntityAsset.longitude;
-    }
+    
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
@@ -104,7 +96,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
     });
 
 
-    debugger
+    
     this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();
@@ -148,8 +140,8 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   }
   onChangeMap() {
     if (this.map && this.map.longitude && this.map.latitude) {
-      this.assetInfoModel.businessEntityAsset.longitude = this.map.longitude;
-      this.assetInfoModel.businessEntityAsset.latitude = this.map.latitude;
+      this.assetInfoModel.businessEntityAssetObj.longitude = this.map.longitude;
+      this.assetInfoModel.businessEntityAssetObj.latitude = this.map.latitude;
     }
   }
 
@@ -158,12 +150,11 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   }
 
   loadHints() {
-    //this.registrationDocumentNumberhint = HintDictionary.getHintByKey("businessAsset.registrationDocumentNumber");
   }
 
   ChangeCityLookup(value: any) {
     if (value == 'null' || value == undefined) {
-      this.assetInfoModel.businessEntityAsset.cityId = -1;
+      this.assetInfoModel.businessEntityAssetObj.cityId = -1;
     }
   }
   get requestType() {
@@ -188,7 +179,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
       return undefined;
   }
 
-  getBusinessEntityAssetLookUpValue(businessEntity: number) {
+  getbusinessEntityAssetLookUpValue(businessEntity: number) {
     if (businessEntity !== undefined)
       return this.regionLookup.find(c => c.id == businessEntity)?.name as string;
     else
@@ -201,7 +192,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
   businessEntityAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = response.id;
+      this.assetInfoModel.businessEntityAssetObj.commercialRegisterAttachmentId = response.id;
       this.businessEntityAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -263,7 +254,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
   businessEntityAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = undefined!;
+      this.assetInfoModel.businessEntityAssetObj.commercialRegisterAttachmentId = undefined!;
       this.businessEntityAssetFile = undefined!;
     });
   }

@@ -35,12 +35,7 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (
-      this.assetInfoModel.intellectualPropertyAndTrademarkAsset == undefined
-    ) {
-      this.assetInfoModel.intellectualPropertyAndTrademarkAsset =
-        new InputIntellectualPropertyAndTrademarkAssetDto();
-    }
+   
 
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();

@@ -42,10 +42,7 @@ export class AnimalOrAgriculturalAssetComponent {
   }
 
   ngOnInit() {
-    if (this.assetInfoModel.animalOrAgriculturalAsset == undefined) {
-      this.assetInfoModel.animalOrAgriculturalAsset =
-        new InputAnimalOrAgriculturalAssetDto();
-    }
+    
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];

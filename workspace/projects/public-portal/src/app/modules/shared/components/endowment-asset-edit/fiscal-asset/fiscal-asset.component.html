@@ -5,13 +5,13 @@
       | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <select class="custom-select" #assetSubTypeId="ngModel" name="assetSubTypeId"
-      [(ngModel)]="assetInfoModel.fiscalAsset.assetSubTypeId" (change)="subTypeChanged()" [hidden]="viewOnly" required>
+      [(ngModel)]="assetInfoModel.fiscalAssetObj.assetSubTypeId" (change)="subTypeChanged()" [hidden]="viewOnly" required>
       <option *ngFor="let assetSubType of assetSubTypes" value="{{ assetSubType.id }}">
         {{ assetSubType.name }}
       </option>
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      getLookUpValue(assetInfoModel.fiscalAsset.assetSubTypeId)
+      getLookUpValue(assetInfoModel.fiscalAssetObj.assetSubTypeId)
       }}
     </label>
 
@@ -27,17 +27,17 @@
       </p>
     </div>
   </div>
-  <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined">
+  <div class="form-group col" *ngIf="assetInfoModel.fiscalAssetObj.assetSubTypeId !== undefined">
     <label class="col-form-label">
       {{ numberOfshareLable }}
       <span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="10"
       #numberOfShare="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
-      name="numberOfShare" [(ngModel)]="assetInfoModel.fiscalAsset.numberOfShare"
+      name="numberOfShare" [(ngModel)]="assetInfoModel.fiscalAssetObj.numberOfShare"
       [pattern]="ePatternValidation.pattern_number" required />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      assetInfoModel.fiscalAsset.numberOfShare }}
+      assetInfoModel.fiscalAssetObj.numberOfShare }}
     </label>
     <div *ngIf="
         numberOfShare.invalid && (numberOfShare.dirty || numberOfShare.touched)
@@ -50,7 +50,7 @@
       </p>
     </div>
   </div>
-  <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined">
+  <div class="form-group col" *ngIf="assetInfoModel.fiscalAssetObj.assetSubTypeId !== undefined">
     <label class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetFiscalinvestmentPortfolioNumberLabel"
       | localize
@@ -59,10 +59,10 @@
     <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="20"
       #investmentPortfolioNumber="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
-      name="investmentPortfolioNumber" [(ngModel)]="assetInfoModel.fiscalAsset.investmentPortfolioNumber"
+      name="investmentPortfolioNumber" [(ngModel)]="assetInfoModel.fiscalAssetObj.investmentPortfolioNumber"
       [pattern]="ePatternValidation.pattern_number" required />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      assetInfoModel.fiscalAsset.investmentPortfolioNumber }}
+      assetInfoModel.fiscalAssetObj.investmentPortfolioNumber }}
     </label>
     <div *ngIf="
         investmentPortfolioNumber.invalid &&
@@ -82,16 +82,16 @@
       </p>
     </div>
   </div>
-  <div class="form-group col" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined">
+  <div class="form-group col" *ngIf="assetInfoModel.fiscalAssetObj.assetSubTypeId !== undefined">
     <label name="currentAssetValuelbl" class="col-form-label">{{ currentassetvalueLabel
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
     <input type="text" class="form-control" [hidden]="viewOnly" [minLength]="1" [maxLength]="15"
       #currentAssetValue="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 45 && event.charCode <= 57"
-      name="currentAssetValue" [(ngModel)]="assetInfoModel.fiscalAsset.currentAssetValue"
+      name="currentAssetValue" [(ngModel)]="assetInfoModel.fiscalAssetObj.currentAssetValue"
       [pattern]="ePatternValidation.pattern_decimal_values" required />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      assetInfoModel.fiscalAsset.currentAssetValue }}
+      assetInfoModel.fiscalAssetObj.currentAssetValue }}
     </label>
     <div *ngIf="
         currentAssetValue.invalid &&
@@ -112,7 +112,7 @@
     </div>
   </div>
 
-  <div class="form-group col-12" *ngIf="assetInfoModel.fiscalAsset.assetSubTypeId !== undefined">
+  <div class="form-group col-12" *ngIf="assetInfoModel.fiscalAssetObj.assetSubTypeId !== undefined">
   
     <div class="input-group mb-3 download p-2">
       <div class="flex-grow-1">
@@ -122,7 +122,7 @@
           (OnUploadFile)="fiscalAssetUpload($event)"></lib-file-uploader>
         <input type="hidden" #fiscalAssetRegisterAttachementId="ngModel" name="fiscalAssetAttachementId"
           [(ngModel)]="
-      assetInfoModel.fiscalAsset.fiscalAssetAttachementId
+      assetInfoModel.fiscalAssetObj.fiscalAssetAttachementId
       " required />
         <app-validationMessages relatedControlName="fiscalAssetAttachementId"
           [control]="fiscalAssetRegisterAttachementId" [validationMessages]="[
@@ -132,7 +132,7 @@
         }
       ]">
         </app-validationMessages>
-        <div *ngIf="assetInfoModel.fiscalAsset.fiscalAssetAttachementId" class="form-group col-12">
+        <div *ngIf="assetInfoModel.fiscalAssetObj.fiscalAssetAttachementId" class="form-group col-12">
           <app-AttachmentViewer *ngIf="fiscalAssetAttachemt"
             (OnAttachementRemove)="fiscalAssetRemoveFile($event)"
             [Attachements]="[fiscalAssetAttachemt]"></app-AttachmentViewer>

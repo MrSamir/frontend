@@ -35,10 +35,6 @@ export class ParticularBenefitAssetComponent {
   ) { }
 
   ngOnInit() {
-    if (this.assetInfoModel.particularBenefitAsset == undefined) {
-      this.assetInfoModel.particularBenefitAsset =
-        new InputParticularBenefitAssetDto();
-    }
 
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();

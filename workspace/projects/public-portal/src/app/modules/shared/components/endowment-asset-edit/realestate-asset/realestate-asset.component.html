@@ -9,7 +9,7 @@
     <select
       class="custom-select"
       #assetSubTypeId="ngModel"
-      [(ngModel)]="assetInfoModel.realEstateAsset.assetSubTypeId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.assetSubTypeId"
       [hidden]="viewOnly"
       name="assetSubTypeId"
       required
@@ -54,7 +54,7 @@
     <select
       class="custom-select"
       #regionId="ngModel"
-      [(ngModel)]="assetInfoModel.realEstateAsset.regionId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.regionId"
       [hidden]="viewOnly"
       name="regionId"
       required
@@ -88,7 +88,7 @@
       class="custom-select"
       [disabled]="cityDisabled"
       #cityId="ngModel"
-      [(ngModel)]="assetInfoModel.realEstateAsset.cityId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.cityId"
       [hidden]="viewOnly"
       required
       name="cityId"
@@ -101,7 +101,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        getCityById(assetInfoModel.realEstateAsset.cityId)
+        getCityById(assetInfoModel.realEstateAssetObj.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
@@ -138,12 +138,12 @@
       [maxLength]="14"
       #estimatedAmount="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
-      [(ngModel)]="assetInfoModel.realEstateAsset.estimatedAmount"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.estimatedAmount"
       [pattern]="ePatternValidation.pattern_decimal_values"
       required
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.realEstateAsset.estimatedAmount }}
+      >&nbsp;{{ assetInfoModel.realEstateAssetObj.estimatedAmount }}
     </label>
     <div
       *ngIf="
@@ -209,7 +209,7 @@
       #commercialRegisterAttachmentId="ngModel"
       name="commercialRegisterAttachmentId"
       [(ngModel)]="
-      assetInfoModel.realEstateAsset.ownershipDeedAttachementId
+      assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId
       "
       required
     />
@@ -228,7 +228,7 @@
     >
     </app-validationMessages>
     <div
-    *ngIf="assetInfoModel.realEstateAsset.ownershipDeedAttachementId"
+    *ngIf="assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId"
     class="form-group col-12"
   >
     <app-AttachmentViewer

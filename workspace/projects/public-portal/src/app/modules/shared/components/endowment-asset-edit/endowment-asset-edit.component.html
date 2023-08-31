@@ -127,31 +127,31 @@
       </div>
 
       <app-shared-business-entity-asset #businessEntityAsset="ngModel" name="businessEntityAsset" *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.businessEntityAsset" [assetInfoModel]="newAsset!">
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.businessEntityAssetObj" [assetInfoModel]="newAsset!">
       </app-shared-business-entity-asset>
       <app-shared-realestate-asset #realEstateAsset="ngModel" *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAsset"  name="realEstateAsset"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAssetObj"  name="realEstateAsset"
         [assetInfoModel]="newAsset!"></app-shared-realestate-asset>
       <app-shared-fiscal-asset #fiscalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAsset"   name="fiscalAsset"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAssetObj"   name="fiscalAsset"
         [assetInfoModel]="newAsset!"></app-shared-fiscal-asset>
       <app-shared-movable-asset #movableAsset="ngModel" *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAsset"  name="movableAsset"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAssetObj"  name="movableAsset"
         [assetInfoModel]="newAsset!"></app-shared-movable-asset>
       <app-shared-monetary-asset #monetaryAsset="ngModel" *ngIf="newAsset?.assetTypeId == 5" 
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAsset" name="monetaryAsset"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAssetObj" name="monetaryAsset"
         [assetInfoModel]="newAsset!"></app-shared-monetary-asset>
 
       <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 6"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAsset" name="animalOrAgriculturalAsset"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAssetObj" name="animalOrAgriculturalAsset"
         [assetInfoModel]="newAsset!"></app-shared-animal-or-agricultural-asset>
 
       <app-shared-particular-benefit-asset #particularBenefitAsset="ngModel" *ngIf="newAsset?.assetTypeId == 7"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAsset"  name="particularBenefitAsset"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAssetObj"  name="particularBenefitAsset"
         [assetInfoModel]="newAsset!"></app-shared-particular-benefit-asset>
       <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset="ngModel"
         *ngIf="newAsset?.assetTypeId == 8" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
-        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAsset"  name="intellectualPropertyAndTrademarkAsset"
+        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAssetObj"  name="intellectualPropertyAndTrademarkAsset"
         [assetInfoModel]="newAsset!"></app-shared-intellectual-property-and-trademark-asset>
     </div>
     <ng-container *ngIf="!isEditRequested && !viewOnly">

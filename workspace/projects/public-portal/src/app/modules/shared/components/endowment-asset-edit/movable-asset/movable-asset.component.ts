@@ -50,9 +50,6 @@ export class MovableAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    if (this.assetInfoModel.movableAsset == undefined) {
-      this.assetInfoModel.movableAsset = new InputMovableAssetDto();
-    }
 
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();

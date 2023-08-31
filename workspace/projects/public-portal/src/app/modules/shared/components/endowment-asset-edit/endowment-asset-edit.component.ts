@@ -105,6 +105,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   }
 
   onAddBtnClicked() {
+    debugger
     this._serviceProxyEndowmentRegistraion
     .createWaqfRequestAsset(this.newAsset)
     .subscribe(
@@ -149,15 +150,15 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
     }
 
     this.newAsset = new InputAssetDto();
-    this.newAsset.businessEntityAsset = new InputBusinessEntityAssetDto();
-    this.newAsset.realEstateAsset = new InputRealEstateAssetDto();
-    this.newAsset.monetaryAsset = new InputMonetaryAssetDto();
-    this.newAsset.fiscalAsset = new InputFiscalAssetDto();
-    this.newAsset.animalOrAgriculturalAsset = new InputAnimalOrAgriculturalAssetDto();
-    this.newAsset.particularBenefitAsset = new InputParticularBenefitAssetDto()
-    this.newAsset.movableAsset = new InputMovableAssetDto();
-    this.newAsset.particularBenefitAsset = new InputParticularBenefitAssetDto();
-    this.newAsset.intellectualPropertyAndTrademarkAsset = new InputIntellectualPropertyAndTrademarkAssetDto();
+    this.newAsset.businessEntityAssetObj = new InputBusinessEntityAssetDto();
+    this.newAsset.realEstateAssetObj = new InputRealEstateAssetDto();
+    this.newAsset.monetaryAssetObj = new InputMonetaryAssetDto();
+    this.newAsset.fiscalAssetObj = new InputFiscalAssetDto();
+    this.newAsset.animalOrAgriculturalAssetObj = new InputAnimalOrAgriculturalAssetDto();
+    this.newAsset.particularBenefitAssetObj = new InputParticularBenefitAssetDto()
+    this.newAsset.movableAssetObj = new InputMovableAssetDto();
+    this.newAsset.particularBenefitAssetObj= new InputParticularBenefitAssetDto();
+    this.newAsset.intellectualPropertyAndTrademarkAssetObj = new InputIntellectualPropertyAndTrademarkAssetDto();
 
 
     this.newAsset.requestId = this.requestId;

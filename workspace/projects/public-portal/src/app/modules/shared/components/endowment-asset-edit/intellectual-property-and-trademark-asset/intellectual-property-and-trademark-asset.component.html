@@ -28,13 +28,13 @@
       "
       name="benefitType"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType
       "
       required
     />
 
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType }}
+      >&nbsp;{{ assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType }}
     </label>
 
     <div
@@ -72,14 +72,14 @@
       #ipatDescription="ngModel"
       name="ipatDescription"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
       "
       [hidden]="viewOnly"
     >
     </textarea>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
       }}
     </label>
     <div
@@ -118,13 +118,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="ipatValue"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
       "
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
       }}
     </label>
     <div
@@ -151,7 +151,7 @@
       #isDirectedBenefit="ngModel"
       name="isDirectedBenefit"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="viewOnly"
       required
@@ -167,7 +167,7 @@
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="!viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
@@ -175,7 +175,7 @@
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        !assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        !assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="!viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}

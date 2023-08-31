@@ -60,19 +60,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-
-
-
-
-
-    if (this.assetInfoModel.realEstateAsset == undefined) {
-      this.assetInfoModel.realEstateAsset = new InputRealEstateAssetDto();
-    } else {
-      this.map.latitude = this.assetInfoModel.realEstateAsset.latitude;
-      this.map.longitude = this.assetInfoModel.realEstateAsset.longitude;
-    }
     this._lookupExtraData = new LookupExtraData();
-    debugger
     this._lookupExtraData.dataName = 'AssetTypeId';
     this._lookupExtraData.dataValue = this.AssetTypeId.toString();
     this.lookupfliter.lookUpName = 'AssetSubType';
@@ -127,8 +115,8 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
   onChangeMap() {
     if (this.map && this.map.longitude && this.map.latitude) {
-      this.assetInfoModel.realEstateAsset.longitude = this.map.longitude;
-      this.assetInfoModel.realEstateAsset.latitude = this.map.latitude;
+      this.assetInfoModel.realEstateAssetObj.longitude = this.map.longitude;
+      this.assetInfoModel.realEstateAssetObj.latitude = this.map.latitude;
     }
   }
 
@@ -160,7 +148,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetAttachemt: AttachementItem;
   realestateAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = response.id;
+      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = response.id;
       this.realestateAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -221,7 +209,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetFile: File;
   realestateAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = undefined!;
+      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = undefined!;
       this.realestateAssetFile = undefined!;
     });
   }

@@ -17,12 +17,12 @@
       "
       #businessEntityName="ngModel"
       name="businessEntityName"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.businessEntityName"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.businessEntityName"
       required
     />
 
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAsset.businessEntityName }}
+      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.businessEntityName }}
     </label>
 
     <div
@@ -65,7 +65,7 @@
       class="custom-select"
       #assetSubTypeId="ngModel"
       name="assetSubTypeId"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.assetSubTypeId"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.assetSubTypeId"
       [hidden]="viewOnly"
       required
     >
@@ -80,7 +80,7 @@
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
         getLookUpValue(
-          assetInfoModel.businessEntityAsset.assetSubTypeId
+          assetInfoModel.businessEntityAssetObj.assetSubTypeId
         )
       }}
     </label>
@@ -111,7 +111,7 @@
       class="custom-select"
       #regionId="ngModel"
       name="regionId"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.regionId"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.regionId"
       [hidden]="viewOnly"
       required
       (change)="getcityLookup(regionId.value)"
@@ -123,7 +123,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        getBusinessEntityAssetLookUpValue(assetInfoModel.businessEntityAsset.regionId)
+        getbusinessEntityAssetLookUpValue(assetInfoModel.businessEntityAssetObj.regionId)
       }}
     </label>
 
@@ -151,7 +151,7 @@
       #cityId="ngModel"
       [disabled]="cityDisabled"
       name="cityId"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.cityId"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.cityId"
       [hidden]="viewOnly"
       required
       (change)="ChangeCityLookup(cityId.value)"
@@ -163,7 +163,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        getCityLookUpValue(assetInfoModel.businessEntityAsset.cityId)
+        getCityLookUpValue(assetInfoModel.businessEntityAssetObj.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
@@ -212,13 +212,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
       name="registrationDocumentNumber"
       [(ngModel)]="
-        assetInfoModel!.businessEntityAsset!.registrationDocumentNumber
+        assetInfoModel!.businessEntityAssetObj!.registrationDocumentNumber
       "
       [pattern]="ePatternValidation.pattern_number"
       required
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel!.businessEntityAsset!.registrationDocumentNumber }}
+      >&nbsp;{{ assetInfoModel!.businessEntityAssetObj!.registrationDocumentNumber }}
     </label>
     <div
       *ngIf="
@@ -261,11 +261,11 @@
       #waqfResponserPortion="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfResponserPortion"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfResponserPortion"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.waqfResponserPortion"
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAsset.waqfResponserPortion }}
+      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.waqfResponserPortion }}
     </label>
     <div
       *ngIf="
@@ -299,11 +299,11 @@
       #waqfPercentageFromAsset="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfPercentageFromAsset"
-      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfPercentageFromAsset"
+      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.waqfPercentageFromAsset"
       [pattern]="ePatternValidation.pattern_percentage"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAsset.waqfPercentageFromAsset }}
+      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.waqfPercentageFromAsset }}
     </label>
     <div
       *ngIf="
@@ -346,7 +346,7 @@
       #commercialRegisterAttachmentId="ngModel"
       name="commercialRegisterAttachmentId"
       [(ngModel)]="
-        assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId
+        assetInfoModel!.businessEntityAssetObj!.commercialRegisterAttachmentId
       "
       required
     />
@@ -365,7 +365,7 @@
     >
     </app-validationMessages>
     <div
-    *ngIf="assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId"
+    *ngIf="assetInfoModel!.businessEntityAssetObj!.commercialRegisterAttachmentId"
     class="form-group col-12"
   >
     <app-AttachmentViewer
