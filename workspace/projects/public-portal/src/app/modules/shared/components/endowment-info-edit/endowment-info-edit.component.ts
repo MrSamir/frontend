@@ -165,9 +165,9 @@ export class EndowmentInfoEditComponent extends ComponentBase implements OnInit 
     });
   }
 
-  ngOnChanges() {
-    this.init();
-  }
+  // ngOnChanges() {
+  //   this.init();
+  // }
 
   // onWaqfDateChange(date: NgbDateStruct) {
 

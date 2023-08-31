@@ -39,7 +39,7 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
   templateUrl: './endowment-info-readonly.component.html',
   styleUrls: ['./endowment-info-readonly.component.css']
 })
-export class EndowmentInfoReadonlyComponent  extends ComponentBase implements OnInit {
+export class EndowmentInfoReadonlyComponent extends ComponentBase implements OnInit {
   @Input() public IsCreate = true;
   @Input() InputEndowmentDto: InputEndowmentDto = new InputEndowmentDto();
   @Input() waqfId: string;
@@ -163,9 +163,9 @@ export class EndowmentInfoReadonlyComponent  extends ComponentBase implements On
     });
   }
 
-  ngOnChanges() {
-    this.init();
-  }
+  // ngOnChanges() {
+  //   this.init();
+  // }
 
   // onWaqfDateChange(date: NgbDateStruct) {
 
@@ -321,6 +321,9 @@ export class EndowmentInfoReadonlyComponent  extends ComponentBase implements On
         (result: ApiResponse) => {
           if (result.isSuccess) {
             this.InputEndowmentDto = result.dto;
+            if (this.InputEndowmentDto.endowmentDeedAttachmentId == '00000000-0000-0000-0000-000000000000') {
+              this.InputEndowmentDto.endowmentDeedAttachmentId = undefined;
+            }
             if (this.InputEndowmentDto.endowmentDeedRegionId) {
               this.LoadCitiesByRegion(this.InputEndowmentDto.endowmentDeedRegionId);
             }

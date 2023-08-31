@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 //import {LoginDemoComponent} from 'projects/shared-features-lib/src/lib/components/login-demo/login-demo.component'
 @Component({
   selector: 'app-root',
@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Common.welcome';
+  constructor(private cdref: ChangeDetectorRef) {
+
+  }
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
 }

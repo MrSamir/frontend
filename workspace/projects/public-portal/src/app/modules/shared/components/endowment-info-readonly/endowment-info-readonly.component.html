@@ -1,9 +1,12 @@
 <form name="form" #waqfForm="ngForm" xmlns="http://www.w3.org/1999/html" *ngIf="!!requestId || !!waqfId"
   (ngSubmit)="onNextBtnClicked(waqfForm)">
-  <div class="aw-content">
+  <p-panel [header]="
+  'EndowmentModule.EndowmentRgistrationService.EndowmentInfoStepTitle'
+    | localize
+">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
       <div class="form-group col">
-        <label class="col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentName" | localize }}<span class="text-danger">*</span></label>
+        <label class="col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentName" | localize }}</label>
         <input type="text" class="form-control" #endowmentName="ngModel" name="endowmentName" [disabled]="true"
           [(ngModel)]="InputEndowmentDto.endowmentName" required />
         <div *ngIf="endowmentName.invalid && (endowmentName.dirty || endowmentName.touched)" class="">
@@ -16,7 +19,7 @@
       <div class="form-group col">
         <div class="d-flex">
           <label class="col col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentType" | localize
-            }}<span class="text-danger">*</span></label>
+            }}</label>
         </div>
         <select class="custom-select" #endowmentTypeId="ngModel" name="endowmentTypeId"  [disabled]="true"
           [(ngModel)]="InputEndowmentDto.endowmentTypeId" required>
@@ -36,7 +39,7 @@
       <div class="form-group col">
         <label class="col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentSpendingCategories" |
           localize
-          }}<span class="text-danger">*</span></label>
+          }}</label>
         <p-multiSelect #spendingCategoriesIds="ngModel" display="chip" name="spendingCategoriesIds"
           [options]="spendingCategoriesLookup" optionLabel="name" optionValue="id"   [disabled]="true"
           [(ngModel)]="InputEndowmentDto.spendingCategoriesIds" required></p-multiSelect>
@@ -53,12 +56,12 @@
         </div>
       </div>
 
-      
+
 
       <div class="form-group col">
         <div class="d-flex">
           <label class="col col-form-label">{{ "EndowmentModule.EndowmentRgistrationService.EndowmentRevenue" | localize
-            }}<span class="text-danger">*</span></label>
+            }}</label>
         </div>
         <!-- pattern_number  [pattern]="ePatternValidation.pattern_number"-->
         <input type="text" class="form-control" #revenue="ngModel" name="revenue" [disabled]="true" placeholder="{{
@@ -100,13 +103,13 @@
       </div>
 
       <div class="form-group col-12"></div>
-     
+
 
       <div class="form-group col-12">
         <label class="col-form-label">
           {{ "EndowmentModule.EndowmentRgistrationService.EndowmentCondation" | localize }}
         </label>
-     
+
      <!-- <p-editor  #condition="ngModel" name="condition"
      [(ngModel)]="InputEndowmentDto.endowmentConditions"  class="form-control" [style]="{ height: '320px' }"></p-editor> -->
         <textarea [rows]="5" cols="10" class="form-control" #condition="ngModel" name="condition" [disabled]="true"
@@ -118,109 +121,80 @@
           </p>
         </div>
       </div>
-      <!-- Section Title -->
-
-      <div class="mt-4 col-12">
-        <h3 class="text-awq-primary my-3">
-          <!-- <svg-icon styleClass="mr-2" icon="title-arrow"></svg-icon> -->
-          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedInfo" | localize }}
-        </h3>
       </div>
-
-      <div class="form-group col">
-        <label class="col-form-label">
-          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumber" | localize }}
-          <span class="text-danger">*</span></label>
-        <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="true" 
-          [(ngModel)]="InputEndowmentDto.endowmentDeedNumber"
-          [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required />
-        <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
-          <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">
-            {{
-            "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumberValidation" | localize
-            }}
-          </p>
-        </div>
-      </div>
- 
-
-      <div class="form-group col">
-        <label class="col-form-label">
-          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedRegion" | localize }}
-          <span class="text-danger">*</span></label>
-        <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="true"
-          [(ngModel)]="InputEndowmentDto.endowmentDeedRegionId" required
-          (change)="LoadCitiesByRegion(deedRegionId.value)">
-          <option [value]="null" disabled selected></option>
-          <option *ngFor="let region of RegioneLookup" value="{{ region.id }}">
-            {{ region.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group col">
-        <label class="col-form-label">
-          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCity" | localize }}
-          <span class="text-danger">*</span></label>
-        <select class="custom-select" #deedCityId="ngModel" name="deedCityId"  [disabled]="true"
-          [(ngModel)]="InputEndowmentDto.endowmentDeedCityId"  required>
-          <option *ngFor="let city of CityLookup" value="{{ city.id }}">
-            {{ city.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group col">
-        <label class="col-form-label">
-          {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCourt" | localize }}
-          <span class="text-danger">*</span></label>
-        <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId"  [disabled]="true"
-          [(ngModel)]="InputEndowmentDto.issuanceCourtId" required>
-          <option *ngFor="let issuanceCourtItem of IssuanceCourtsLookup" value="{{ issuanceCourtItem.id }}">
-            {{ issuanceCourtItem.name }}
-          </option>
-        </select>
-      </div>
-
-      <div class="form-group col-12">
-        <div class="d-flex">
-          <label class="col col-form-label">
-            {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement" | localize }}
-
-            <span class="text-danger">*</span></label>
-        </div>
-
-        <div class="input-group mb-3 download p-2">
-          <div *ngIf="!InputEndowmentDto.endowmentDeedAttachmentId" class="form-group col-12" >
-            <lib-file-uploader [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement')"
-              [showDisclaimer]="true" (OnSelectFile)="EndowmentDeedFileSelect($event)"
-              (OnUploadFile)="EndowmentDeedFileUpload($event)"></lib-file-uploader>
-            <input type="text" hidden [(ngModel)]="
-              InputEndowmentDto.endowmentDeedAttachmentId
-              " #_endowmentDeadAttachemt="ngModel" required name="endowmentdeedAttachmentId" />
-            <app-validationMessages relatedControlName="endowmentdeedAttachmentId" [control]="_endowmentDeadAttachemt"
-              [validationMessages]="[
-                {
-                  ruleName: 'required',
-                  ruleMessage: l(
-                    'Common.Required',
-                    l('EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement')
-                  )
-                }
-              ]">
-            </app-validationMessages>
-          </div>
+  </p-panel>
+<br>
+  <p-panel [header]="
+  'EndowmentModule.EndowmentRgistrationService.EndowmentdeedInfo'
+    | localize
+">
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+<div class="form-group col">
+  <label class="col-form-label">
+    {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumber" | localize }}</label>
+  <input type="text" class="form-control" #deedNumber="ngModel" name="deedNumber" [disabled]="true"
+    [(ngModel)]="InputEndowmentDto.endowmentDeedNumber"
+    [pattern]="ePatternValidation.pattern_arabic_number_forwardslash_char" required />
+  <div *ngIf="deedNumber.invalid && (deedNumber.dirty || deedNumber.touched)" class="">
+    <p *ngIf="deedNumber.errors" class="text-danger pt-1 small">
+      {{
+      "EndowmentModule.EndowmentRgistrationService.EndowmentdeedNumberValidation" | localize
+      }}
+    </p>
+  </div>
+</div>
 
 
-          <div *ngIf="InputEndowmentDto.endowmentDeedAttachmentId" class="form-group col-12">
-            <app-AttachmentViewer *ngIf="endowmentDeadAttachemt" [showDeleteButton]="false"
-             (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
-              [Attachements]="[endowmentDeadAttachemt]"></app-AttachmentViewer>
-          </div>
-        </div>
-      </div>
-    </div>
+<div class="form-group col">
+  <label class="col-form-label">
+    {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedRegion" | localize }}</label>
+  <select class="custom-select" #deedRegionId="ngModel" name="deedRegionId" [disabled]="true"
+    [(ngModel)]="InputEndowmentDto.endowmentDeedRegionId" required
+    (change)="LoadCitiesByRegion(deedRegionId.value)">
+    <option [value]="null" disabled selected></option>
+    <option *ngFor="let region of RegioneLookup" value="{{ region.id }}">
+      {{ region.name }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group col">
+  <label class="col-form-label">
+    {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCity" | localize }}</label>
+  <select class="custom-select" #deedCityId="ngModel" name="deedCityId"  [disabled]="true"
+    [(ngModel)]="InputEndowmentDto.endowmentDeedCityId"  required>
+    <option *ngFor="let city of CityLookup" value="{{ city.id }}">
+      {{ city.name }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group col">
+  <label class="col-form-label">
+    {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedCourt" | localize }}</label>
+  <select class="custom-select" #issuanceCourtId="ngModel" name="issuanceCourtId"  [disabled]="true"
+    [(ngModel)]="InputEndowmentDto.issuanceCourtId" required>
+    <option *ngFor="let issuanceCourtItem of IssuanceCourtsLookup" value="{{ issuanceCourtItem.id }}">
+      {{ issuanceCourtItem.name }}
+    </option>
+  </select>
+</div>
+
+<div class="form-group col-12" *ngIf="InputEndowmentDto.endowmentDeedAttachmentId">
+  <div class="d-flex">
+    <label class="col col-form-label">
+      {{ "EndowmentModule.EndowmentRgistrationService.EndowmentdeedAttachement" | localize }}</label>
   </div>
 
- 
+  <div class="input-group mb-3 download p-2">
+    <div class="form-group col-12">
+      <app-AttachmentViewer *ngIf="endowmentDeadAttachemt" [showDeleteButton]="false"
+       (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
+        [Attachements]="[endowmentDeadAttachemt]"></app-AttachmentViewer>
+    </div>
+  </div>
+</div>
+</div>
+</p-panel>
+
 </form>
