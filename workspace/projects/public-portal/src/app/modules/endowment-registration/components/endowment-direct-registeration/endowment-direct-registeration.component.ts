@@ -32,7 +32,6 @@ export class EndowmentDirectRegisterationComponent
       .registerEndowmentByDeedNumberFromWeb(this.deedNumber, true)
       .subscribe(
         (result) => {
-          debugger;
           this.message.showMessage(MessageTypeEnum.toast, {
             closable: true,
             enableService: true,
