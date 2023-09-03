@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -17,6 +17,7 @@ import {
   InputOneAssetDto,
   InputParticularBenefitAssetDto,
   InputRealEstateAssetDto,
+  InputRemoveAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   OutputAssetDto,
@@ -29,14 +30,18 @@ import { MessageTypeEnum } from "../../../../../../../core-lib/src/lib/enums/mes
 import { MessageSeverity } from "../../../../../../../core-lib/src/lib/enums/message-severity";
 import { ComponentBase } from "../../../../../../../core-lib/src/lib/components/ComponentBase/ComponentBase.component";
 import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-data';
+import { ActivatedRoute } from '@angular/router';
+import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
+import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
 
 @Component({
   selector: 'app-endowment-shared-asset-edit',
   templateUrl: './endowment-asset-edit.component.html',
   styleUrls: ['./endowment-asset-edit.component.css'],
 })
-export class EndowmentSharedAssetEditComponent extends ComponentBase {
+export class EndowmentSharedAssetEditComponent extends ComponentBase implements OnInit {
   //#region variables
+  primengTableHelper: PrimengTableHelper;
 
   @Input() viewOnly = false;
 
@@ -63,9 +68,30 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   map: MapModel;
 
   newAsset: InputAssetDto | undefined;
+  ngOnInit() {
+    this.lookupfliter.lookUpName = 'AssetType';
+    this.lookupfliter.filters = [];
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
+      this.assetsTypeLookup = data.dto.items!;
+    });
+
+    this.primengTableHelper = new PrimengTableHelper();
+    this.loadAssets();
+
+  }
+
+
+  getAssetType(assetTypeId: number) {
+    if (assetTypeId != undefined) {
+      return this.assetsTypeLookup.find(c => c.id == assetTypeId).localizedKey;
+    } else {
+      return undefined;
+    }
+  }
 
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   assetsSubTypeLookup: LookupDto[] = [];
+  assetsTypeLookup: LookupDto[] = [];
   AssetTypeLookup: LookupDto[] = [];
   AssetSizeLookup: LookupDto[] = [];
   RegionLookup: LookupDto[] = [];
@@ -84,14 +110,20 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   //assetSubTypes: LookupModel[];
 
   constructor(
-    public formBuilder: FormBuilder,
+    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
+    injecter: Injector,
+    private dateHelper: DateFormatterService,
+    private activatedRoute: ActivatedRoute,
+    public formBuilder: FormBuilder,
     private injector: Injector,
     private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
   ) /*private activatedRoute: ActivatedRoute*/ {
-    super(injector);
+    super(injecter);
   }
+
+
 
   //#region Events
 
@@ -107,36 +139,52 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   onAddBtnClicked() {
     debugger
     this._serviceProxyEndowmentRegistraion
-    .createWaqfRequestAsset(this.newAsset)
-    .subscribe(
-      (data) => {
-        if (data) {
-          const resAssetData = data;
-          if (resAssetData.isSuccess) {
-           // this.loadAssetsBy();
-            this.modalService.dismissAll();
-            // showSuccess('تم إنشاء الاصل بنجاح',
-            //   () => {
-            //     this.newAsset.id = resAssetData.dto.toString();
-            //     let obj = { asset: resAssetData.dto }
-            //     this.modalService.dismissAll();
-            //   }
-            // )
-            // showSuccess('تم إنشاء الاصل بنجاح',
-            //   () => {
-            //     this.newAsset.id = resAssetData.dto.toString();
-            //     let obj = { asset: resAssetData.dto }
-            //     this.modalService.dismissAll();
-            //   }
-            // )
-            //this.setOldAttachmentIds();
+      .createWaqfRequestAsset(this.newAsset)
+      .subscribe(
+        (data) => {
+          if (data) {
+            const resAssetData = data;
+            if (resAssetData.isSuccess) {
+              this.loadAssets();
+              this.modalService.dismissAll();
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
+              // showSuccess('تم إنشاء الاصل بنجاح',
+              //   () => {
+              //     this.newAsset.id = resAssetData.dto.toString();
+              //     let obj = { asset: resAssetData.dto }
+              //     this.modalService.dismissAll();
+              //   }
+              // )
+              //this.setOldAttachmentIds();
+            }
           }
+        },
+        (err: ApiException) => {
+          //handleServiceProxyError(err);
         }
-      },
-      (err: ApiException) => {
-        //handleServiceProxyError(err);
-      }
-    );    //this.OnAddingNewAsset.emit(this.newAsset);
+      );    //this.OnAddingNewAsset.emit(this.newAsset);
+  }
+
+
+  loadAssets() {
+    this.primengTableHelper.showLoadingIndicator();
+    if (this.requestId != undefined) {
+      this._serviceProxyEndowmentRegistraion.getAssetsByRequestId(
+        this.requestId
+      ).subscribe((response) => {
+        debugger
+        this.Assets = response;
+         this.primengTableHelper.records = this.Assets;
+        this.primengTableHelper.totalRecordsCount = this.Assets.length;
+      });
+    }
+    this.primengTableHelper.hideLoadingIndicator();
   }
 
   async onAddNewAssetClicked(data: any) {
@@ -157,7 +205,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
     this.newAsset.animalOrAgriculturalAssetObj = new InputAnimalOrAgriculturalAssetDto();
     this.newAsset.particularBenefitAssetObj = new InputParticularBenefitAssetDto()
     this.newAsset.movableAssetObj = new InputMovableAssetDto();
-    this.newAsset.particularBenefitAssetObj= new InputParticularBenefitAssetDto();
+    this.newAsset.particularBenefitAssetObj = new InputParticularBenefitAssetDto();
     this.newAsset.intellectualPropertyAndTrademarkAssetObj = new InputIntellectualPropertyAndTrademarkAssetDto();
 
 
@@ -199,8 +247,13 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase {
   }
 
   onDeleteTableCellClicked(assetToDelete: any, index: number) {
-    // we change AssetDto to any , revert back after building backend
-    this.OnDeletingExistingAsset.emit({ assetToDelete, index });
+    let body:InputRemoveAssetDto = new InputRemoveAssetDto();
+    debugger
+    body.requestId =this.requestId;
+    body.id = assetToDelete.id;
+    this.Assets.splice(index,1);
+
+    this._serviceProxyEndowmentRegistraion.deleteWaqfRequestAsset(body).subscribe(res=>{});
   }
 
   //#endregion
