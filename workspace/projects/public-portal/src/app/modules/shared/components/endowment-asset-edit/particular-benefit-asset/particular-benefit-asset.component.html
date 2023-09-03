@@ -21,12 +21,12 @@
       [pattern]="
         ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
       "
-      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitType"
+      [(ngModel)]="assetInfoModel.particularBenefitAssetObj.benefitType"
       required
     />
 
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitType }}
+      >&nbsp;{{ assetInfoModel.particularBenefitAssetObj.benefitType }}
     </label>
 
     <div
@@ -64,12 +64,12 @@
       "
       #benefitDescription="ngModel"
       name="benefitDescription"
-      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitDescription"
+      [(ngModel)]="assetInfoModel.particularBenefitAssetObj.benefitDescription"
       [hidden]="viewOnly"
     >
     </textarea>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitDescription }}
+      >&nbsp;{{ assetInfoModel.particularBenefitAssetObj.benefitDescription }}
     </label>
     <div
       *ngIf="
@@ -103,11 +103,11 @@
       #benefitValue="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="benefitValue"
-      [(ngModel)]="assetInfoModel.particularBenefitAsset.benefitValue"
+      [(ngModel)]="assetInfoModel.particularBenefitAssetObj.benefitValue"
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.particularBenefitAsset.benefitValue }}
+      >&nbsp;{{ assetInfoModel.particularBenefitAssetObj.benefitValue }}
     </label>
     <div
       *ngIf="
@@ -137,29 +137,29 @@
       class="custom-select"
       #isDirectedBenefit="ngModel"
       name="isDirectedBenefit"
-      [(ngModel)]="assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      [(ngModel)]="assetInfoModel.particularBenefitAssetObj.isDirectedBenefit"
       [hidden]="viewOnly"
       required
     >
       <option [ngValue]="undefined"></option>
       <option [ngValue]="true">
-        {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
       </option>
       <option [ngValue]="false">
-        {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
       </option>
     </select>
     <label
       class="col-form-label font-weight-bold"
-      *ngIf="assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      *ngIf="assetInfoModel.particularBenefitAssetObj.isDirectedBenefit"
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
     </label>
     <label
       class="col-form-label font-weight-bold"
-      *ngIf="!assetInfoModel.particularBenefitAsset.isDirectedBenefit"
+      *ngIf="!assetInfoModel.particularBenefitAssetObj.isDirectedBenefit"
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
     </label>
     <div
       *ngIf="

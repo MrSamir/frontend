@@ -10,87 +10,84 @@
   </a>
 </div>
 
-<div *ngIf="!!this.Assets && this.Assets!.length > 0">
-  <div class="table-responsive mt-2">
-    <div>
-      <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-          <tr>
-            <td class="text-center" scope="col">#</td>
-            <td class="text-center" scope="col">
-              {{
-              "EndowmentModule.EndowmentRgistrationService.AssetTypeLabel"
-              | localize
-              }}
-            </td>
-            <td class="text-center" scope="col" *ngIf="viewOnly">
-              {{
-              "EndowmentModule.EndowmentRgistrationService.ReviewAssetBtnLabel"
-              | localize
-              }}
-            </td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">
-              {{
-              "EndowmentModule.EndowmentRgistrationService.EditAssetBtnLabel"
-              | localize
-              }}
-            </td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">
-              {{
-              "EndowmentModule.EndowmentRgistrationService.DeleteAssetBtnLabel"
-              | localize
-              }}
-            </td>
-            <!-- <td class="text-center" scope="col">نوع الأصل</td>
-            <td class="text-center" scope="col" *ngIf="viewOnly">مراجعة</td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">تعديل</td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">حذف</td> -->
-          </tr>
-        </thead>
-        <!--   ==============    if the have result ============== -->
-        <tbody>
-          <tr *ngFor="let foundAsset of this.Assets; index as i">
-            <td class="text-center" scope="col">
-              {{ i + 1 }}
-            </td>
-            <td class="text-center" scope="col">
-              {{ assetTypeMap[foundAsset.assetTypeId!] }}
-            </td>
-            <td class="text-center" scope="col" *ngIf="viewOnly">
-              <button class="btn btn-sm btn-outline-awq-secondary rounded"
-                (click)="onViewTableCellClicked(addData, foundAsset.id)" [hidden]="!viewOnly">
-                <!-- <svg-icon icon="eye"></svg-icon> -->
-              </button>
-            </td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">
-              <button class="btn btn-sm btn-outline-awq-secondary rounded"
-                (click)="onEditTableCellClicked(addData, foundAsset.id)" *ngIf="!viewOnly">
-                <!-- <svg-icon icon="pencil"></svg-icon> -->
-              </button>
-            </td>
-            <td class="text-center" scope="col" *ngIf="!viewOnly">
-              <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(foundAsset, i)"
-                *ngIf="!viewOnly">
-                <!-- <svg-icon icon="trash-alt"></svg-icon> -->
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="d-flex justify-content-end my-6">
+  <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
+    (click)="onAddNewAssetClicked(addData)" *ngIf="!viewOnly">
+    <!-- <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon> -->
+    <!-- <span>إضافة أصل آخر</span> -->
+    <span>{{
+      "EndowmentModule.EndowmentRgistrationService.AddNewAssetLabel"
+      | localize
+      }}</span>
+  </a>
+</div>
 
-  <div class="d-flex justify-content-end my-6">
-    <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
-      (click)="onAddNewAssetClicked(addData)" *ngIf="!viewOnly">
-      <!-- <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon> -->
-      <!-- <span>إضافة أصل آخر</span> -->
-      <span>{{
-        "EndowmentModule.EndowmentRgistrationService.AddNewAssetLabel"
+<div *ngIf="!!this.Assets && this.Assets!.length > 0">
+
+
+
+  <p-table class="table table-striped table-hover" #dt [value]="primengTableHelper.records"
+  [totalRecords]="primengTableHelper.totalRecordsCount" [loading]="primengTableHelper.isLoading"
+  [rows]="primengTableHelper.defaultRecordsCountPerPage" [paginator]="true"
+  [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage"
+  [responsive]="primengTableHelper.isResponsive" [showCurrentPageReport]="true"
+  [currentPageReportTemplate]="' عدد السطور'+ primengTableHelper.totalRecordsCount.toString()"
+  [resizableColumns]="primengTableHelper.resizableColumns">
+  <ng-template pTemplate="header">
+    <tr>
+      <th class="text-center" scope="col">#</th>
+      <th class="text-center" scope="col">
+        {{
+        "EndowmentModule.EndowmentRgistrationService.AssetTypeLabel"
         | localize
-        }}</span>
-    </a>
-  </div>
+        }}
+      </th>
+      <th class="text-center" scope="col" *ngIf="viewOnly">
+        {{
+        "EndowmentModule.EndowmentRgistrationService.ReviewAssetBtnLabel"
+        | localize
+        }}
+      </th>
+      <th class="text-center" scope="col" *ngIf="!viewOnly">
+        {{
+        "EndowmentModule.EndowmentRgistrationService.EditAssetBtnLabel"
+        | localize
+        }}
+      </th>
+      <th class="text-center" scope="col" *ngIf="!viewOnly">
+        {{
+        "EndowmentModule.EndowmentRgistrationService.DeleteAssetBtnLabel"
+        | localize
+        }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-record="$implicit" let-i="rowIndex">
+      <tr>
+          <td class="text-center" scope="col">
+            {{ i + 1 }}
+          </td>
+          <td class="text-center" scope="col">
+            {{ getAssetType(record.assetTypeId!) | localize }}
+          </td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">
+            <button class="btn btn-sm btn-outline-awq-secondary rounded"
+              (click)="onEditTableCellClicked(addData, record.id)">
+              <svg-icon icon="pencil"></svg-icon>
+            </button>
+          </td>
+          <td class="text-center" scope="col" *ngIf="!viewOnly">
+            <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(record, i)">
+              <svg-icon icon="trash-alt"></svg-icon>
+            </button>
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+
+
+
+ 
 </div>
 
 <ng-template #addData let-modal>
@@ -120,61 +117,53 @@
             </option>
           </select>
 
-          <!-- <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetTypeId,AssetTypeLookup)}} </label> -->
 
-          <!-- <div *ngIf="assetTypeId.invalid && (assetTypeId.dirty || assetTypeId.touched)" class=""> -->
-          <!-- <p *ngIf="assetTypeId.errors" class="text-danger pt-1 small">نوع الأصل مطلوب</p> -->
-          <!-- <p *ngIf="assetTypeId.errors" class="text-danger pt-1 small">{{'EndowmentModule.EndowmentRgistrationService.RequiredAssetTypeValidationlabel' | localize}}</p>
-          </div> -->
         </div>
 
-        <!-- <div *ngIf="viewOnly" class="form-group col col-12">
-          <label class="col-form-label font-weight-bold"
-            [hidden]="!viewOnly">&nbsp;{{resolveLookup(newAsset.assetSizeId,AssetSizeLookup)}} </label>
-        </div> -->
+
       </div>
 
-      <app-shared-business-entity-asset #businessEntityAsset *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.businessEntityAsset" [assetInfoModel]="newAsset!">
+      <app-shared-business-entity-asset #businessEntityAsset="ngModel" name="businessEntityAsset"
+        *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
+        [(ngModel)]="newAsset!.businessEntityAssetObj" [assetInfoModel]="newAsset!">
       </app-shared-business-entity-asset>
-      <app-shared-realestate-asset #realEstateAsset *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAsset"
+      <app-shared-realestate-asset #realEstateAsset="ngModel" *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAssetObj" name="realEstateAsset"
         [assetInfoModel]="newAsset!"></app-shared-realestate-asset>
-      <app-shared-fiscal-asset #fiscalAsset *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAsset"
+      <app-shared-fiscal-asset #fiscalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAssetObj" name="fiscalAsset"
         [assetInfoModel]="newAsset!"></app-shared-fiscal-asset>
-      <app-shared-movable-asset #movableAsset *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAsset"
+      <app-shared-movable-asset #movableAsset="ngModel" *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAssetObj" name="movableAsset"
         [assetInfoModel]="newAsset!"></app-shared-movable-asset>
-      <app-shared-monetary-asset #monetaryAsset *ngIf="newAsset?.assetTypeId == 5" [assetSubTypes]="assetSubTypes"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAsset"
+      <app-shared-monetary-asset #monetaryAsset="ngModel" *ngIf="newAsset?.assetTypeId == 5" [viewOnly]="viewOnly"
+        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAssetObj" name="monetaryAsset"
         [assetInfoModel]="newAsset!"></app-shared-monetary-asset>
 
-      <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset *ngIf="newAsset?.assetTypeId == 6"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAsset"
-        [assetInfoModel]="newAsset!"></app-shared-animal-or-agricultural-asset>
+      <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 6"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAssetObj"
+        name="animalOrAgriculturalAsset" [assetInfoModel]="newAsset!"></app-shared-animal-or-agricultural-asset>
 
-      <app-shared-particular-benefit-asset #particularBenefitAsset *ngIf="newAsset?.assetTypeId == 7"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAsset"
-        [assetInfoModel]="newAsset!"></app-shared-particular-benefit-asset>
-      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset
+      <app-shared-particular-benefit-asset #particularBenefitAsset="ngModel" *ngIf="newAsset?.assetTypeId == 7"
+        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAssetObj"
+        name="particularBenefitAsset" [assetInfoModel]="newAsset!"></app-shared-particular-benefit-asset>
+      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset="ngModel"
         *ngIf="newAsset?.assetTypeId == 8" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
-        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAsset"
+        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAssetObj" name="intellectualPropertyAndTrademarkAsset"
         [assetInfoModel]="newAsset!"></app-shared-intellectual-property-and-trademark-asset>
     </div>
     <ng-container *ngIf="!isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-awq-secondary px-6"
-          [disabled]="assetForm.form?.invalid" (click)="onAddBtnClicked()">
+        <button type="button" class="btn btn-awq-secondary px-6" [disabled]="assetForm.form?.invalid"
+          (click)="onAddBtnClicked()">
           {{'EndowmentModule.EndowmentRgistrationService.AddASubssetBtnLabel' | localize}}</button>
         <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
       </div>
     </ng-container>
     <ng-container *ngIf="isEditRequested && !viewOnly">
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-warning px-6"
-          [disabled]="assetForm.form?.invalid" (click)="onEditBtnClicked()">
+        <button type="button" class="btn btn-warning px-6" [disabled]="assetForm.form?.invalid"
+          (click)="onEditBtnClicked()">
           {{'EndowmentModule.EndowmentRgistrationService.EditSubAssetBtnLabel' | localize}}
         </button>
         <button type="button" class="btn btn-outline-awq-secondary px-6" [disabled]="!isNewOrEditAssetValid()"
@@ -191,6 +180,8 @@
 </ng-template>
 
 <div class="aw-btn">
-  <button type="button" class="btn btn-awq-secondary"  (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
-  <button type="button" class="btn btn-outline-awq-secondary" (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
+  <button type="button" class="btn btn-awq-secondary"
+    (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
+  <button type="button" class="btn btn-outline-awq-secondary"
+    (click)="onBackBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonPreviouse' | localize}}</button>
 </div>
