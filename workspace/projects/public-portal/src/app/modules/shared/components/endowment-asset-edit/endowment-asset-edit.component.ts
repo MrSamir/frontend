@@ -73,10 +73,11 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.assetsTypeLookup = data.dto.items!;
+      this.loadAssets();
     });
 
     this.primengTableHelper = new PrimengTableHelper();
-    this.loadAssets();
+    
 
   }
 
@@ -181,7 +182,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
         debugger
         this.Assets = response;
          this.primengTableHelper.records = this.Assets;
-        this.primengTableHelper.totalRecordsCount = this.Assets.length;
+        this.primengTableHelper.totalRecordsCount = this.Assets?.length;
       });
     }
     this.primengTableHelper.hideLoadingIndicator();
@@ -275,8 +276,6 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.AssetSizeLookup = data.dto.items!;
-      console.log(data);
-      //this.loadassetSubType();
     });
   }
 
