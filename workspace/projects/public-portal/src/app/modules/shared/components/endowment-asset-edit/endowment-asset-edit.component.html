@@ -22,7 +22,7 @@
   </a>
 </div>
 
-<div *ngIf="!!this.Assets && this.Assets!.length > 0">
+<div *ngIf="!!this.Assets && this.Assets?.length > 0">
 
 
 
@@ -42,7 +42,7 @@
         | localize
         }}
       </th>
-      <th class="text-center" scope="col" *ngIf="viewOnly">
+      <th class="text-center" scope="col">
         {{
         "EndowmentModule.EndowmentRgistrationService.ReviewAssetBtnLabel"
         | localize
@@ -69,6 +69,12 @@
           </td>
           <td class="text-center" scope="col">
             {{ getAssetType(record.assetTypeId!) | localize }}
+          </td>
+          <td class="text-center" scope="col">
+            <button class="btn btn-sm btn-outline-awq-secondary rounded"
+              (click)="onViewTableCellClicked(addData, record.id)" >
+              <svg-icon icon="eye"></svg-icon>
+            </button>
           </td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">
             <button class="btn btn-sm btn-outline-awq-secondary rounded"
@@ -111,7 +117,7 @@
             }}<span class="text-danger">*</span></label>
           <select class="custom-select" [hidden]="viewOnly" #assetTypeId="ngModel" [disabled]="this.isEditRequested"
             (change)="changeAssetType()" name="assetTypeId" [(ngModel)]="newAsset!.assetTypeId" required>
-            <!-- <option [value]="null" selected></option> -->
+            <option [value]="null" selected></option>
             <option *ngFor="let assetType of AssetTypeLookup" value="{{ assetType.id }}">
               {{ assetType.name }}
             </option>
