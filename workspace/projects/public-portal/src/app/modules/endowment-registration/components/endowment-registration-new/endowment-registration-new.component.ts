@@ -76,7 +76,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   //@Input() public wizard: WizardComponent;
   @ViewChild(WizardComponent, { static: true }) public wizard: WizardComponent;
 
-  resolveLookup: any;
   ePatternValidation: typeof EnumValidation = EnumValidation;
   registerUsingendowmentDeedNumber: boolean | undefined = undefined;
 
@@ -280,6 +279,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   // Passed new Asset from Common Assets Component in order to add it through calling API from Parent component
   OnAddingNewAsset(newAwqafAsset: InputAssetDto) {
+    debugger
     //this.setIsAttachmentChanged(newAwqafAsset);
     this._serviceProxyEndowmentRegistraion
       .createWaqfRequestAsset(newAwqafAsset)
@@ -394,16 +394,16 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   mapSelected() {
     if (this.newAsset.assetTypeId == 1) {
       if (
-        this.newAsset.businessEntityAsset.longitude &&
-        this.newAsset.businessEntityAsset.latitude
+        this.newAsset.businessEntityAssetObj.longitude &&
+        this.newAsset.businessEntityAssetObj.latitude
       ) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 2) {
       if (
-        this.newAsset.realEstateAsset.longitude &&
-        this.newAsset.realEstateAsset.latitude
+        this.newAsset.realEstateAssetObj.longitude &&
+        this.newAsset.realEstateAssetObj.latitude
       ) {
         return false;
       }
@@ -416,17 +416,17 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   IsRequiredDocumentsAttached() {
     if (this.newAsset.assetTypeId == 1) {
-      if (this.newAsset.businessEntityAsset.commercialRegisterAttachmentId) {
+      if (this.newAsset.businessEntityAssetObj.commercialRegisterAttachmentId) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 2) {
-      if (this.newAsset.realEstateAsset.ownershipDeedAttachementId) {
+      if (this.newAsset.realEstateAssetObj.ownershipDeedAttachementId) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 3) {
-      if (this.newAsset.fiscalAsset.fiscalAssetAttachementId) {
+      if (this.newAsset.fiscalAssetObj.fiscalAssetAttachementId) {
         return false;
       }
       return true;

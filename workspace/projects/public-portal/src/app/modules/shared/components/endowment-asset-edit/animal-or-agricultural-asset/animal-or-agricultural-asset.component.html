@@ -1,74 +1,48 @@
 <div class="row row-cols-1 row-cols-md-2">
   <div class="form-group col">
-    <label class="col-form-label"
-      >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegion"
-          | localize
-      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
-    >
-    <select
-      class="custom-select"
-      #regionId="ngModel"
-      name="regionId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.regionId"
-      [hidden]="viewOnly"
-      required
-      (change)="getcityLookup(regionId.value)"
-    >
+    <label class="col-form-label">{{
+      "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegion"
+      | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+    <select class="custom-select" #regionId="ngModel" name="regionId"
+      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.regionId" [hidden]="viewOnly" required
+      (change)="getcityLookup(regionId.value)">
       <option [value]="null" selected></option>
       <option *ngFor="let region of regionLookup" value="{{ region.id }}">
         {{ region.name }}
       </option>
     </select>
-    <!-- <label class="col-form-label font-weight-bold"
-        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.animalOrAgriculturalAsset.regionId,regionLookup)}} </label> -->
-
-    <div
-      *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)"
-      class=""
-    >
+  
+    <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
       <p *ngIf="regionId.errors" class="text-danger pt-1 small">
         {{
-          "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegionRequiredValidationlabel"
-            | localize
+        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegionRequiredValidationlabel"
+        | localize
         }}
       </p>
     </div>
   </div>
   <div class="form-group col">
-    <label class="col-form-label"
-      >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCity"
-          | localize
-      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
-    >
-    <select
-      class="custom-select"
-      [disabled]="cityDisabled"
-      #cityId="ngModel"
-      name="cityId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.cityId"
-      [hidden]="viewOnly"
-      required
-    >
+    <label class="col-form-label">{{
+      "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCity"
+      | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+    <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId"
+      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.cityId" [hidden]="viewOnly" required>
       <option [value]="null" selected></option>
       <option *ngFor="let city of cityLookup" value="{{ city.id }}">
         {{ city.name }}
       </option>
     </select>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{
-        resolveLookup(
-          assetInfoModel.animalOrAgriculturalAsset.cityId,
-          cityLookup
-        )
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
+      getCityValue(assetInfoModel.animalOrAgriculturalAssetObj.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
       <p *ngIf="cityId.errors" class="text-danger pt-1 small">
         {{
-          "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCityRequiredValidationlabel"
-            | localize
+        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCityRequiredValidationlabel"
+        | localize
         }}
       </p>
     </div>
@@ -76,26 +50,16 @@
   <div class="form-group col-12">
     <label class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalDescription"
-        | localize
-    }}</label>
-    <textarea
-      [rows]="5"
-      cols="10"
-      class="form-control"
-      [pattern]="
+      | localize
+      }}</label>
+    <textarea [rows]="5" cols="10" class="form-control" [pattern]="
         ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      "
-      #animalOrAgriculturaDescription="ngModel"
-      name="animalOrAgriculturaDescription"
-      [(ngModel)]="
-        assetInfoModel.animalOrAgriculturalAsset.animalOrAgriculturaDescription
-      "
-      [hidden]="viewOnly"
-    >
+      " #animalOrAgriculturaDescription="ngModel" name="animalOrAgriculturaDescription" [(ngModel)]="
+        assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
+      " [hidden]="viewOnly">
     </textarea>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{
-        assetInfoModel.animalOrAgriculturalAsset.animalOrAgriculturaDescription
+    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
+      assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
       }}
     </label>
   </div>

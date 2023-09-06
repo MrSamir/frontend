@@ -1,3 +1,5 @@
+import { EndowmentRegistrationReadonlyComponent } from './../../endowment-registration/components/endowment-registration-readonly/endowment-registration-readonly.component';
+import { MapModule } from './../components/map/map.module';
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -69,6 +71,8 @@ import { EndowmentApplicantReadonlyComponent } from '../components/endowment-app
     CoreLibModule,
     TableModule,
     SvgIconModule,
+    MapModule
+  
   ],
   exports: [
     //EndowmentAssetsEditComponent,

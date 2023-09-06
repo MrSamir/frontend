@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MapComponent } from './map.component';
+
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MapComponent } from './map.component';
 
 @NgModule({
   declarations: [MapComponent],
@@ -10,7 +11,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModule,
     CommonModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCvmBlv7K2uypX65NgMKyh3Q3T59_nGWW8', // AppComponent.googleMapApiKey,
+      apiKey: "AIzaSyCvmBlv7K2uypX65NgMKyh3Q3T59_nGWW8",
       libraries: ['places'],
     }),
   ],

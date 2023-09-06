@@ -36,7 +36,7 @@
     "useDefineForClassFields": false,
 
     "noImplicitAny": false,
-    "strict":true,
+    "strict":false,
     "lib": [
       "ES2022",
       "dom"

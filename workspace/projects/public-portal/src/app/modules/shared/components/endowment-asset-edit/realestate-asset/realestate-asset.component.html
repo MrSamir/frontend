@@ -9,9 +9,9 @@
     <select
       class="custom-select"
       #assetSubTypeId="ngModel"
-      name="assetSubTypeId"
-      [(ngModel)]="assetInfoModel.realEstateAsset.assetSubTypeId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.assetSubTypeId"
       [hidden]="viewOnly"
+      name="assetSubTypeId"
       required
     >
       <option
@@ -23,9 +23,8 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(
-          assetInfoModel.realEstateAsset.assetSubTypeId,
-          assetSubTypes
+        getSubAssetsById(
+          assetInfoModel.assetTypeId
         )
       }}
     </label>
@@ -55,9 +54,9 @@
     <select
       class="custom-select"
       #regionId="ngModel"
-      name="regionId"
-      [(ngModel)]="assetInfoModel.realEstateAsset.regionId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.regionId"
       [hidden]="viewOnly"
+      name="regionId"
       required
       (change)="getcityLookup(regionId.value)"
     >
@@ -66,9 +65,7 @@
         {{ region.name }}
       </option>
     </select>
-    <!-- <label class="col-form-label font-weight-bold"
-        [hidden]="!viewOnly">&nbsp;{{resolveLookup(assetInfoModel.realEstateAsset.regionId,regionLookup)}} </label> -->
-
+ 
     <div
       *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)"
       class=""
@@ -91,10 +88,11 @@
       class="custom-select"
       [disabled]="cityDisabled"
       #cityId="ngModel"
-      name="cityId"
-      [(ngModel)]="assetInfoModel.realEstateAsset.cityId"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.cityId"
       [hidden]="viewOnly"
       required
+      name="cityId"
+
     >
       <option [value]="null" selected></option>
       <option *ngFor="let city of cityLookup" value="{{ city.id }}">
@@ -103,7 +101,7 @@
     </select>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        resolveLookup(assetInfoModel.realEstateAsset.cityId, cityLookup)
+        getCityById(assetInfoModel.realEstateAssetObj.cityId)
       }}
     </label>
     <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
@@ -134,18 +132,18 @@
     <input
       type="text"
       class="form-control"
+      name="estimatedAmount"
       [hidden]="viewOnly"
       [minLength]="1"
       [maxLength]="14"
       #estimatedAmount="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
-      name="estimatedAmount"
-      [(ngModel)]="assetInfoModel.realEstateAsset.estimatedAmount"
+      [(ngModel)]="assetInfoModel.realEstateAssetObj.estimatedAmount"
       [pattern]="ePatternValidation.pattern_decimal_values"
       required
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.realEstateAsset.estimatedAmount }}
+      >&nbsp;{{ assetInfoModel.realEstateAssetObj.estimatedAmount }}
     </label>
     <div
       *ngIf="
@@ -182,38 +180,66 @@
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
     <div class="col-sm-12 px-0">
-      <!-- <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map> -->
+      <google-map [disabled]="viewOnly" (mapChange)="onChangeMap()" [(map)]="map" required></google-map>
     </div>
   </div>
 
+
+
   <div class="form-group col-12">
-    <label class="col-form-label"
-      >{{
+    <label class="col-form-label">
+      {{
         "EndowmentModule.EndowmentRgistrationService.RealeStateAssetOwnershipDeed"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
 
-    <input
-      type="hidden"
-      #ownershipDeedAttachementId
-      name="ownershipDeedAttachementId"
-      [(ngModel)]="assetInfoModel.realEstateAsset.ownershipDeedAttachementId"
-      required
-    />
+    
     <div class="input-group mb-3 download p-2">
       <div class="flex-grow-1">
-        <!-- <file-uploader
-            [showDownloadButton]="true"
-            [showDeleteButton]="!viewOnly"
-            [allowedExtensions]="['.pdf' ]"
-            [objects]="[assetInfoModel.realEstateAsset]"
-            [keys]="['ownershipDeedAttachementId']"
-            [fileDisplayName]="' صك الملكية'"
-            [serviceTypeId]="requestType.NewWaqf"
-          >
-          </file-uploader> -->
+        <lib-file-uploader
+        name="commercialRegisterAttachment"
+        [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.RealeStateAssetOwnershipDeed')"
+        [showDisclaimer]="true"
+        (OnSelectFile)="realestateAssetSelect($event)"
+        (OnUploadFile)="realestateAssetUpload($event)"
+      ></lib-file-uploader>
+    <input
+      type="hidden"
+      #commercialRegisterAttachmentId="ngModel"
+      name="commercialRegisterAttachmentId"
+      [(ngModel)]="
+      assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId
+      "
+      required
+    />
+    <app-validationMessages
+      relatedControlName="commercialRegisterAttachmentId"
+      [control]="commercialRegisterAttachmentId"
+      [validationMessages]="[
+        {
+          ruleName: 'required',
+          ruleMessage: l(
+            'Common.Required',
+            l('EndowmentModule.EndowmentRgistrationService.seenDeed')
+          )
+        }
+      ]"
+    >
+    </app-validationMessages>
+    <div
+    *ngIf="assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId"
+    class="form-group col-12"
+  >
+    <app-AttachmentViewer
+      *ngIf="realestateAssetAttachemt"
+      (OnAttachementRemove)="realestateAssetRemoveFile($event)"
+      [Attachements]="[realestateAssetAttachemt]"
+    ></app-AttachmentViewer>
       </div>
     </div>
   </div>
+</div>
+
+ 
 </div>

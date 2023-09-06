@@ -28,13 +28,13 @@
       "
       name="benefitType"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType
       "
       required
     />
 
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatType }}
+      >&nbsp;{{ assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType }}
     </label>
 
     <div
@@ -72,14 +72,14 @@
       #ipatDescription="ngModel"
       name="ipatDescription"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
       "
       [hidden]="viewOnly"
     >
     </textarea>
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatDescription
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
       }}
     </label>
     <div
@@ -118,13 +118,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="ipatValue"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
       "
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
     <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
       >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
       }}
     </label>
     <div
@@ -151,34 +151,34 @@
       #isDirectedBenefit="ngModel"
       name="isDirectedBenefit"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="viewOnly"
       required
     >
       <option [ngValue]="undefined"></option>
       <option [ngValue]="true">
-        {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
       </option>
       <option [ngValue]="false">
-        {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+        {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
       </option>
     </select>
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.yes" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
     </label>
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        !assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
+        !assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
       "
       [hidden]="!viewOnly"
-      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.no" | localize }}
+      >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
     </label>
     <div
       *ngIf="
