@@ -31,7 +31,6 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,

@@ -28,11 +28,10 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
   isBeneficiaryInKsaEditView: boolean = true;
   @Input() updated: boolean = false;
   @Output() onEditBeneficiayData = new EventEmitter<AddBeneficiaryInputDto>();
-  
+
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
@@ -45,7 +44,7 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
   @Input() viewOnly: boolean = true;
 
   ngOnChanges() {
-    
+
     this.ngOnInit();
   }
 

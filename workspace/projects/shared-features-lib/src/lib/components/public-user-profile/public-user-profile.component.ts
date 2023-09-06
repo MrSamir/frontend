@@ -1,7 +1,7 @@
 import { ApiResponseOfOutputApplicationUserDto, EmailOtpGenerationInputDto, InputApplicationUserDto, LookupApplicationServiceProxy, OtpGenerationOutputDto, PhoneOtpGenerationInputDto, UpdateUserCityRegionInputDto } from './../../../../../public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
-import {Component, Injector, Input, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, NgForm, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import { Component, Injector, Input, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -25,12 +25,12 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
 
   @Input() viewOnly: boolean = false;
   ePatternValidation: typeof EnumValidation = EnumValidation;
-  lookupfliter:InputLookUpDto=new InputLookUpDto();
-  NationalityLookup:any=[];
-  RegioneLookup:any=[];
-  CityLookup:any=[];
+  lookupfliter: InputLookUpDto = new InputLookUpDto();
+  NationalityLookup: any = [];
+  RegioneLookup: any = [];
+  CityLookup: any = [];
 
-  _lookupExtraData: LookupExtraData=new LookupExtraData();
+  _lookupExtraData: LookupExtraData = new LookupExtraData();
 
   currentUserProfile: OutputApplicationUserDto;
 
@@ -50,12 +50,11 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
   udateUserLocationForm: FormGroup;
 
   constructor(
-    private router: Router
-    , private modalService: NgbModal
+    private modalService: NgbModal
     , private formBuilder: FormBuilder
     , private userProfileProxyService: ApplicationUserServiceProxy
     //, private authenticationService: AuthenticationService
-    , public lookupService: LookupApplicationServiceProxy,injector: Injector) {
+    , public lookupService: LookupApplicationServiceProxy, injector: Injector) {
     super(injector);
   }
 
@@ -68,13 +67,12 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
     this.LoadRegion();
     //this.lookupService.fetchRegionsLookups();
   }
-  LoadNationalities()
-  {
-    this.lookupfliter.lookUpName="Nationality";
-    this.lookupfliter.filters=[];
+  LoadNationalities() {
+    this.lookupfliter.lookUpName = "Nationality";
+    this.lookupfliter.filters = [];
     this.lookupService.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.NationalityLookup=data.dto.items;
+        this.NationalityLookup = data.dto.items;
         console.log(data);
         // this.currentUserProfile.phoneNumberConfirmed
       }
@@ -84,27 +82,25 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
 
 
 
-  LoadRegion()
-  {
-    this.lookupfliter.lookUpName="Region";
-    this.lookupfliter.filters=[];
+  LoadRegion() {
+    this.lookupfliter.lookUpName = "Region";
+    this.lookupfliter.filters = [];
     this.lookupService.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.RegioneLookup=data.dto.items;
+        this.RegioneLookup = data.dto.items;
         console.log(data);
       }
     );
 
   }
- LoadCitiesByRegion(RegionId:number)
-  {
-    this._lookupExtraData.dataName="RegionId"
-    this._lookupExtraData.dataValue=RegionId.toString();
-    this.lookupfliter.lookUpName="City";
-    this.lookupfliter.filters=[this._lookupExtraData];
+  LoadCitiesByRegion(RegionId: number) {
+    this._lookupExtraData.dataName = "RegionId"
+    this._lookupExtraData.dataValue = RegionId.toString();
+    this.lookupfliter.lookUpName = "City";
+    this.lookupfliter.filters = [this._lookupExtraData];
     this.lookupService.getAllLookups(this.lookupfliter).subscribe(
       (data) => {
-        this.CityLookup=data.dto.items;
+        this.CityLookup = data.dto.items;
         console.log(data);
 
       }
@@ -138,7 +134,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
   private initUpdateUserLocationForm() {
     this.udateUserLocationForm = this.formBuilder.group({
       regionId: [null, Validators.compose([Validators.required])],
-      cityId: [{value: null, disabled: true}, Validators.compose([Validators.required])]
+      cityId: [{ value: null, disabled: true }, Validators.compose([Validators.required])]
     });
   }
 
@@ -187,10 +183,10 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
       // var errorServiceResponse = this.parseHttpError(error);
       // switch (errorServiceResponse.errorData[0].code) {
       //   case "PhoneIsAlreadyVerified":
-        //showError(this.l("Common.PhoneNumberAlreadyVerified"))
+      //showError(this.l("Common.PhoneNumberAlreadyVerified"))
       //   break;
       //   default:
-           //showError(this.l("Common.PhoneVerificationError"))
+      //showError(this.l("Common.PhoneVerificationError"))
       //     break;
       // }
     });
@@ -316,7 +312,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
     if (!regionIdVal || regionIdVal == 'null' || regionIdVal == '') {
       this.udateUserLocationForm.controls['regionId'].setValue(null);
       this.udateUserLocationForm.controls['cityId'].setValue(null);
-      this.udateUserLocationForm.controls['cityId'].disable({onlySelf: true});
+      this.udateUserLocationForm.controls['cityId'].disable({ onlySelf: true });
       this.udateUserLocationForm.controls['cityId'].updateValueAndValidity();
     } else {
       this.udateUserLocationForm.controls['regionId'].setValue(regionIdVal);
@@ -330,7 +326,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
   }
 
   onCityLookupChanged(e: any) {
-    this.udateUserLocationForm.get('cityId')?.setValue(e.target.value, {onlySelf: true});
+    this.udateUserLocationForm.get('cityId')?.setValue(e.target.value, { onlySelf: true });
   }
 
   // private parseHttpError(error: any, showErrorPopup: boolean = false): ServiceResponse {
@@ -356,7 +352,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
   private triggerFormValidation(form: FormGroup) {
     Object.keys(form.controls).forEach(field => {
       const control = form.get(field);
-      control?.markAsTouched({onlySelf: true});
+      control?.markAsTouched({ onlySelf: true });
     });
   }
 
@@ -369,7 +365,7 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
         this.udateUserLocationForm.controls['regionId'].setValue(this.currentUserProfile.regionId);
         this.udateUserLocationForm.controls['cityId'].setValue(this.currentUserProfile.cityId);
 
-        if(this.currentUserProfile.regionId && this.currentUserProfile.regionId > 0){
+        if (this.currentUserProfile.regionId && this.currentUserProfile.regionId > 0) {
           this.LoadCitiesByRegion(this.currentUserProfile.regionId)
         }
       }
@@ -379,21 +375,21 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
 
   onRegionAndCityUpdate() {
     this.triggerFormValidation(this.udateUserLocationForm);
-    
+
     this.userProfileProxyService.updateCurrentUserRegionAndCity(new UpdateUserCityRegionInputDto(
       {
 
         regionId: this.currentUserProfile.regionId,
         cityId: this.currentUserProfile.cityId,
       })).subscribe({
-      next: (result: ApiResponseOfOutputApplicationUserDto) => {
+        next: (result: ApiResponseOfOutputApplicationUserDto) => {
 
-        // this.authenticationService.updateUserToken().subscribe((response) => {
-        //   showSuccess(this.l("Common.DataSavedSuccessfully"), () => {
-        //     this.modalService.dismissAll()
-        //   });
-        // });
-        // showSuccess(this.l("Common.DataSavedSuccessfully"), () => {
+          // this.authenticationService.updateUserToken().subscribe((response) => {
+          //   showSuccess(this.l("Common.DataSavedSuccessfully"), () => {
+          //     this.modalService.dismissAll()
+          //   });
+          // });
+          // showSuccess(this.l("Common.DataSavedSuccessfully"), () => {
           this.message.showMessage(MessageTypeEnum.toast, {
             severity: MessageSeverity.Success,
             message: '',
@@ -405,17 +401,17 @@ export class PublicUserProfileComponent extends ComponentBase implements OnInit 
             enableService: true,
           });
           this.modalService.dismissAll()
-        //});
-        console.log("suceess");
-      },
-      error: (error) => {
-        console.error("region / city update failed. ", error);
-      }
-    });
+          //});
+          console.log("suceess");
+        },
+        error: (error) => {
+          console.error("region / city update failed. ", error);
+        }
+      });
   }
 
   onEditButtonClick() {
-      this.router.navigate(['/public/my-profile'])
+    this.router.navigate(['/public/my-profile'])
   }
 }
 function appModuleAnimation(): any {

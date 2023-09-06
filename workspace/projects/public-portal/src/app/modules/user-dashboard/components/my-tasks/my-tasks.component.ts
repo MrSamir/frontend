@@ -19,7 +19,6 @@ export class MyTasksComponent extends ComponentBase implements OnInit {
   inboxTask: InboxTask = new InboxTask();
   constructor(
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private requestApplicationServiceServiceProxy: RequestApplicationServiceProxy

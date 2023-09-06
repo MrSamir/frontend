@@ -16,7 +16,6 @@ export class MyRequestsComponent extends ComponentBase implements OnInit {
 
   constructor(
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private requestApplicationServiceServiceProxy: RequestApplicationServiceProxy

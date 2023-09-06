@@ -49,7 +49,15 @@
         <app-beneficiary-step [requestId]="requestId" [viewOnly]="true"></app-beneficiary-step>
       </ng-template>
     </ngb-panel>
-
   </ngb-accordion>
+  <div>
+    <div>
+      <button type="button" (click)="Back()" class="btn btn-awq-secondary">
+        {{
+        "EndowmentModule.EndowmentRgistrationService.ButtonPreviouse" | localize
+        }}
+      </button>
+    </div>
+  </div>
 </div>
 

@@ -16,4 +16,7 @@ export class EndowmentRegistrationReadonlyComponent extends ComponentBase implem
   ngOnInit(): void {
     this.requestId = this.activatedRoute.snapshot.params['requestId'];
   }
+  Back() {
+    this.goBack();
+  }
 }

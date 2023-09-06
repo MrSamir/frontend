@@ -23,7 +23,6 @@ export class LoginComponent extends ComponentBase {
   _applicationUserTasks: ApplicationUserTasks = new ApplicationUserTasks();
   constructor(
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private authenticationService: AuthenticationService,
     private _applicationUserServiceProxy: ApplicationUserServiceProxy

@@ -23,7 +23,7 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     if (this.editBenificaryInfo) {
       this.activeCrudOperation = CrudOperation.Update;
       this.isEditRequested = true;
-      
+
       this.yakeenPersonUtilities[this.editBenificaryInfo.beneficiaryPerson.idTypeId!](this.editBenificaryInfo.beneficiaryPerson);
       this.newPerson = new InputApplicationUserDto();
       this.newPerson.init(this.editBenificaryInfo.beneficiaryPerson);
@@ -37,7 +37,6 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
   constructor(
     private modalService: NgbModal,
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
@@ -270,7 +269,7 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
             });
         }
         this.modalService.dismissAll();
-        
+
       },
       (error) => {
         this.message.showMessage(MessageTypeEnum.toast, {

@@ -14,17 +14,16 @@ export class UserDashboardComponent extends ComponentBase implements OnInit {
 
   constructor(
     _injecter: Injector,
-    private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
     private requestApplicationServiceServiceProxy: RequestApplicationServiceProxy,
-    private activatedRoute:ActivatedRoute
-    
+    private activatedRoute: ActivatedRoute
+
   ) {
     super(_injecter);
   }
   ngOnInit(): void {
-    
+
     this.paramActive = this.activatedRoute.snapshot.params['activeTab'];
     if (this.paramActive != undefined) this.active = parseInt(this.paramActive);
     //throw new Error('Method not implemented.');

@@ -38,7 +38,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     private lookupssrv: LookupApplicationServiceProxy,
     private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private injector: Injector
   ) {
     super(injector);
