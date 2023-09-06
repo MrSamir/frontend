@@ -3,7 +3,7 @@ import {
   ApiResponseOfOutputFileDto,
   ApplicationUserServiceProxy,
   AttorneyInquiryInput,
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileByIdDto,
   FileLibraryApplicationServiceProxy,
   InputApplicantAgentDto,
@@ -90,7 +90,7 @@ export class EndowmentApplicantCreateOrEditComponent
   constructor(
     injecter: Injector,
     private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
-    private _endowmentRegistrationService: EndowmentRegistrationServiceProxy,
+    private _endowmentRegistrationService: EndowmentRegistrationApplicationServiceProxy,
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
     private _MojServiceProxy: MOJApplicationServiceProxy,

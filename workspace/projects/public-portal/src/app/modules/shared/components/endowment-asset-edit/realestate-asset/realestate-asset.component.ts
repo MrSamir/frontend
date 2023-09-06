@@ -2,7 +2,7 @@ import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
   ApiResponseOfOutputFileDto,
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputFileDto,
@@ -48,7 +48,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   //estimatedValuehint:HintEntry;
 
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,

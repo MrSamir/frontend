@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
-import { AccountProxy, AddBeneficiaryInputDto, AlienInfoResponse, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, CitizenInfoResponse, EndowmentRegistrationServiceProxy, InputApplicationUserDto, OutputApplicationUserDto, OutputBeneficiaryDto, PagedResultDtoOfOutputBeneficiaryDto, RemoveBeneficiaryInputDto, RequestApplicationServiceProxy } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
+import { AccountProxy, AddBeneficiaryInputDto, AlienInfoResponse, ApiException, ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto, CitizenInfoResponse, EndowmentRegistrationApplicationServiceProxy, InputApplicationUserDto, OutputApplicationUserDto, OutputBeneficiaryDto, PagedResultDtoOfOutputBeneficiaryDto, RemoveBeneficiaryInputDto, RequestApplicationServiceProxy } from 'projects/public-portal/src/app/modules/shared/services/services-proxies/service-proxies';
 import { CitizenUtilities } from '../../../Models/CitizenInfo';
 import { AlienUtilities } from '../../../Models/alienInfo';
 import { BeneficiaryUtilities } from '../../../Models/beneficiaryOutKsa';
@@ -35,7 +35,7 @@ export class EndowmentBeneficiariesListComponent extends ComponentBase implement
     private router: Router,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
-    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute
   ) {
 

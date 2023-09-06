@@ -1,6 +1,6 @@
 import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
@@ -35,7 +35,7 @@ export class MonetaryAssetComponent extends ComponentBase implements OnInit {
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   assetSubTypes: LookupDto[] = [];
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import {
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   InputAssetDto,
   InputIntellectualPropertyAndTrademarkAssetDto,
   InputLookUpDto,
@@ -29,7 +29,7 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
 
   ePatternValidation: typeof EnumValidation = EnumValidation;
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy
   ) {}

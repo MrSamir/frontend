@@ -655,7 +655,7 @@ export class ApplicationUserServiceProxy {
 }
 
 @Injectable()
-export class EndowmentRegistrationServiceProxy {
+export class EndowmentRegistrationApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -670,7 +670,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     createEndowment(body: InputEndowmentDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateEndowment";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateEndowment";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -726,7 +726,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getEndowmentDataByRequestId(requestId: string | undefined): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentDataByRequestId?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowmentDataByRequestId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -782,7 +782,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     updateEndowmentRegistrationRequest(body: InputEndowmentRegistrationRequestDto | undefined): Observable<boolean> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/UpdateEndowmentRegistrationRequest";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/UpdateEndowmentRegistrationRequest";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -839,7 +839,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     generateEnowmentInitialCertificate(requestId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GenerateEnowmentInitialCertificate?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateEnowmentInitialCertificate?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -891,7 +891,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     generateEnowmentFinalCertificate(endowmentId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GenerateEnowmentFinalCertificate?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateEnowmentFinalCertificate?";
         if (endowmentId === null)
             throw new Error("The parameter 'endowmentId' cannot be null.");
         else if (endowmentId !== undefined)
@@ -943,7 +943,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     generateFinalCertificateFromK2(requestId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GenerateFinalCertificateFromK2?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateFinalCertificateFromK2?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -995,7 +995,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     generateRestirctedCertificateFromK2(requestId: string | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GenerateRestirctedCertificateFromK2?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateRestirctedCertificateFromK2?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -1047,7 +1047,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     editWaqfAssetRequest(body: InputAssetDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditWaqfAssetRequest";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditWaqfAssetRequest";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1103,7 +1103,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     createWaqfRequestAsset(body: InputAssetDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateWaqfRequestAsset";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateWaqfRequestAsset";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1159,7 +1159,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     deleteWaqfRequestAsset(body: InputRemoveAssetDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/DeleteWaqfRequestAsset";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/DeleteWaqfRequestAsset";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1215,7 +1215,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getAssetsByRequestId(requestId: string | undefined): Observable<OutputAssetDto[]> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetAssetsByRequestId?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetAssetsByRequestId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -1278,7 +1278,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getOneAsset(body: InputOneAssetDto | undefined): Observable<ApiResponseOfOutputAssetDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetOneAsset";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetOneAsset";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1334,7 +1334,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getSeersInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputSeerDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetSeersInformationByReqId?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetSeersInformationByReqId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -1390,7 +1390,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     addSeer(body: AddSeerInputDto | undefined): Observable<ApiResponseOfAddSeerOutputDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddSeer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddSeer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1446,7 +1446,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     removeSeer(body: RemoveSeerInputDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/RemoveSeer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/RemoveSeer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1502,7 +1502,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     editSeer(body: EditSeerInputDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditSeer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditSeer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1558,7 +1558,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     addBeneficiary(body: AddBeneficiaryInputDto | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddBeneficiary";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1614,7 +1614,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     updateBeneficiary(body: AddBeneficiaryInputDto | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/UpdateBeneficiary";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/UpdateBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1670,7 +1670,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getBeneficiariesInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetBeneficiariesInformationByReqId?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetBeneficiariesInformationByReqId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -1726,7 +1726,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     removeBeneficiary(body: RemoveBeneficiaryInputDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/RemoveBeneficiary";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/RemoveBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1782,7 +1782,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getEndowersInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowersInformationByReqId?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowersInformationByReqId?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -1838,7 +1838,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     addEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/AddEndowmer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1894,7 +1894,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     editEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/EditEndowmer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1950,7 +1950,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     deleteEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponse> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/DeleteEndowmer";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/DeleteEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -2006,7 +2006,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     createOrEditEndowmentRegistrationRequest(body: InputEndwomentRegistraionRequestApplicantDto | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/CreateOrEditEndowmentRegistrationRequest";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateOrEditEndowmentRegistrationRequest";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -2062,7 +2062,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     getEndowmentRegistrationApplicant(requestId: string | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/GetEndowmentRegistrationApplicant?";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowmentRegistrationApplicant?";
         if (requestId === null)
             throw new Error("The parameter 'requestId' cannot be null.");
         else if (requestId !== undefined)
@@ -2118,7 +2118,7 @@ export class EndowmentRegistrationServiceProxy {
      * @return Success
      */
     submitRequest(body: RequestModelDto | undefined): Observable<ApiResponseOfRequestModelDto> {
-        let url_ = this.baseUrl + "/api/EndowmentRegistrationService/SubmitRequest";
+        let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/SubmitRequest";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -10532,6 +10532,7 @@ export interface ILookupExtraData {
 }
 
 export class MonetaryAssetData implements IMonetaryAssetData {
+    assetSubTypeId!: number;
     monetaryAssetAmount!: number | undefined;
     createdBy!: string | undefined;
     creationDate!: DateTime;
@@ -10550,6 +10551,7 @@ export class MonetaryAssetData implements IMonetaryAssetData {
 
     init(_data?: any) {
         if (_data) {
+            this.assetSubTypeId = _data["assetSubTypeId"];
             this.monetaryAssetAmount = _data["monetaryAssetAmount"];
             this.createdBy = _data["createdBy"];
             this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
@@ -10568,6 +10570,7 @@ export class MonetaryAssetData implements IMonetaryAssetData {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
+        data["assetSubTypeId"] = this.assetSubTypeId;
         data["monetaryAssetAmount"] = this.monetaryAssetAmount;
         data["createdBy"] = this.createdBy;
         data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
@@ -10579,6 +10582,7 @@ export class MonetaryAssetData implements IMonetaryAssetData {
 }
 
 export interface IMonetaryAssetData {
+    assetSubTypeId: number;
     monetaryAssetAmount: number | undefined;
     createdBy: string | undefined;
     creationDate: DateTime;
@@ -11127,7 +11131,7 @@ export class OutputAssetDto implements IOutputAssetDto {
     assetIssuanceCourt!: string | undefined;
     assetDeedDate!: DateTime | undefined;
     assetDeedDateHijri!: string | undefined;
-    requestId!: string | undefined;
+    requestId!: string;
     animalOrAgriculturalAsset!: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset!: InputBusinessEntityAssetDto;
     fiscalAsset!: InputFiscalAssetDto;
@@ -11219,7 +11223,7 @@ export interface IOutputAssetDto {
     assetIssuanceCourt: string | undefined;
     assetDeedDate: DateTime | undefined;
     assetDeedDateHijri: string | undefined;
-    requestId: string | undefined;
+    requestId: string;
     animalOrAgriculturalAsset: InputAnimalOrAgriculturalAssetDto;
     businessEntityAsset: InputBusinessEntityAssetDto;
     fiscalAsset: InputFiscalAssetDto;
@@ -12760,6 +12764,7 @@ export enum RequestStatusEnum {
     ReturnedToApplicant = 6,
     ReturnToLvl1 = 7,
     ReSubmitTolvl1 = 8,
+    FinallyApproved = 9,
 }
 
 export class RequestType implements IRequestType {
