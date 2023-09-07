@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit, Injector, OnChanges, TemplateRef, ViewChild } from '@angular/core';
-import { AccountProxy, AddBeneficiaryInputDto, AddBeneficiaryOutputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, EndowmentRegistrationServiceProxy, InputApplicationUserDto, LookupApplicationServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
+import { AccountProxy, AddBeneficiaryInputDto, AddBeneficiaryOutputDto, AlienInfoResponse, CitizenInfoResponse, CreateBeneficiaryDto, EndowmentRegistrationApplicationServiceProxy, InputApplicationUserDto, LookupApplicationServiceProxy, OutputApplicationUserDto, OutputBeneficiaryDto } from '../../services/services-proxies/service-proxies';
 import { ArrayExtensions } from 'projects/core-lib/src/lib/helpers/array-extensions';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CitizenUtilities } from 'projects/shared-features-lib/src/lib/Models/CitizenInfo';
@@ -39,7 +39,7 @@ export class EndowmentBeneficiaryEditComponent extends ComponentBase implements 
     _injecter: Injector,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
-    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute
   ) {
 

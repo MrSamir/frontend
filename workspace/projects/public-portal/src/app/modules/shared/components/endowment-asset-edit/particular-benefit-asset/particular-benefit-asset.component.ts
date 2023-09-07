@@ -1,7 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
   InputParticularBenefitAssetDto,
@@ -29,7 +29,7 @@ export class ParticularBenefitAssetComponent {
   ePatternValidation: typeof EnumValidation = EnumValidation;
 
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy
   ) { }

@@ -1,7 +1,7 @@
 import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputFileDto,
@@ -48,7 +48,7 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
   assetAttachementLable = 'الأصل';
   numberOfshareLable: string;
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,

@@ -1,4 +1,4 @@
-import { EndowmentRegistrationServiceProxy, LookupApplicationServiceProxy } from './../../../shared/services/services-proxies/service-proxies';
+import { EndowmentRegistrationApplicationServiceProxy, LookupApplicationServiceProxy } from './../../../shared/services/services-proxies/service-proxies';
 import { Component, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
 import {
@@ -36,7 +36,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     //private activatedRoute: ActivatedRoute,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
-    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
+    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute,
     private injector: Injector
   ) {

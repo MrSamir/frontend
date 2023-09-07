@@ -1,5 +1,4 @@
-import { EndowmentRegistrationReadonlyComponent } from './../../endowment-registration/components/endowment-registration-readonly/endowment-registration-readonly.component';
-import { MapModule } from './../components/map/map.module';
+ 
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -33,6 +32,7 @@ import { SvgIconModule } from "../../../../../../shared-features-lib/src/lib/mod
 import { EndowmentBeneficiaryEditComponent } from '../components/endowment-beneficiary-edit/endowment-beneficiary-edit.component';
 import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-readonly/endowment-info-readonly.component';
 import { EndowmentApplicantReadonlyComponent } from '../components/endowment-applicant-readonly/endowment-applicant-readonly.component';
+import { MapModule } from '../components/map/map.module';
 
 
 @NgModule({

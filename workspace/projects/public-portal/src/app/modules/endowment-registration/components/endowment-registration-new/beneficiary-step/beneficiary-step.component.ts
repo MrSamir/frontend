@@ -3,7 +3,7 @@ import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ComponentBase } from "projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component";
-import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationServiceProxy, AddBeneficiaryInputDto, RequestModelDto, RequestDto, ActionInput } from "../../../../shared/services/services-proxies/service-proxies";
+import { OutputBeneficiaryDto, RemoveBeneficiaryInputDto, AccountProxy, EndowmentRegistrationApplicationServiceProxy, AddBeneficiaryInputDto, RequestModelDto, RequestDto, ActionInput } from "../../../../shared/services/services-proxies/service-proxies";
 import { wizardNavDto } from "../../../models/wizard-nav-data";
 import { MessageTypeEnum } from "projects/core-lib/src/lib/enums/message-type";
 import { MessageSeverity } from "projects/core-lib/src/lib/enums/message-severity";
@@ -33,7 +33,7 @@ export class BeneficiaryStepComponent extends ComponentBase implements OnInit {
     _injecter: Injector,
     private accountServiceProxy: AccountProxy,
     private formBuilder: FormBuilder,
-    private endowmentRegistrationServiceProxy: EndowmentRegistrationServiceProxy,
+    private endowmentRegistrationServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute,
     private authService: AuthenticationService
   ) {

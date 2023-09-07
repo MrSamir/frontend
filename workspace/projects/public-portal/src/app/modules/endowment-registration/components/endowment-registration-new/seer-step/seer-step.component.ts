@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
-import { AddSeerInputDto, AddSeerOutputDto, ApiException, ApiResponse, EndowmentRegistrationServiceProxy, OutputSeerDto, RemoveSeerInputDto } from '../../../../shared/services/services-proxies/service-proxies';
+import { AddSeerInputDto, AddSeerOutputDto, ApiException, ApiResponse, EndowmentRegistrationApplicationServiceProxy, OutputSeerDto, RemoveSeerInputDto } from '../../../../shared/services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
@@ -27,7 +27,7 @@ export class SeerStepComponent extends ComponentBase implements OnInit {
   wizardNavDto: wizardNavDto = new wizardNavDto();
   OneRequestSeer: RemoveSeerInputDto;
   primengTableHelper: PrimengTableHelper;
-  constructor(private registerWaqfService: EndowmentRegistrationServiceProxy, private modalService: NgbModal, injector: Injector) {
+  constructor(private registerWaqfService: EndowmentRegistrationApplicationServiceProxy, private modalService: NgbModal, injector: Injector) {
     super(injector);
   }
 

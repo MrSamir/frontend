@@ -5,7 +5,7 @@ import { CrudOperation } from 'projects/core-lib/src/lib/enums/CrudOperation';
 import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.service';
 import {
   AlienInfoResponse, ApiResponseOfOutputApplicationUserDto, ApiResponseOfOutputEndowmerDto,
-  CitizenInfoResponse, EndowmentRegistrationServiceProxy,
+  CitizenInfoResponse, EndowmentRegistrationApplicationServiceProxy,
   InputApplicationUserDto, InputAssetDto,
   InputEndowmerDto, InputLookUpDto,
   LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto,
@@ -88,7 +88,7 @@ export class EndowmentEndowersListComponent extends ComponentBase implements OnI
   constructor(private modalService: NgbModal,
     public lookupService: LookupApplicationServiceProxy,
     //private requestService: RequestServiceProxy,
-    private registerWaqfService: EndowmentRegistrationServiceProxy, injector: Injector) {
+    private registerWaqfService: EndowmentRegistrationApplicationServiceProxy, injector: Injector) {
     super(injector);
   }
 

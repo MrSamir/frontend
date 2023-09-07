@@ -1,7 +1,7 @@
 import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputLookUpDto,
@@ -38,7 +38,7 @@ export class MovableAssetComponent extends ComponentBase implements OnInit {
   _lookupExtraData: LookupExtraData = new LookupExtraData();
 
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,
