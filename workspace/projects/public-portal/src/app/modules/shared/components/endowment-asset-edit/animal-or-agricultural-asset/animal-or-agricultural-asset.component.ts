@@ -1,6 +1,6 @@
 import { Component, Input, Output, forwardRef } from '@angular/core';
 import {
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   InputAnimalOrAgriculturalAssetDto,
   InputAssetDto,
   InputLookUpDto,
@@ -35,7 +35,7 @@ export class AnimalOrAgriculturalAssetComponent {
   constructor(
     private lookupssrv: LookupApplicationServiceProxy,
     private modalService: NgbModal,
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy
 
   ) {
 

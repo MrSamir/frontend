@@ -44,9 +44,16 @@
                 </td>
                 <td class="text-center" scope="col">
                     <a class="btn btn-sm btn-outline-awq-secondary rounded" (click)="ShowRequestData(record?.id)">
-                    <svg-icon icon="eye"></svg-icon>
+                    <svg-icon icon="eye"></svg-icon>   
                  </a>
 
+
+                 <a *ngIf="record.requestType?.id==1 && record?.requestStatus?.id==1"       (click)="CompleteRequestMissingData(record?.serialNumber,'1',record?.id)" class="btn btn-sm btn-outline-awq-secondary rounded" >
+                    <svg-icon icon="pencil"></svg-icon>
+                    
+                  </a>
+                
+            
               </td>
             </tr>
         </ng-template>

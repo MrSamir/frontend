@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MapComponent } from './map.component';
 
+
 @NgModule({
   declarations: [MapComponent],
   imports: [

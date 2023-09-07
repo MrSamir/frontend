@@ -5,7 +5,7 @@ import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { LookupModel } from '../../models/LookupModel';
 import {
   ApiException,
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   InputAnimalOrAgriculturalAssetDto,
   InputAssetDto,
   InputBusinessEntityAssetDto,
@@ -111,7 +111,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
   //assetSubTypes: LookupModel[];
 
   constructor(
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,
@@ -119,7 +119,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     private activatedRoute: ActivatedRoute,
     public formBuilder: FormBuilder,
     private injector: Injector,
-    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationServiceProxy,
+    private _serviceProxyEndowmentRegistraion: EndowmentRegistrationApplicationServiceProxy,
   ) /*private activatedRoute: ActivatedRoute*/ {
     super(injecter);
   }

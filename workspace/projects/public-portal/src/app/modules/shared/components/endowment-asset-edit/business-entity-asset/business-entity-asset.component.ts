@@ -1,7 +1,7 @@
 import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
-  EndowmentRegistrationServiceProxy,
+  EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
   InputAssetDto,
   InputBusinessEntityAssetDto,
@@ -55,7 +55,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private registerWaqfServiceProxy: EndowmentRegistrationServiceProxy,
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
     private lookupssrv: LookupApplicationServiceProxy,
     injecter: Injector,
