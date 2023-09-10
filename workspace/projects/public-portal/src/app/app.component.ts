@@ -10,6 +10,7 @@ export class AppComponent {
   constructor(private cdref: ChangeDetectorRef) {
 
   }
+  static googleMapApiKey = '';
   ngAfterContentChecked() {
     this.cdref.detectChanges();
   }

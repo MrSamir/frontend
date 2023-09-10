@@ -2,6 +2,96 @@
   <div class="form-group col">
     <label class="col-form-label"
       >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType"
+          | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{
+        getLookUpValue(
+          assetInfoModel.assetSubTypeId
+        )
+      }}
+    </label>
+    <p-dropdown [required]="true" [options]="assetSubTypes" [hidden]="viewOnly" [showClear]="true" name="assetSubTypeId"
+    #assetSubTypeId="ngModel"
+    [(ngModel)]="assetInfoModel!.assetSubTypeId" optionLabel="name" optionValue="id"
+    [placeholder]="
+      l(
+        'Common.Choose',
+        l('EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType')
+      )
+    "></p-dropdown>
+  <app-validationMessages relatedControlName="assetSubTypeId"
+    [control]="assetSubTypeId" [validationMessages]="[
+      {
+        ruleName: 'required',
+        ruleMessage: l(
+          'Common.Required',
+          l('EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType')
+        )
+      }
+    ]">
+  </app-validationMessages>
+  </div>
+  <div class="form-group col" *ngIf="assetInfoModel.assetSubTypeId == 12">
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetSubTypeDescriptionLabel"
+          | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <input
+      type="text"
+      class="form-control"
+      [minLength]="1"
+      [maxLength]="250"
+      [hidden]="viewOnly"
+      [pattern]="
+        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+      "
+      #assetSubTypeDescription="ngModel"
+      name="assetSubTypeDescription"
+      [(ngModel)]="assetInfoModel!.assetSubTypeDescription"
+      required
+    />
+
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel!.assetSubTypeDescription }}
+    </label>
+
+    <div
+      *ngIf="
+      assetSubTypeDescription.invalid &&
+        (assetSubTypeDescription.dirty ||
+        assetSubTypeDescription.touched)
+      "
+      class=""
+    >
+      <p
+        *ngIf="assetSubTypeDescription.errors?.['required']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetSubTypeDescriptionRequired"
+            | localize
+        }}
+      </p>
+
+      <p
+        *ngIf="assetSubTypeDescription.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBusinessCharacterValidation"
+            | localize
+        }}
+      </p>
+    </div>
+  </div>
+  <div class="form-group col">
+    <label class="col-form-label"
+      >{{
         "EndowmentModule.EndowmentRgistrationService.AssetBusinessEntityName"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
@@ -17,12 +107,12 @@
       "
       #businessEntityName="ngModel"
       name="businessEntityName"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.businessEntityName"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.businessEntityName"
       required
     />
 
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.businessEntityName }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel.businessEntityAsset.businessEntityName }}
     </label>
 
     <div
@@ -57,87 +147,36 @@
   <div class="form-group col">
     <label class="col-form-label"
       >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType"
-          | localize
-      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
-    >
-    <select
-      class="custom-select"
-      #assetSubTypeId="ngModel"
-      name="assetSubTypeId"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.assetSubTypeId"
-      [hidden]="viewOnly"
-      required
-    >
-      <option [value]="null" selected disabled></option>
-      <option
-        *ngFor="let asset of assetSubTypes"
-        value="{{ asset.id }}"
-      >
-        {{ asset.name }}
-      </option>
-    </select>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{
-        getLookUpValue(
-          assetInfoModel.businessEntityAssetObj.assetSubTypeId
-        )
-      }}
-    </label>
-
-    <div
-      *ngIf="
-        assetSubTypeId.invalid &&
-        (assetSubTypeId.dirty || assetSubTypeId.touched)
-      "
-      class=""
-    >
-      <p *ngIf="assetSubTypeId.errors" class="text-danger pt-1 small">
-        {{
-          "EndowmentModule.EndowmentRgistrationService.AssetBusinessSubTypeRequiredValidation"
-            | localize
-        }}
-      </p>
-    </div>
-  </div>
-  <div class="form-group col">
-    <label class="col-form-label"
-      >{{
         "EndowmentModule.EndowmentRgistrationService.RealeStateRegion"
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
-    <select
-      class="custom-select"
-      #regionId="ngModel"
-      name="regionId"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.regionId"
-      [hidden]="viewOnly"
-      required
-      (change)="getcityLookup(regionId.value)"
-    >
-      <option [value]="null" selected disabled></option>
-      <option *ngFor="let region of regionLookup" value="{{ region.id }}">
-        {{ region.name }}
-      </option>
-    </select>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
       >&nbsp;{{
-        getbusinessEntityAssetLookUpValue(assetInfoModel.businessEntityAssetObj.regionId)
+        getbusinessEntityAssetLookUpValue(assetInfoModel.businessEntityAsset.regionId)
       }}
     </label>
+    <p-dropdown [required]="true" [options]="regionLookup" [hidden]="viewOnly" [showClear]="true" name="regionId"
+    #regionId="ngModel"
+    [(ngModel)]="assetInfoModel!.businessEntityAsset!.regionId" optionLabel="name" optionValue="id"
+    [placeholder]="
+      l(
+        'Common.Choose',
+        l('EndowmentModule.EndowmentRgistrationService.RealeStateRegion')
+      )
+    " (onChange)="getcityLookup(regionId.value)"></p-dropdown>
+  <app-validationMessages relatedControlName="regionId"
+    [control]="regionId" [validationMessages]="[
+      {
+        ruleName: 'required',
+        ruleMessage: l(
+          'Common.Required',
+          l('EndowmentModule.EndowmentRgistrationService.RealeStateRegion')
+        )
+      }
+    ]">
+  </app-validationMessages>
 
-    <div
-      *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)"
-      class=""
-    >
-      <p *ngIf="regionId.errors" class="text-danger pt-1 small">
-        {{
-          "EndowmentModule.EndowmentRgistrationService.RequiredRealeStateAssetRegionValidationlabel"
-            | localize
-        }}
-      </p>
-    </div>
   </div>
   <div class="form-group col">
     <label class="col-form-label"
@@ -146,34 +185,31 @@
           | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
-    <select
-      class="custom-select"
-      #cityId="ngModel"
-      [disabled]="cityDisabled"
-      name="cityId"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.cityId"
-      [hidden]="viewOnly"
-      required
-      (change)="ChangeCityLookup(cityId.value)"
-    >
-      <option [value]="null" selected disabled></option>
-      <option *ngFor="let city of cityLookup" value="{{ city.id }}">
-        {{ city.name }}
-      </option>
-    </select>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
       >&nbsp;{{
-        getCityLookUpValue(assetInfoModel.businessEntityAssetObj.cityId)
+        getCityLookUpValue(assetInfoModel.businessEntityAsset.cityId)
       }}
     </label>
-    <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
-      <p *ngIf="cityId.errors" class="text-danger pt-1 small">
-        {{
-          "EndowmentModule.EndowmentRgistrationService.RealeStateAssetCityRequiredValidationlabel"
-            | localize
-        }}
-      </p>
-    </div>
+    <p-dropdown [required]="true" [options]="cityLookup" [hidden]="viewOnly" [showClear]="true" name="cityId"
+    #cityId="ngModel"
+    [(ngModel)]="assetInfoModel!.businessEntityAsset!.cityId" optionLabel="name" optionValue="id" [disabled]="cityDisabled"
+    [placeholder]="
+      l(
+        'Common.Choose',
+        l('EndowmentModule.EndowmentRgistrationService.RealeStateCity')
+      )
+    "></p-dropdown>
+  <app-validationMessages relatedControlName="cityId"
+    [control]="cityId" [validationMessages]="[
+      {
+        ruleName: 'required',
+        ruleMessage: l(
+          'Common.Required',
+          l('EndowmentModule.EndowmentRgistrationService.RealeStateCity')
+        )
+      }
+    ]">
+  </app-validationMessages>
   </div>
 
   <div class="form-group col-12">
@@ -197,7 +233,7 @@
       >
       <!-- <hint [hintContent]="registrationDocumentNumberhint?.hintContentAr" [hintTitle]="registrationDocumentNumberhint?.hintTitleAr"></hint> -->
     </div>
-    <label [hidden]="!viewOnly" class="col-form-label">{{
+    <label *ngIf="viewOnly" class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetBusinessRegisterationDocNumber"
         | localize
     }}</label>
@@ -212,13 +248,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
       name="registrationDocumentNumber"
       [(ngModel)]="
-        assetInfoModel!.businessEntityAssetObj!.registrationDocumentNumber
+        assetInfoModel!.businessEntityAsset!.registrationDocumentNumber
       "
       [pattern]="ePatternValidation.pattern_number"
       required
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel!.businessEntityAssetObj!.registrationDocumentNumber }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel!.businessEntityAsset!.registrationDocumentNumber }}
     </label>
     <div
       *ngIf="
@@ -261,11 +297,11 @@
       #waqfResponserPortion="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfResponserPortion"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.waqfResponserPortion"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfResponserPortion"
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.waqfResponserPortion }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel.businessEntityAsset.waqfResponserPortion }}
     </label>
     <div
       *ngIf="
@@ -299,11 +335,11 @@
       #waqfPercentageFromAsset="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="waqfPercentageFromAsset"
-      [(ngModel)]="assetInfoModel!.businessEntityAssetObj!.waqfPercentageFromAsset"
+      [(ngModel)]="assetInfoModel!.businessEntityAsset!.waqfPercentageFromAsset"
       [pattern]="ePatternValidation.pattern_percentage"
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.businessEntityAssetObj.waqfPercentageFromAsset }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel.businessEntityAsset.waqfPercentageFromAsset }}
     </label>
     <div
       *ngIf="
@@ -331,10 +367,10 @@
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
 
-    
+
     <div class="input-group mb-3 download p-2">
       <div class="flex-grow-1">
-        <lib-file-uploader
+        <lib-file-uploader *ngIf="!businessEntityAssetAttachemt"
         name="commercialRegisterAttachmentId"
         [fileLabel]="l('EndowmentModule.EndowmentRgistrationService.AssetBusinesscommercialRegisterAttachment')"
         [showDisclaimer]="true"
@@ -346,7 +382,7 @@
       #commercialRegisterAttachmentId="ngModel"
       name="commercialRegisterAttachmentId"
       [(ngModel)]="
-        assetInfoModel!.businessEntityAssetObj!.commercialRegisterAttachmentId
+        assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId
       "
       required
     />
@@ -365,16 +401,16 @@
     >
     </app-validationMessages>
     <div
-    *ngIf="assetInfoModel!.businessEntityAssetObj!.commercialRegisterAttachmentId"
+    *ngIf="assetInfoModel!.businessEntityAsset!.commercialRegisterAttachmentId"
     class="form-group col-12"
   >
     <app-AttachmentViewer
-      *ngIf="businessEntityAssetAttachemt"
+      *ngIf="businessEntityAssetAttachemt" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"
       (OnAttachementRemove)="businessEntityAssetRemoveFile($event)"
-      [Attachements]="[businessEntityAssetAttachemt]"
+      [Attachements]="[businessEntityAssetAttachemt] "
     ></app-AttachmentViewer>
         <!-- <file-uploader [showDownloadButton]="true" [showDeleteButton]="!viewOnly" [allowedExtensions]="['.pdf' ]"
-            [objects]="[assetInfoModel.businessEntityAsset]" [keys]="['commercialRegisterAttachmentId']"
+            [ects]="[assetInfoModel.businessEntityAsset]" [keys]="['commercialRegisterAttachmentId']"
             [fileDisplayName]="'السجل التجاري'" [serviceTypeId]="requestType.NewWaqf">
           </file-uploader> -->
       </div>

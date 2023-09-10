@@ -94,22 +94,49 @@
             <div class="row">
               <div class="form-group col">
                 <label class="col-form-label">{{'Common.Region' | localize}}<span class="text-danger">*</span></label>
-                <select class="custom-select" #RegionId="ngModel" name="RegionId"
-                        [(ngModel)]=currentUserProfile.regionId required
-                        (change)="LoadCitiesByRegion(RegionId.value)">
-                  <option [value]="null" disabled selected></option>
-                  <option *ngFor="let region of RegioneLookup" value={{region.id}}>
-                    {{region.name}}</option>
-                </select>
+                <p-dropdown [required]="true" [options]="RegioneLookup" [showClear]="true" name="RegionId"
+      #RegionId="ngModel"
+      [(ngModel)]="currentUserProfile!.regionId" optionLabel="name" optionValue="id"
+      [placeholder]="
+        l(
+          'Common.Choose',
+          l('Common.Region')
+        )
+      " (onChange)="LoadCitiesByRegion(RegionId.value)"></p-dropdown>
+    <app-validationMessages relatedControlName="RegionId"
+      [control]="RegionId" [validationMessages]="[
+        {
+          ruleName: 'required',
+          ruleMessage: l(
+            'Common.Required',
+            l('Common.Region')
+          )
+        }
+      ]">
+    </app-validationMessages>
               </div>
 
               <div class="form-group col">
                 <label class="col-form-label">{{'Common.City' | localize}}<span class="text-danger">*</span></label>
-                <select class="custom-select" #CityId="ngModel" name="deedCityId" [(ngModel)]=currentUserProfile.cityId
-                        required>
-                  <option *ngFor="let city of CityLookup" value={{city.id}}>
-                    {{city.name}}</option>
-                </select>
+                <p-dropdown [required]="true" [options]="CityLookup" [showClear]="true" name="CityId"
+                #CityId="ngModel"
+                [(ngModel)]="currentUserProfile!.cityId" optionLabel="name" optionValue="id"
+                [placeholder]="
+                  l(
+                    'Common.Choose',
+                    l('Common.City')
+                  )"></p-dropdown>
+              <app-validationMessages relatedControlName="CityId"
+                [control]="CityId" [validationMessages]="[
+                  {
+                    ruleName: 'required',
+                    ruleMessage: l(
+                      'Common.Required',
+                      l('Common.City')
+                    )
+                  }
+                ]">
+              </app-validationMessages>
               </div>
               <div class="form-group col ">
                 <button type="submit"  class="btn btn-warning mt-6"

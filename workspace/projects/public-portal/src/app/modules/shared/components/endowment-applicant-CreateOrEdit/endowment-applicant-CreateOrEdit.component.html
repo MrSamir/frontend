@@ -596,7 +596,7 @@
             </div>
             <div *ngIf="requestInfo.applicantSeer.seedDeedAttachmentId" class="form-group col-12">
               <app-AttachmentViewer *ngIf="seerDeadAttachemt" [AttachmenetLabel]="l('EndowmentModule.EndowmentRgistrationService.seenDeed')" (OnAttachementRemove)="SeerDeedremoveFile($event)"
-                [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
+                [Attachements]="[seerDeadAttachemt]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"></app-AttachmentViewer>
             </div>
           </div>
         </p-panel>
@@ -668,7 +668,7 @@
             </div>
             <div *ngIf="requestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
               <app-AttachmentViewer *ngIf="agentDeedAttachment" (OnAttachementRemove)="removeAgentDeedFile($event)"
-                [Attachements]="[agentDeedAttachment]"></app-AttachmentViewer>
+                [Attachements]="[agentDeedAttachment]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"></app-AttachmentViewer>
             </div>
             <div *ngIf="requestInfo?.applicantAgent?.statusName" class="form-group col">
               <label for="">{{

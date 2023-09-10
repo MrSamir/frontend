@@ -1,8 +1,7 @@
-import { Component, Input, Output, forwardRef } from '@angular/core';
+import { Component, Injector, Input, Output, forwardRef } from '@angular/core';
 import {
   EndowmentRegistrationApplicationServiceProxy,
-  InputAnimalOrAgriculturalAssetDto,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
@@ -11,17 +10,18 @@ import {
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 @Component({
   selector: 'app-shared-animal-or-agricultural-asset',
   templateUrl: './animal-or-agricultural-asset.component.html',
   styleUrls: ['./animal-or-agricultural-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => AnimalOrAgriculturalAssetComponent) }]
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => AnimalOrAgriculturalAssetComponent) }]
 })
-export class AnimalOrAgriculturalAssetComponent {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+export class AnimalOrAgriculturalAssetComponent extends ComponentBase {
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -35,14 +35,14 @@ export class AnimalOrAgriculturalAssetComponent {
   constructor(
     private lookupssrv: LookupApplicationServiceProxy,
     private modalService: NgbModal,
-    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy
+    private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
+    injector: Injector
 
   ) {
-
+    super(injector);
   }
 
   ngOnInit() {
-    
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
@@ -50,7 +50,6 @@ export class AnimalOrAgriculturalAssetComponent {
       this.regionLookup = data.dto.items!;
       console.log(data);
     });
-
     this.lookupfliter.lookUpName = 'City';
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
@@ -59,10 +58,10 @@ export class AnimalOrAgriculturalAssetComponent {
 
     });
   }
-  getcityLookup(value: any) {
+  getcityLookup(event: any) {
     this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'regionId';
-    this._lookupExtraData.dataValue = value.toString();
+    this._lookupExtraData.dataValue = event.value.toString();
     this.lookupfliter.lookUpName = 'City';
     this.lookupfliter.filters = [this._lookupExtraData];
 

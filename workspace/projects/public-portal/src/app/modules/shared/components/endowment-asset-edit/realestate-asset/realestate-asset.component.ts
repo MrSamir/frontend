@@ -4,10 +4,9 @@ import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputFileDto,
   InputLookUpDto,
-  InputRealEstateAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
@@ -23,23 +22,23 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { ActivatedRoute } from '@angular/router';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-realestate-asset',
   templateUrl: './realestate-asset.component.html',
   styleUrls: ['./realestate-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => RealestateAssetComponent) }]
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => RealestateAssetComponent) }]
 })
 export class RealestateAssetComponent extends ComponentBase implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
   map: MapModel = new MapModel();
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -60,17 +59,6 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    this._lookupExtraData = new LookupExtraData();
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      debugger
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
@@ -96,6 +84,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
     //this.loadHints();
   }
   getcityLookup(value: any) {
+    if (value == undefined || value == '') return;
     this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
@@ -115,8 +104,8 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
   onChangeMap() {
     if (this.map && this.map.longitude && this.map.latitude) {
-      this.assetInfoModel.realEstateAssetObj.longitude = this.map.longitude;
-      this.assetInfoModel.realEstateAssetObj.latitude = this.map.latitude;
+      this.assetInfoModel.realEstateAsset.longitude = this.map.longitude;
+      this.assetInfoModel.realEstateAsset.latitude = this.map.latitude;
     }
   }
 
@@ -148,7 +137,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetAttachemt: AttachementItem;
   realestateAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = response.id;
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = response.id;
       this.realestateAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -209,7 +198,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetFile: File;
   realestateAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = undefined!;
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = undefined!;
       this.realestateAssetFile = undefined!;
     });
   }

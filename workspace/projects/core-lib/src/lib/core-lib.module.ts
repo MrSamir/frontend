@@ -21,6 +21,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { HintComponent } from './components/hint/hint.component';
 import { PanelModule } from 'primeng/panel';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
+import { SvgIconModule } from 'projects/shared-features-lib/src/lib/modules/svg-icon.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
     ConfirmDialogModule,
     OverlayPanelModule,
     PanelModule,
+    SvgIconModule
   ],
   exports: [
     LocalizePipe,

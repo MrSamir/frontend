@@ -3,9 +3,8 @@ import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputFileDto,
-  InputFiscalAssetDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
@@ -22,23 +21,22 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
-import { BusinessEntityAssetComponent } from '../business-entity-asset/business-entity-asset.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-fiscal-asset',
   templateUrl: './fiscal-asset.component.html',
   styleUrls: ['./fiscal-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => FiscalAssetComponent) }]
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => FiscalAssetComponent) }]
 })
 export class FiscalAssetComponent extends ComponentBase implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   //assetSubTypes:LookupModel[];
 
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   _lookupExtraData: LookupExtraData;
 
@@ -60,35 +58,25 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-
-    this._lookupExtraData = new LookupExtraData();
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
+    this.assetInfoModel;
   }
 
   subTypeChanged() {
     if (
-      this.assetInfoModel.fiscalAssetObj.assetSubTypeId >= 10 &&
-      this.assetInfoModel.fiscalAssetObj.assetSubTypeId < 13
+      this.assetInfoModel.assetSubTypeId >= 10 &&
+      this.assetInfoModel.assetSubTypeId < 13
     ) {
       this.currentassetvalueLabel = `القيمة الحالية ل${this.assetSubTypes.find(
-        (c) => c.id == this.assetInfoModel.fiscalAssetObj.assetSubTypeId
+        (c) => c.id == this.assetInfoModel.assetSubTypeId
       )?.name as string
         }`;
 
       this.numberOfshareLable = `عدد ال${this.assetSubTypes.find(
-        (c) => c.id == this.assetInfoModel.fiscalAssetObj.assetSubTypeId
+        (c) => c.id == this.assetInfoModel.assetSubTypeId
       )?.name as string
         }`;
       this.assetAttachementLable = `${this.assetSubTypes.find(
-        (c) => c.id == this.assetInfoModel.fiscalAssetObj.assetSubTypeId
+        (c) => c.id == this.assetInfoModel.assetSubTypeId
       )?.name as string
         }ال`;
     } else {
@@ -103,7 +91,7 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
 
   getLookUpValue(assetSubTypeId: number) {
     return this.assetSubTypes.find(
-      (c) => c.id == this.assetInfoModel.fiscalAssetObj.assetSubTypeId
+      (c) => c.id == this.assetInfoModel.assetSubTypeId
     )?.name as string;
   }
 
@@ -115,7 +103,7 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
   fiscalAssetAttachemt: AttachementItem;
   fiscalAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.fiscalAssetObj.fiscalAssetAttachementId = response.id;
+      this.assetInfoModel.fiscalAsset.fiscalAssetAttachementId = response.id;
       this.fiscalAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -176,7 +164,7 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
   fiscalAssetFile: File;
   fiscalAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.fiscalAssetObj.fiscalAssetAttachementId = undefined!;
+      this.assetInfoModel.fiscalAsset.fiscalAssetAttachementId = undefined!;
       this.fiscalAssetFile = undefined!;
     });
   }

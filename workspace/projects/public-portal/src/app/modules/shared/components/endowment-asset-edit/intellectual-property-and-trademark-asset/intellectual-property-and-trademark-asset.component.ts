@@ -1,8 +1,7 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
   EndowmentRegistrationApplicationServiceProxy,
-  InputAssetDto,
-  InputIntellectualPropertyAndTrademarkAssetDto,
+  EndowmentAssetDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
@@ -10,20 +9,25 @@ import {
 } from '../../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 @Component({
   selector: 'app-shared-intellectual-property-and-trademark-asset',
   templateUrl: './intellectual-property-and-trademark-asset.component.html',
   styleUrls: ['./intellectual-property-and-trademark-asset.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => IntellectualPropertyAndTrademarkAssetComponent) }]
 })
-export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+export class IntellectualPropertyAndTrademarkAssetComponent extends ComponentBase implements OnInit {
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   //Typehint: HintEntry;
   //assetSubTypes: LookupModel[];
 
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   _lookupExtraData: LookupExtraData = new LookupExtraData();
 
@@ -31,21 +35,16 @@ export class IntellectualPropertyAndTrademarkAssetComponent implements OnInit {
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy
-  ) {}
+    private lookupssrv: LookupApplicationServiceProxy,
+    injector: Injector
+  ) {
+    super(injector);
+  }
 
   ngOnInit() {
-   
-
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
+    if (this.assetInfoModel.assetSubTypeId == undefined) {
+      this.assetInfoModel.assetSubTypeId = 12;
+    }
     this.loadHints();
   }
   loadHints() {

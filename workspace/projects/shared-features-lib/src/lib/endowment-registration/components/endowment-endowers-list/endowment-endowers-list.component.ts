@@ -6,7 +6,7 @@ import { handleError } from 'projects/core-lib/src/lib/services/alert/alert.serv
 import {
   AlienInfoResponse, ApiResponseOfOutputApplicationUserDto, ApiResponseOfOutputEndowmerDto,
   CitizenInfoResponse, EndowmentRegistrationApplicationServiceProxy,
-  InputApplicationUserDto, InputAssetDto,
+  InputApplicationUserDto, EndowmentAssetDto,
   InputEndowmerDto, InputLookUpDto,
   LookupApplicationServiceProxy, LookupDto, OutputApplicationUserDto,
   OutputEndowmerDto

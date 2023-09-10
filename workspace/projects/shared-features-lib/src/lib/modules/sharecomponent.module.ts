@@ -30,6 +30,7 @@ import { CustomYearSelectComponent } from '../components/ng-bootstrap-hijri-greg
 import { AddRequestSuccessMessageComponent } from '../endowment-registration/components/add-request-success-message/add-request-success-message.component';
 import { UpdateMissingSuccessMessageComponent } from '../endowment-registration/components/update-missing-success-message/update-missing-success-message.component';
 import { SvgIconModule } from "./svg-icon.module";
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { SvgIconModule } from "./svg-icon.module";
     TableModule,
     GalleriaModule,
     CoreLibModule,
-    SvgIconModule
+    SvgIconModule,
+    DropdownModule
   ]
 })
 export class SharecomponentModule { }

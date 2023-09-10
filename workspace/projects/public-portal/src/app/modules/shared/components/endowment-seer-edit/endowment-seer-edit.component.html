@@ -323,7 +323,7 @@
             class="form-group col-12"
           >
             <lib-file-uploader
-            *ngIf="!viewOnly"
+            *ngIf="!viewOnly && !seerDeadAttachemt"
               name="seerDeed"
               [fileLabel]="
                 l('EndowmentModule.EndowmentRgistrationService.seenDeed')
@@ -364,7 +364,7 @@
             <app-AttachmentViewer
               *ngIf="seerDeadAttachemt"
               (OnAttachementRemove)="SeerDeedremoveFile($event)"
-              [Attachements]="[seerDeadAttachemt]"
+              [Attachements]="[seerDeadAttachemt]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"
             ></app-AttachmentViewer>
           </div>
         </div>
