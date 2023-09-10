@@ -13,6 +13,7 @@ import { NgModule, Optional, SkipSelf } from '@angular/core';
     ServiceProxy.ApplicationUserServiceProxy,
     ServiceProxy.YaqeenApplicationServiceProxy,
     ServiceProxy.RequestApplicationServiceProxy,
+    ServiceProxy.EndowmentApplicationServiceProxy,
     ServiceProxy.FileLibraryApplicationServiceProxy,
     ServiceProxy.EndowmentRegistrationApplicationServiceProxy,
     ServiceProxy.LookupApplicationServiceProxy,
