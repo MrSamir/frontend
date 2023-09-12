@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, Input, OnInit, Output, forwardRef } from '@angular/core';
 import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationApplicationServiceProxy,
@@ -10,6 +10,7 @@ import {
   LookupDto,
   LookupExtraData,
   OutputFileDto,
+  FileByIdDto,
 } from '../../../services/services-proxies/service-proxies';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
@@ -52,15 +53,47 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
     injecter: Injector,
     private _serviceProxyFileLibrary: FileLibraryApplicationServiceProxy,
     private dateHelper: DateFormatterService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdref: ChangeDetectorRef
   ) {
     super(injecter);
   }
-
-  ngOnInit() {
-    this.assetInfoModel;
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
-
+  ngOnInit() {
+    debugger;
+    if (this.assetInfoModel.fiscalAsset) {
+      if (this.assetInfoModel.fiscalAsset.fiscalAssetAttachementId) {
+        this.getFileById(
+          this.assetInfoModel.fiscalAsset.fiscalAssetAttachementId,
+          (fileDto) => {
+            this.fiscalAssetAttachemt = {
+              id: fileDto.id,
+              fileName: fileDto.fileName!,
+              fileData: fileDto.fileData!,
+              ContentType: fileDto.contentType!,
+            };
+          }
+        );
+      }
+      if (this.assetInfoModel.assetSubTypeId) {
+        this.subTypeChanged();
+      }
+    }
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
+    this._serviceProxyFileLibrary
+      .downloadFileById(fileinfo)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
+  }
   subTypeChanged() {
     if (
       this.assetInfoModel.assetSubTypeId >= 10 &&
@@ -168,7 +201,6 @@ export class FiscalAssetComponent extends ComponentBase implements OnInit {
       this.fiscalAssetFile = undefined!;
     });
   }
-
 
   removeFile(
     event: AttachementItem,

@@ -42,7 +42,9 @@ export class IntellectualPropertyAndTrademarkAssetComponent extends ComponentBas
   }
 
   ngOnInit() {
-    if (this.assetInfoModel.assetSubTypeId == undefined) {
+    debugger;
+    this.assetSubTypes;
+    if (this.assetInfoModel.assetSubTypeId == undefined && !this.viewOnly) {
       this.assetInfoModel.assetSubTypeId = 12;
     }
     this.loadHints();

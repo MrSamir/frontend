@@ -11,6 +11,7 @@ import {
   LookupDto,
   LookupExtraData,
   OutputFileDto,
+  FileByIdDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
@@ -59,7 +60,8 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-
+    debugger;
+    this.assetInfoModel;
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
@@ -75,13 +77,33 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
       console.log(data);
     });
 
-
-    //  this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result) => {
-    //    result.subscribe((assetsSubTypes: LookupModel[]) => {
-    //      this.assetSubTypes = assetsSubTypes;
-    //    });
-    //  });
-    //this.loadHints();
+    if (this.assetInfoModel.realEstateAsset) {
+      if (this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId) {
+        this.getFileById(
+          this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId,
+          (fileDto) => {
+            this.realestateAssetAttachemt = {
+              id: fileDto.id,
+              fileName: fileDto.fileName!,
+              fileData: fileDto.fileData!,
+              ContentType: fileDto.contentType!,
+            };
+          }
+        );
+      }
+    }
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
+    this._serviceProxyFileLibrary
+      .downloadFileById(fileinfo)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
   }
   getcityLookup(value: any) {
     if (value == undefined || value == '') return;
@@ -117,6 +139,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   getSubAssetsById(assetId: number) {
+    debugger;
     if (assetId !== undefined)
       return this.assetSubTypes.filter(c => c.id == assetId).map(c => c.name);
     else
@@ -129,7 +152,12 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
     else
       return undefined;
   }
-
+  getRegionById(regionId: number) {
+    if (regionId !== undefined)
+      return this.regionLookup.find(c => c.id == regionId)?.name as string;
+    else
+      return undefined;
+  }
   realestateAssetSelect(event: any) {
     this.realestateAssetFile = event.files[0];
   }

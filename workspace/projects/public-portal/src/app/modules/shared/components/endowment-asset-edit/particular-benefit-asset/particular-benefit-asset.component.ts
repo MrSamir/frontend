@@ -42,7 +42,8 @@ export class ParticularBenefitAssetComponent extends ComponentBase {
   }
 
   ngOnInit() {
-    if (this.assetInfoModel.assetSubTypeId == undefined) {
+
+    if (this.assetInfoModel.assetSubTypeId == undefined && !this.viewOnly) {
       this.assetInfoModel.assetSubTypeId = 12;
     }
     this.loadHints();

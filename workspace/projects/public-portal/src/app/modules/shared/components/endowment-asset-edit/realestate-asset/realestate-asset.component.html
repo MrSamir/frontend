@@ -15,7 +15,7 @@
       <div>
         <label class="col-form-label font-weight-bold" *ngIf="viewOnly">&nbsp;{{
           getSubAssetsById(
-          assetInfoModel.assetTypeId
+          assetInfoModel.assetSubTypeId
         ) }}
         </label>
       </div>
@@ -102,6 +102,11 @@
         l('EndowmentModule.EndowmentRgistrationService.RealeStateRegion')
       )
     " (onChange)="getcityLookup(regionId.value)"></p-dropdown>
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{
+        getRegionById(assetInfoModel!.realEstateAsset!.regionId)
+      }}
+    </label>
   <app-validationMessages relatedControlName="regionId"
     [control]="regionId" [validationMessages]="[
       {

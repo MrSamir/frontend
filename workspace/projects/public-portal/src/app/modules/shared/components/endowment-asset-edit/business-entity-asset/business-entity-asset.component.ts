@@ -10,6 +10,7 @@ import {
   LookupDto,
   LookupExtraData,
   OutputFileDto,
+  FileByIdDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -110,7 +111,35 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
     //   });
     // });
     // this.loadHints();
+    if (this.assetInfoModel.businessEntityAsset) {
+      if (this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId) {
+        this.getFileById(
+          this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId,
+          (fileDto) => {
+            this.businessEntityAssetAttachemt = {
+              id: fileDto.id,
+              fileName: fileDto.fileName!,
+              fileData: fileDto.fileData!,
+              ContentType: fileDto.contentType!,
+            };
+          }
+        );
+      }
+    }
   }
+  getFileById(id, callback: (fileDto) => void) {
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
+    this._serviceProxyFileLibrary
+      .downloadFileById(fileinfo)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
+  }
+
   getcityLookup(value: any) {
     if (value == undefined || value == '') return;
     this._lookupExtraData = new LookupExtraData();

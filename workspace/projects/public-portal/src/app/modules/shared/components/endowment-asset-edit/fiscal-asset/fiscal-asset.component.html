@@ -191,9 +191,8 @@
       ]">
         </app-validationMessages>
         <div *ngIf="assetInfoModel.fiscalAsset.fiscalAssetAttachementId" class="form-group col-12">
-          <app-AttachmentViewer *ngIf="fiscalAssetAttachemt" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"
-            (OnAttachementRemove)="fiscalAssetRemoveFile($event)"
-            [Attachements]="[fiscalAssetAttachemt]"></app-AttachmentViewer>
+          <app-AttachmentViewer *ngIf="fiscalAssetAttachemt" (OnAttachementRemove)="fiscalAssetRemoveFile($event)"
+            [Attachements]="[fiscalAssetAttachemt]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"></app-AttachmentViewer>
         </div>
       </div>
     </div>

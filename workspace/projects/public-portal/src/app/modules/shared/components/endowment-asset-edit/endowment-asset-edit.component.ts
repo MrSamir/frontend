@@ -235,45 +235,18 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     this.isViewRequested = true;
     this.isEditRequested = false;
     this.isAddRequested = false;
-    var SelectedAssetToView = this.primengTableHelper.records[index];
-    this.newAsset = SelectedAssetToView;
-    this.newAsset.requestId = this.requestId;
-    //this.newAsset = this.initiateAssetects(this.newAsset, SelectedAssetToView);
-    await this.loadAssetType();
-    await this.loadassetSubType(
-      this.newAsset.assetTypeId!, content
-    );
+    await this.showSeletctedAsset(content, index);
 
   }
-  // initiateAssetects(asset: EndowmentAssetDto, selectedAsset: EndowmentAssetDto): EndowmentAssetDto {
-  //   debugger;
-  //   asset.init(selectedAsset);
-  //   asset.fiscalAsset = new FiscalAssetDto;
-  //   asset.movableAsset = new MovableAssetDto;
-  //   asset.monetaryAsset = new MonetaryAssetDto;
-  //   asset.realEstateAsset = new RealEstateAssetDto;
-  //   asset.businessEntityAsset = new BusinessEntityAssetDto;
-  //   asset.particularBenefitAsset = new ParticularBenefitAssetDto;
-  //   asset.animalOrAgriculturalAsset = new AnimalOrAgriculturalAssetDto;
-  //   asset.intellectualPropertyAndTrademarkAsset = new IntellectualPropertyAndTrademarkAssetDto;
-  //   asset.fiscalAsset.init(selectedAsset.fiscalAsset);
-  //   asset.movableAsset.init(selectedAsset.movableAsset);
-  //   asset.monetaryAsset.init(selectedAsset.monetaryAsset);
-  //   asset.realEstateAsset.init(selectedAsset.realEstateAsset);
-  //   asset.businessEntityAsset.init(selectedAsset.businessEntityAsset);
-  //   asset.particularBenefitAsset.init(selectedAsset.particularBenefitAsset);
-  //   asset.animalOrAgriculturalAsset.init(selectedAsset.animalOrAgriculturalAsset);
-  //   asset.intellectualPropertyAndTrademarkAsset.init(selectedAsset.intellectualPropertyAndTrademarkAsset);
-
-  //   return asset;
-
-  // }
   async onEditTableCellClicked(content: any, index: any) {
     this.isViewRequested = false;
     this.isEditRequested = true;
     this.isAddRequested = false;
-    var SelectedAssetToEdit = this.primengTableHelper.records[index];
-    this.newAsset = SelectedAssetToEdit;
+    await this.showSeletctedAsset(content, index);
+  }
+  async showSeletctedAsset(content: any, index) {
+    var SelectedAsset = this.primengTableHelper.records[index];
+    this.newAsset = SelectedAsset;
     //this.newAsset = this.initiateAssetects(this.newAsset, SelectedAssetToView);
     this.newAsset.requestId = this.requestId;
     await this.loadAssetType();
@@ -361,7 +334,7 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     this.lookupfliter.lookUpName = 'AssetSubType';
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.assetsSubTypeLookup = data.dto.items!;
-      if (!this.isViewRequested) {
+      if (this.assetsSubTypeLookup.filter(id => id.id == 12).length <= 0) {
         let otherItem: LookupDto = new LookupDto();
         otherItem.id = 12;
         otherItem.name = this.l('Common.Other');
