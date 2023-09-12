@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -6,21 +6,21 @@ import { LookupModel } from '../../models/LookupModel';
 import {
   ApiException,
   EndowmentRegistrationApplicationServiceProxy,
-  InputAnimalOrAgriculturalAssetDto,
-  InputAssetDto,
-  InputBusinessEntityAssetDto,
-  InputFiscalAssetDto,
-  InputIntellectualPropertyAndTrademarkAssetDto,
+  AnimalOrAgriculturalAssetDto,
+  BusinessEntityAssetDto,
+  FiscalAssetDto,
+  IntellectualPropertyAndTrademarkAssetDto,
   InputLookUpDto,
-  InputMonetaryAssetDto,
-  InputMovableAssetDto,
-  InputOneAssetDto,
-  InputParticularBenefitAssetDto,
-  InputRealEstateAssetDto,
-  InputRemoveAssetDto,
+  MonetaryAssetDto,
+  MovableAssetDto,
+  OneAssetDto,
+  ParticularBenefitAssetDto,
+  RealEstateAssetDto,
+  RemoveAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
-  OutputAssetDto,
+  LookupExtraData,
+  EndowmentAssetDto,
 } from '../../services/services-proxies/service-proxies';
 import { MapModel } from '../map/map.model';
 //import { ActivatedRoute } from '@angular/router';
@@ -33,6 +33,7 @@ import { wizardNavDto } from '../../../endowment-registration/models/wizard-nav-
 import { ActivatedRoute } from '@angular/router';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-endowment-shared-asset-edit',
@@ -49,10 +50,10 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
 
   @Input() @Output() request: RequestModel;
 
-  @Output() OnAddingNewAsset = new EventEmitter<InputAssetDto>();
-  @Output() OnEditingExistingAsset = new EventEmitter<InputAssetDto>();
+  @Output() OnAddingNewAsset = new EventEmitter<EndowmentAssetDto>();
+  @Output() OnEditingExistingAsset = new EventEmitter<EndowmentAssetDto>();
   @Output() OnDeletingExistingAsset = new EventEmitter<{
-    assetToDelete: OutputAssetDto;
+    assetToDelete: EndowmentAssetDto;
     index: number;
   }>();
 
@@ -62,34 +63,10 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
   @Input() serialNumber: string | undefined;
   @Input() waqfId: string | undefined;
   @Input() requestId: string;
-  @Input() Assets: OutputAssetDto[] = [];
+  @Input() Assets: EndowmentAssetDto[] = [];
 
-  SelectedAssetToEdit: InputAssetDto;
+  SelectedAssetToEdit: EndowmentAssetDto;
   map: MapModel;
-
-  newAsset: InputAssetDto | undefined;
-  ngOnInit() {
-    this.lookupfliter.lookUpName = 'AssetType';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetsTypeLookup = data.dto.items!;
-      this.loadAssets();
-    });
-
-    this.primengTableHelper = new PrimengTableHelper();
-    
-
-  }
-
-
-  getAssetType(assetTypeId: number) {
-    if (assetTypeId != undefined) {
-      return this.assetsTypeLookup.find(c => c.id == assetTypeId).localizedKey;
-    } else {
-      return undefined;
-    }
-  }
-
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   assetsSubTypeLookup: LookupDto[] = [];
   assetsTypeLookup: LookupDto[] = [];
@@ -97,18 +74,20 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
   AssetSizeLookup: LookupDto[] = [];
   RegionLookup: LookupDto[] = [];
   CityLookup: LookupDto[] = [];
-  AssetSubTypeLookup: LookupDto[] = [];
-  OneRequestAsset: InputOneAssetDto;
+  OneRequestAsset: OneAssetDto;
   assetTypeMap: { [value: number]: string } = {};
   assetToEditIndex: number;
   isEditRequested = false;
-  assetSubTypes: LookupModel[];
+  isAddRequested = false;
+  isViewRequested = false;
+  assetSubTypes: LookupDto[];
   ePatternValidation: typeof EnumValidation = EnumValidation;
   @Input() public wizard: WizardComponent;
   wizardNavDto: wizardNavDto = new wizardNavDto();
-
+  newAsset: EndowmentAssetDto | undefined;
   //#endregion
   //assetSubTypes: LookupModel[];
+  _lookupExtraData: LookupExtraData;
 
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
@@ -120,16 +99,60 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
     public formBuilder: FormBuilder,
     private injector: Injector,
     private _serviceProxyEndowmentRegistraion: EndowmentRegistrationApplicationServiceProxy,
+    private cdref: ChangeDetectorRef
   ) /*private activatedRoute: ActivatedRoute*/ {
     super(injecter);
   }
+  ngOnInit() {
+    this.lookupfliter.lookUpName = 'AssetType';
+    this.lookupfliter.filters = [];
+    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
+      this.assetsTypeLookup = data.dto.items!;
+      this.loadAssets();
+    });
+    this.primengTableHelper = new PrimengTableHelper();
 
 
+  }
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
+
+
+  getAssetType(assetTypeId: number) {
+    if (assetTypeId != undefined) {
+      return this.assetsTypeLookup.find(c => c.id == assetTypeId).localizedKey;
+    } else {
+      return undefined;
+    }
+  }
 
   //#region Events
 
   onEditBtnClicked() {
-    this.OnEditingExistingAsset.emit(this.newAsset);
+    this._serviceProxyEndowmentRegistraion
+      .editWaqfAssetRequest(this.newAsset)
+      .subscribe(
+        (data) => {
+          if (data) {
+            const resAssetData = data;
+            if (resAssetData.isSuccess) {
+              this.loadAssets();
+              this.modalService.dismissAll();
+              this.message.showMessage(MessageTypeEnum.toast, {
+                closable: true,
+                enableService: true,
+                summary: '',
+                detail: this.l('EndowmentModule.EndowmentRgistrationService.UpdateAssetSuccessMessage'),
+                severity: MessageSeverity.Success,
+              });
+            }
+          }
+        },
+        (err: ApiException) => {
+          //handleServiceProxyError(err);
+        }
+      );
   }
 
   onCancelBtnClicked() {
@@ -138,7 +161,6 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
   }
 
   onAddBtnClicked() {
-    debugger
     this._serviceProxyEndowmentRegistraion
       .createWaqfRequestAsset(this.newAsset)
       .subscribe(
@@ -148,21 +170,13 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
             if (resAssetData.isSuccess) {
               this.loadAssets();
               this.modalService.dismissAll();
-              // showSuccess('تم إنشاء الاصل بنجاح',
-              //   () => {
-              //     this.newAsset.id = resAssetData.dto.toString();
-              //     let obj = { asset: resAssetData.dto }
-              //     this.modalService.dismissAll();
-              //   }
-              // )
-              // showSuccess('تم إنشاء الاصل بنجاح',
-              //   () => {
-              //     this.newAsset.id = resAssetData.dto.toString();
-              //     let obj = { asset: resAssetData.dto }
-              //     this.modalService.dismissAll();
-              //   }
-              // )
-              //this.setOldAttachmentIds();
+              this.message.showMessage(MessageTypeEnum.toast, {
+                closable: true,
+                enableService: true,
+                summary: '',
+                detail: this.l('EndowmentModule.EndowmentRgistrationService.AddAssetSuccessMessage'),
+                severity: MessageSeverity.Success,
+              });
             }
           }
         },
@@ -179,9 +193,8 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
       this._serviceProxyEndowmentRegistraion.getAssetsByRequestId(
         this.requestId
       ).subscribe((response) => {
-        debugger
         this.Assets = response;
-         this.primengTableHelper.records = this.Assets;
+        this.primengTableHelper.records = this.Assets;
         this.primengTableHelper.totalRecordsCount = this.Assets?.length;
       });
     }
@@ -189,6 +202,9 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
   }
 
   async onAddNewAssetClicked(data: any) {
+    this.isAddRequested = true;
+    this.isEditRequested = false;
+    this.isViewRequested = false;
     if (this.requestId == undefined) {
       if (this.request == undefined || this.request.id == undefined) {
         this.requestId = '';
@@ -198,134 +214,149 @@ export class EndowmentSharedAssetEditComponent extends ComponentBase implements 
       }
     }
 
-    this.newAsset = new InputAssetDto();
-    this.newAsset.businessEntityAssetObj = new InputBusinessEntityAssetDto();
-    this.newAsset.realEstateAssetObj = new InputRealEstateAssetDto();
-    this.newAsset.monetaryAssetObj = new InputMonetaryAssetDto();
-    this.newAsset.fiscalAssetObj = new InputFiscalAssetDto();
-    this.newAsset.animalOrAgriculturalAssetObj = new InputAnimalOrAgriculturalAssetDto();
-    this.newAsset.particularBenefitAssetObj = new InputParticularBenefitAssetDto()
-    this.newAsset.movableAssetObj = new InputMovableAssetDto();
-    this.newAsset.particularBenefitAssetObj = new InputParticularBenefitAssetDto();
-    this.newAsset.intellectualPropertyAndTrademarkAssetObj = new InputIntellectualPropertyAndTrademarkAssetDto();
+    this.newAsset = new EndowmentAssetDto();
+    this.newAsset.businessEntityAsset = new BusinessEntityAssetDto();
+    this.newAsset.realEstateAsset = new RealEstateAssetDto();
+    this.newAsset.monetaryAsset = new MonetaryAssetDto();
+    this.newAsset.fiscalAsset = new FiscalAssetDto();
+    this.newAsset.animalOrAgriculturalAsset = new AnimalOrAgriculturalAssetDto();
+    this.newAsset.particularBenefitAsset = new ParticularBenefitAssetDto()
+    this.newAsset.movableAsset = new MovableAssetDto();
+    this.newAsset.particularBenefitAsset = new ParticularBenefitAssetDto();
+    this.newAsset.intellectualPropertyAndTrademarkAsset = new IntellectualPropertyAndTrademarkAssetDto();
 
 
     this.newAsset.requestId = this.requestId;
     // this.newAsset.isDirectlyBenefited = true;
-    await this.loadAssetType();
+    await this.loadAssetType(data);
+  }
 
-    await this.loadAssetSize();
+  async onViewTableCellClicked(content: any, index) {
+    this.isViewRequested = true;
     this.isEditRequested = false;
-    this.viewOnly = false;
+    this.isAddRequested = false;
+    await this.showSeletctedAsset(content, index);
 
-    this.modalService.open(data, { size: 'lg' });
   }
-
-  onViewTableCellClicked(content: any, id?: string) {
-    if (!id) return;
+  async onEditTableCellClicked(content: any, index: any) {
+    this.isViewRequested = false;
     this.isEditRequested = true;
-    const assetToEditIndex = parseInt(id);
-    const seerToView = this.Assets[assetToEditIndex];
-    const SelectedAssetToView = new InputAssetDto();
-    SelectedAssetToView.init(seerToView);
-    this.newAsset = SelectedAssetToView;
-    this.loadassetSubType();
-    this.modalService.open(content, { size: 'lg' });
+    this.isAddRequested = false;
+    await this.showSeletctedAsset(content, index);
   }
-
-  async onEditTableCellClicked(content: any, id?: string) {
-    if (!id) return;
-    this.isEditRequested = true;
-    const assetToEditIndex = parseInt(id);
-    const seerToEdit = this.Assets[assetToEditIndex];
-    const SelectedAssetToEdit = new InputAssetDto();
-    SelectedAssetToEdit.init(seerToEdit);
-    this.newAsset = SelectedAssetToEdit;
-    this.loadassetSubTypeforEdit(
-      this.Assets[assetToEditIndex].assetTypeId!,
-      content
+  async showSeletctedAsset(content: any, index) {
+    var SelectedAsset = this.primengTableHelper.records[index];
+    this.newAsset = SelectedAsset;
+    //this.newAsset = this.initiateAssetects(this.newAsset, SelectedAssetToView);
+    this.newAsset.requestId = this.requestId;
+    await this.loadAssetType();
+    await this.loadassetSubType(
+      this.newAsset.assetTypeId!, content
     );
+
   }
 
-  onDeleteTableCellClicked(assetToDelete: any, index: number) {
-    let body:InputRemoveAssetDto = new InputRemoveAssetDto();
-    debugger
-    body.requestId =this.requestId;
-    body.id = assetToDelete.id;
-    this.Assets.splice(index,1);
+  onDeleteTableCellClicked(index: number) {
+    let body: RemoveAssetDto = new RemoveAssetDto();
+    Swal.fire({
+      title: this.l('EndowmentModule.EndowmentRgistrationService.ConfirmDeleteAsset'),
+      icon: 'question',
+      confirmButtonText: this.l('EndowmentModule.EndowmentRgistrationService.Yes'),
+      width: 600,
+      padding: '3em',
+      confirmButtonColor: '#D6BD81',
+      cancelButtonText: this.l('EndowmentModule.EndowmentRgistrationService.No'),
+      cancelButtonColor: '#00846c',
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        body.requestId = this.requestId;
+        body.id = this.primengTableHelper.records[index].id;
+        this.Assets.splice(index, 1);
 
-    this._serviceProxyEndowmentRegistraion.deleteWaqfRequestAsset(body).subscribe(res=>{});
+        this._serviceProxyEndowmentRegistraion.deleteWaqfRequestAsset(body).subscribe(res => {
+          if (res.isSuccess) {
+            this.loadAssets();
+            this.message.showMessage(MessageTypeEnum.toast, {
+              closable: true,
+              enableService: true,
+              summary: '',
+              detail: this.l('EndowmentModule.EndowmentRgistrationService.DeleteAssetSuccessMessage'),
+              severity: MessageSeverity.Success,
+            });
+          }
+        });
+      }
+    });
   }
 
   //#endregion
 
   //#region internal methods
 
-  private loadAssetType() {
+  private loadAssetType(content?: any) {
     this.lookupfliter.lookUpName = 'AssetType';
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.AssetTypeLookup = data.dto.items!;
       console.log(data);
-      this.loadAssetSize();
+      this.loadAssetSize(content);
+
     });
   }
 
-  private loadAssetSize() {
+  private loadAssetSize(content?: any) {
     this.lookupfliter.lookUpName = 'AssetSize';
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.AssetSizeLookup = data.dto.items!;
+      if (content != undefined) {
+        this.modalService.open(content, { size: 'lg' });
+      }
     });
   }
 
   public changeAssetType() {
-    // this.newAsset.businessEntityAsset = undefined;
-    // this.newAsset.realEstateAsset = undefined;
-    // this.newAsset.fiscalAsset = undefined;
-    // this.newAsset.movableAsset = undefined;
-    // this.newAsset.monetaryAsset = undefined;
-    // this.newAsset.particularBenefitAsset = undefined;
-    // this.newAsset.intellectualPropertyAndTrademarkAsset = undefined;
-    // this.newAsset.animalOrAgriculturalAsset = undefined;
-
-    this.loadassetSubType();
+    this.newAsset.assetSubTypeId = undefined;
+    this.newAsset.assetSubTypeDescription = undefined;
+    this.loadassetSubType(this.newAsset?.assetTypeId!);
   }
 
   isNewOrEditAssetValid() {
     return true;
   }
 
-  loadassetSubTypeforEdit(_assetTypeId: number, _content: any) {
-    debugger
+  loadassetSubType(_assetTypeId: number, content?: any) {
+    this._lookupExtraData = new LookupExtraData();
+    this._lookupExtraData.dataName = 'AssetTypeId';
+    this._lookupExtraData.dataValue = _assetTypeId.toString();
+    this.lookupfliter.filters = [this._lookupExtraData]
     this.lookupfliter.lookUpName = 'AssetSubType';
-    //this.lookupfliter.filters = [assetTypeId];
-    this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.assetsSubTypeLookup = data.dto.items!;
+      if (this.assetsSubTypeLookup.filter(id => id.id == 12).length <= 0) {
+        let otherItem: LookupDto = new LookupDto();
+        otherItem.id = 12;
+        otherItem.name = this.l('Common.Other');
+        this.assetsSubTypeLookup.push(otherItem);
+      }
       console.log(data);
+      if (content != undefined)
+        this.modalService.open(content, { size: 'lg' });
     });
-  }
 
-  loadassetSubType() {
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetsSubTypeLookup = data.dto.items!;
-      console.log(data);
-    });
   }
   onNextBtnClicked() {
-    // if (!this.Assets || this.Assets.length == 0) {
-    //   this.message.showMessage(MessageTypeEnum.toast, {
-    //     closable: true,
-    //     enableService: true,
-    //     summary: '',
-    //     detail: this.l('EndowmentModule.EndowmentRgistrationService.atLeastOneAsset'),
-    //     severity: MessageSeverity.Error,
-    //   });
-    //   return;
-    // }
+    if (!this.Assets || this.Assets.length == 0) {
+      this.message.showMessage(MessageTypeEnum.toast, {
+        closable: true,
+        enableService: true,
+        summary: '',
+        detail: this.l('EndowmentModule.EndowmentRgistrationService.atLeastOneAsset'),
+        severity: MessageSeverity.Error,
+      });
+      return;
+    }
     this.wizardNavDto.isNaviagateToNext = true;
     this.wizardNavDto.requestId = this.requestId;
     this.wizardNavDto.step = '4';

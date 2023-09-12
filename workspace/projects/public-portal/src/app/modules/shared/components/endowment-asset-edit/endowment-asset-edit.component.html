@@ -1,6 +1,5 @@
-<div class="d-flex justify-content-center my-6" *ngIf="!this.Assets || this.Assets?.length === 0">
-  <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)"
-    *ngIf="!viewOnly">
+<div class="d-flex justify-content-center my-6" *ngIf="(!this.Assets || this.Assets?.length === 0) && !viewOnly">
+  <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)">
     <!-- <svg-icon styleClass="fa-3x mr-3 mb-2 " icon="add-icon"></svg-icon> -->
     <!-- <span>يجب إضافة أصل واحد على الأقل</span> -->
     <span>{{
@@ -10,9 +9,9 @@
   </a>
 </div>
 
-<div class="d-flex justify-content-end my-6">
+<div class="d-flex justify-content-end my-6" *ngIf="!viewOnly">
   <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
-    (click)="onAddNewAssetClicked(addData)" *ngIf="!viewOnly">
+    (click)="onAddNewAssetClicked(addData)">
     <!-- <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon> -->
     <!-- <span>إضافة أصل آخر</span> -->
     <span>{{
@@ -72,18 +71,18 @@
           </td>
           <td class="text-center" scope="col">
             <button class="btn btn-sm btn-outline-awq-secondary rounded"
-              (click)="onViewTableCellClicked(addData, record.id)" >
+              (click)="onViewTableCellClicked(addData, i)" >
               <svg-icon icon="eye"></svg-icon>
             </button>
           </td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">
             <button class="btn btn-sm btn-outline-awq-secondary rounded"
-              (click)="onEditTableCellClicked(addData, record.id)">
+              (click)="onEditTableCellClicked(addData, i)">
               <svg-icon icon="pencil"></svg-icon>
             </button>
           </td>
           <td class="text-center" scope="col" *ngIf="!viewOnly">
-            <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(record, i)">
+            <button class="btn btn-sm btn-outline-danger rounded" (click)="onDeleteTableCellClicked(i)">
               <svg-icon icon="trash-alt"></svg-icon>
             </button>
           </td>
@@ -93,11 +92,11 @@
 
 
 
- 
+
 </div>
 
 <ng-template #addData let-modal>
-  <form name="form" #assetForm="ngForm">
+  <form name="form" #assetForm="ngForm" *ngIf="AssetTypeLookup">
     <div class="modal-header">
       <!-- <h2>بيانات الأصل</h2> -->
       <h2>
@@ -109,56 +108,90 @@
     </div>
     <div class="modal-body">
       <div class="row row-cols-1 row-cols-md-2">
-        <div class="form-group col">
+        <div class="form-group col" *ngIf="AssetTypeLookup">
           <!-- <label class="col-form-label block">نوع الأصل<span class="text-danger">*</span></label> -->
           <label class="col-form-label block">{{
             "EndowmentModule.EndowmentRgistrationService.AssetTypeLabel"
             | localize
-            }}<span class="text-danger">*</span></label>
-          <select class="custom-select" [hidden]="viewOnly" #assetTypeId="ngModel" [disabled]="this.isEditRequested"
-            (change)="changeAssetType()" name="assetTypeId" [(ngModel)]="newAsset!.assetTypeId" required>
-            <option [value]="null" selected></option>
-            <option *ngFor="let assetType of AssetTypeLookup" value="{{ assetType.id }}">
-              {{ assetType.name }}
-            </option>
-          </select>
-
-
+            }}<span class="text-danger" *ngIf="!isViewRequested">*</span></label>
+            <div>
+              <label class="col-form-label font-weight-bold" *ngIf="isViewRequested">&nbsp;{{
+                AssetTypeLookup[newAsset!.assetTypeId - 1]?.name
+                }}
+              </label>
+            </div>
+          <p-dropdown [required]="true" [options]="AssetTypeLookup" [hidden]="isViewRequested" [showClear]="true" name="assetTypeId"
+          #assetTypeId="ngModel" (onChange)="changeAssetType()"
+          [(ngModel)]="newAsset!.assetTypeId" optionLabel="name" optionValue="id"
+          [placeholder]="
+            l(
+              'Common.Choose',
+              l('EndowmentModule.EndowmentRgistrationService.AssetTypeLabel')
+            )
+          "></p-dropdown>
+        <app-validationMessages relatedControlName="assetTypeId"
+          [control]="assetTypeId" [validationMessages]="[
+            {
+              ruleName: 'required',
+              ruleMessage: l(
+                'Common.Required',
+                l('EndowmentModule.EndowmentRgistrationService.AssetTypeLabel')
+              )
+            }
+          ]">
+        </app-validationMessages>
         </div>
 
 
       </div>
 
-      <app-shared-business-entity-asset #businessEntityAsset="ngModel" name="businessEntityAsset"
-        *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
-        [(ngModel)]="newAsset!.businessEntityAssetObj" [assetInfoModel]="newAsset!">
+      <app-shared-business-entity-asset name="businessEntityAsset"
+        *ngIf="newAsset?.assetTypeId == 1" [viewOnly]="isViewRequested" [AssetTypeId]="newAsset!.assetTypeId" [assetSubTypes]="assetsSubTypeLookup"
+        [assetInfoModel]="newAsset!">
       </app-shared-business-entity-asset>
-      <app-shared-realestate-asset #realEstateAsset="ngModel" *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.realEstateAssetObj" name="realEstateAsset"
+      <app-shared-realestate-asset *ngIf="newAsset?.assetTypeId == 2" [viewOnly]="isViewRequested" [assetSubTypes]="assetsSubTypeLookup"
+        [AssetTypeId]="newAsset!.assetTypeId" name="realEstateAsset"
         [assetInfoModel]="newAsset!"></app-shared-realestate-asset>
-      <app-shared-fiscal-asset #fiscalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.fiscalAssetObj" name="fiscalAsset"
+      <app-shared-fiscal-asset *ngIf="newAsset?.assetTypeId == 3" [viewOnly]="isViewRequested" [assetSubTypes]="assetsSubTypeLookup"
+        [AssetTypeId]="newAsset!.assetTypeId" name="fiscalAsset"
         [assetInfoModel]="newAsset!"></app-shared-fiscal-asset>
-      <app-shared-movable-asset #movableAsset="ngModel" *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.movableAssetObj" name="movableAsset"
+      <app-shared-movable-asset *ngIf="newAsset?.assetTypeId == 4" [viewOnly]="isViewRequested" [assetSubTypes]="assetsSubTypeLookup"
+        [AssetTypeId]="newAsset!.assetTypeId" name="movableAsset"
         [assetInfoModel]="newAsset!"></app-shared-movable-asset>
-      <app-shared-monetary-asset #monetaryAsset="ngModel" *ngIf="newAsset?.assetTypeId == 5" [viewOnly]="viewOnly"
-        [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.monetaryAssetObj" name="monetaryAsset"
+      <app-shared-monetary-asset *ngIf="newAsset?.assetTypeId == 5" [viewOnly]="isViewRequested" [assetSubTypes]="assetsSubTypeLookup"
+        [AssetTypeId]="newAsset!.assetTypeId" name="monetaryAsset"
         [assetInfoModel]="newAsset!"></app-shared-monetary-asset>
 
-      <app-shared-animal-or-agricultural-asset #animalOrAgriculturalAsset="ngModel" *ngIf="newAsset?.assetTypeId == 6"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.animalOrAgriculturalAssetObj"
+      <app-shared-animal-or-agricultural-asset *ngIf="newAsset?.assetTypeId == 6"
+        [viewOnly]="isViewRequested" [AssetTypeId]="newAsset!.assetTypeId"
         name="animalOrAgriculturalAsset" [assetInfoModel]="newAsset!"></app-shared-animal-or-agricultural-asset>
 
-      <app-shared-particular-benefit-asset #particularBenefitAsset="ngModel" *ngIf="newAsset?.assetTypeId == 7"
-        [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId" [(ngModel)]="newAsset!.particularBenefitAssetObj"
+      <app-shared-particular-benefit-asset *ngIf="newAsset?.assetTypeId == 7" [assetSubTypes]="assetsSubTypeLookup"
+        [viewOnly]="isViewRequested" [AssetTypeId]="newAsset!.assetTypeId"
         name="particularBenefitAsset" [assetInfoModel]="newAsset!"></app-shared-particular-benefit-asset>
-      <app-shared-intellectual-property-and-trademark-asset #intellectualPropertyAndTrademarkAsset="ngModel"
-        *ngIf="newAsset?.assetTypeId == 8" [viewOnly]="viewOnly" [AssetTypeId]="newAsset!.assetTypeId"
-        [(ngModel)]="newAsset!.intellectualPropertyAndTrademarkAssetObj" name="intellectualPropertyAndTrademarkAsset"
+      <app-shared-intellectual-property-and-trademark-asset
+        *ngIf="newAsset?.assetTypeId == 8" [viewOnly]="isViewRequested" [AssetTypeId]="newAsset!.assetTypeId" [assetSubTypes]="assetsSubTypeLookup"
+        name="intellectualPropertyAndTrademarkAsset"
         [assetInfoModel]="newAsset!"></app-shared-intellectual-property-and-trademark-asset>
+
+        <div>
+          <!-- <label class="col-form-label block">نوع الأصل<span class="text-danger">*</span></label> -->
+          <label class="col-form-label block">{{
+            "EndowmentModule.EndowmentRgistrationService.AssetDescription"
+            | localize
+            }}</label>
+            <textarea [rows]="5" cols="10" class="form-control" [pattern]="
+            ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+          " #assetDescription="ngModel" name="assetDescription" [(ngModel)]="newAsset!.assetDescription" *ngIf="!isViewRequested">
+        </textarea>
+        <label class="col-form-label font-weight-bold" [hidden]="!isViewRequested">&nbsp;{{
+          newAsset!.assetDescription
+          }}
+        </label>
+        </div>
+
     </div>
-    <ng-container *ngIf="!isEditRequested && !viewOnly">
+    <ng-container *ngIf="isAddRequested">
       <div class="modal-footer justify-content-center">
         <button type="button" class="btn btn-awq-secondary px-6" [disabled]="assetForm.form?.invalid"
           (click)="onAddBtnClicked()">
@@ -166,7 +199,7 @@
         <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
       </div>
     </ng-container>
-    <ng-container *ngIf="isEditRequested && !viewOnly">
+    <ng-container *ngIf="isEditRequested">
       <div class="modal-footer justify-content-between">
         <button type="button" class="btn btn-warning px-6" [disabled]="assetForm.form?.invalid"
           (click)="onEditBtnClicked()">
@@ -180,12 +213,19 @@
           }}
         </button>
       </div>
-
+    </ng-container>
+    <ng-container *ngIf="isViewRequested">
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-awq-secondary px-6"
+          (click)="onCancelBtnClicked()">
+          {{'EndowmentModule.EndowmentRgistrationService.CancelSubAssetBtnLabel' | localize}}</button>
+        <!-- <svg-icon styleClass="ml-1 small" icon="plus"></svg-icon> -->
+      </div>
     </ng-container>
   </form>
 </ng-template>
 
-<div class="aw-btn">
+<div class="aw-btn" *ngIf="!viewOnly">
   <button type="button" class="btn btn-awq-secondary"
     (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
   <button type="button" class="btn btn-outline-awq-secondary"

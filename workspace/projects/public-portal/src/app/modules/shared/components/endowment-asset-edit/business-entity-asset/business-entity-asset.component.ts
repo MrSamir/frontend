@@ -3,14 +3,14 @@ import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
-  InputAssetDto,
-  InputBusinessEntityAssetDto,
+  EndowmentAssetDto,
   InputFileDto,
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
   OutputFileDto,
+  FileByIdDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
@@ -24,18 +24,18 @@ import { MessageTypeEnum } from 'projects/core-lib/src/lib/enums/message-type';
 import { AttachementItem } from 'projects/shared-features-lib/src/lib/components/AttachmentViewer/AttachmentViewer.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
 import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-business-entity-asset',
   templateUrl: './business-entity-asset.component.html',
-  styleUrls: ['./business-entity-asset.component.css'],  
+  styleUrls: ['./business-entity-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+
   providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => BusinessEntityAssetComponent) }]
 })
 export class BusinessEntityAssetComponent extends ComponentBase implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   // regionLookup: LookupModel[];
@@ -44,7 +44,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
   map: MapModel = new MapModel();
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -68,7 +68,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   }
 
   ngOnInit() {
-   
+
     const patternDecimalValues =
       /^([0-9]{1,10})$|^([0-9]{1,10})(\.)[0-9]{1,4}$/;
     const patternWaqfResponserPortion =
@@ -79,7 +79,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
     //this.combinedPattern = EnumValidation.pattern_CombinedWaqfResponserPortion; //new RegExp(`${EnumValidation.pattern_decimal_values} +"|"+ ${EnumValidation.pattern_WaqfResponserPortion}`);
 
-    
+
 
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
@@ -92,19 +92,6 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
       this.cityLookup = data.dto.items!;
-      console.log(data);
-    });
-
-
-    
-    this._lookupExtraData = new LookupExtraData();
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetSubTypes = data.dto.items!;
       console.log(data);
     });
     // this.lookupService.getLookupValues(EnumLookuptypes.RegionLookup).subscribe((res: any) => {
@@ -124,8 +111,37 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
     //   });
     // });
     // this.loadHints();
+    if (this.assetInfoModel.businessEntityAsset) {
+      if (this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId) {
+        this.getFileById(
+          this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId,
+          (fileDto) => {
+            this.businessEntityAssetAttachemt = {
+              id: fileDto.id,
+              fileName: fileDto.fileName!,
+              fileData: fileDto.fileData!,
+              ContentType: fileDto.contentType!,
+            };
+          }
+        );
+      }
+    }
   }
+  getFileById(id, callback: (fileDto) => void) {
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
+    this._serviceProxyFileLibrary
+      .downloadFileById(fileinfo)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
+  }
+
   getcityLookup(value: any) {
+    if (value == undefined || value == '') return;
     this._lookupExtraData = new LookupExtraData();
 
     this._lookupExtraData.dataName = 'regionId';
@@ -140,8 +156,8 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   }
   onChangeMap() {
     if (this.map && this.map.longitude && this.map.latitude) {
-      this.assetInfoModel.businessEntityAssetObj.longitude = this.map.longitude;
-      this.assetInfoModel.businessEntityAssetObj.latitude = this.map.latitude;
+      this.assetInfoModel.businessEntityAsset.longitude = this.map.longitude;
+      this.assetInfoModel.businessEntityAsset.latitude = this.map.latitude;
     }
   }
 
@@ -152,11 +168,6 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   loadHints() {
   }
 
-  ChangeCityLookup(value: any) {
-    if (value == 'null' || value == undefined) {
-      this.assetInfoModel.businessEntityAssetObj.cityId = -1;
-    }
-  }
   get requestType() {
     return ServiceRequestTypeEnum;
   }
@@ -189,10 +200,12 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
   businessEntityAssetSelect(event: any) {
     this.businessEntityAssetFile = event.files[0];
   }
-
+  OnAssetSupTypeChange() {
+    this.assetInfoModel.assetSubTypeDescription = null;
+  }
   businessEntityAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.businessEntityAssetObj.commercialRegisterAttachmentId = response.id;
+      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = response.id;
       this.businessEntityAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -254,7 +267,7 @@ export class BusinessEntityAssetComponent extends ComponentBase implements OnIni
 
   businessEntityAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.businessEntityAssetObj.commercialRegisterAttachmentId = undefined!;
+      this.assetInfoModel.businessEntityAsset.commercialRegisterAttachmentId = undefined!;
       this.businessEntityAssetFile = undefined!;
     });
   }

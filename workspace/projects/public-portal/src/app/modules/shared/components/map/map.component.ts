@@ -11,7 +11,6 @@ import { GoogleMapsAPIWrapper, MapsAPILoader } from '@agm/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MapModel } from './map.model';
 //import {MapModel} from "@app/_shared/map/map.model";
-
 declare let google: any;
 
 @Component({

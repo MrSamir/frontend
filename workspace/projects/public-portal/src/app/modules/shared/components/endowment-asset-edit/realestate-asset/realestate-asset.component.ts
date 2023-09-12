@@ -4,14 +4,14 @@ import {
   ApiResponseOfOutputFileDto,
   EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputFileDto,
   InputLookUpDto,
-  InputRealEstateAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
   OutputFileDto,
+  FileByIdDto,
 } from '../../../services/services-proxies/service-proxies';
 import { MapModel } from '../../map/map.model';
 import { ServiceRequestTypeEnum } from '../../../models/ServiceRequestTypeEnum';
@@ -23,23 +23,23 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { ActivatedRoute } from '@angular/router';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-realestate-asset',
   templateUrl: './realestate-asset.component.html',
   styleUrls: ['./realestate-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => RealestateAssetComponent) }]
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => RealestateAssetComponent) }]
 })
 export class RealestateAssetComponent extends ComponentBase implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   regionLookup: LookupDto[] = [];
   cityLookup: LookupDto[] = [];
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   _lookupExtraData: LookupExtraData;
   map: MapModel = new MapModel();
   ePatternValidation: typeof EnumValidation = EnumValidation;
@@ -60,18 +60,8 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   ngOnInit() {
-    this._lookupExtraData = new LookupExtraData();
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      debugger
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
-
+    debugger;
+    this.assetInfoModel;
     this.lookupfliter.lookUpName = 'Region';
     this.lookupfliter.filters = [];
     this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
@@ -87,15 +77,36 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
       console.log(data);
     });
 
-
-    //  this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result) => {
-    //    result.subscribe((assetsSubTypes: LookupModel[]) => {
-    //      this.assetSubTypes = assetsSubTypes;
-    //    });
-    //  });
-    //this.loadHints();
+    if (this.assetInfoModel.realEstateAsset) {
+      if (this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId) {
+        this.getFileById(
+          this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId,
+          (fileDto) => {
+            this.realestateAssetAttachemt = {
+              id: fileDto.id,
+              fileName: fileDto.fileName!,
+              fileData: fileDto.fileData!,
+              ContentType: fileDto.contentType!,
+            };
+          }
+        );
+      }
+    }
+  }
+  getFileById(id, callback: (fileDto) => void) {
+    var fileinfo: FileByIdDto = new FileByIdDto();
+    fileinfo.entityName = this.FileUploadentityName;
+    fileinfo.id = id;
+    this._serviceProxyFileLibrary
+      .downloadFileById(fileinfo)
+      .subscribe((result) => {
+        if (result.isSuccess) {
+          callback(result.dto);
+        }
+      });
   }
   getcityLookup(value: any) {
+    if (value == undefined || value == '') return;
     this._lookupExtraData = new LookupExtraData();
     this._lookupExtraData.dataName = 'regionId';
     this._lookupExtraData.dataValue = value.toString();
@@ -115,8 +126,8 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
   onChangeMap() {
     if (this.map && this.map.longitude && this.map.latitude) {
-      this.assetInfoModel.realEstateAssetObj.longitude = this.map.longitude;
-      this.assetInfoModel.realEstateAssetObj.latitude = this.map.latitude;
+      this.assetInfoModel.realEstateAsset.longitude = this.map.longitude;
+      this.assetInfoModel.realEstateAsset.latitude = this.map.latitude;
     }
   }
 
@@ -128,6 +139,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   }
 
   getSubAssetsById(assetId: number) {
+    debugger;
     if (assetId !== undefined)
       return this.assetSubTypes.filter(c => c.id == assetId).map(c => c.name);
     else
@@ -140,7 +152,12 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
     else
       return undefined;
   }
-
+  getRegionById(regionId: number) {
+    if (regionId !== undefined)
+      return this.regionLookup.find(c => c.id == regionId)?.name as string;
+    else
+      return undefined;
+  }
   realestateAssetSelect(event: any) {
     this.realestateAssetFile = event.files[0];
   }
@@ -148,7 +165,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetAttachemt: AttachementItem;
   realestateAssetUpload(event) {
     this.UploadFile(event.files[0], (response) => {
-      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = response.id;
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = response.id;
       this.realestateAssetAttachemt = {
         id: response.id,
         fileName: response.fileName!,
@@ -209,7 +226,7 @@ export class RealestateAssetComponent extends ComponentBase implements OnInit {
   realestateAssetFile: File;
   realestateAssetRemoveFile(event) {
     this.removeFile(event, (result) => {
-      this.assetInfoModel.realEstateAssetObj.ownershipDeedAttachementId = undefined!;
+      this.assetInfoModel.realEstateAsset.ownershipDeedAttachementId = undefined!;
       this.realestateAssetFile = undefined!;
     });
   }

@@ -3,12 +3,11 @@ import { Component, Injector, Input, OnInit, Output, ViewChild } from '@angular/
 import { AspNetUser } from 'projects/public-portal/src/app/modules/shared/models/AspNetUser';
 import {
   ApiException,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputLookUpDto,
-  InputOneAssetDto,
-  InputRemoveAssetDto,
+  OneAssetDto,
+  RemoveAssetDto,
   LookupDto,
-  OutputAssetDto,
 } from '../../../shared/services/services-proxies/service-proxies';
 //import { EndowmentRegistrationServiceProxy } from '../../../shared/services/services-proxies/service-proxies';
 import { MapModel } from '../../../shared/components/map/map.model';
@@ -38,7 +37,6 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     private lookupssrv: LookupApplicationServiceProxy,
     private _serviceProxyEndowmentRegistraion: EndowmentRegistrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
     private injector: Injector
   ) {
     super(injector);
@@ -54,10 +52,10 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   map: MapModel;
 
-  Assets: OutputAssetDto[] = [];
-  newAsset: InputAssetDto;
+  Assets: EndowmentAssetDto[] = [];
+  newAsset: EndowmentAssetDto;
   //requestId:string;
-  cancelAsset: OutputAssetDto;
+  cancelAsset: EndowmentAssetDto;
   assetToEditIndex: number;
 
   lookupfliter: InputLookUpDto = new InputLookUpDto();
@@ -66,7 +64,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   RegionLookup: LookupDto[] = [];
   CityLookup: LookupDto[] = [];
   AssetSubType: LookupDto[] = [];
-  OneRequestAsset: InputOneAssetDto;
+  OneRequestAsset: OneAssetDto;
   assetTypeMap: { [value: number]: string } = {};
 
   isEditRequested = false;
@@ -184,7 +182,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
         this.requestId = this.request.id;
       }
     }
-    this.newAsset = new InputAssetDto();
+    this.newAsset = new EndowmentAssetDto();
     this.newAsset.requestId = this.requestId;
     // this.newAsset.isDirectlyBenefited = true;
     await this.loadAssetType();
@@ -279,8 +277,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   }
 
   // Passed new Asset from Common Assets Component in order to add it through calling API from Parent component
-  OnAddingNewAsset(newAwqafAsset: InputAssetDto) {
-    debugger
+  OnAddingNewAsset(newAwqafAsset: EndowmentAssetDto) {
     //this.setIsAttachmentChanged(newAwqafAsset);
     this._serviceProxyEndowmentRegistraion
       .createWaqfRequestAsset(newAwqafAsset)
@@ -307,13 +304,13 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   // Passed Asset from Common Assets Component in order to delete it through calling API from Parent component
   OnDeletingExistingAsset(event: {
-    assetToDelete: OutputAssetDto;
+    assetToDelete: EndowmentAssetDto;
     index: number;
   }) {
     this.onDeleteTableCellClicked(event.assetToDelete, event.index);
   }
 
-  OnEditingExistingAsset(CurrentAsset: InputAssetDto) {
+  OnEditingExistingAsset(CurrentAsset: EndowmentAssetDto) {
     CurrentAsset.requestId = this.requestId; //set request ID
     //this.setIsAttachmentChanged();
     this._serviceProxyEndowmentRegistraion
@@ -336,7 +333,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
     this.modalService.dismissAll();
   }
 
-  onDeleteTableCellClicked(assetToDelete: OutputAssetDto, index: number) {
+  onDeleteTableCellClicked(assetToDelete: EndowmentAssetDto, index: number) {
     Swal.fire({
       title: '????? ??? ??? ????? ?',
       icon: 'question',
@@ -346,7 +343,7 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
       confirmButtonColor: '#D6BD81',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.OneRequestAsset = new InputRemoveAssetDto();
+        this.OneRequestAsset = new RemoveAssetDto();
         this.OneRequestAsset.id = assetToDelete.requestId!;
         this.OneRequestAsset.requestId = this.requestId;
 
@@ -395,16 +392,16 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
   mapSelected() {
     if (this.newAsset.assetTypeId == 1) {
       if (
-        this.newAsset.businessEntityAssetObj.longitude &&
-        this.newAsset.businessEntityAssetObj.latitude
+        this.newAsset.businessEntityAsset.longitude &&
+        this.newAsset.businessEntityAsset.latitude
       ) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 2) {
       if (
-        this.newAsset.realEstateAssetObj.longitude &&
-        this.newAsset.realEstateAssetObj.latitude
+        this.newAsset.realEstateAsset.longitude &&
+        this.newAsset.realEstateAsset.latitude
       ) {
         return false;
       }
@@ -417,17 +414,17 @@ export class EndowmentRegistrationNewComponent extends ComponentBase implements 
 
   IsRequiredDocumentsAttached() {
     if (this.newAsset.assetTypeId == 1) {
-      if (this.newAsset.businessEntityAssetObj.commercialRegisterAttachmentId) {
+      if (this.newAsset.businessEntityAsset.commercialRegisterAttachmentId) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 2) {
-      if (this.newAsset.realEstateAssetObj.ownershipDeedAttachementId) {
+      if (this.newAsset.realEstateAsset.ownershipDeedAttachementId) {
         return false;
       }
       return true;
     } else if (this.newAsset.assetTypeId == 3) {
-      if (this.newAsset.fiscalAssetObj.fiscalAssetAttachementId) {
+      if (this.newAsset.fiscalAsset.fiscalAssetAttachementId) {
         return false;
       }
       return true;

@@ -10,7 +10,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SharecomponentModule } from "../../modules/sharecomponent.module";
 import { TableModule } from 'primeng/table';
 import { SvgIconModule } from '../../modules/svg-icon.module';
-import { DropdownModule } from 'primeng/dropdown';
+import { Dropdown, DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   imports: [

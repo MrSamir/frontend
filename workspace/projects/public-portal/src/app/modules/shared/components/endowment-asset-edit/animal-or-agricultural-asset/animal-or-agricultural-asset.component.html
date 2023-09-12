@@ -4,63 +4,61 @@
       "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegion"
       | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-    <select class="custom-select" #regionId="ngModel" name="regionId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.regionId" [hidden]="viewOnly" required
-      (change)="getcityLookup(regionId.value)">
-      <option [value]="null" selected></option>
-      <option *ngFor="let region of regionLookup" value="{{ region.id }}">
-        {{ region.name }}
-      </option>
-    </select>
-  
-    <div *ngIf="regionId.invalid && (regionId.dirty || regionId.touched)" class="">
-      <p *ngIf="regionId.errors" class="text-danger pt-1 small">
-        {{
-        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegionRequiredValidationlabel"
-        | localize
-        }}
-      </p>
-    </div>
+      <div>
+        <label class="col-form-label font-weight-bold" *ngIf="regionLookup.length>0 && viewOnly">&nbsp;{{regionLookup[assetInfoModel.animalOrAgriculturalAsset.regionId -1 ].name}}
+        </label>
+      </div>
+    <p-dropdown [required]="true" [options]="regionLookup" [hidden]="viewOnly" [filter]="true" filterBy="name" [showClear]="true" name="regionId"
+    #regionId="ngModel" (onChange)="getcityLookup($event)"
+    [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.regionId" optionLabel="name" optionValue="id"
+    [placeholder]="
+      l(
+        'Common.Choose',
+        l('EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegion')
+      )
+    "></p-dropdown>
+  <app-validationMessages relatedControlName="regionId"
+    [control]="regionId" [validationMessages]="[
+      {
+        ruleName: 'required',
+        ruleMessage: l(
+          'Common.Required',
+          l('EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalRegion')
+        )
+      }
+    ]">
+  </app-validationMessages>
   </div>
   <div class="form-group col">
     <label class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCity"
       | localize
       }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
-    <select class="custom-select" [disabled]="cityDisabled" #cityId="ngModel" name="cityId"
-      [(ngModel)]="assetInfoModel.animalOrAgriculturalAssetObj.cityId" [hidden]="viewOnly" required>
-      <option [value]="null" selected></option>
-      <option *ngFor="let city of cityLookup" value="{{ city.id }}">
-        {{ city.name }}
-      </option>
-    </select>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      getCityValue(assetInfoModel.animalOrAgriculturalAssetObj.cityId)
+      <div>
+    <label class="col-form-label font-weight-bold" *ngIf="regionLookup.length>0 && viewOnly">&nbsp;{{
+      getCityValue(assetInfoModel.animalOrAgriculturalAsset.cityId)
       }}
     </label>
-    <div *ngIf="cityId.invalid && (cityId.dirty || cityId.touched)" class="">
-      <p *ngIf="cityId.errors" class="text-danger pt-1 small">
-        {{
-        "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCityRequiredValidationlabel"
-        | localize
-        }}
-      </p>
-    </div>
   </div>
-  <div class="form-group col-12">
-    <label class="col-form-label">{{
-      "EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalDescription"
-      | localize
-      }}</label>
-    <textarea [rows]="5" cols="10" class="form-control" [pattern]="
-        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      " #animalOrAgriculturaDescription="ngModel" name="animalOrAgriculturaDescription" [(ngModel)]="
-        assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
-      " [hidden]="viewOnly">
-    </textarea>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly">&nbsp;{{
-      assetInfoModel.animalOrAgriculturalAssetObj.animalOrAgriculturaDescription
-      }}
-    </label>
+    <p-dropdown [required]="true" [options]="cityLookup" [disabled]="cityDisabled" [hidden]="viewOnly" [filter]="true" filterBy="name"  [showClear]="true" name="cityId"
+    #cityId="ngModel"
+    [(ngModel)]="assetInfoModel.animalOrAgriculturalAsset.cityId" optionLabel="name" optionValue="id"
+    [placeholder]="
+      l(
+        'Common.Choose',
+        l('EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCity')
+      )
+    "></p-dropdown>
+  <app-validationMessages relatedControlName="cityId"
+    [control]="cityId" [validationMessages]="[
+      {
+        ruleName: 'required',
+        ruleMessage: l(
+          'Common.Required',
+          l('EndowmentModule.EndowmentRgistrationService.AssetAnimalOrAgriculturalCity')
+        )
+      }
+    ]">
+  </app-validationMessages>
   </div>
 </div>

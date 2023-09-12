@@ -2,9 +2,8 @@ import { Component, Injector, Input, OnInit, Output, forwardRef } from '@angular
 import {
   EndowmentRegistrationApplicationServiceProxy,
   FileLibraryApplicationServiceProxy,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputLookUpDto,
-  InputMonetaryAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
@@ -17,23 +16,23 @@ import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBas
 import { ActivatedRoute } from '@angular/router';
 import { DateFormatterService } from 'projects/shared-features-lib/src/lib/components/ng-bootstrap-hijri-gregorian-datepicker/date-formatter.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { EndowmentRegistrationNewComponent } from '../../../../endowment-registration/components/endowment-registration-new/endowment-registration-new.component';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
 
 @Component({
   selector: 'app-shared-monetary-asset',
   templateUrl: './monetary-asset.component.html',
   styleUrls: ['./monetary-asset.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
-  providers: [{ provide: EndowmentRegistrationNewComponent, useExisting: forwardRef(() => MonetaryAssetComponent) }]
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => MonetaryAssetComponent) }]
 })
 export class MonetaryAssetComponent extends ComponentBase implements OnInit {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   ePatternValidation: typeof EnumValidation = EnumValidation;
   _lookupExtraData: LookupExtraData;
   lookupfliter: InputLookUpDto = new InputLookUpDto();
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
@@ -49,24 +48,15 @@ export class MonetaryAssetComponent extends ComponentBase implements OnInit {
 
   ngOnInit() {
     this.loadingdata();
-    this._lookupExtraData = new LookupExtraData();
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      debugger
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
+
   }
 
   ngOnChanges() {
-    this.assetInfoModel.monetaryAssetObj;
+    this.assetInfoModel.monetaryAsset;
   }
 
   loadingdata() {
-    
+
   }
 
   getSubAssets(subassetId: number) {

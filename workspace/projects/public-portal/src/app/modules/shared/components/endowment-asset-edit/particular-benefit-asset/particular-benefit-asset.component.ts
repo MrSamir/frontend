@@ -1,28 +1,32 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, Injector, Input, Output, forwardRef } from '@angular/core';
 import { EnumValidation } from 'projects/core-lib/src/lib/enums/EnumValidation';
 import {
   EndowmentRegistrationApplicationServiceProxy,
-  InputAssetDto,
+  EndowmentAssetDto,
   InputLookUpDto,
-  InputParticularBenefitAssetDto,
   LookupApplicationServiceProxy,
   LookupDto,
   LookupExtraData,
 } from '../../../services/services-proxies/service-proxies';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { EndowmentSharedAssetEditComponent } from '../endowment-asset-edit.component';
+import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 
 @Component({
   selector: 'app-shared-particular-benefit-asset',
   templateUrl: './particular-benefit-asset.component.html',
   styleUrls: ['./particular-benefit-asset.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
+  providers: [{ provide: EndowmentSharedAssetEditComponent, useExisting: forwardRef(() => ParticularBenefitAssetComponent) }]
 })
-export class ParticularBenefitAssetComponent {
-  @Input() @Output() assetInfoModel: InputAssetDto;
+export class ParticularBenefitAssetComponent extends ComponentBase {
+  @Input() @Output() assetInfoModel: EndowmentAssetDto;
   @Input() AssetTypeId: number;
   @Input() viewOnly: boolean;
   //Typehint:HintEntry;
   //assetSubTypes:LookupDto[]=[];
-  assetSubTypes: LookupDto[] = [];
+  @Input() assetSubTypes: LookupDto[] = [];
   lookupfliter: InputLookUpDto = new InputLookUpDto();
   _lookupExtraData: LookupExtraData = new LookupExtraData();
 
@@ -31,26 +35,17 @@ export class ParticularBenefitAssetComponent {
   constructor(
     private registerWaqfServiceProxy: EndowmentRegistrationApplicationServiceProxy,
     private modalService: NgbModal,
-    private lookupssrv: LookupApplicationServiceProxy
-  ) { }
+    private lookupssrv: LookupApplicationServiceProxy,
+    injector: Injector
+  ) {
+    super(injector);
+  }
 
   ngOnInit() {
 
-    this._lookupExtraData.dataName = 'AssetTypeId';
-    this._lookupExtraData.dataValue = this.AssetTypeId.toString();
-    this.lookupfliter.lookUpName = 'AssetSubType';
-    this.lookupfliter.filters = [this._lookupExtraData];
-
-    this.lookupssrv.getAllLookups(this.lookupfliter).subscribe((data) => {
-      this.assetSubTypes = data.dto.items!;
-      console.log(data);
-    });
-
-    // this.lookupService.getAssetSubTypeByAssetTypeId(this.AssetTypeId).subscribe((result)=>{
-    //   result.subscribe((assetsSubTypes: LookupModel[])=>{
-    //     this.assetSubTypes=assetsSubTypes;
-    //   });
-    // });
+    if (this.assetInfoModel.assetSubTypeId == undefined && !this.viewOnly) {
+      this.assetInfoModel.assetSubTypeId = 12;
+    }
     this.loadHints();
   }
   loadHints() {

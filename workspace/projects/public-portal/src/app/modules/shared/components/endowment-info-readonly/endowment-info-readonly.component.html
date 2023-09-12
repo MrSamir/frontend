@@ -189,7 +189,7 @@
   <div class="input-group mb-3 download p-2">
     <div class="form-group col-12">
       <app-AttachmentViewer *ngIf="endowmentDeadAttachemt" [showDeleteButton]="false"
-       (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
+       (OnAttachementRemove)="EndowmentDeedremoveFile($event)" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"
         [Attachements]="[endowmentDeadAttachemt]"></app-AttachmentViewer>
     </div>
   </div>

@@ -79,7 +79,7 @@
           <label class="col-form-label">{{ "Common.nationality" | localize
             }}:
           </label>
-          <label *ngIf="applicantRequestInfo.applicant?.nationalityId 
+          <label *ngIf="applicantRequestInfo.applicant?.nationalityId
             " class="col-form-label"><strong>{{ applicantRequestInfo.applicant.nationality.name }}</strong></label>
         </div>
         <div class="form-group col">
@@ -116,7 +116,7 @@
         ">
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
           <div class="form-group col">
-          
+
               <label class="col col-form-label">{{
                 "EndowmentModule.EndowmentRgistrationService.EndowmerType"
                 | localize
@@ -176,7 +176,7 @@
                   loadexperienceYear(applicantRequestInfo.applicantSeer.experienceYearId) }}</strong></label>
           </div>
           <div class="form-group col">
-            
+
               <label class="col col-form-label">{{
                 "EndowmentModule.EndowmentRgistrationService.SeerType"
                 | localize
@@ -221,7 +221,7 @@
           </div>
           <div *ngIf="applicantRequestInfo.applicantSeer.seedDeedAttachmentId"  class="form-group col-12">
             <app-AttachmentViewer *ngIf="seerDeadAttachemt" [AttachmenetLabel]="l('EndowmentModule.EndowmentRgistrationService.seenDeed')" [showDeleteButton]="false"
-              [Attachements]="[seerDeadAttachemt]"></app-AttachmentViewer>
+              [Attachements]="[seerDeadAttachemt]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"></app-AttachmentViewer>
           </div>
         </div>
       </p-panel>
@@ -244,7 +244,7 @@
           </div>
           <div *ngIf="applicantRequestInfo.applicantAgent.representativeAttachmentId" class="form-group col-12">
             <app-AttachmentViewer *ngIf="agentDeedAttachment" [AttachmenetLabel]=" l('EndowmentModule.EndowmentRgistrationService.agencyDeed')" [showDeleteButton]="false"
-              [Attachements]="[agentDeedAttachment]"></app-AttachmentViewer>
+              [Attachements]="[agentDeedAttachment]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"></app-AttachmentViewer>
           </div>
           <div *ngIf="applicantRequestInfo?.applicantAgent?.statusName" class="form-group col">
             <label for="">{{

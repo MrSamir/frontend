@@ -25,8 +25,8 @@ const routes: Routes = [
   {
     path: 'landing',
     component: LandingComponent,
-    data: { title: 'الخدمات الالكترونية' },
-    canActivate: [PublicActiveProfileGuardService]
+    data: { title: 'الخدمات الالكترونية', breadcrumb: 'الخدمات الالكترونية', },
+    canActivate: [PublicActiveProfileGuardService],
   },
 
   {

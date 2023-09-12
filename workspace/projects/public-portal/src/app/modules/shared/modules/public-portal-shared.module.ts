@@ -1,4 +1,3 @@
- 
 import { NgModule } from '@angular/core';
 import { EndowmentAssetsEditComponent } from '../components/endowment-assets-edit/endowment-assets-edit.component';
 import { EndowmentInfoEditComponent } from '../components/endowment-info-edit/endowment-info-edit.component';
@@ -33,6 +32,8 @@ import { EndowmentBeneficiaryEditComponent } from '../components/endowment-benef
 import { EndowmentInfoReadonlyComponent } from '../components/endowment-info-readonly/endowment-info-readonly.component';
 import { EndowmentApplicantReadonlyComponent } from '../components/endowment-applicant-readonly/endowment-applicant-readonly.component';
 import { MapModule } from '../components/map/map.module';
+import { AgmCoreModule, AgmMap, AgmMarker } from '@agm/core';
+import { AppComponent } from '../../../app.component';
 
 
 @NgModule({
@@ -71,8 +72,7 @@ import { MapModule } from '../components/map/map.module';
     CoreLibModule,
     TableModule,
     SvgIconModule,
-    MapModule
-  
+    MapModule,
   ],
   exports: [
     //EndowmentAssetsEditComponent,

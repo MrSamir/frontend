@@ -32,7 +32,7 @@ export class AccountProxy {
      * @param body (optional) 
      * @return Success
      */
-    login(body: LoginModel | undefined): Observable<ApiResponseOfTokenResponse> {
+    login(body: LoginModel | null | undefined): Observable<ApiResponseOfTokenResponse> {
         let url_ = this.baseUrl + "/api/Account/login";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -44,7 +44,7 @@ export class AccountProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -107,7 +107,7 @@ export class AppCoreConfigurationsServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -170,7 +170,7 @@ export class ApplicationUserServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -221,7 +221,7 @@ export class ApplicationUserServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -265,7 +265,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getUserProfile(body: string | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+    getUserProfile(body: string | null | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/GetUserProfile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -277,7 +277,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -321,7 +321,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    generatePhoneNumberOtp(body: PhoneOtpGenerationInputDto | undefined): Observable<ApiResponseOfOtpGenerationOutputDto> {
+    generatePhoneNumberOtp(body: PhoneOtpGenerationInputDto | null | undefined): Observable<ApiResponseOfOtpGenerationOutputDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/GeneratePhoneNumberOtp";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -333,7 +333,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -377,7 +377,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    verifyPhoneNumberOtp(body: PhoneOtpVerificationInputDto | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+    verifyPhoneNumberOtp(body: PhoneOtpVerificationInputDto | null | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/VerifyPhoneNumberOtp";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -389,7 +389,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -433,7 +433,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    sendEmailToVerifyUserEmailAddress(body: EmailOtpGenerationInputDto | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
+    sendEmailToVerifyUserEmailAddress(body: EmailOtpGenerationInputDto | null | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/SendEmailToVerifyUserEmailAddress";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -445,7 +445,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -489,7 +489,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    confirmUserEmail(body: ConfirmUserEmailInputDto | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
+    confirmUserEmail(body: ConfirmUserEmailInputDto | null | undefined): Observable<ApiResponseOfOtpVerificationOutputDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/ConfirmUserEmail";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -501,7 +501,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -545,7 +545,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    updateCurrentUserRegionAndCity(body: UpdateUserCityRegionInputDto | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+    updateCurrentUserRegionAndCity(body: UpdateUserCityRegionInputDto | null | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/UpdateCurrentUserRegionAndCity";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -557,7 +557,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -601,7 +601,7 @@ export class ApplicationUserServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    ensureYaqeenPersonalInfo(body: InputApplicationUserDto | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
+    ensureYaqeenPersonalInfo(body: InputApplicationUserDto | null | undefined): Observable<ApiResponseOfOutputApplicationUserDto> {
         let url_ = this.baseUrl + "/api/ApplicationUserService/EnsureYaqeenPersonalInfo";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -613,7 +613,7 @@ export class ApplicationUserServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -674,31 +674,19 @@ export class EndowmentApplicationServiceProxy {
      * @param limitCount (optional) 
      * @return Success
      */
-    getEndowments(endowmentName: string | undefined, endowmentStatusId: number | undefined, endowmentTypeId: number | undefined, sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfEndowmentDto> {
+    getEndowments(endowmentName: string | null | undefined, endowmentStatusId: number | null | undefined, endowmentTypeId: number | null | undefined, sorting: string | null | undefined, skipCount: number | null | undefined, limitCount: number | null | undefined): Observable<ApiResponseOfPagedResultDtoOfEndowmentDto> {
         let url_ = this.baseUrl + "/api/EndowmentApplicationService/GetEndowments?";
-        if (endowmentName === null)
-            throw new Error("The parameter 'endowmentName' cannot be null.");
-        else if (endowmentName !== undefined)
+        if (endowmentName !== undefined && endowmentName !== null)
             url_ += "endowmentName=" + encodeURIComponent("" + endowmentName) + "&";
-        if (endowmentStatusId === null)
-            throw new Error("The parameter 'endowmentStatusId' cannot be null.");
-        else if (endowmentStatusId !== undefined)
+        if (endowmentStatusId !== undefined && endowmentStatusId !== null)
             url_ += "endowmentStatusId=" + encodeURIComponent("" + endowmentStatusId) + "&";
-        if (endowmentTypeId === null)
-            throw new Error("The parameter 'endowmentTypeId' cannot be null.");
-        else if (endowmentTypeId !== undefined)
+        if (endowmentTypeId !== undefined && endowmentTypeId !== null)
             url_ += "endowmentTypeId=" + encodeURIComponent("" + endowmentTypeId) + "&";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
+        if (sorting !== undefined && sorting !== null)
             url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
+        if (skipCount !== undefined && skipCount !== null)
             url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (limitCount === null)
-            throw new Error("The parameter 'limitCount' cannot be null.");
-        else if (limitCount !== undefined)
+        if (limitCount !== undefined && limitCount !== null)
             url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -706,7 +694,7 @@ export class EndowmentApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -762,7 +750,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createEndowment(body: InputEndowmentDto | undefined): Observable<ApiResponse> {
+    createEndowment(body: InputEndowmentDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateEndowment";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -774,7 +762,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -818,11 +806,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getEndowmentDataByRequestId(requestId: string | undefined): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
+    getEndowmentDataByRequestId(requestId: string | null | undefined): Observable<ApiResponseOfOutputEndowmentDetailsDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowmentDataByRequestId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -830,7 +816,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -874,7 +860,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    updateEndowmentRegistrationRequest(body: InputEndowmentRegistrationRequestDto | undefined): Observable<boolean> {
+    updateEndowmentRegistrationRequest(body: InputEndowmentRegistrationRequestDto | null | undefined): Observable<boolean> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/UpdateEndowmentRegistrationRequest";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -886,7 +872,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -931,11 +917,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    generateEnowmentInitialCertificate(requestId: string | undefined): Observable<void> {
+    generateEnowmentInitialCertificate(requestId: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateEnowmentInitialCertificate?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -983,11 +967,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param endowmentId (optional) 
      * @return Success
      */
-    generateEnowmentFinalCertificate(endowmentId: string | undefined): Observable<void> {
+    generateEnowmentFinalCertificate(endowmentId: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateEnowmentFinalCertificate?";
-        if (endowmentId === null)
-            throw new Error("The parameter 'endowmentId' cannot be null.");
-        else if (endowmentId !== undefined)
+        if (endowmentId !== undefined && endowmentId !== null)
             url_ += "endowmentId=" + encodeURIComponent("" + endowmentId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1035,11 +1017,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    generateFinalCertificateFromK2(requestId: string | undefined): Observable<void> {
+    generateFinalCertificateFromK2(requestId: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateFinalCertificateFromK2?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1087,11 +1067,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    generateRestirctedCertificateFromK2(requestId: string | undefined): Observable<void> {
+    generateRestirctedCertificateFromK2(requestId: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GenerateRestirctedCertificateFromK2?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1139,7 +1117,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    editWaqfAssetRequest(body: InputAssetDto | undefined): Observable<ApiResponse> {
+    editWaqfAssetRequest(body: EndowmentAssetDto | null | undefined): Observable<ApiResponseOfEndowmentAssetDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditWaqfAssetRequest";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1151,7 +1129,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1162,14 +1140,14 @@ export class EndowmentRegistrationApplicationServiceProxy {
                 try {
                     return this.processEditWaqfAssetRequest(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfEndowmentAssetDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfEndowmentAssetDto>;
         }));
     }
 
-    protected processEditWaqfAssetRequest(response: HttpResponseBase): Observable<ApiResponse> {
+    protected processEditWaqfAssetRequest(response: HttpResponseBase): Observable<ApiResponseOfEndowmentAssetDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1180,7 +1158,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
+            result200 = ApiResponseOfEndowmentAssetDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1195,7 +1173,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createWaqfRequestAsset(body: InputAssetDto | undefined): Observable<ApiResponse> {
+    createWaqfRequestAsset(body: EndowmentAssetDto | null | undefined): Observable<ApiResponseOfEndowmentAssetDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateWaqfRequestAsset";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1207,7 +1185,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1218,14 +1196,14 @@ export class EndowmentRegistrationApplicationServiceProxy {
                 try {
                     return this.processCreateWaqfRequestAsset(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponse>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfEndowmentAssetDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResponse>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfEndowmentAssetDto>;
         }));
     }
 
-    protected processCreateWaqfRequestAsset(response: HttpResponseBase): Observable<ApiResponse> {
+    protected processCreateWaqfRequestAsset(response: HttpResponseBase): Observable<ApiResponseOfEndowmentAssetDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1236,7 +1214,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponse.fromJS(resultData200);
+            result200 = ApiResponseOfEndowmentAssetDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1251,7 +1229,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    deleteWaqfRequestAsset(body: InputRemoveAssetDto | undefined): Observable<ApiResponse> {
+    deleteWaqfRequestAsset(body: RemoveAssetDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/DeleteWaqfRequestAsset";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1263,7 +1241,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1307,11 +1285,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getAssetsByRequestId(requestId: string | undefined): Observable<OutputAssetDto[]> {
+    getAssetsByRequestId(requestId: string | null | undefined): Observable<EndowmentAssetDto[]> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetAssetsByRequestId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1319,7 +1295,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1330,14 +1306,14 @@ export class EndowmentRegistrationApplicationServiceProxy {
                 try {
                     return this.processGetAssetsByRequestId(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<OutputAssetDto[]>;
+                    return _observableThrow(e) as any as Observable<EndowmentAssetDto[]>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<OutputAssetDto[]>;
+                return _observableThrow(response_) as any as Observable<EndowmentAssetDto[]>;
         }));
     }
 
-    protected processGetAssetsByRequestId(response: HttpResponseBase): Observable<OutputAssetDto[]> {
+    protected processGetAssetsByRequestId(response: HttpResponseBase): Observable<EndowmentAssetDto[]> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1351,7 +1327,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             if (Array.isArray(resultData200)) {
                 result200 = [] as any;
                 for (let item of resultData200)
-                    result200!.push(OutputAssetDto.fromJS(item));
+                    result200!.push(EndowmentAssetDto.fromJS(item));
             }
             else {
                 result200 = <any>null;
@@ -1370,7 +1346,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getOneAsset(body: InputOneAssetDto | undefined): Observable<ApiResponseOfOutputAssetDto> {
+    getOneAsset(body: OneAssetDto | null | undefined): Observable<ApiResponseOfEndowmentAssetDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetOneAsset";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1382,7 +1358,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1393,14 +1369,14 @@ export class EndowmentRegistrationApplicationServiceProxy {
                 try {
                     return this.processGetOneAsset(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponseOfOutputAssetDto>;
+                    return _observableThrow(e) as any as Observable<ApiResponseOfEndowmentAssetDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ApiResponseOfOutputAssetDto>;
+                return _observableThrow(response_) as any as Observable<ApiResponseOfEndowmentAssetDto>;
         }));
     }
 
-    protected processGetOneAsset(response: HttpResponseBase): Observable<ApiResponseOfOutputAssetDto> {
+    protected processGetOneAsset(response: HttpResponseBase): Observable<ApiResponseOfEndowmentAssetDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -1411,7 +1387,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponseOfOutputAssetDto.fromJS(resultData200);
+            result200 = ApiResponseOfEndowmentAssetDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -1426,11 +1402,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getSeersInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputSeerDto> {
+    getSeersInformationByReqId(requestId: string | null | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputSeerDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetSeersInformationByReqId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1438,7 +1412,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1482,7 +1456,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    addSeer(body: AddSeerInputDto | undefined): Observable<ApiResponseOfAddSeerOutputDto> {
+    addSeer(body: AddSeerInputDto | null | undefined): Observable<ApiResponseOfAddSeerOutputDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddSeer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1494,7 +1468,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1538,7 +1512,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    removeSeer(body: RemoveSeerInputDto | undefined): Observable<ApiResponse> {
+    removeSeer(body: RemoveSeerInputDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/RemoveSeer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1550,7 +1524,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1594,7 +1568,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    editSeer(body: EditSeerInputDto | undefined): Observable<ApiResponse> {
+    editSeer(body: EditSeerInputDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditSeer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1606,7 +1580,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1650,7 +1624,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    addBeneficiary(body: AddBeneficiaryInputDto | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
+    addBeneficiary(body: AddBeneficiaryInputDto | null | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1662,7 +1636,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1706,7 +1680,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    updateBeneficiary(body: AddBeneficiaryInputDto | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
+    updateBeneficiary(body: AddBeneficiaryInputDto | null | undefined): Observable<ApiResponseOfAddBeneficiaryOutputDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/UpdateBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1718,7 +1692,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1762,11 +1736,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getBeneficiariesInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto> {
+    getBeneficiariesInformationByReqId(requestId: string | null | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetBeneficiariesInformationByReqId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1774,7 +1746,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1818,7 +1790,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    removeBeneficiary(body: RemoveBeneficiaryInputDto | undefined): Observable<ApiResponse> {
+    removeBeneficiary(body: RemoveBeneficiaryInputDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/RemoveBeneficiary";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1830,7 +1802,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1874,11 +1846,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getEndowersInformationByReqId(requestId: string | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto> {
+    getEndowersInformationByReqId(requestId: string | null | undefined): Observable<ApiResponseOfPagedResultDtoOfOutputEndowmerDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowersInformationByReqId?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1886,7 +1856,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1930,7 +1900,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    addEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
+    addEndowmer(body: InputEndowmerDto | null | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/AddEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1942,7 +1912,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -1986,7 +1956,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    editEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
+    editEndowmer(body: InputEndowmerDto | null | undefined): Observable<ApiResponseOfOutputEndowmerDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/EditEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -1998,7 +1968,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2042,7 +2012,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    deleteEndowmer(body: InputEndowmerDto | undefined): Observable<ApiResponse> {
+    deleteEndowmer(body: InputEndowmerDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/DeleteEndowmer";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2054,7 +2024,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2098,7 +2068,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    createOrEditEndowmentRegistrationRequest(body: InputEndwomentRegistraionRequestApplicantDto | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+    createOrEditEndowmentRegistrationRequest(body: InputEndwomentRegistraionRequestApplicantDto | null | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/CreateOrEditEndowmentRegistrationRequest";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2110,7 +2080,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2154,11 +2124,9 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param requestId (optional) 
      * @return Success
      */
-    getEndowmentRegistrationApplicant(requestId: string | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
+    getEndowmentRegistrationApplicant(requestId: string | null | undefined): Observable<ApiResponseOfOutputEndwomentRegistrationRequestDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/GetEndowmentRegistrationApplicant?";
-        if (requestId === null)
-            throw new Error("The parameter 'requestId' cannot be null.");
-        else if (requestId !== undefined)
+        if (requestId !== undefined && requestId !== null)
             url_ += "requestId=" + encodeURIComponent("" + requestId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2166,7 +2134,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2210,7 +2178,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    submitRequest(body: RequestModelDto | undefined): Observable<ApiResponseOfRequestModelDto> {
+    submitRequest(body: RequestModelDto | null | undefined): Observable<ApiResponseOfRequestModelDto> {
         let url_ = this.baseUrl + "/api/EndowmentRegistrationApplicationService/SubmitRequest";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2222,7 +2190,7 @@ export class EndowmentRegistrationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2278,7 +2246,7 @@ export class FileLibraryApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    downloadFilePost(body: InputFileDto | undefined): Observable<ApiResponseOfOutputFileDto> {
+    downloadFilePost(body: InputFileDto | null | undefined): Observable<ApiResponseOfOutputFileDto> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DownloadFile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2290,7 +2258,7 @@ export class FileLibraryApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2335,15 +2303,11 @@ export class FileLibraryApplicationServiceProxy {
      * @param id (optional) 
      * @return Success
      */
-    downloadFileGet(entityName: string | undefined, id: string | undefined): Observable<void> {
+    downloadFileGet(entityName: string | null | undefined, id: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DownloadFile?";
-        if (entityName === null)
-            throw new Error("The parameter 'entityName' cannot be null.");
-        else if (entityName !== undefined)
+        if (entityName !== undefined && entityName !== null)
             url_ += "entityName=" + encodeURIComponent("" + entityName) + "&";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
+        if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2391,7 +2355,7 @@ export class FileLibraryApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    downloadFileById(body: FileByIdDto | undefined): Observable<ApiResponseOfOutputFileDto> {
+    downloadFileById(body: FileByIdDto | null | undefined): Observable<ApiResponseOfOutputFileDto> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DownloadFileById";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2403,7 +2367,7 @@ export class FileLibraryApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2449,22 +2413,16 @@ export class FileLibraryApplicationServiceProxy {
      * @param fileExtraDatas (optional) 
      * @return Success
      */
-    uploadFile(entityName: string | undefined, file: FileParameter | undefined, fileExtraDatas: FileExtraData[] | undefined): Observable<ApiResponseOfOutputFileDto> {
+    uploadFile(entityName: string | null | undefined, file: FileParameter | null | undefined, fileExtraDatas: FileExtraData[] | null | undefined): Observable<ApiResponseOfOutputFileDto> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/UploadFile";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
-        if (entityName === null || entityName === undefined)
-            throw new Error("The parameter 'entityName' cannot be null.");
-        else
+        if (entityName !== null && entityName !== undefined)
             content_.append("entityName", entityName.toString());
-        if (file === null || file === undefined)
-            throw new Error("The parameter 'file' cannot be null.");
-        else
+        if (file !== null && file !== undefined)
             content_.append("file", file.data, file.fileName ? file.fileName : "file");
-        if (fileExtraDatas === null || fileExtraDatas === undefined)
-            throw new Error("The parameter 'fileExtraDatas' cannot be null.");
-        else
+        if (fileExtraDatas !== null && fileExtraDatas !== undefined)
             fileExtraDatas.forEach(item_ => content_.append("fileExtraDatas", item_.toString()));
 
         let options_ : any = {
@@ -2472,7 +2430,7 @@ export class FileLibraryApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2520,30 +2478,20 @@ export class FileLibraryApplicationServiceProxy {
      * @param fileExtraDatas (optional) 
      * @return Success
      */
-    uploadFileBytes(entityName: string | undefined, contentType: string | undefined, fileName: string | undefined, fileData: string | undefined, fileExtraDatas: FileExtraData[] | undefined): Observable<ApiResponseOfOutputFileDto> {
+    uploadFileBytes(entityName: string | null | undefined, contentType: string | null | undefined, fileName: string | null | undefined, fileData: string | null | undefined, fileExtraDatas: FileExtraData[] | null | undefined): Observable<ApiResponseOfOutputFileDto> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/UploadFileBytes";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = new FormData();
-        if (entityName === null || entityName === undefined)
-            throw new Error("The parameter 'entityName' cannot be null.");
-        else
+        if (entityName !== null && entityName !== undefined)
             content_.append("entityName", entityName.toString());
-        if (contentType === null || contentType === undefined)
-            throw new Error("The parameter 'contentType' cannot be null.");
-        else
+        if (contentType !== null && contentType !== undefined)
             content_.append("contentType", contentType.toString());
-        if (fileName === null || fileName === undefined)
-            throw new Error("The parameter 'fileName' cannot be null.");
-        else
+        if (fileName !== null && fileName !== undefined)
             content_.append("fileName", fileName.toString());
-        if (fileData === null || fileData === undefined)
-            throw new Error("The parameter 'fileData' cannot be null.");
-        else
+        if (fileData !== null && fileData !== undefined)
             content_.append("fileData", fileData.toString());
-        if (fileExtraDatas === null || fileExtraDatas === undefined)
-            throw new Error("The parameter 'fileExtraDatas' cannot be null.");
-        else
+        if (fileExtraDatas !== null && fileExtraDatas !== undefined)
             fileExtraDatas.forEach(item_ => content_.append("fileExtraDatas", item_.toString()));
 
         let options_ : any = {
@@ -2551,7 +2499,7 @@ export class FileLibraryApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2595,7 +2543,7 @@ export class FileLibraryApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    deleteFile(body: InputFileDto | undefined): Observable<ApiResponse> {
+    deleteFile(body: InputFileDto | null | undefined): Observable<ApiResponse> {
         let url_ = this.baseUrl + "/api/FileLibraryApplicationService/DeleteFile";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2607,7 +2555,7 @@ export class FileLibraryApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2663,7 +2611,7 @@ export class LookupApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getAllLookups(body: InputLookUpDto | undefined): Observable<ApiResponseOfPagedResultDtoOfLookupDto> {
+    getAllLookups(body: InputLookUpDto | null | undefined): Observable<ApiResponseOfPagedResultDtoOfLookupDto> {
         let url_ = this.baseUrl + "/api/LookupApplicationService/GetAllLookups";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2675,7 +2623,7 @@ export class LookupApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2719,7 +2667,7 @@ export class LookupApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getById(body: InputLookUpDto | undefined): Observable<ApiResponseOfLookupDto> {
+    getById(body: InputLookUpDto | null | undefined): Observable<ApiResponseOfLookupDto> {
         let url_ = this.baseUrl + "/api/LookupApplicationService/GetById";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2731,7 +2679,7 @@ export class LookupApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2773,74 +2721,6 @@ export class LookupApplicationServiceProxy {
 }
 
 @Injectable()
-export class MOJApplicationServiceProxy {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
-
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    attorneyInquiry(body: AttorneyInquiryInput | undefined): Observable<ApiResponseOfAttorneyInquiryOutput> {
-        let url_ = this.baseUrl + "/api/MOJApplicationService/AttorneyInquiry";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processAttorneyInquiry(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processAttorneyInquiry(response_ as any);
-                } catch (e) {
-                    return _observableThrow(e) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
-                }
-            } else
-                return _observableThrow(response_) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
-        }));
-    }
-
-    protected processAttorneyInquiry(response: HttpResponseBase): Observable<ApiResponseOfAttorneyInquiryOutput> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (response as any).error instanceof Blob ? (response as any).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ApiResponseOfAttorneyInquiryOutput.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf(null as any);
-    }
-}
-
-@Injectable()
 export class MojDataMigrationApplicationServicesProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -2862,7 +2742,7 @@ export class MojDataMigrationApplicationServicesProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2906,11 +2786,9 @@ export class MojDataMigrationApplicationServicesProxy {
      * @param deedNumber (optional) 
      * @return Success
      */
-    registerEndowmentByDeedNumber(deedNumber: number | undefined): Observable<ApiResponseOfRequestDto> {
+    registerEndowmentByDeedNumber(deedNumber: number | null | undefined): Observable<ApiResponseOfRequestDto> {
         let url_ = this.baseUrl + "/api/MojDataMigrationApplicationServices/RegisterEndowmentByDeedNumber?";
-        if (deedNumber === null)
-            throw new Error("The parameter 'deedNumber' cannot be null.");
-        else if (deedNumber !== undefined)
+        if (deedNumber !== undefined && deedNumber !== null)
             url_ += "deedNumber=" + encodeURIComponent("" + deedNumber) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2918,7 +2796,7 @@ export class MojDataMigrationApplicationServicesProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -2963,15 +2841,11 @@ export class MojDataMigrationApplicationServicesProxy {
      * @param isFromWebPortal (optional) 
      * @return Success
      */
-    registerEndowmentByDeedNumberFromWeb(deedNumber: number | undefined, isFromWebPortal: boolean | undefined): Observable<ApiResponseOfRequestDto> {
+    registerEndowmentByDeedNumberFromWeb(deedNumber: number | null | undefined, isFromWebPortal: boolean | null | undefined): Observable<ApiResponseOfRequestDto> {
         let url_ = this.baseUrl + "/api/MojDataMigrationApplicationServices/RegisterEndowmentByDeedNumberFromWeb?";
-        if (deedNumber === null)
-            throw new Error("The parameter 'deedNumber' cannot be null.");
-        else if (deedNumber !== undefined)
+        if (deedNumber !== undefined && deedNumber !== null)
             url_ += "deedNumber=" + encodeURIComponent("" + deedNumber) + "&";
-        if (isFromWebPortal === null)
-            throw new Error("The parameter 'isFromWebPortal' cannot be null.");
-        else if (isFromWebPortal !== undefined)
+        if (isFromWebPortal !== undefined && isFromWebPortal !== null)
             url_ += "isFromWebPortal=" + encodeURIComponent("" + isFromWebPortal) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -2979,7 +2853,7 @@ export class MojDataMigrationApplicationServicesProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3021,6 +2895,74 @@ export class MojDataMigrationApplicationServicesProxy {
 }
 
 @Injectable()
+export class MojIntegrationApplicationServiceProxy {
+    private http: HttpClient;
+    private baseUrl: string;
+    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+
+    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.http = http;
+        this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    attorneyInquiry(body: AttorneyInquiryInput | null | undefined): Observable<ApiResponseOfAttorneyInquiryOutput> {
+        let url_ = this.baseUrl + "/api/MojIntegrationApplicationService/AttorneyInquiry";
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_ : any = {
+            body: content_,
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            })
+        };
+
+        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processAttorneyInquiry(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processAttorneyInquiry(response_ as any);
+                } catch (e) {
+                    return _observableThrow(e) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
+                }
+            } else
+                return _observableThrow(response_) as any as Observable<ApiResponseOfAttorneyInquiryOutput>;
+        }));
+    }
+
+    protected processAttorneyInquiry(response: HttpResponseBase): Observable<ApiResponseOfAttorneyInquiryOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (response as any).error instanceof Blob ? (response as any).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ApiResponseOfAttorneyInquiryOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf(null as any);
+    }
+}
+
+@Injectable()
 export class OtpHandlerApplicationServiceProxy {
     private http: HttpClient;
     private baseUrl: string;
@@ -3037,15 +2979,11 @@ export class OtpHandlerApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    otpVerificationEmail(id: string | undefined, templateGroupId: number | undefined, body: string[] | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
+    otpVerificationEmail(id: string | null | undefined, templateGroupId: number | null | undefined, body: string[] | null | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
         let url_ = this.baseUrl + "/api/OtpHandlerApplicationService/OtpVerificationEmail?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
+        if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
-        if (templateGroupId === null)
-            throw new Error("The parameter 'templateGroupId' cannot be null.");
-        else if (templateGroupId !== undefined)
+        if (templateGroupId !== undefined && templateGroupId !== null)
             url_ += "templateGroupId=" + encodeURIComponent("" + templateGroupId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3057,7 +2995,7 @@ export class OtpHandlerApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3103,15 +3041,11 @@ export class OtpHandlerApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    otpVerificationSMS(id: string | undefined, templateGroupId: number | undefined, body: string[] | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
+    otpVerificationSMS(id: string | null | undefined, templateGroupId: number | null | undefined, body: string[] | null | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
         let url_ = this.baseUrl + "/api/OtpHandlerApplicationService/OtpVerificationSMS?";
-        if (id === null)
-            throw new Error("The parameter 'id' cannot be null.");
-        else if (id !== undefined)
+        if (id !== undefined && id !== null)
             url_ += "id=" + encodeURIComponent("" + id) + "&";
-        if (templateGroupId === null)
-            throw new Error("The parameter 'templateGroupId' cannot be null.");
-        else if (templateGroupId !== undefined)
+        if (templateGroupId !== undefined && templateGroupId !== null)
             url_ += "templateGroupId=" + encodeURIComponent("" + templateGroupId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3123,7 +3057,7 @@ export class OtpHandlerApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3181,19 +3115,13 @@ export class RequestApplicationServiceProxy {
      * @param limitCount (optional) 
      * @return Success
      */
-    getMyEndowments(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto> {
+    getMyEndowments(sorting: string | null | undefined, skipCount: number | null | undefined, limitCount: number | null | undefined): Observable<ApiResponseOfPagedResultDtoOfEndowmentOutputDto> {
         let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyEndowments?";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
+        if (sorting !== undefined && sorting !== null)
             url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
+        if (skipCount !== undefined && skipCount !== null)
             url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (limitCount === null)
-            throw new Error("The parameter 'limitCount' cannot be null.");
-        else if (limitCount !== undefined)
+        if (limitCount !== undefined && limitCount !== null)
             url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3201,7 +3129,7 @@ export class RequestApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3247,19 +3175,13 @@ export class RequestApplicationServiceProxy {
      * @param limitCount (optional) 
      * @return Success
      */
-    getMyRequests(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+    getMyRequests(sorting: string | null | undefined, skipCount: number | null | undefined, limitCount: number | null | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
         let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyRequests?";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
+        if (sorting !== undefined && sorting !== null)
             url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
+        if (skipCount !== undefined && skipCount !== null)
             url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (limitCount === null)
-            throw new Error("The parameter 'limitCount' cannot be null.");
-        else if (limitCount !== undefined)
+        if (limitCount !== undefined && limitCount !== null)
             url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3267,7 +3189,7 @@ export class RequestApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3313,19 +3235,13 @@ export class RequestApplicationServiceProxy {
      * @param limitCount (optional) 
      * @return Success
      */
-    getMyTasks(sorting: string | undefined, skipCount: number | undefined, limitCount: number | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
+    getMyTasks(sorting: string | null | undefined, skipCount: number | null | undefined, limitCount: number | null | undefined): Observable<ApiResponseOfPagedResultDtoOfRequestOutputDto> {
         let url_ = this.baseUrl + "/api/RequestApplicationService/GetMyTasks?";
-        if (sorting === null)
-            throw new Error("The parameter 'sorting' cannot be null.");
-        else if (sorting !== undefined)
+        if (sorting !== undefined && sorting !== null)
             url_ += "sorting=" + encodeURIComponent("" + sorting) + "&";
-        if (skipCount === null)
-            throw new Error("The parameter 'skipCount' cannot be null.");
-        else if (skipCount !== undefined)
+        if (skipCount !== undefined && skipCount !== null)
             url_ += "skipCount=" + encodeURIComponent("" + skipCount) + "&";
-        if (limitCount === null)
-            throw new Error("The parameter 'limitCount' cannot be null.");
-        else if (limitCount !== undefined)
+        if (limitCount !== undefined && limitCount !== null)
             url_ += "limitCount=" + encodeURIComponent("" + limitCount) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3333,7 +3249,7 @@ export class RequestApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3391,19 +3307,13 @@ export class SendNotificationApplicationServiceProxy {
      * @param roleName (optional) 
      * @return Success
      */
-    sendNotificationForRole(requestNumber: string | undefined, templateGroupId: number | undefined, roleName: string | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
+    sendNotificationForRole(requestNumber: string | null | undefined, templateGroupId: number | null | undefined, roleName: string | null | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
         let url_ = this.baseUrl + "/api/SendNotificationApplicationService/SendNotificationForRole?";
-        if (requestNumber === null)
-            throw new Error("The parameter 'requestNumber' cannot be null.");
-        else if (requestNumber !== undefined)
+        if (requestNumber !== undefined && requestNumber !== null)
             url_ += "requestNumber=" + encodeURIComponent("" + requestNumber) + "&";
-        if (templateGroupId === null)
-            throw new Error("The parameter 'templateGroupId' cannot be null.");
-        else if (templateGroupId !== undefined)
+        if (templateGroupId !== undefined && templateGroupId !== null)
             url_ += "templateGroupId=" + encodeURIComponent("" + templateGroupId) + "&";
-        if (roleName === null)
-            throw new Error("The parameter 'roleName' cannot be null.");
-        else if (roleName !== undefined)
+        if (roleName !== undefined && roleName !== null)
             url_ += "roleName=" + encodeURIComponent("" + roleName) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3411,7 +3321,7 @@ export class SendNotificationApplicationServiceProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3457,15 +3367,11 @@ export class SendNotificationApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    sendNotificationUsers(requestNumber: string | undefined, templateGroupId: number | undefined, body: string[] | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
+    sendNotificationUsers(requestNumber: string | null | undefined, templateGroupId: number | null | undefined, body: string[] | null | undefined): Observable<ApiResponseOfSentNotificationMessagesDto> {
         let url_ = this.baseUrl + "/api/SendNotificationApplicationService/SendNotificationUsers?";
-        if (requestNumber === null)
-            throw new Error("The parameter 'requestNumber' cannot be null.");
-        else if (requestNumber !== undefined)
+        if (requestNumber !== undefined && requestNumber !== null)
             url_ += "requestNumber=" + encodeURIComponent("" + requestNumber) + "&";
-        if (templateGroupId === null)
-            throw new Error("The parameter 'templateGroupId' cannot be null.");
-        else if (templateGroupId !== undefined)
+        if (templateGroupId !== undefined && templateGroupId !== null)
             url_ += "templateGroupId=" + encodeURIComponent("" + templateGroupId) + "&";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3477,7 +3383,7 @@ export class SendNotificationApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3540,7 +3446,7 @@ export class WeatherForecastProxy {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3603,7 +3509,7 @@ export class YaqeenApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getAlienInfo(body: GetAlienInfoInputDto | undefined): Observable<ApiResponseOfAlienInfoResponse> {
+    getAlienInfo(body: GetAlienInfoInputDto | null | undefined): Observable<ApiResponseOfAlienInfoResponse> {
         let url_ = this.baseUrl + "/api/YaqeenApplicationService/GetAlienInfo";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3615,7 +3521,7 @@ export class YaqeenApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3659,7 +3565,7 @@ export class YaqeenApplicationServiceProxy {
      * @param body (optional) 
      * @return Success
      */
-    getCitizenInfo(body: GetCitizenInfoInputDto | undefined): Observable<ApiResponseOfCitizenInfoResponse> {
+    getCitizenInfo(body: GetCitizenInfoInputDto | null | undefined): Observable<ApiResponseOfCitizenInfoResponse> {
         let url_ = this.baseUrl + "/api/YaqeenApplicationService/GetCitizenInfo";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -3671,7 +3577,7 @@ export class YaqeenApplicationServiceProxy {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
-                "Accept": "text/plain"
+                "Accept": "application/json"
             })
         };
 
@@ -3716,7 +3622,7 @@ export class ActionInput implements IActionInput {
     serialNumber!: string;
     requestId!: string | undefined;
     actionName!: string;
-    dataFields!: DataFieldAction;
+    dataFields!: DataFieldAction | undefined;
     impersonateUserName!: string | undefined;
     requestNumber!: string | undefined;
     internalNote!: string | undefined;
@@ -3787,7 +3693,7 @@ export interface IActionInput {
     serialNumber: string;
     requestId: string | undefined;
     actionName: string;
-    dataFields: DataFieldAction;
+    dataFields: DataFieldAction | undefined;
     impersonateUserName: string | undefined;
     requestNumber: string | undefined;
     internalNote: string | undefined;
@@ -3802,9 +3708,9 @@ export interface IActionInput {
 
 export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
     requestId!: string;
-    createBeneficiaryDto!: CreateBeneficiaryDto;
+    createBeneficiaryDto!: CreateBeneficiaryDto | undefined;
     applicationUserId!: string | undefined;
-    beneficiaryPerson!: InputApplicationUserDto;
+    beneficiaryPerson!: InputApplicationUserDto | undefined;
 
     constructor(data?: IAddBeneficiaryInputDto) {
         if (data) {
@@ -3843,14 +3749,14 @@ export class AddBeneficiaryInputDto implements IAddBeneficiaryInputDto {
 
 export interface IAddBeneficiaryInputDto {
     requestId: string;
-    createBeneficiaryDto: CreateBeneficiaryDto;
+    createBeneficiaryDto: CreateBeneficiaryDto | undefined;
     applicationUserId: string | undefined;
-    beneficiaryPerson: InputApplicationUserDto;
+    beneficiaryPerson: InputApplicationUserDto | undefined;
 }
 
 export class AddBeneficiaryOutputDto implements IAddBeneficiaryOutputDto {
-    personId!: string;
-    beneficiaryId!: string;
+    personId!: string | undefined;
+    beneficiaryId!: string | undefined;
 
     constructor(data?: IAddBeneficiaryOutputDto) {
         if (data) {
@@ -3884,15 +3790,15 @@ export class AddBeneficiaryOutputDto implements IAddBeneficiaryOutputDto {
 }
 
 export interface IAddBeneficiaryOutputDto {
-    personId: string;
-    beneficiaryId: string;
+    personId: string | undefined;
+    beneficiaryId: string | undefined;
 }
 
 export class AddSeerInputDto implements IAddSeerInputDto {
     requestId!: string;
-    createSeerInputDto!: CreateSeerInputDto;
+    createSeerInputDto!: CreateSeerInputDto | undefined;
     applicationUserId!: string | undefined;
-    seerPerson!: InputApplicationUserDto;
+    seerPerson!: InputApplicationUserDto | undefined;
 
     constructor(data?: IAddSeerInputDto) {
         if (data) {
@@ -3931,13 +3837,13 @@ export class AddSeerInputDto implements IAddSeerInputDto {
 
 export interface IAddSeerInputDto {
     requestId: string;
-    createSeerInputDto: CreateSeerInputDto;
+    createSeerInputDto: CreateSeerInputDto | undefined;
     applicationUserId: string | undefined;
-    seerPerson: InputApplicationUserDto;
+    seerPerson: InputApplicationUserDto | undefined;
 }
 
 export class AddSeerOutputDto implements IAddSeerOutputDto {
-    seerId!: string;
+    seerId!: string | undefined;
 
     constructor(data?: IAddSeerOutputDto) {
         if (data) {
@@ -3969,7 +3875,7 @@ export class AddSeerOutputDto implements IAddSeerOutputDto {
 }
 
 export interface IAddSeerOutputDto {
-    seerId: string;
+    seerId: string | undefined;
 }
 
 export class AlienInfoResponse implements IAlienInfoResponse {
@@ -3995,7 +3901,7 @@ export class AlienInfoResponse implements IAlienInfoResponse {
     nationalityNameAr!: string | undefined;
     nationalityNameEn!: string | undefined;
     lifeStatus!: number | undefined;
-    awqafNatinaityId!: number;
+    awqafNatinaityId!: number | undefined;
 
     constructor(data?: IAlienInfoResponse) {
         if (data) {
@@ -4093,19 +3999,19 @@ export interface IAlienInfoResponse {
     nationalityNameAr: string | undefined;
     nationalityNameEn: string | undefined;
     lifeStatus: number | undefined;
-    awqafNatinaityId: number;
+    awqafNatinaityId: number | undefined;
 }
 
 export class AnimalOrAgriculturalAssetData implements IAnimalOrAgriculturalAssetData {
     regionId!: number | undefined;
     cityId!: number | undefined;
-    city!: City;
-    region!: Region;
+    city!: City | undefined;
+    region!: Region | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IAnimalOrAgriculturalAssetData) {
         if (data) {
@@ -4155,17 +4061,65 @@ export class AnimalOrAgriculturalAssetData implements IAnimalOrAgriculturalAsset
 export interface IAnimalOrAgriculturalAssetData {
     regionId: number | undefined;
     cityId: number | undefined;
-    city: City;
-    region: Region;
+    city: City | undefined;
+    region: Region | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class AnimalOrAgriculturalAssetDto implements IAnimalOrAgriculturalAssetDto {
+    regionId!: number;
+    cityId!: number;
+    animalOrAgriculturaDescription!: string | undefined;
+    id!: string | undefined;
+
+    constructor(data?: IAnimalOrAgriculturalAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.animalOrAgriculturaDescription = _data["animalOrAgriculturaDescription"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): AnimalOrAgriculturalAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new AnimalOrAgriculturalAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["animalOrAgriculturaDescription"] = this.animalOrAgriculturaDescription;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IAnimalOrAgriculturalAssetDto {
+    regionId: number;
+    cityId: number;
+    animalOrAgriculturaDescription: string | undefined;
+    id: string | undefined;
 }
 
 export class ApiResponse implements IApiResponse {
-    isSuccess!: boolean;
+    isSuccess!: boolean | undefined;
     dto!: any | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
@@ -4214,15 +4168,15 @@ export class ApiResponse implements IApiResponse {
 }
 
 export interface IApiResponse {
-    isSuccess: boolean;
+    isSuccess: boolean | undefined;
     dto: any | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfAddBeneficiaryOutputDto implements IApiResponseOfAddBeneficiaryOutputDto {
-    isSuccess!: boolean;
-    dto!: AddBeneficiaryOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: AddBeneficiaryOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4270,15 +4224,15 @@ export class ApiResponseOfAddBeneficiaryOutputDto implements IApiResponseOfAddBe
 }
 
 export interface IApiResponseOfAddBeneficiaryOutputDto {
-    isSuccess: boolean;
-    dto: AddBeneficiaryOutputDto;
+    isSuccess: boolean | undefined;
+    dto: AddBeneficiaryOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfAddSeerOutputDto implements IApiResponseOfAddSeerOutputDto {
-    isSuccess!: boolean;
-    dto!: AddSeerOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: AddSeerOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4326,15 +4280,15 @@ export class ApiResponseOfAddSeerOutputDto implements IApiResponseOfAddSeerOutpu
 }
 
 export interface IApiResponseOfAddSeerOutputDto {
-    isSuccess: boolean;
-    dto: AddSeerOutputDto;
+    isSuccess: boolean | undefined;
+    dto: AddSeerOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfAlienInfoResponse implements IApiResponseOfAlienInfoResponse {
-    isSuccess!: boolean;
-    dto!: AlienInfoResponse;
+    isSuccess!: boolean | undefined;
+    dto!: AlienInfoResponse | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4382,15 +4336,15 @@ export class ApiResponseOfAlienInfoResponse implements IApiResponseOfAlienInfoRe
 }
 
 export interface IApiResponseOfAlienInfoResponse {
-    isSuccess: boolean;
-    dto: AlienInfoResponse;
+    isSuccess: boolean | undefined;
+    dto: AlienInfoResponse | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfApplicationUserTasks implements IApiResponseOfApplicationUserTasks {
-    isSuccess!: boolean;
-    dto!: ApplicationUserTasks;
+    isSuccess!: boolean | undefined;
+    dto!: ApplicationUserTasks | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4438,15 +4392,15 @@ export class ApiResponseOfApplicationUserTasks implements IApiResponseOfApplicat
 }
 
 export interface IApiResponseOfApplicationUserTasks {
-    isSuccess: boolean;
-    dto: ApplicationUserTasks;
+    isSuccess: boolean | undefined;
+    dto: ApplicationUserTasks | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfAttorneyInquiryOutput implements IApiResponseOfAttorneyInquiryOutput {
-    isSuccess!: boolean;
-    dto!: AttorneyInquiryOutput;
+    isSuccess!: boolean | undefined;
+    dto!: AttorneyInquiryOutput | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4494,15 +4448,15 @@ export class ApiResponseOfAttorneyInquiryOutput implements IApiResponseOfAttorne
 }
 
 export interface IApiResponseOfAttorneyInquiryOutput {
-    isSuccess: boolean;
-    dto: AttorneyInquiryOutput;
+    isSuccess: boolean | undefined;
+    dto: AttorneyInquiryOutput | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfCitizenInfoResponse implements IApiResponseOfCitizenInfoResponse {
-    isSuccess!: boolean;
-    dto!: CitizenInfoResponse;
+    isSuccess!: boolean | undefined;
+    dto!: CitizenInfoResponse | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4550,15 +4504,71 @@ export class ApiResponseOfCitizenInfoResponse implements IApiResponseOfCitizenIn
 }
 
 export interface IApiResponseOfCitizenInfoResponse {
-    isSuccess: boolean;
-    dto: CitizenInfoResponse;
+    isSuccess: boolean | undefined;
+    dto: CitizenInfoResponse | undefined;
+    message: string | undefined;
+    validationResultMessages: ValidationResultMessage[] | undefined;
+}
+
+export class ApiResponseOfEndowmentAssetDto implements IApiResponseOfEndowmentAssetDto {
+    isSuccess!: boolean | undefined;
+    dto!: EndowmentAssetDto | undefined;
+    message!: string | undefined;
+    validationResultMessages!: ValidationResultMessage[] | undefined;
+
+    constructor(data?: IApiResponseOfEndowmentAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.isSuccess = _data["isSuccess"];
+            this.dto = _data["dto"] ? EndowmentAssetDto.fromJS(_data["dto"]) : <any>undefined;
+            this.message = _data["message"];
+            if (Array.isArray(_data["validationResultMessages"])) {
+                this.validationResultMessages = [] as any;
+                for (let item of _data["validationResultMessages"])
+                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ApiResponseOfEndowmentAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ApiResponseOfEndowmentAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["isSuccess"] = this.isSuccess;
+        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        if (Array.isArray(this.validationResultMessages)) {
+            data["validationResultMessages"] = [];
+            for (let item of this.validationResultMessages)
+                data["validationResultMessages"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IApiResponseOfEndowmentAssetDto {
+    isSuccess: boolean | undefined;
+    dto: EndowmentAssetDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfLookupDto implements IApiResponseOfLookupDto {
-    isSuccess!: boolean;
-    dto!: LookupDto;
+    isSuccess!: boolean | undefined;
+    dto!: LookupDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4606,15 +4616,15 @@ export class ApiResponseOfLookupDto implements IApiResponseOfLookupDto {
 }
 
 export interface IApiResponseOfLookupDto {
-    isSuccess: boolean;
-    dto: LookupDto;
+    isSuccess: boolean | undefined;
+    dto: LookupDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOtpGenerationOutputDto implements IApiResponseOfOtpGenerationOutputDto {
-    isSuccess!: boolean;
-    dto!: OtpGenerationOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: OtpGenerationOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4662,15 +4672,15 @@ export class ApiResponseOfOtpGenerationOutputDto implements IApiResponseOfOtpGen
 }
 
 export interface IApiResponseOfOtpGenerationOutputDto {
-    isSuccess: boolean;
-    dto: OtpGenerationOutputDto;
+    isSuccess: boolean | undefined;
+    dto: OtpGenerationOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOtpVerificationOutputDto implements IApiResponseOfOtpVerificationOutputDto {
-    isSuccess!: boolean;
-    dto!: OtpVerificationOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: OtpVerificationOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4718,15 +4728,15 @@ export class ApiResponseOfOtpVerificationOutputDto implements IApiResponseOfOtpV
 }
 
 export interface IApiResponseOfOtpVerificationOutputDto {
-    isSuccess: boolean;
-    dto: OtpVerificationOutputDto;
+    isSuccess: boolean | undefined;
+    dto: OtpVerificationOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOutputApplicationUserDto implements IApiResponseOfOutputApplicationUserDto {
-    isSuccess!: boolean;
-    dto!: OutputApplicationUserDto;
+    isSuccess!: boolean | undefined;
+    dto!: OutputApplicationUserDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4774,71 +4784,15 @@ export class ApiResponseOfOutputApplicationUserDto implements IApiResponseOfOutp
 }
 
 export interface IApiResponseOfOutputApplicationUserDto {
-    isSuccess: boolean;
-    dto: OutputApplicationUserDto;
-    message: string | undefined;
-    validationResultMessages: ValidationResultMessage[] | undefined;
-}
-
-export class ApiResponseOfOutputAssetDto implements IApiResponseOfOutputAssetDto {
-    isSuccess!: boolean;
-    dto!: OutputAssetDto;
-    message!: string | undefined;
-    validationResultMessages!: ValidationResultMessage[] | undefined;
-
-    constructor(data?: IApiResponseOfOutputAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.isSuccess = _data["isSuccess"];
-            this.dto = _data["dto"] ? OutputAssetDto.fromJS(_data["dto"]) : <any>undefined;
-            this.message = _data["message"];
-            if (Array.isArray(_data["validationResultMessages"])) {
-                this.validationResultMessages = [] as any;
-                for (let item of _data["validationResultMessages"])
-                    this.validationResultMessages!.push(ValidationResultMessage.fromJS(item));
-            }
-        }
-    }
-
-    static fromJS(data: any): ApiResponseOfOutputAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new ApiResponseOfOutputAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["isSuccess"] = this.isSuccess;
-        data["dto"] = this.dto ? this.dto.toJSON() : <any>undefined;
-        data["message"] = this.message;
-        if (Array.isArray(this.validationResultMessages)) {
-            data["validationResultMessages"] = [];
-            for (let item of this.validationResultMessages)
-                data["validationResultMessages"].push(item.toJSON());
-        }
-        return data;
-    }
-}
-
-export interface IApiResponseOfOutputAssetDto {
-    isSuccess: boolean;
-    dto: OutputAssetDto;
+    isSuccess: boolean | undefined;
+    dto: OutputApplicationUserDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOutputEndowmentDetailsDto implements IApiResponseOfOutputEndowmentDetailsDto {
-    isSuccess!: boolean;
-    dto!: OutputEndowmentDetailsDto;
+    isSuccess!: boolean | undefined;
+    dto!: OutputEndowmentDetailsDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4886,15 +4840,15 @@ export class ApiResponseOfOutputEndowmentDetailsDto implements IApiResponseOfOut
 }
 
 export interface IApiResponseOfOutputEndowmentDetailsDto {
-    isSuccess: boolean;
-    dto: OutputEndowmentDetailsDto;
+    isSuccess: boolean | undefined;
+    dto: OutputEndowmentDetailsDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOutputEndowmerDto implements IApiResponseOfOutputEndowmerDto {
-    isSuccess!: boolean;
-    dto!: OutputEndowmerDto;
+    isSuccess!: boolean | undefined;
+    dto!: OutputEndowmerDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4942,15 +4896,15 @@ export class ApiResponseOfOutputEndowmerDto implements IApiResponseOfOutputEndow
 }
 
 export interface IApiResponseOfOutputEndowmerDto {
-    isSuccess: boolean;
-    dto: OutputEndowmerDto;
+    isSuccess: boolean | undefined;
+    dto: OutputEndowmerDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOutputEndwomentRegistrationRequestDto implements IApiResponseOfOutputEndwomentRegistrationRequestDto {
-    isSuccess!: boolean;
-    dto!: OutputEndwomentRegistrationRequestDto;
+    isSuccess!: boolean | undefined;
+    dto!: OutputEndwomentRegistrationRequestDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -4998,15 +4952,15 @@ export class ApiResponseOfOutputEndwomentRegistrationRequestDto implements IApiR
 }
 
 export interface IApiResponseOfOutputEndwomentRegistrationRequestDto {
-    isSuccess: boolean;
-    dto: OutputEndwomentRegistrationRequestDto;
+    isSuccess: boolean | undefined;
+    dto: OutputEndwomentRegistrationRequestDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfOutputFileDto implements IApiResponseOfOutputFileDto {
-    isSuccess!: boolean;
-    dto!: OutputFileDto;
+    isSuccess!: boolean | undefined;
+    dto!: OutputFileDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5054,15 +5008,15 @@ export class ApiResponseOfOutputFileDto implements IApiResponseOfOutputFileDto {
 }
 
 export interface IApiResponseOfOutputFileDto {
-    isSuccess: boolean;
-    dto: OutputFileDto;
+    isSuccess: boolean | undefined;
+    dto: OutputFileDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfEndowmentDto implements IApiResponseOfPagedResultDtoOfEndowmentDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfEndowmentDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfEndowmentDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5110,15 +5064,15 @@ export class ApiResponseOfPagedResultDtoOfEndowmentDto implements IApiResponseOf
 }
 
 export interface IApiResponseOfPagedResultDtoOfEndowmentDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfEndowmentDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfEndowmentDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfEndowmentOutputDto implements IApiResponseOfPagedResultDtoOfEndowmentOutputDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfEndowmentOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfEndowmentOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5166,15 +5120,15 @@ export class ApiResponseOfPagedResultDtoOfEndowmentOutputDto implements IApiResp
 }
 
 export interface IApiResponseOfPagedResultDtoOfEndowmentOutputDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfEndowmentOutputDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfEndowmentOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfLookupDto implements IApiResponseOfPagedResultDtoOfLookupDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfLookupDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfLookupDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5222,15 +5176,15 @@ export class ApiResponseOfPagedResultDtoOfLookupDto implements IApiResponseOfPag
 }
 
 export interface IApiResponseOfPagedResultDtoOfLookupDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfLookupDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfLookupDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto implements IApiResponseOfPagedResultDtoOfOutputBeneficiaryDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfOutputBeneficiaryDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfOutputBeneficiaryDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5278,15 +5232,15 @@ export class ApiResponseOfPagedResultDtoOfOutputBeneficiaryDto implements IApiRe
 }
 
 export interface IApiResponseOfPagedResultDtoOfOutputBeneficiaryDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfOutputBeneficiaryDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfOutputBeneficiaryDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfOutputEndowmerDto implements IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfOutputEndowmerDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfOutputEndowmerDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5334,15 +5288,15 @@ export class ApiResponseOfPagedResultDtoOfOutputEndowmerDto implements IApiRespo
 }
 
 export interface IApiResponseOfPagedResultDtoOfOutputEndowmerDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfOutputEndowmerDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfOutputEndowmerDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfOutputSeerDto implements IApiResponseOfPagedResultDtoOfOutputSeerDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfOutputSeerDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfOutputSeerDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5390,15 +5344,15 @@ export class ApiResponseOfPagedResultDtoOfOutputSeerDto implements IApiResponseO
 }
 
 export interface IApiResponseOfPagedResultDtoOfOutputSeerDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfOutputSeerDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfOutputSeerDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfPagedResultDtoOfRequestOutputDto implements IApiResponseOfPagedResultDtoOfRequestOutputDto {
-    isSuccess!: boolean;
-    dto!: PagedResultDtoOfRequestOutputDto;
+    isSuccess!: boolean | undefined;
+    dto!: PagedResultDtoOfRequestOutputDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5446,15 +5400,15 @@ export class ApiResponseOfPagedResultDtoOfRequestOutputDto implements IApiRespon
 }
 
 export interface IApiResponseOfPagedResultDtoOfRequestOutputDto {
-    isSuccess: boolean;
-    dto: PagedResultDtoOfRequestOutputDto;
+    isSuccess: boolean | undefined;
+    dto: PagedResultDtoOfRequestOutputDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfRequestDto implements IApiResponseOfRequestDto {
-    isSuccess!: boolean;
-    dto!: RequestDto;
+    isSuccess!: boolean | undefined;
+    dto!: RequestDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5502,15 +5456,15 @@ export class ApiResponseOfRequestDto implements IApiResponseOfRequestDto {
 }
 
 export interface IApiResponseOfRequestDto {
-    isSuccess: boolean;
-    dto: RequestDto;
+    isSuccess: boolean | undefined;
+    dto: RequestDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfRequestModelDto implements IApiResponseOfRequestModelDto {
-    isSuccess!: boolean;
-    dto!: RequestModelDto;
+    isSuccess!: boolean | undefined;
+    dto!: RequestModelDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5558,15 +5512,15 @@ export class ApiResponseOfRequestModelDto implements IApiResponseOfRequestModelD
 }
 
 export interface IApiResponseOfRequestModelDto {
-    isSuccess: boolean;
-    dto: RequestModelDto;
+    isSuccess: boolean | undefined;
+    dto: RequestModelDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfSentNotificationMessagesDto {
-    isSuccess!: boolean;
-    dto!: SentNotificationMessagesDto;
+    isSuccess!: boolean | undefined;
+    dto!: SentNotificationMessagesDto | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5614,15 +5568,15 @@ export class ApiResponseOfSentNotificationMessagesDto implements IApiResponseOfS
 }
 
 export interface IApiResponseOfSentNotificationMessagesDto {
-    isSuccess: boolean;
-    dto: SentNotificationMessagesDto;
+    isSuccess: boolean | undefined;
+    dto: SentNotificationMessagesDto | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class ApiResponseOfTokenResponse implements IApiResponseOfTokenResponse {
-    isSuccess!: boolean;
-    dto!: TokenResponse;
+    isSuccess!: boolean | undefined;
+    dto!: TokenResponse | undefined;
     message!: string | undefined;
     validationResultMessages!: ValidationResultMessage[] | undefined;
 
@@ -5670,15 +5624,15 @@ export class ApiResponseOfTokenResponse implements IApiResponseOfTokenResponse {
 }
 
 export interface IApiResponseOfTokenResponse {
-    isSuccess: boolean;
-    dto: TokenResponse;
+    isSuccess: boolean | undefined;
+    dto: TokenResponse | undefined;
     message: string | undefined;
     validationResultMessages: ValidationResultMessage[] | undefined;
 }
 
 export class AppCore implements IAppCore {
-    localization!: LocalizationDto;
-    settings!: Setting;
+    localization!: LocalizationDto | undefined;
+    settings!: Setting | undefined;
 
     constructor(data?: IAppCore) {
         if (data) {
@@ -5712,8 +5666,8 @@ export class AppCore implements IAppCore {
 }
 
 export interface IAppCore {
-    localization: LocalizationDto;
-    settings: Setting;
+    localization: LocalizationDto | undefined;
+    settings: Setting | undefined;
 }
 
 export class AppCulture implements IAppCulture {
@@ -5758,14 +5712,14 @@ export interface IAppCulture {
 
 export class ApplicantType implements IApplicantType {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IApplicantType) {
         if (data) {
@@ -5814,14 +5768,14 @@ export class ApplicantType implements IApplicantType {
 
 export interface IApplicantType {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class ApplicationUser implements IApplicationUser {
@@ -5829,7 +5783,7 @@ export class ApplicationUser implements IApplicationUser {
     userType!: UserType;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
-    gender!: UserGender;
+    gender!: UserGender | undefined;
     idTypeId!: number | undefined;
     regionId!: number | undefined;
     cityId!: number | undefined;
@@ -5853,26 +5807,26 @@ export class ApplicationUser implements IApplicationUser {
     noIdentityReason!: number | undefined;
     validatedByYaqeen!: boolean | undefined;
     isAlive!: boolean | undefined;
-    city!: City;
-    idType!: IdType;
-    nationality!: Nationality;
-    region!: Region;
+    city!: City | undefined;
+    idType!: IdType | undefined;
+    nationality!: Nationality | undefined;
+    region!: Region | undefined;
     requests!: Request[] | undefined;
     id!: string | undefined;
     userName!: string | undefined;
     normalizedUserName!: string | undefined;
     email!: string | undefined;
     normalizedEmail!: string | undefined;
-    emailConfirmed!: boolean;
+    emailConfirmed!: boolean | undefined;
     passwordHash!: string | undefined;
     securityStamp!: string | undefined;
     concurrencyStamp!: string | undefined;
     phoneNumber!: string | undefined;
-    phoneNumberConfirmed!: boolean;
-    twoFactorEnabled!: boolean;
+    phoneNumberConfirmed!: boolean | undefined;
+    twoFactorEnabled!: boolean | undefined;
     lockoutEnd!: DateTime | undefined;
-    lockoutEnabled!: boolean;
-    accessFailedCount!: number;
+    lockoutEnabled!: boolean | undefined;
+    accessFailedCount!: number | undefined;
 
     constructor(data?: IApplicationUser) {
         if (data) {
@@ -6010,7 +5964,7 @@ export interface IApplicationUser {
     userType: UserType;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
-    gender: UserGender;
+    gender: UserGender | undefined;
     idTypeId: number | undefined;
     regionId: number | undefined;
     cityId: number | undefined;
@@ -6034,26 +5988,26 @@ export interface IApplicationUser {
     noIdentityReason: number | undefined;
     validatedByYaqeen: boolean | undefined;
     isAlive: boolean | undefined;
-    city: City;
-    idType: IdType;
-    nationality: Nationality;
-    region: Region;
+    city: City | undefined;
+    idType: IdType | undefined;
+    nationality: Nationality | undefined;
+    region: Region | undefined;
     requests: Request[] | undefined;
     id: string | undefined;
     userName: string | undefined;
     normalizedUserName: string | undefined;
     email: string | undefined;
     normalizedEmail: string | undefined;
-    emailConfirmed: boolean;
+    emailConfirmed: boolean | undefined;
     passwordHash: string | undefined;
     securityStamp: string | undefined;
     concurrencyStamp: string | undefined;
     phoneNumber: string | undefined;
-    phoneNumberConfirmed: boolean;
-    twoFactorEnabled: boolean;
+    phoneNumberConfirmed: boolean | undefined;
+    twoFactorEnabled: boolean | undefined;
     lockoutEnd: DateTime | undefined;
-    lockoutEnabled: boolean;
-    accessFailedCount: number;
+    lockoutEnabled: boolean | undefined;
+    accessFailedCount: number | undefined;
 }
 
 export class ApplicationUserDto implements IApplicationUserDto {
@@ -6061,7 +6015,7 @@ export class ApplicationUserDto implements IApplicationUserDto {
     userName!: string | undefined;
     email!: string | undefined;
     phoneNumber!: string | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IApplicationUserDto) {
         if (data) {
@@ -6105,11 +6059,11 @@ export interface IApplicationUserDto {
     userName: string | undefined;
     email: string | undefined;
     phoneNumber: string | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class ApplicationUserTasks implements IApplicationUserTasks {
-    totalCountTasks!: number;
+    totalCountTasks!: number | undefined;
 
     constructor(data?: IApplicationUserTasks) {
         if (data) {
@@ -6141,7 +6095,7 @@ export class ApplicationUserTasks implements IApplicationUserTasks {
 }
 
 export interface IApplicationUserTasks {
-    totalCountTasks: number;
+    totalCountTasks: number | undefined;
 }
 
 export class AttorneyInquiryInput implements IAttorneyInquiryInput {
@@ -6252,10 +6206,10 @@ export class BusinessEntityAssetData implements IBusinessEntityAssetData {
     waqfPercentageFromAsset!: number | undefined;
     commercialRegisterAttachmentId!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IBusinessEntityAssetData) {
         if (data) {
@@ -6326,28 +6280,104 @@ export interface IBusinessEntityAssetData {
     waqfPercentageFromAsset: number | undefined;
     commercialRegisterAttachmentId: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class BusinessEntityAssetDto implements IBusinessEntityAssetDto {
+    businessEntityName!: string;
+    assetSubTypeId!: number;
+    regionId!: number;
+    cityId!: number;
+    longitude!: number;
+    latitude!: number;
+    registrationDocumentNumber!: number;
+    waqfResponserPortion!: number | undefined;
+    waqfPercentageFromAsset!: number | undefined;
+    commercialRegisterAttachmentId!: string | undefined;
+    id!: string | undefined;
+
+    constructor(data?: IBusinessEntityAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.businessEntityName = _data["businessEntityName"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.registrationDocumentNumber = _data["registrationDocumentNumber"];
+            this.waqfResponserPortion = _data["waqfResponserPortion"];
+            this.waqfPercentageFromAsset = _data["waqfPercentageFromAsset"];
+            this.commercialRegisterAttachmentId = _data["commercialRegisterAttachmentId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): BusinessEntityAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new BusinessEntityAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["businessEntityName"] = this.businessEntityName;
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["registrationDocumentNumber"] = this.registrationDocumentNumber;
+        data["waqfResponserPortion"] = this.waqfResponserPortion;
+        data["waqfPercentageFromAsset"] = this.waqfPercentageFromAsset;
+        data["commercialRegisterAttachmentId"] = this.commercialRegisterAttachmentId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IBusinessEntityAssetDto {
+    businessEntityName: string;
+    assetSubTypeId: number;
+    regionId: number;
+    cityId: number;
+    longitude: number;
+    latitude: number;
+    registrationDocumentNumber: number;
+    waqfResponserPortion: number | undefined;
+    waqfPercentageFromAsset: number | undefined;
+    commercialRegisterAttachmentId: string | undefined;
+    id: string | undefined;
 }
 
 export class Certificate implements ICertificate {
     certificateNumber!: string | undefined;
-    certificateStatusId!: number;
-    certificateTypeId!: number;
-    currentVersion!: number;
-    issueDate!: DateTime;
-    expiryDate!: DateTime;
-    certificateType!: CertificateType;
-    certificateStatus!: CertificateStatus;
-    endowmentCertificate!: EndowmentCertificate;
+    certificateStatusId!: number | undefined;
+    certificateTypeId!: number | undefined;
+    currentVersion!: number | undefined;
+    issueDate!: DateTime | undefined;
+    expiryDate!: DateTime | undefined;
+    certificateType!: CertificateType | undefined;
+    certificateStatus!: CertificateStatus | undefined;
+    endowmentCertificate!: EndowmentCertificate | undefined;
     endowmentCertificateVersions!: EndowmentCertificateVersion[] | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: ICertificate) {
         if (data) {
@@ -6416,33 +6446,33 @@ export class Certificate implements ICertificate {
 
 export interface ICertificate {
     certificateNumber: string | undefined;
-    certificateStatusId: number;
-    certificateTypeId: number;
-    currentVersion: number;
-    issueDate: DateTime;
-    expiryDate: DateTime;
-    certificateType: CertificateType;
-    certificateStatus: CertificateStatus;
-    endowmentCertificate: EndowmentCertificate;
+    certificateStatusId: number | undefined;
+    certificateTypeId: number | undefined;
+    currentVersion: number | undefined;
+    issueDate: DateTime | undefined;
+    expiryDate: DateTime | undefined;
+    certificateType: CertificateType | undefined;
+    certificateStatus: CertificateStatus | undefined;
+    endowmentCertificate: EndowmentCertificate | undefined;
     endowmentCertificateVersions: EndowmentCertificateVersion[] | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class CertificateStatus implements ICertificateStatus {
     certificates!: Certificate[] | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: ICertificateStatus) {
         if (data) {
@@ -6502,26 +6532,26 @@ export class CertificateStatus implements ICertificateStatus {
 export interface ICertificateStatus {
     certificates: Certificate[] | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class CertificateType implements ICertificateType {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: ICertificateType) {
         if (data) {
@@ -6570,14 +6600,14 @@ export class CertificateType implements ICertificateType {
 
 export interface ICertificateType {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class CitizenInfoResponse implements ICitizenInfoResponse {
@@ -6597,9 +6627,9 @@ export class CitizenInfoResponse implements ICitizenInfoResponse {
     idVersionNumber!: number | undefined;
     logId!: number | undefined;
     placeOfBirth!: string | undefined;
-    nationalityCode!: number;
-    nationalityId!: number;
-    lifeStatus!: number;
+    nationalityCode!: number | undefined;
+    nationalityId!: number | undefined;
+    lifeStatus!: number | undefined;
 
     constructor(data?: ICitizenInfoResponse) {
         if (data) {
@@ -6683,24 +6713,24 @@ export interface ICitizenInfoResponse {
     idVersionNumber: number | undefined;
     logId: number | undefined;
     placeOfBirth: string | undefined;
-    nationalityCode: number;
-    nationalityId: number;
-    lifeStatus: number;
+    nationalityCode: number | undefined;
+    nationalityId: number | undefined;
+    lifeStatus: number | undefined;
 }
 
 export class City implements ICity {
-    hrsdCode!: number;
-    regionId!: number;
-    region!: Region;
+    hrsdCode!: number | undefined;
+    regionId!: number | undefined;
+    region!: Region | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: ICity) {
         if (data) {
@@ -6754,22 +6784,22 @@ export class City implements ICity {
 }
 
 export interface ICity {
-    hrsdCode: number;
-    regionId: number;
-    region: Region;
+    hrsdCode: number | undefined;
+    regionId: number | undefined;
+    region: Region | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class ConfirmUserEmailInputDto implements IConfirmUserEmailInputDto {
-    id!: number;
+    id!: number | undefined;
     code!: string | undefined;
     userId!: string | undefined;
 
@@ -6807,7 +6837,7 @@ export class ConfirmUserEmailInputDto implements IConfirmUserEmailInputDto {
 }
 
 export interface IConfirmUserEmailInputDto {
-    id: number;
+    id: number | undefined;
     code: string | undefined;
     userId: string | undefined;
 }
@@ -6880,7 +6910,7 @@ export class CreateSeerInputDto implements ICreateSeerInputDto {
     endDate!: DateTime | undefined;
     endSeerReasonTypeId!: number | undefined;
     endowmentPartiesTypeId!: number | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: ICreateSeerInputDto) {
         if (data) {
@@ -6957,7 +6987,7 @@ export interface ICreateSeerInputDto {
     endDate: DateTime | undefined;
     endSeerReasonTypeId: number | undefined;
     endowmentPartiesTypeId: number | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class DataFieldAction implements IDataFieldAction {
@@ -7022,9 +7052,9 @@ export interface IDataFieldAction {
 
 export class EditSeerInputDto implements IEditSeerInputDto {
     requestId!: string;
-    createSeerInputDto!: CreateSeerInputDto;
+    createSeerInputDto!: CreateSeerInputDto | undefined;
     applicationUserId!: string | undefined;
-    seerPerson!: InputApplicationUserDto;
+    seerPerson!: InputApplicationUserDto | undefined;
 
     constructor(data?: IEditSeerInputDto) {
         if (data) {
@@ -7063,22 +7093,22 @@ export class EditSeerInputDto implements IEditSeerInputDto {
 
 export interface IEditSeerInputDto {
     requestId: string;
-    createSeerInputDto: CreateSeerInputDto;
+    createSeerInputDto: CreateSeerInputDto | undefined;
     applicationUserId: string | undefined;
-    seerPerson: InputApplicationUserDto;
+    seerPerson: InputApplicationUserDto | undefined;
 }
 
 export class EducationLevel implements IEducationLevel {
-    isAttachmentRequired!: boolean;
+    isAttachmentRequired!: boolean | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IEducationLevel) {
         if (data) {
@@ -7128,16 +7158,16 @@ export class EducationLevel implements IEducationLevel {
 }
 
 export interface IEducationLevel {
-    isAttachmentRequired: boolean;
+    isAttachmentRequired: boolean | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class EmailOtpGenerationInputDto implements IEmailOtpGenerationInputDto {
@@ -7182,7 +7212,7 @@ export interface IEmailOtpGenerationInputDto {
 
 export class EndowmentAgentData implements IEndowmentAgentData {
     agentId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     representativeNumber!: string | undefined;
     representativeAttachmentId!: string | undefined;
     statusId!: string | undefined;
@@ -7195,7 +7225,7 @@ export class EndowmentAgentData implements IEndowmentAgentData {
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
 
     constructor(data?: IEndowmentAgentData) {
         if (data) {
@@ -7256,7 +7286,7 @@ export class EndowmentAgentData implements IEndowmentAgentData {
 
 export interface IEndowmentAgentData {
     agentId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     representativeNumber: string | undefined;
     representativeAttachmentId: string | undefined;
     statusId: string | undefined;
@@ -7269,7 +7299,7 @@ export interface IEndowmentAgentData {
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
 }
 
 export class EndowmentAssetData implements IEndowmentAssetData {
@@ -7284,20 +7314,20 @@ export class EndowmentAssetData implements IEndowmentAssetData {
     assetIssuanceCourt!: string | undefined;
     assetDeedDate!: DateTime | undefined;
     assetDeedDateHijri!: string | undefined;
-    animalOrAgriculturalAsset!: AnimalOrAgriculturalAssetData;
-    businessEntityAssetData!: BusinessEntityAssetData;
-    endowmentData!: EndowmentData;
-    fiscalAssetData!: FiscalAssetData;
-    monetaryAssetData!: MonetaryAssetData;
-    intellectualPropertyAndTrademarkAssetData!: IntellectualPropertyAndTrademarkAssetData;
-    movableAssetData!: MovableAssetData;
-    particularBenefitAssetData!: ParticularBenefitAssetData;
-    realEstateAssetData!: RealEstateAssetData;
+    animalOrAgriculturalAsset!: AnimalOrAgriculturalAssetData | undefined;
+    businessEntityAsset!: BusinessEntityAssetData | undefined;
+    endowment!: EndowmentData | undefined;
+    fiscalAsset!: FiscalAssetData | undefined;
+    monetaryAsset!: MonetaryAssetData | undefined;
+    intellectualPropertyAndTrademarkAsset!: IntellectualPropertyAndTrademarkAssetData | undefined;
+    movableAsset!: MovableAssetData | undefined;
+    particularBenefitAsset!: ParticularBenefitAssetData | undefined;
+    realEstateAsset!: RealEstateAssetData | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentAssetData) {
         if (data) {
@@ -7322,14 +7352,14 @@ export class EndowmentAssetData implements IEndowmentAssetData {
             this.assetDeedDate = _data["assetDeedDate"] ? DateTime.fromISO(_data["assetDeedDate"].toString()) : <any>undefined;
             this.assetDeedDateHijri = _data["assetDeedDateHijri"];
             this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? AnimalOrAgriculturalAssetData.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
-            this.businessEntityAssetData = _data["businessEntityAssetData"] ? BusinessEntityAssetData.fromJS(_data["businessEntityAssetData"]) : <any>undefined;
-            this.endowmentData = _data["endowmentData"] ? EndowmentData.fromJS(_data["endowmentData"]) : <any>undefined;
-            this.fiscalAssetData = _data["fiscalAssetData"] ? FiscalAssetData.fromJS(_data["fiscalAssetData"]) : <any>undefined;
-            this.monetaryAssetData = _data["monetaryAssetData"] ? MonetaryAssetData.fromJS(_data["monetaryAssetData"]) : <any>undefined;
-            this.intellectualPropertyAndTrademarkAssetData = _data["intellectualPropertyAndTrademarkAssetData"] ? IntellectualPropertyAndTrademarkAssetData.fromJS(_data["intellectualPropertyAndTrademarkAssetData"]) : <any>undefined;
-            this.movableAssetData = _data["movableAssetData"] ? MovableAssetData.fromJS(_data["movableAssetData"]) : <any>undefined;
-            this.particularBenefitAssetData = _data["particularBenefitAssetData"] ? ParticularBenefitAssetData.fromJS(_data["particularBenefitAssetData"]) : <any>undefined;
-            this.realEstateAssetData = _data["realEstateAssetData"] ? RealEstateAssetData.fromJS(_data["realEstateAssetData"]) : <any>undefined;
+            this.businessEntityAsset = _data["businessEntityAsset"] ? BusinessEntityAssetData.fromJS(_data["businessEntityAsset"]) : <any>undefined;
+            this.endowment = _data["endowment"] ? EndowmentData.fromJS(_data["endowment"]) : <any>undefined;
+            this.fiscalAsset = _data["fiscalAsset"] ? FiscalAssetData.fromJS(_data["fiscalAsset"]) : <any>undefined;
+            this.monetaryAsset = _data["monetaryAsset"] ? MonetaryAssetData.fromJS(_data["monetaryAsset"]) : <any>undefined;
+            this.intellectualPropertyAndTrademarkAsset = _data["intellectualPropertyAndTrademarkAsset"] ? IntellectualPropertyAndTrademarkAssetData.fromJS(_data["intellectualPropertyAndTrademarkAsset"]) : <any>undefined;
+            this.movableAsset = _data["movableAsset"] ? MovableAssetData.fromJS(_data["movableAsset"]) : <any>undefined;
+            this.particularBenefitAsset = _data["particularBenefitAsset"] ? ParticularBenefitAssetData.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
+            this.realEstateAsset = _data["realEstateAsset"] ? RealEstateAssetData.fromJS(_data["realEstateAsset"]) : <any>undefined;
             this.createdBy = _data["createdBy"];
             this.creationDate = _data["creationDate"] ? DateTime.fromISO(_data["creationDate"].toString()) : <any>undefined;
             this.updatedBy = _data["updatedBy"];
@@ -7359,14 +7389,14 @@ export class EndowmentAssetData implements IEndowmentAssetData {
         data["assetDeedDate"] = this.assetDeedDate ? this.assetDeedDate.toString() : <any>undefined;
         data["assetDeedDateHijri"] = this.assetDeedDateHijri;
         data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
-        data["businessEntityAssetData"] = this.businessEntityAssetData ? this.businessEntityAssetData.toJSON() : <any>undefined;
-        data["endowmentData"] = this.endowmentData ? this.endowmentData.toJSON() : <any>undefined;
-        data["fiscalAssetData"] = this.fiscalAssetData ? this.fiscalAssetData.toJSON() : <any>undefined;
-        data["monetaryAssetData"] = this.monetaryAssetData ? this.monetaryAssetData.toJSON() : <any>undefined;
-        data["intellectualPropertyAndTrademarkAssetData"] = this.intellectualPropertyAndTrademarkAssetData ? this.intellectualPropertyAndTrademarkAssetData.toJSON() : <any>undefined;
-        data["movableAssetData"] = this.movableAssetData ? this.movableAssetData.toJSON() : <any>undefined;
-        data["particularBenefitAssetData"] = this.particularBenefitAssetData ? this.particularBenefitAssetData.toJSON() : <any>undefined;
-        data["realEstateAssetData"] = this.realEstateAssetData ? this.realEstateAssetData.toJSON() : <any>undefined;
+        data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
+        data["endowment"] = this.endowment ? this.endowment.toJSON() : <any>undefined;
+        data["fiscalAsset"] = this.fiscalAsset ? this.fiscalAsset.toJSON() : <any>undefined;
+        data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
+        data["intellectualPropertyAndTrademarkAsset"] = this.intellectualPropertyAndTrademarkAsset ? this.intellectualPropertyAndTrademarkAsset.toJSON() : <any>undefined;
+        data["movableAsset"] = this.movableAsset ? this.movableAsset.toJSON() : <any>undefined;
+        data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
+        data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
         data["createdBy"] = this.createdBy;
         data["creationDate"] = this.creationDate ? this.creationDate.toString() : <any>undefined;
         data["updatedBy"] = this.updatedBy;
@@ -7388,20 +7418,136 @@ export interface IEndowmentAssetData {
     assetIssuanceCourt: string | undefined;
     assetDeedDate: DateTime | undefined;
     assetDeedDateHijri: string | undefined;
-    animalOrAgriculturalAsset: AnimalOrAgriculturalAssetData;
-    businessEntityAssetData: BusinessEntityAssetData;
-    endowmentData: EndowmentData;
-    fiscalAssetData: FiscalAssetData;
-    monetaryAssetData: MonetaryAssetData;
-    intellectualPropertyAndTrademarkAssetData: IntellectualPropertyAndTrademarkAssetData;
-    movableAssetData: MovableAssetData;
-    particularBenefitAssetData: ParticularBenefitAssetData;
-    realEstateAssetData: RealEstateAssetData;
+    animalOrAgriculturalAsset: AnimalOrAgriculturalAssetData | undefined;
+    businessEntityAsset: BusinessEntityAssetData | undefined;
+    endowment: EndowmentData | undefined;
+    fiscalAsset: FiscalAssetData | undefined;
+    monetaryAsset: MonetaryAssetData | undefined;
+    intellectualPropertyAndTrademarkAsset: IntellectualPropertyAndTrademarkAssetData | undefined;
+    movableAsset: MovableAssetData | undefined;
+    particularBenefitAsset: ParticularBenefitAssetData | undefined;
+    realEstateAsset: RealEstateAssetData | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class EndowmentAssetDto implements IEndowmentAssetDto {
+    assetTypeId!: number | undefined;
+    assetSizeId!: number | undefined;
+    assetApproximatelyAmount!: number | undefined;
+    requestId!: string | undefined;
+    endowmentId!: string | undefined;
+    assetSubTypeId!: number | undefined;
+    assetSubTypeDescription!: string | undefined;
+    assetDescription!: string | undefined;
+    assetDeedNumber!: string | undefined;
+    assetIssuanceCourt!: string | undefined;
+    assetDeedDate!: DateTime | undefined;
+    assetDeedDateHijri!: string | undefined;
+    animalOrAgriculturalAsset!: AnimalOrAgriculturalAssetDto | undefined;
+    businessEntityAsset!: BusinessEntityAssetDto | undefined;
+    fiscalAsset!: FiscalAssetDto | undefined;
+    intellectualPropertyAndTrademarkAsset!: IntellectualPropertyAndTrademarkAssetDto | undefined;
+    movableAsset!: MovableAssetDto | undefined;
+    monetaryAsset!: MonetaryAssetDto | undefined;
+    particularBenefitAsset!: ParticularBenefitAssetDto | undefined;
+    realEstateAsset!: RealEstateAssetDto | undefined;
+    id!: string | undefined;
+
+    constructor(data?: IEndowmentAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetTypeId = _data["assetTypeId"];
+            this.assetSizeId = _data["assetSizeId"];
+            this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
+            this.requestId = _data["requestId"];
+            this.endowmentId = _data["endowmentId"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.assetSubTypeDescription = _data["assetSubTypeDescription"];
+            this.assetDescription = _data["assetDescription"];
+            this.assetDeedNumber = _data["assetDeedNumber"];
+            this.assetIssuanceCourt = _data["assetIssuanceCourt"];
+            this.assetDeedDate = _data["assetDeedDate"] ? DateTime.fromISO(_data["assetDeedDate"].toString()) : <any>undefined;
+            this.assetDeedDateHijri = _data["assetDeedDateHijri"];
+            this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? AnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
+            this.businessEntityAsset = _data["businessEntityAsset"] ? BusinessEntityAssetDto.fromJS(_data["businessEntityAsset"]) : <any>undefined;
+            this.fiscalAsset = _data["fiscalAsset"] ? FiscalAssetDto.fromJS(_data["fiscalAsset"]) : <any>undefined;
+            this.intellectualPropertyAndTrademarkAsset = _data["intellectualPropertyAndTrademarkAsset"] ? IntellectualPropertyAndTrademarkAssetDto.fromJS(_data["intellectualPropertyAndTrademarkAsset"]) : <any>undefined;
+            this.movableAsset = _data["movableAsset"] ? MovableAssetDto.fromJS(_data["movableAsset"]) : <any>undefined;
+            this.monetaryAsset = _data["monetaryAsset"] ? MonetaryAssetDto.fromJS(_data["monetaryAsset"]) : <any>undefined;
+            this.particularBenefitAsset = _data["particularBenefitAsset"] ? ParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
+            this.realEstateAsset = _data["realEstateAsset"] ? RealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): EndowmentAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new EndowmentAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetTypeId"] = this.assetTypeId;
+        data["assetSizeId"] = this.assetSizeId;
+        data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
+        data["requestId"] = this.requestId;
+        data["endowmentId"] = this.endowmentId;
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["assetSubTypeDescription"] = this.assetSubTypeDescription;
+        data["assetDescription"] = this.assetDescription;
+        data["assetDeedNumber"] = this.assetDeedNumber;
+        data["assetIssuanceCourt"] = this.assetIssuanceCourt;
+        data["assetDeedDate"] = this.assetDeedDate ? this.assetDeedDate.toString() : <any>undefined;
+        data["assetDeedDateHijri"] = this.assetDeedDateHijri;
+        data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
+        data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
+        data["fiscalAsset"] = this.fiscalAsset ? this.fiscalAsset.toJSON() : <any>undefined;
+        data["intellectualPropertyAndTrademarkAsset"] = this.intellectualPropertyAndTrademarkAsset ? this.intellectualPropertyAndTrademarkAsset.toJSON() : <any>undefined;
+        data["movableAsset"] = this.movableAsset ? this.movableAsset.toJSON() : <any>undefined;
+        data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
+        data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
+        data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IEndowmentAssetDto {
+    assetTypeId: number | undefined;
+    assetSizeId: number | undefined;
+    assetApproximatelyAmount: number | undefined;
+    requestId: string | undefined;
+    endowmentId: string | undefined;
+    assetSubTypeId: number | undefined;
+    assetSubTypeDescription: string | undefined;
+    assetDescription: string | undefined;
+    assetDeedNumber: string | undefined;
+    assetIssuanceCourt: string | undefined;
+    assetDeedDate: DateTime | undefined;
+    assetDeedDateHijri: string | undefined;
+    animalOrAgriculturalAsset: AnimalOrAgriculturalAssetDto | undefined;
+    businessEntityAsset: BusinessEntityAssetDto | undefined;
+    fiscalAsset: FiscalAssetDto | undefined;
+    intellectualPropertyAndTrademarkAsset: IntellectualPropertyAndTrademarkAssetDto | undefined;
+    movableAsset: MovableAssetDto | undefined;
+    monetaryAsset: MonetaryAssetDto | undefined;
+    particularBenefitAsset: ParticularBenefitAssetDto | undefined;
+    realEstateAsset: RealEstateAssetDto | undefined;
+    id: string | undefined;
 }
 
 export class EndowmentBankAccountData implements IEndowmentBankAccountData {
@@ -7410,10 +7556,10 @@ export class EndowmentBankAccountData implements IEndowmentBankAccountData {
     accountName!: string | undefined;
     iban!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentBankAccountData) {
         if (data) {
@@ -7466,10 +7612,10 @@ export interface IEndowmentBankAccountData {
     accountName: string | undefined;
     iban: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentBeneficiaryData implements IEndowmentBeneficiaryData {
@@ -7479,10 +7625,10 @@ export class EndowmentBeneficiaryData implements IEndowmentBeneficiaryData {
     spendingCategoryId!: number | undefined;
     isBeneficiaryInsideKsa!: boolean | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentBeneficiaryData) {
         if (data) {
@@ -7538,21 +7684,21 @@ export interface IEndowmentBeneficiaryData {
     spendingCategoryId: number | undefined;
     isBeneficiaryInsideKsa: boolean | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentCertificate implements IEndowmentCertificate {
     endowmentId!: string | undefined;
     requestId!: string | undefined;
-    certificate!: Certificate;
+    certificate!: Certificate | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentCertificate) {
         if (data) {
@@ -7600,26 +7746,26 @@ export class EndowmentCertificate implements IEndowmentCertificate {
 export interface IEndowmentCertificate {
     endowmentId: string | undefined;
     requestId: string | undefined;
-    certificate: Certificate;
+    certificate: Certificate | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentCertificateVersion implements IEndowmentCertificateVersion {
-    certificateId!: string;
-    version!: number;
-    requestId!: string;
-    issueDate!: DateTime;
-    expiryDate!: DateTime;
-    certificate!: Certificate;
+    certificateId!: string | undefined;
+    version!: number | undefined;
+    requestId!: string | undefined;
+    issueDate!: DateTime | undefined;
+    expiryDate!: DateTime | undefined;
+    certificate!: Certificate | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentCertificateVersion) {
         if (data) {
@@ -7671,17 +7817,17 @@ export class EndowmentCertificateVersion implements IEndowmentCertificateVersion
 }
 
 export interface IEndowmentCertificateVersion {
-    certificateId: string;
-    version: number;
-    requestId: string;
-    issueDate: DateTime;
-    expiryDate: DateTime;
-    certificate: Certificate;
+    certificateId: string | undefined;
+    version: number | undefined;
+    requestId: string | undefined;
+    issueDate: DateTime | undefined;
+    expiryDate: DateTime | undefined;
+    certificate: Certificate | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentData implements IEndowmentData {
@@ -7711,17 +7857,17 @@ export class EndowmentData implements IEndowmentData {
     endowmentBankAccountsData!: EndowmentBankAccountData[] | undefined;
     endowmentBeneficiariesData!: EndowmentBeneficiaryData[] | undefined;
     endowmersData!: EndowmerData[] | undefined;
-    endowmentRegistrationSource!: EndowmentRegistrationSource;
-    issuanceCourt!: IssuanceCourt;
+    endowmentRegistrationSource!: EndowmentRegistrationSource | undefined;
+    issuanceCourt!: IssuanceCourt | undefined;
     endowmentSeersData!: EndowmentSeerData[] | undefined;
     spendingCategories!: SpendingCategory[] | undefined;
-    endowmentDeedCity!: City;
-    endowmentDeedRegion!: Region;
+    endowmentDeedCity!: City | undefined;
+    endowmentDeedRegion!: Region | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentData) {
         if (data) {
@@ -7907,24 +8053,24 @@ export interface IEndowmentData {
     endowmentBankAccountsData: EndowmentBankAccountData[] | undefined;
     endowmentBeneficiariesData: EndowmentBeneficiaryData[] | undefined;
     endowmersData: EndowmerData[] | undefined;
-    endowmentRegistrationSource: EndowmentRegistrationSource;
-    issuanceCourt: IssuanceCourt;
+    endowmentRegistrationSource: EndowmentRegistrationSource | undefined;
+    issuanceCourt: IssuanceCourt | undefined;
     endowmentSeersData: EndowmentSeerData[] | undefined;
     spendingCategories: SpendingCategory[] | undefined;
-    endowmentDeedCity: City;
-    endowmentDeedRegion: Region;
+    endowmentDeedCity: City | undefined;
+    endowmentDeedRegion: Region | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentDto implements IEndowmentDto {
     endowmentName!: string | undefined;
     endowmentStatusId!: number | undefined;
-    endowmentStatus!: LookupDto;
-    endowmentType!: LookupDto;
+    endowmentStatus!: LookupDto | undefined;
+    endowmentType!: LookupDto | undefined;
     endowmentTypeId!: number | undefined;
     endowmentConditions!: string | undefined;
     seerRules!: string | undefined;
@@ -7944,11 +8090,11 @@ export class EndowmentDto implements IEndowmentDto {
     acceptGiveaways!: boolean | undefined;
     unifiedNationalNumber!: string | undefined;
     endowmentRegistrationSourceId!: number | undefined;
-    createdBy!: ApplicationUserDto;
-    creationDate!: DateTime;
-    updatedBy!: ApplicationUserDto;
+    createdBy!: ApplicationUserDto | undefined;
+    creationDate!: DateTime | undefined;
+    updatedBy!: ApplicationUserDto | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentDto) {
         if (data) {
@@ -8036,8 +8182,8 @@ export class EndowmentDto implements IEndowmentDto {
 export interface IEndowmentDto {
     endowmentName: string | undefined;
     endowmentStatusId: number | undefined;
-    endowmentStatus: LookupDto;
-    endowmentType: LookupDto;
+    endowmentStatus: LookupDto | undefined;
+    endowmentType: LookupDto | undefined;
     endowmentTypeId: number | undefined;
     endowmentConditions: string | undefined;
     seerRules: string | undefined;
@@ -8057,21 +8203,21 @@ export interface IEndowmentDto {
     acceptGiveaways: boolean | undefined;
     unifiedNationalNumber: string | undefined;
     endowmentRegistrationSourceId: number | undefined;
-    createdBy: ApplicationUserDto;
-    creationDate: DateTime;
-    updatedBy: ApplicationUserDto;
+    createdBy: ApplicationUserDto | undefined;
+    creationDate: DateTime | undefined;
+    updatedBy: ApplicationUserDto | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentOutputDto implements IEndowmentOutputDto {
     applicantTypeIds!: string | undefined;
     endowmentId!: string | undefined;
-    endowmentData!: EndowmentData;
+    endowmentData!: EndowmentData | undefined;
     assetsData!: EndowmentAssetData[] | undefined;
     endowmersData!: EndowmerData[] | undefined;
     seersData!: EndowmentSeerData[] | undefined;
-    cetifcatesdata!: Certificate;
+    cetifcatesdata!: Certificate | undefined;
     agentsData!: EndowmentAgentData[] | undefined;
     beneficiariesData!: EndowmentBeneficiaryData[] | undefined;
     unifiedNumberResponse!: string | undefined;
@@ -8079,8 +8225,8 @@ export class EndowmentOutputDto implements IEndowmentOutputDto {
     endowmentRegistrationSourceId!: number | undefined;
     dataStateId!: number | undefined;
     tobeVisitedStep!: number | undefined;
-    applicantType!: ApplicantType;
-    request!: Request;
+    applicantType!: ApplicantType | undefined;
+    request!: Request | undefined;
 
     constructor(data?: IEndowmentOutputDto) {
         if (data) {
@@ -8192,11 +8338,11 @@ export class EndowmentOutputDto implements IEndowmentOutputDto {
 export interface IEndowmentOutputDto {
     applicantTypeIds: string | undefined;
     endowmentId: string | undefined;
-    endowmentData: EndowmentData;
+    endowmentData: EndowmentData | undefined;
     assetsData: EndowmentAssetData[] | undefined;
     endowmersData: EndowmerData[] | undefined;
     seersData: EndowmentSeerData[] | undefined;
-    cetifcatesdata: Certificate;
+    cetifcatesdata: Certificate | undefined;
     agentsData: EndowmentAgentData[] | undefined;
     beneficiariesData: EndowmentBeneficiaryData[] | undefined;
     unifiedNumberResponse: string | undefined;
@@ -8204,18 +8350,18 @@ export interface IEndowmentOutputDto {
     endowmentRegistrationSourceId: number | undefined;
     dataStateId: number | undefined;
     tobeVisitedStep: number | undefined;
-    applicantType: ApplicantType;
-    request: Request;
+    applicantType: ApplicantType | undefined;
+    request: Request | undefined;
 }
 
 export class EndowmentRegistrationRequest implements IEndowmentRegistrationRequest {
     applicantTypeIds!: string | undefined;
     endowmentId!: string | undefined;
-    endowmentData!: EndowmentData;
+    endowmentData!: EndowmentData | undefined;
     assetsData!: EndowmentAssetData[] | undefined;
     endowmersData!: EndowmerData[] | undefined;
     seersData!: EndowmentSeerData[] | undefined;
-    cetifcatesdata!: Certificate;
+    cetifcatesdata!: Certificate | undefined;
     agentsData!: EndowmentAgentData[] | undefined;
     beneficiariesData!: EndowmentBeneficiaryData[] | undefined;
     unifiedNumberResponse!: string | undefined;
@@ -8223,12 +8369,12 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
     endowmentRegistrationSourceId!: number | undefined;
     dataStateId!: number | undefined;
     tobeVisitedStep!: number | undefined;
-    request!: Request;
+    request!: Request | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IEndowmentRegistrationRequest) {
         if (data) {
@@ -8348,11 +8494,11 @@ export class EndowmentRegistrationRequest implements IEndowmentRegistrationReque
 export interface IEndowmentRegistrationRequest {
     applicantTypeIds: string | undefined;
     endowmentId: string | undefined;
-    endowmentData: EndowmentData;
+    endowmentData: EndowmentData | undefined;
     assetsData: EndowmentAssetData[] | undefined;
     endowmersData: EndowmerData[] | undefined;
     seersData: EndowmentSeerData[] | undefined;
-    cetifcatesdata: Certificate;
+    cetifcatesdata: Certificate | undefined;
     agentsData: EndowmentAgentData[] | undefined;
     beneficiariesData: EndowmentBeneficiaryData[] | undefined;
     unifiedNumberResponse: string | undefined;
@@ -8360,24 +8506,24 @@ export interface IEndowmentRegistrationRequest {
     endowmentRegistrationSourceId: number | undefined;
     dataStateId: number | undefined;
     tobeVisitedStep: number | undefined;
-    request: Request;
+    request: Request | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class EndowmentRegistrationSource implements IEndowmentRegistrationSource {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IEndowmentRegistrationSource) {
         if (data) {
@@ -8426,19 +8572,19 @@ export class EndowmentRegistrationSource implements IEndowmentRegistrationSource
 
 export interface IEndowmentRegistrationSource {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class EndowmentSeerData implements IEndowmentSeerData {
     seerId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     seenDeedId!: string | undefined;
     seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
@@ -8449,13 +8595,13 @@ export class EndowmentSeerData implements IEndowmentSeerData {
     endDate!: DateTime | undefined;
     endSeerReasonTypeId!: number | undefined;
     isDeleted!: boolean | undefined;
-    experienceYear!: ExperienceYear;
-    applicationUser!: ApplicationUser;
-    educationLevel!: EducationLevel;
+    experienceYear!: ExperienceYear | undefined;
+    applicationUser!: ApplicationUser | undefined;
+    educationLevel!: EducationLevel | undefined;
     endowmentPartiesTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
 
@@ -8530,7 +8676,7 @@ export class EndowmentSeerData implements IEndowmentSeerData {
 
 export interface IEndowmentSeerData {
     seerId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     seenDeedId: string | undefined;
     seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
@@ -8541,28 +8687,28 @@ export interface IEndowmentSeerData {
     endDate: DateTime | undefined;
     endSeerReasonTypeId: number | undefined;
     isDeleted: boolean | undefined;
-    experienceYear: ExperienceYear;
-    applicationUser: ApplicationUser;
-    educationLevel: EducationLevel;
+    experienceYear: ExperienceYear | undefined;
+    applicationUser: ApplicationUser | undefined;
+    educationLevel: EducationLevel | undefined;
     endowmentPartiesTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
 }
 
 export class EndowmerData implements IEndowmerData {
     endowmerId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     endowmentPartiesTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    isMainApplicant!: boolean;
+    isMainApplicant!: boolean | undefined;
 
     constructor(data?: IEndowmerData) {
         if (data) {
@@ -8613,27 +8759,27 @@ export class EndowmerData implements IEndowmerData {
 
 export interface IEndowmerData {
     endowmerId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     endowmentPartiesTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    isMainApplicant: boolean;
+    isMainApplicant: boolean | undefined;
 }
 
 export class ExperienceYear implements IExperienceYear {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IExperienceYear) {
         if (data) {
@@ -8682,19 +8828,19 @@ export class ExperienceYear implements IExperienceYear {
 
 export interface IExperienceYear {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class FileByIdDto implements IFileByIdDto {
     entityName!: string | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IFileByIdDto) {
         if (data) {
@@ -8729,7 +8875,7 @@ export class FileByIdDto implements IFileByIdDto {
 
 export interface IFileByIdDto {
     entityName: string | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class FileExtraData implements IFileExtraData {
@@ -8777,10 +8923,10 @@ export class FiscalAssetData implements IFiscalAssetData {
     investmentPortfolioNumber!: number | undefined;
     currentAssetValue!: number | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IFiscalAssetData) {
         if (data) {
@@ -8830,10 +8976,66 @@ export interface IFiscalAssetData {
     investmentPortfolioNumber: number | undefined;
     currentAssetValue: number | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class FiscalAssetDto implements IFiscalAssetDto {
+    assetSubTypeId!: number;
+    investmentPortfolioNumber!: number;
+    numberOfShare!: number;
+    currentAssetValue!: number;
+    fiscalAssetAttachementId!: string;
+    id!: string | undefined;
+
+    constructor(data?: IFiscalAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.investmentPortfolioNumber = _data["investmentPortfolioNumber"];
+            this.numberOfShare = _data["numberOfShare"];
+            this.currentAssetValue = _data["currentAssetValue"];
+            this.fiscalAssetAttachementId = _data["fiscalAssetAttachementId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): FiscalAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new FiscalAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["investmentPortfolioNumber"] = this.investmentPortfolioNumber;
+        data["numberOfShare"] = this.numberOfShare;
+        data["currentAssetValue"] = this.currentAssetValue;
+        data["fiscalAssetAttachementId"] = this.fiscalAssetAttachementId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IFiscalAssetDto {
+    assetSubTypeId: number;
+    investmentPortfolioNumber: number;
+    numberOfShare: number;
+    currentAssetValue: number;
+    fiscalAssetAttachementId: string;
+    id: string | undefined;
 }
 
 export class GetAlienInfoInputDto implements IGetAlienInfoInputDto {
@@ -8918,14 +9120,14 @@ export interface IGetCitizenInfoInputDto {
 
 export class IdType implements IIdType {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IIdType) {
         if (data) {
@@ -8974,73 +9176,25 @@ export class IdType implements IIdType {
 
 export interface IIdType {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
-}
-
-export class InputAnimalOrAgriculturalAssetDto implements IInputAnimalOrAgriculturalAssetDto {
-    regionId!: number;
-    cityId!: number;
-    animalOrAgriculturaDescription!: string | undefined;
-    id!: string;
-
-    constructor(data?: IInputAnimalOrAgriculturalAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.regionId = _data["regionId"];
-            this.cityId = _data["cityId"];
-            this.animalOrAgriculturaDescription = _data["animalOrAgriculturaDescription"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputAnimalOrAgriculturalAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputAnimalOrAgriculturalAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["regionId"] = this.regionId;
-        data["cityId"] = this.cityId;
-        data["animalOrAgriculturaDescription"] = this.animalOrAgriculturaDescription;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputAnimalOrAgriculturalAssetDto {
-    regionId: number;
-    cityId: number;
-    animalOrAgriculturaDescription: string | undefined;
-    id: string;
+    id: number | undefined;
 }
 
 export class InputApplicantAgentDto implements IInputApplicantAgentDto {
     representativeNumber!: string | undefined;
-    representativeAttachmentId!: string;
+    representativeAttachmentId!: string | undefined;
     statusId!: string | undefined;
     statusName!: string | undefined;
     issueDateHijri!: string | undefined;
-    issueDateGreg!: DateTime;
+    issueDateGreg!: DateTime | undefined;
     endDateHijri!: string | undefined;
-    endDateGreg!: DateTime;
+    endDateGreg!: DateTime | undefined;
 
     constructor(data?: IInputApplicantAgentDto) {
         if (data) {
@@ -9087,27 +9241,27 @@ export class InputApplicantAgentDto implements IInputApplicantAgentDto {
 
 export interface IInputApplicantAgentDto {
     representativeNumber: string | undefined;
-    representativeAttachmentId: string;
+    representativeAttachmentId: string | undefined;
     statusId: string | undefined;
     statusName: string | undefined;
     issueDateHijri: string | undefined;
-    issueDateGreg: DateTime;
+    issueDateGreg: DateTime | undefined;
     endDateHijri: string | undefined;
-    endDateGreg: DateTime;
+    endDateGreg: DateTime | undefined;
 }
 
 export class InputApplicantDto implements IInputApplicantDto {
     idNumber!: string | undefined;
-    idTypeId!: number;
+    idTypeId!: number | undefined;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
-    gender!: UserGender;
+    gender!: UserGender | undefined;
     firstNameAr!: string | undefined;
     secondNameAr!: string | undefined;
     thirdNameAr!: string | undefined;
     lastNameAr!: string | undefined;
-    nationalityId!: number;
-    nationality!: LookupDto;
+    nationalityId!: number | undefined;
+    nationality!: LookupDto | undefined;
     isAlive!: boolean | undefined;
     phoneNumber!: string | undefined;
     email!: string | undefined;
@@ -9169,25 +9323,25 @@ export class InputApplicantDto implements IInputApplicantDto {
 
 export interface IInputApplicantDto {
     idNumber: string | undefined;
-    idTypeId: number;
+    idTypeId: number | undefined;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
-    gender: UserGender;
+    gender: UserGender | undefined;
     firstNameAr: string | undefined;
     secondNameAr: string | undefined;
     thirdNameAr: string | undefined;
     lastNameAr: string | undefined;
-    nationalityId: number;
-    nationality: LookupDto;
+    nationalityId: number | undefined;
+    nationality: LookupDto | undefined;
     isAlive: boolean | undefined;
     phoneNumber: string | undefined;
     email: string | undefined;
 }
 
 export class InputApplicantEndowmerDto implements IInputApplicantEndowmerDto {
-    prestigiousAttributeTypeId!: number;
+    prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
-    endowmentPartiesTypeId!: number;
+    endowmentPartiesTypeId!: number | undefined;
 
     constructor(data?: IInputApplicantEndowmerDto) {
         if (data) {
@@ -9223,20 +9377,20 @@ export class InputApplicantEndowmerDto implements IInputApplicantEndowmerDto {
 }
 
 export interface IInputApplicantEndowmerDto {
-    prestigiousAttributeTypeId: number;
+    prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
-    endowmentPartiesTypeId: number;
+    endowmentPartiesTypeId: number | undefined;
 }
 
 export class InputApplicantSeerDto implements IInputApplicantSeerDto {
-    prestigiousAttributeTypeId!: number;
+    prestigiousAttributeTypeId!: number | undefined;
     seenDeedId!: string | undefined;
-    seedDeedAttachmentId!: string;
+    seedDeedAttachmentId!: string | undefined;
     commercialNumber!: string | undefined;
-    educationLevelId!: number;
-    educationLevelCertificateAttachmentId!: string;
-    experienceYearId!: number;
-    endowmentPartiesTypeId!: number;
+    educationLevelId!: number | undefined;
+    educationLevelCertificateAttachmentId!: string | undefined;
+    experienceYearId!: number | undefined;
+    endowmentPartiesTypeId!: number | undefined;
 
     constructor(data?: IInputApplicantSeerDto) {
         if (data) {
@@ -9282,21 +9436,21 @@ export class InputApplicantSeerDto implements IInputApplicantSeerDto {
 }
 
 export interface IInputApplicantSeerDto {
-    prestigiousAttributeTypeId: number;
+    prestigiousAttributeTypeId: number | undefined;
     seenDeedId: string | undefined;
-    seedDeedAttachmentId: string;
+    seedDeedAttachmentId: string | undefined;
     commercialNumber: string | undefined;
-    educationLevelId: number;
-    educationLevelCertificateAttachmentId: string;
-    experienceYearId: number;
-    endowmentPartiesTypeId: number;
+    educationLevelId: number | undefined;
+    educationLevelCertificateAttachmentId: string | undefined;
+    experienceYearId: number | undefined;
+    endowmentPartiesTypeId: number | undefined;
 }
 
 export class InputApplicationUserDto implements IInputApplicationUserDto {
     id!: string | undefined;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
-    gender!: UserGender;
+    gender!: UserGender | undefined;
     idTypeId!: number | undefined;
     regionId!: number | undefined;
     cityId!: number | undefined;
@@ -9427,7 +9581,7 @@ export interface IInputApplicationUserDto {
     id: string | undefined;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
-    gender: UserGender;
+    gender: UserGender | undefined;
     idTypeId: number | undefined;
     regionId: number | undefined;
     cityId: number | undefined;
@@ -9458,170 +9612,6 @@ export interface IInputApplicationUserDto {
     emailConfirmed: boolean | undefined;
     phoneNumber: string | undefined;
     phoneNumberConfirmed: boolean | undefined;
-}
-
-export class InputAssetDto implements IInputAssetDto {
-    assetTypeId!: number;
-    assetSizeId!: number;
-    assetApproximatelyAmount!: number;
-    requestId!: string;
-    animalOrAgriculturalAssetObj!: InputAnimalOrAgriculturalAssetDto;
-    businessEntityAssetObj!: InputBusinessEntityAssetDto;
-    fiscalAssetObj!: InputFiscalAssetDto;
-    intellectualPropertyAndTrademarkAssetObj!: InputIntellectualPropertyAndTrademarkAssetDto;
-    movableAssetObj!: InputMovableAssetDto;
-    monetaryAssetObj!: InputMonetaryAssetDto;
-    particularBenefitAssetObj!: InputParticularBenefitAssetDto;
-    realEstateAssetObj!: InputRealEstateAssetDto;
-    endowmentId!: string;
-    id!: string;
-
-    constructor(data?: IInputAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.assetTypeId = _data["assetTypeId"];
-            this.assetSizeId = _data["assetSizeId"];
-            this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
-            this.requestId = _data["requestId"];
-            this.animalOrAgriculturalAssetObj = _data["animalOrAgriculturalAssetObj"] ? InputAnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAssetObj"]) : <any>undefined;
-            this.businessEntityAssetObj = _data["businessEntityAssetObj"] ? InputBusinessEntityAssetDto.fromJS(_data["businessEntityAssetObj"]) : <any>undefined;
-            this.fiscalAssetObj = _data["fiscalAssetObj"] ? InputFiscalAssetDto.fromJS(_data["fiscalAssetObj"]) : <any>undefined;
-            this.intellectualPropertyAndTrademarkAssetObj = _data["intellectualPropertyAndTrademarkAssetObj"] ? InputIntellectualPropertyAndTrademarkAssetDto.fromJS(_data["intellectualPropertyAndTrademarkAssetObj"]) : <any>undefined;
-            this.movableAssetObj = _data["movableAssetObj"] ? InputMovableAssetDto.fromJS(_data["movableAssetObj"]) : <any>undefined;
-            this.monetaryAssetObj = _data["monetaryAssetObj"] ? InputMonetaryAssetDto.fromJS(_data["monetaryAssetObj"]) : <any>undefined;
-            this.particularBenefitAssetObj = _data["particularBenefitAssetObj"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAssetObj"]) : <any>undefined;
-            this.realEstateAssetObj = _data["realEstateAssetObj"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAssetObj"]) : <any>undefined;
-            this.endowmentId = _data["endowmentId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["assetTypeId"] = this.assetTypeId;
-        data["assetSizeId"] = this.assetSizeId;
-        data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
-        data["requestId"] = this.requestId;
-        data["animalOrAgriculturalAssetObj"] = this.animalOrAgriculturalAssetObj ? this.animalOrAgriculturalAssetObj.toJSON() : <any>undefined;
-        data["businessEntityAssetObj"] = this.businessEntityAssetObj ? this.businessEntityAssetObj.toJSON() : <any>undefined;
-        data["fiscalAssetObj"] = this.fiscalAssetObj ? this.fiscalAssetObj.toJSON() : <any>undefined;
-        data["intellectualPropertyAndTrademarkAssetObj"] = this.intellectualPropertyAndTrademarkAssetObj ? this.intellectualPropertyAndTrademarkAssetObj.toJSON() : <any>undefined;
-        data["movableAssetObj"] = this.movableAssetObj ? this.movableAssetObj.toJSON() : <any>undefined;
-        data["monetaryAssetObj"] = this.monetaryAssetObj ? this.monetaryAssetObj.toJSON() : <any>undefined;
-        data["particularBenefitAssetObj"] = this.particularBenefitAssetObj ? this.particularBenefitAssetObj.toJSON() : <any>undefined;
-        data["realEstateAssetObj"] = this.realEstateAssetObj ? this.realEstateAssetObj.toJSON() : <any>undefined;
-        data["endowmentId"] = this.endowmentId;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputAssetDto {
-    assetTypeId: number;
-    assetSizeId: number;
-    assetApproximatelyAmount: number;
-    requestId: string;
-    animalOrAgriculturalAssetObj: InputAnimalOrAgriculturalAssetDto;
-    businessEntityAssetObj: InputBusinessEntityAssetDto;
-    fiscalAssetObj: InputFiscalAssetDto;
-    intellectualPropertyAndTrademarkAssetObj: InputIntellectualPropertyAndTrademarkAssetDto;
-    movableAssetObj: InputMovableAssetDto;
-    monetaryAssetObj: InputMonetaryAssetDto;
-    particularBenefitAssetObj: InputParticularBenefitAssetDto;
-    realEstateAssetObj: InputRealEstateAssetDto;
-    endowmentId: string;
-    id: string;
-}
-
-export class InputBusinessEntityAssetDto implements IInputBusinessEntityAssetDto {
-    businessEntityName!: string;
-    assetSubTypeId!: number;
-    regionId!: number;
-    cityId!: number;
-    longitude!: number;
-    latitude!: number;
-    registrationDocumentNumber!: number;
-    waqfResponserPortion!: number;
-    waqfPercentageFromAsset!: number;
-    commercialRegisterAttachmentId!: string;
-    id!: string;
-
-    constructor(data?: IInputBusinessEntityAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.businessEntityName = _data["businessEntityName"];
-            this.assetSubTypeId = _data["assetSubTypeId"];
-            this.regionId = _data["regionId"];
-            this.cityId = _data["cityId"];
-            this.longitude = _data["longitude"];
-            this.latitude = _data["latitude"];
-            this.registrationDocumentNumber = _data["registrationDocumentNumber"];
-            this.waqfResponserPortion = _data["waqfResponserPortion"];
-            this.waqfPercentageFromAsset = _data["waqfPercentageFromAsset"];
-            this.commercialRegisterAttachmentId = _data["commercialRegisterAttachmentId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputBusinessEntityAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputBusinessEntityAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["businessEntityName"] = this.businessEntityName;
-        data["assetSubTypeId"] = this.assetSubTypeId;
-        data["regionId"] = this.regionId;
-        data["cityId"] = this.cityId;
-        data["longitude"] = this.longitude;
-        data["latitude"] = this.latitude;
-        data["registrationDocumentNumber"] = this.registrationDocumentNumber;
-        data["waqfResponserPortion"] = this.waqfResponserPortion;
-        data["waqfPercentageFromAsset"] = this.waqfPercentageFromAsset;
-        data["commercialRegisterAttachmentId"] = this.commercialRegisterAttachmentId;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputBusinessEntityAssetDto {
-    businessEntityName: string;
-    assetSubTypeId: number;
-    regionId: number;
-    cityId: number;
-    longitude: number;
-    latitude: number;
-    registrationDocumentNumber: number;
-    waqfResponserPortion: number;
-    waqfPercentageFromAsset: number;
-    commercialRegisterAttachmentId: string;
-    id: string;
 }
 
 export class InputEndowmentDto implements IInputEndowmentDto {
@@ -9751,12 +9741,12 @@ export interface IInputEndowmentDto {
 export class InputEndowmentRegistrationRequestDto implements IInputEndowmentRegistrationRequestDto {
     applicantTypeId!: number | undefined;
     endowmentId!: string | undefined;
-    endowmentData!: EndowmentData;
+    endowmentData!: EndowmentData | undefined;
     assetsData!: EndowmentAssetData[] | undefined;
     endowmersData!: EndowmerData[] | undefined;
     seersData!: EndowmentSeerData[] | undefined;
     beneficiariesData!: EndowmentBeneficiaryData[] | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IInputEndowmentRegistrationRequestDto) {
         if (data) {
@@ -9836,23 +9826,23 @@ export class InputEndowmentRegistrationRequestDto implements IInputEndowmentRegi
 export interface IInputEndowmentRegistrationRequestDto {
     applicantTypeId: number | undefined;
     endowmentId: string | undefined;
-    endowmentData: EndowmentData;
+    endowmentData: EndowmentData | undefined;
     assetsData: EndowmentAssetData[] | undefined;
     endowmersData: EndowmerData[] | undefined;
     seersData: EndowmentSeerData[] | undefined;
     beneficiariesData: EndowmentBeneficiaryData[] | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class InputEndowmerDto implements IInputEndowmerDto {
-    requestId!: string;
+    requestId!: string | undefined;
     endowmerId!: string | undefined;
     endowmentId!: string | undefined;
     endowmerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
     endowmentPartiesTypeId!: number | undefined;
-    endowmerPerson!: InputApplicationUserDto;
+    endowmerPerson!: InputApplicationUserDto | undefined;
 
     constructor(data?: IInputEndowmerDto) {
         if (data) {
@@ -9898,23 +9888,23 @@ export class InputEndowmerDto implements IInputEndowmerDto {
 }
 
 export interface IInputEndowmerDto {
-    requestId: string;
+    requestId: string | undefined;
     endowmerId: string | undefined;
     endowmentId: string | undefined;
     endowmerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
     endowmentPartiesTypeId: number | undefined;
-    endowmerPerson: InputApplicationUserDto;
+    endowmerPerson: InputApplicationUserDto | undefined;
 }
 
 export class InputEndwomentRegistraionRequestApplicantDto implements IInputEndwomentRegistraionRequestApplicantDto {
     requestId!: string | undefined;
     applicantTypes!: string | undefined;
-    applicant!: InputApplicantDto;
-    applicantEndowmer!: InputApplicantEndowmerDto;
-    applicantSeer!: InputApplicantSeerDto;
-    applicantAgent!: InputApplicantAgentDto;
+    applicant!: InputApplicantDto | undefined;
+    applicantEndowmer!: InputApplicantEndowmerDto | undefined;
+    applicantSeer!: InputApplicantSeerDto | undefined;
+    applicantAgent!: InputApplicantAgentDto | undefined;
 
     constructor(data?: IInputEndwomentRegistraionRequestApplicantDto) {
         if (data) {
@@ -9958,10 +9948,10 @@ export class InputEndwomentRegistraionRequestApplicantDto implements IInputEndwo
 export interface IInputEndwomentRegistraionRequestApplicantDto {
     requestId: string | undefined;
     applicantTypes: string | undefined;
-    applicant: InputApplicantDto;
-    applicantEndowmer: InputApplicantEndowmerDto;
-    applicantSeer: InputApplicantSeerDto;
-    applicantAgent: InputApplicantAgentDto;
+    applicant: InputApplicantDto | undefined;
+    applicantEndowmer: InputApplicantEndowmerDto | undefined;
+    applicantSeer: InputApplicantSeerDto | undefined;
+    applicantAgent: InputApplicantAgentDto | undefined;
 }
 
 export class InputFileDto implements IInputFileDto {
@@ -10016,117 +10006,9 @@ export interface IInputFileDto {
     filters: FileExtraData[] | undefined;
 }
 
-export class InputFiscalAssetDto implements IInputFiscalAssetDto {
-    assetSubTypeId!: number;
-    investmentPortfolioNumber!: number;
-    numberOfShare!: number;
-    currentAssetValue!: number;
-    fiscalAssetAttachementId!: string;
-    id!: string;
-
-    constructor(data?: IInputFiscalAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.assetSubTypeId = _data["assetSubTypeId"];
-            this.investmentPortfolioNumber = _data["investmentPortfolioNumber"];
-            this.numberOfShare = _data["numberOfShare"];
-            this.currentAssetValue = _data["currentAssetValue"];
-            this.fiscalAssetAttachementId = _data["fiscalAssetAttachementId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputFiscalAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputFiscalAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["assetSubTypeId"] = this.assetSubTypeId;
-        data["investmentPortfolioNumber"] = this.investmentPortfolioNumber;
-        data["numberOfShare"] = this.numberOfShare;
-        data["currentAssetValue"] = this.currentAssetValue;
-        data["fiscalAssetAttachementId"] = this.fiscalAssetAttachementId;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputFiscalAssetDto {
-    assetSubTypeId: number;
-    investmentPortfolioNumber: number;
-    numberOfShare: number;
-    currentAssetValue: number;
-    fiscalAssetAttachementId: string;
-    id: string;
-}
-
-export class InputIntellectualPropertyAndTrademarkAssetDto implements IInputIntellectualPropertyAndTrademarkAssetDto {
-    ipatType!: string;
-    ipatDescription!: string | undefined;
-    ipatValue!: number;
-    isDirectedBenefit!: boolean;
-    id!: string;
-
-    constructor(data?: IInputIntellectualPropertyAndTrademarkAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.ipatType = _data["ipatType"];
-            this.ipatDescription = _data["ipatDescription"];
-            this.ipatValue = _data["ipatValue"];
-            this.isDirectedBenefit = _data["isDirectedBenefit"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputIntellectualPropertyAndTrademarkAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputIntellectualPropertyAndTrademarkAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["ipatType"] = this.ipatType;
-        data["ipatDescription"] = this.ipatDescription;
-        data["ipatValue"] = this.ipatValue;
-        data["isDirectedBenefit"] = this.isDirectedBenefit;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputIntellectualPropertyAndTrademarkAssetDto {
-    ipatType: string;
-    ipatDescription: string | undefined;
-    ipatValue: number;
-    isDirectedBenefit: boolean;
-    id: string;
-}
-
 export class InputLookUpDto implements IInputLookUpDto {
     lookUpName!: string | undefined;
-    id!: number;
+    id!: number | undefined;
     filters!: LookupExtraData[] | undefined;
 
     constructor(data?: IInputLookUpDto) {
@@ -10172,304 +10054,8 @@ export class InputLookUpDto implements IInputLookUpDto {
 
 export interface IInputLookUpDto {
     lookUpName: string | undefined;
-    id: number;
+    id: number | undefined;
     filters: LookupExtraData[] | undefined;
-}
-
-export class InputMonetaryAssetDto implements IInputMonetaryAssetDto {
-    assetSubTypeId!: number;
-    monetaryAssetAmount!: number;
-    id!: string;
-
-    constructor(data?: IInputMonetaryAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.assetSubTypeId = _data["assetSubTypeId"];
-            this.monetaryAssetAmount = _data["monetaryAssetAmount"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputMonetaryAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputMonetaryAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["assetSubTypeId"] = this.assetSubTypeId;
-        data["monetaryAssetAmount"] = this.monetaryAssetAmount;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputMonetaryAssetDto {
-    assetSubTypeId: number;
-    monetaryAssetAmount: number;
-    id: string;
-}
-
-export class InputMovableAssetDto implements IInputMovableAssetDto {
-    movableAssetType!: string;
-    movableAssetDescription!: string | undefined;
-    movableAssetOwnershipNumber!: number;
-    movableValue!: number;
-    isDirectedBenefit!: boolean;
-    id!: string;
-
-    constructor(data?: IInputMovableAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.movableAssetType = _data["movableAssetType"];
-            this.movableAssetDescription = _data["movableAssetDescription"];
-            this.movableAssetOwnershipNumber = _data["movableAssetOwnershipNumber"];
-            this.movableValue = _data["movableValue"];
-            this.isDirectedBenefit = _data["isDirectedBenefit"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputMovableAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputMovableAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["movableAssetType"] = this.movableAssetType;
-        data["movableAssetDescription"] = this.movableAssetDescription;
-        data["movableAssetOwnershipNumber"] = this.movableAssetOwnershipNumber;
-        data["movableValue"] = this.movableValue;
-        data["isDirectedBenefit"] = this.isDirectedBenefit;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputMovableAssetDto {
-    movableAssetType: string;
-    movableAssetDescription: string | undefined;
-    movableAssetOwnershipNumber: number;
-    movableValue: number;
-    isDirectedBenefit: boolean;
-    id: string;
-}
-
-export class InputOneAssetDto implements IInputOneAssetDto {
-    requestId!: string;
-    id!: string;
-
-    constructor(data?: IInputOneAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.requestId = _data["requestId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputOneAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputOneAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["requestId"] = this.requestId;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputOneAssetDto {
-    requestId: string;
-    id: string;
-}
-
-export class InputParticularBenefitAssetDto implements IInputParticularBenefitAssetDto {
-    benefitType!: string;
-    benefitDescription!: string | undefined;
-    benefitValue!: number;
-    isDirectedBenefit!: boolean;
-    id!: string;
-
-    constructor(data?: IInputParticularBenefitAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.benefitType = _data["benefitType"];
-            this.benefitDescription = _data["benefitDescription"];
-            this.benefitValue = _data["benefitValue"];
-            this.isDirectedBenefit = _data["isDirectedBenefit"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputParticularBenefitAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputParticularBenefitAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["benefitType"] = this.benefitType;
-        data["benefitDescription"] = this.benefitDescription;
-        data["benefitValue"] = this.benefitValue;
-        data["isDirectedBenefit"] = this.isDirectedBenefit;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputParticularBenefitAssetDto {
-    benefitType: string;
-    benefitDescription: string | undefined;
-    benefitValue: number;
-    isDirectedBenefit: boolean;
-    id: string;
-}
-
-export class InputRealEstateAssetDto implements IInputRealEstateAssetDto {
-    id!: string;
-    assetSubTypeId!: number;
-    regionId!: number;
-    cityId!: number;
-    longitude!: number;
-    latitude!: number;
-    ownershipDeedAttachementId!: string;
-    estimatedAmount!: number;
-
-    constructor(data?: IInputRealEstateAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.id = _data["id"];
-            this.assetSubTypeId = _data["assetSubTypeId"];
-            this.regionId = _data["regionId"];
-            this.cityId = _data["cityId"];
-            this.longitude = _data["longitude"];
-            this.latitude = _data["latitude"];
-            this.ownershipDeedAttachementId = _data["ownershipDeedAttachementId"];
-            this.estimatedAmount = _data["estimatedAmount"];
-        }
-    }
-
-    static fromJS(data: any): InputRealEstateAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputRealEstateAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["id"] = this.id;
-        data["assetSubTypeId"] = this.assetSubTypeId;
-        data["regionId"] = this.regionId;
-        data["cityId"] = this.cityId;
-        data["longitude"] = this.longitude;
-        data["latitude"] = this.latitude;
-        data["ownershipDeedAttachementId"] = this.ownershipDeedAttachementId;
-        data["estimatedAmount"] = this.estimatedAmount;
-        return data;
-    }
-}
-
-export interface IInputRealEstateAssetDto {
-    id: string;
-    assetSubTypeId: number;
-    regionId: number;
-    cityId: number;
-    longitude: number;
-    latitude: number;
-    ownershipDeedAttachementId: string;
-    estimatedAmount: number;
-}
-
-export class InputRemoveAssetDto implements IInputRemoveAssetDto {
-    requestId!: string;
-    id!: string;
-
-    constructor(data?: IInputRemoveAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.requestId = _data["requestId"];
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): InputRemoveAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new InputRemoveAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["requestId"] = this.requestId;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IInputRemoveAssetDto {
-    requestId: string;
-    id: string;
 }
 
 export class IntellectualPropertyAndTrademarkAssetData implements IIntellectualPropertyAndTrademarkAssetData {
@@ -10477,10 +10063,10 @@ export class IntellectualPropertyAndTrademarkAssetData implements IIntellectualP
     ipatValue!: string | undefined;
     isDirectedBenefit!: boolean | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IIntellectualPropertyAndTrademarkAssetData) {
         if (data) {
@@ -10530,23 +10116,75 @@ export interface IIntellectualPropertyAndTrademarkAssetData {
     ipatValue: string | undefined;
     isDirectedBenefit: boolean | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class IntellectualPropertyAndTrademarkAssetDto implements IIntellectualPropertyAndTrademarkAssetDto {
+    ipatType!: string;
+    ipatDescription!: string | undefined;
+    ipatValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string | undefined;
+
+    constructor(data?: IIntellectualPropertyAndTrademarkAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.ipatType = _data["ipatType"];
+            this.ipatDescription = _data["ipatDescription"];
+            this.ipatValue = _data["ipatValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): IntellectualPropertyAndTrademarkAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new IntellectualPropertyAndTrademarkAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["ipatType"] = this.ipatType;
+        data["ipatDescription"] = this.ipatDescription;
+        data["ipatValue"] = this.ipatValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IIntellectualPropertyAndTrademarkAssetDto {
+    ipatType: string;
+    ipatDescription: string | undefined;
+    ipatValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string | undefined;
 }
 
 export class IssuanceCourt implements IIssuanceCourt {
-    mojCode!: number;
+    mojCode!: number | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IIssuanceCourt) {
         if (data) {
@@ -10596,25 +10234,25 @@ export class IssuanceCourt implements IIssuanceCourt {
 }
 
 export interface IIssuanceCourt {
-    mojCode: number;
+    mojCode: number | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class LanguageInfo implements ILanguageInfo {
     name!: string | undefined;
     displayName!: string | undefined;
     icon!: string | undefined;
-    isDefault!: boolean;
-    isEnabled!: boolean;
-    isRightToLeft!: boolean;
+    isDefault!: boolean | undefined;
+    isEnabled!: boolean | undefined;
+    isRightToLeft!: boolean | undefined;
 
     constructor(data?: ILanguageInfo) {
         if (data) {
@@ -10659,16 +10297,16 @@ export interface ILanguageInfo {
     name: string | undefined;
     displayName: string | undefined;
     icon: string | undefined;
-    isDefault: boolean;
-    isEnabled: boolean;
-    isRightToLeft: boolean;
+    isDefault: boolean | undefined;
+    isEnabled: boolean | undefined;
+    isRightToLeft: boolean | undefined;
 }
 
 export class LocalizationDto implements ILocalizationDto {
-    currentCulture!: AppCulture;
+    currentCulture!: AppCulture | undefined;
     languages!: LanguageInfo[] | undefined;
     localizationDatas!: { [key: string]: { [key: string]: string; }; } | undefined;
-    currentLanguage!: LanguageInfo;
+    currentLanguage!: LanguageInfo | undefined;
 
     constructor(data?: ILocalizationDto) {
         if (data) {
@@ -10726,10 +10364,10 @@ export class LocalizationDto implements ILocalizationDto {
 }
 
 export interface ILocalizationDto {
-    currentCulture: AppCulture;
+    currentCulture: AppCulture | undefined;
     languages: LanguageInfo[] | undefined;
     localizationDatas: { [key: string]: { [key: string]: string; }; } | undefined;
-    currentLanguage: LanguageInfo;
+    currentLanguage: LanguageInfo | undefined;
 }
 
 export class LoginModel implements ILoginModel {
@@ -10770,12 +10408,12 @@ export interface ILoginModel {
 
 export class LookupDto implements ILookupDto {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     hint!: string | undefined;
     lookupExtraDatas!: LookupExtraData[] | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: ILookupDto) {
         if (data) {
@@ -10828,12 +10466,12 @@ export class LookupDto implements ILookupDto {
 
 export interface ILookupDto {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     hint: string | undefined;
     lookupExtraDatas: LookupExtraData[] | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class LookupExtraData implements ILookupExtraData {
@@ -10877,13 +10515,13 @@ export interface ILookupExtraData {
 }
 
 export class MonetaryAssetData implements IMonetaryAssetData {
-    assetSubTypeId!: number;
+    assetSubTypeId!: number | undefined;
     monetaryAssetAmount!: number | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IMonetaryAssetData) {
         if (data) {
@@ -10927,13 +10565,57 @@ export class MonetaryAssetData implements IMonetaryAssetData {
 }
 
 export interface IMonetaryAssetData {
-    assetSubTypeId: number;
+    assetSubTypeId: number | undefined;
     monetaryAssetAmount: number | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class MonetaryAssetDto implements IMonetaryAssetDto {
+    assetSubTypeId!: number | undefined;
+    monetaryAssetAmount!: number | undefined;
+    id!: string | undefined;
+
+    constructor(data?: IMonetaryAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.monetaryAssetAmount = _data["monetaryAssetAmount"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MonetaryAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MonetaryAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["monetaryAssetAmount"] = this.monetaryAssetAmount;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMonetaryAssetDto {
+    assetSubTypeId: number | undefined;
+    monetaryAssetAmount: number | undefined;
+    id: string | undefined;
 }
 
 export class MovableAssetData implements IMovableAssetData {
@@ -10941,10 +10623,10 @@ export class MovableAssetData implements IMovableAssetData {
     movableValue!: number | undefined;
     isDirectedBenefit!: boolean | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IMovableAssetData) {
         if (data) {
@@ -10994,10 +10676,66 @@ export interface IMovableAssetData {
     movableValue: number | undefined;
     isDirectedBenefit: boolean | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class MovableAssetDto implements IMovableAssetDto {
+    movableAssetType!: string;
+    movableAssetDescription!: string | undefined;
+    movableAssetOwnershipNumber!: number | undefined;
+    movableValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string | undefined;
+
+    constructor(data?: IMovableAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.movableAssetType = _data["movableAssetType"];
+            this.movableAssetDescription = _data["movableAssetDescription"];
+            this.movableAssetOwnershipNumber = _data["movableAssetOwnershipNumber"];
+            this.movableValue = _data["movableValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): MovableAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MovableAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["movableAssetType"] = this.movableAssetType;
+        data["movableAssetDescription"] = this.movableAssetDescription;
+        data["movableAssetOwnershipNumber"] = this.movableAssetOwnershipNumber;
+        data["movableValue"] = this.movableValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IMovableAssetDto {
+    movableAssetType: string;
+    movableAssetDescription: string | undefined;
+    movableAssetOwnershipNumber: number | undefined;
+    movableValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string | undefined;
 }
 
 export class Nationality implements INationality {
@@ -11005,14 +10743,14 @@ export class Nationality implements INationality {
     hrsdCode!: string | undefined;
     nafathCode!: string | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: INationality) {
         if (data) {
@@ -11070,14 +10808,14 @@ export interface INationality {
     hrsdCode: string | undefined;
     nafathCode: string | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class NotificationMessageDto implements INotificationMessageDto {
@@ -11094,8 +10832,8 @@ export class NotificationMessageDto implements INotificationMessageDto {
     isSent!: boolean | undefined;
     sentDatetime!: DateTime | undefined;
     parameters!: TemplateParameter[] | undefined;
-    notificationTemplateId!: number;
-    id!: string;
+    notificationTemplateId!: number | undefined;
+    id!: string | undefined;
 
     constructor(data?: INotificationMessageDto) {
         if (data) {
@@ -11176,7 +10914,47 @@ export interface INotificationMessageDto {
     isSent: boolean | undefined;
     sentDatetime: DateTime | undefined;
     parameters: TemplateParameter[] | undefined;
-    notificationTemplateId: number;
+    notificationTemplateId: number | undefined;
+    id: string | undefined;
+}
+
+export class OneAssetDto implements IOneAssetDto {
+    requestId!: string;
+    id!: string;
+
+    constructor(data?: IOneAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): OneAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new OneAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IOneAssetDto {
+    requestId: string;
     id: string;
 }
 
@@ -11184,8 +10962,8 @@ export class OtpGenerationOutputDto implements IOtpGenerationOutputDto {
     code!: string | undefined;
     url!: string | undefined;
     hash!: string | undefined;
-    expireDate!: DateTime;
-    validityMinutes!: number;
+    expireDate!: DateTime | undefined;
+    validityMinutes!: number | undefined;
 
     constructor(data?: IOtpGenerationOutputDto) {
         if (data) {
@@ -11228,15 +11006,15 @@ export interface IOtpGenerationOutputDto {
     code: string | undefined;
     url: string | undefined;
     hash: string | undefined;
-    expireDate: DateTime;
-    validityMinutes: number;
+    expireDate: DateTime | undefined;
+    validityMinutes: number | undefined;
 }
 
 export class OtpVerificationOutputDto implements IOtpVerificationOutputDto {
-    id!: number;
+    id!: number | undefined;
     hash!: string | undefined;
-    expireDate!: DateTime;
-    validityMinutes!: number;
+    expireDate!: DateTime | undefined;
+    validityMinutes!: number | undefined;
 
     constructor(data?: IOtpVerificationOutputDto) {
         if (data) {
@@ -11274,10 +11052,10 @@ export class OtpVerificationOutputDto implements IOtpVerificationOutputDto {
 }
 
 export interface IOtpVerificationOutputDto {
-    id: number;
+    id: number | undefined;
     hash: string | undefined;
-    expireDate: DateTime;
-    validityMinutes: number;
+    expireDate: DateTime | undefined;
+    validityMinutes: number | undefined;
 }
 
 export class OutputApplicationUserDto implements IOutputApplicationUserDto {
@@ -11285,12 +11063,12 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     idNumber!: string | undefined;
     birthDate!: DateTime | undefined;
     birthDateHijri!: string | undefined;
-    gender!: UserGender;
+    gender!: UserGender | undefined;
     idTypeId!: number | undefined;
     regionId!: number | undefined;
-    region!: LookupDto;
+    region!: LookupDto | undefined;
     cityId!: number | undefined;
-    city!: LookupDto;
+    city!: LookupDto | undefined;
     fullName!: string | undefined;
     userName!: string | undefined;
     firstNameEn!: string | undefined;
@@ -11310,7 +11088,7 @@ export class OutputApplicationUserDto implements IOutputApplicationUserDto {
     iqamaIssuePlaceCode!: string | undefined;
     placeOfBirthCode!: string | undefined;
     nationalityId!: number | undefined;
-    nationality!: LookupDto;
+    nationality!: LookupDto | undefined;
     noIdentityReason!: number | undefined;
     validatedByYaqeen!: boolean | undefined;
     isAlive!: boolean | undefined;
@@ -11428,12 +11206,12 @@ export interface IOutputApplicationUserDto {
     idNumber: string | undefined;
     birthDate: DateTime | undefined;
     birthDateHijri: string | undefined;
-    gender: UserGender;
+    gender: UserGender | undefined;
     idTypeId: number | undefined;
     regionId: number | undefined;
-    region: LookupDto;
+    region: LookupDto | undefined;
     cityId: number | undefined;
-    city: LookupDto;
+    city: LookupDto | undefined;
     fullName: string | undefined;
     userName: string | undefined;
     firstNameEn: string | undefined;
@@ -11453,7 +11231,7 @@ export interface IOutputApplicationUserDto {
     iqamaIssuePlaceCode: string | undefined;
     placeOfBirthCode: string | undefined;
     nationalityId: number | undefined;
-    nationality: LookupDto;
+    nationality: LookupDto | undefined;
     noIdentityReason: number | undefined;
     validatedByYaqeen: boolean | undefined;
     isAlive: boolean | undefined;
@@ -11464,129 +11242,13 @@ export interface IOutputApplicationUserDto {
     phoneNumberConfirmed: boolean | undefined;
 }
 
-export class OutputAssetDto implements IOutputAssetDto {
-    endowmentId!: string | undefined;
-    assetTypeId!: number | undefined;
-    assetSubTypeId!: number | undefined;
-    assetSizeId!: number | undefined;
-    assetApproximatelyAmount!: number | undefined;
-    assetSubTypeDescription!: string | undefined;
-    assetDescription!: string | undefined;
-    assetDeedNumber!: string | undefined;
-    assetIssuanceCourt!: string | undefined;
-    assetDeedDate!: DateTime | undefined;
-    assetDeedDateHijri!: string | undefined;
-    requestId!: string;
-    animalOrAgriculturalAsset!: InputAnimalOrAgriculturalAssetDto;
-    businessEntityAsset!: InputBusinessEntityAssetDto;
-    fiscalAsset!: InputFiscalAssetDto;
-    intellectualPropertyAndTrademarkAsset!: InputIntellectualPropertyAndTrademarkAssetDto;
-    movableAsset!: InputMovableAssetDto;
-    monetaryAsset!: InputMonetaryAssetDto;
-    particularBenefitAsset!: InputParticularBenefitAssetDto;
-    realEstateAsset!: InputRealEstateAssetDto;
-    id!: string | undefined;
-
-    constructor(data?: IOutputAssetDto) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.endowmentId = _data["endowmentId"];
-            this.assetTypeId = _data["assetTypeId"];
-            this.assetSubTypeId = _data["assetSubTypeId"];
-            this.assetSizeId = _data["assetSizeId"];
-            this.assetApproximatelyAmount = _data["assetApproximatelyAmount"];
-            this.assetSubTypeDescription = _data["assetSubTypeDescription"];
-            this.assetDescription = _data["assetDescription"];
-            this.assetDeedNumber = _data["assetDeedNumber"];
-            this.assetIssuanceCourt = _data["assetIssuanceCourt"];
-            this.assetDeedDate = _data["assetDeedDate"] ? DateTime.fromISO(_data["assetDeedDate"].toString()) : <any>undefined;
-            this.assetDeedDateHijri = _data["assetDeedDateHijri"];
-            this.requestId = _data["requestId"];
-            this.animalOrAgriculturalAsset = _data["animalOrAgriculturalAsset"] ? InputAnimalOrAgriculturalAssetDto.fromJS(_data["animalOrAgriculturalAsset"]) : <any>undefined;
-            this.businessEntityAsset = _data["businessEntityAsset"] ? InputBusinessEntityAssetDto.fromJS(_data["businessEntityAsset"]) : <any>undefined;
-            this.fiscalAsset = _data["fiscalAsset"] ? InputFiscalAssetDto.fromJS(_data["fiscalAsset"]) : <any>undefined;
-            this.intellectualPropertyAndTrademarkAsset = _data["intellectualPropertyAndTrademarkAsset"] ? InputIntellectualPropertyAndTrademarkAssetDto.fromJS(_data["intellectualPropertyAndTrademarkAsset"]) : <any>undefined;
-            this.movableAsset = _data["movableAsset"] ? InputMovableAssetDto.fromJS(_data["movableAsset"]) : <any>undefined;
-            this.monetaryAsset = _data["monetaryAsset"] ? InputMonetaryAssetDto.fromJS(_data["monetaryAsset"]) : <any>undefined;
-            this.particularBenefitAsset = _data["particularBenefitAsset"] ? InputParticularBenefitAssetDto.fromJS(_data["particularBenefitAsset"]) : <any>undefined;
-            this.realEstateAsset = _data["realEstateAsset"] ? InputRealEstateAssetDto.fromJS(_data["realEstateAsset"]) : <any>undefined;
-            this.id = _data["id"];
-        }
-    }
-
-    static fromJS(data: any): OutputAssetDto {
-        data = typeof data === 'object' ? data : {};
-        let result = new OutputAssetDto();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["endowmentId"] = this.endowmentId;
-        data["assetTypeId"] = this.assetTypeId;
-        data["assetSubTypeId"] = this.assetSubTypeId;
-        data["assetSizeId"] = this.assetSizeId;
-        data["assetApproximatelyAmount"] = this.assetApproximatelyAmount;
-        data["assetSubTypeDescription"] = this.assetSubTypeDescription;
-        data["assetDescription"] = this.assetDescription;
-        data["assetDeedNumber"] = this.assetDeedNumber;
-        data["assetIssuanceCourt"] = this.assetIssuanceCourt;
-        data["assetDeedDate"] = this.assetDeedDate ? this.assetDeedDate.toString() : <any>undefined;
-        data["assetDeedDateHijri"] = this.assetDeedDateHijri;
-        data["requestId"] = this.requestId;
-        data["animalOrAgriculturalAsset"] = this.animalOrAgriculturalAsset ? this.animalOrAgriculturalAsset.toJSON() : <any>undefined;
-        data["businessEntityAsset"] = this.businessEntityAsset ? this.businessEntityAsset.toJSON() : <any>undefined;
-        data["fiscalAsset"] = this.fiscalAsset ? this.fiscalAsset.toJSON() : <any>undefined;
-        data["intellectualPropertyAndTrademarkAsset"] = this.intellectualPropertyAndTrademarkAsset ? this.intellectualPropertyAndTrademarkAsset.toJSON() : <any>undefined;
-        data["movableAsset"] = this.movableAsset ? this.movableAsset.toJSON() : <any>undefined;
-        data["monetaryAsset"] = this.monetaryAsset ? this.monetaryAsset.toJSON() : <any>undefined;
-        data["particularBenefitAsset"] = this.particularBenefitAsset ? this.particularBenefitAsset.toJSON() : <any>undefined;
-        data["realEstateAsset"] = this.realEstateAsset ? this.realEstateAsset.toJSON() : <any>undefined;
-        data["id"] = this.id;
-        return data;
-    }
-}
-
-export interface IOutputAssetDto {
-    endowmentId: string | undefined;
-    assetTypeId: number | undefined;
-    assetSubTypeId: number | undefined;
-    assetSizeId: number | undefined;
-    assetApproximatelyAmount: number | undefined;
-    assetSubTypeDescription: string | undefined;
-    assetDescription: string | undefined;
-    assetDeedNumber: string | undefined;
-    assetIssuanceCourt: string | undefined;
-    assetDeedDate: DateTime | undefined;
-    assetDeedDateHijri: string | undefined;
-    requestId: string;
-    animalOrAgriculturalAsset: InputAnimalOrAgriculturalAssetDto;
-    businessEntityAsset: InputBusinessEntityAssetDto;
-    fiscalAsset: InputFiscalAssetDto;
-    intellectualPropertyAndTrademarkAsset: InputIntellectualPropertyAndTrademarkAssetDto;
-    movableAsset: InputMovableAssetDto;
-    monetaryAsset: InputMonetaryAssetDto;
-    particularBenefitAsset: InputParticularBenefitAssetDto;
-    realEstateAsset: InputRealEstateAssetDto;
-    id: string | undefined;
-}
-
 export class OutputBeneficiaryDto implements IOutputBeneficiaryDto {
     beneficiaryId!: string | undefined;
     endowmentId!: string | undefined;
     beneficiaryName!: string | undefined;
     spendingCategoryId!: number | undefined;
     isBeneficiaryInsideKsa!: boolean | undefined;
-    beneficiaryPerson!: OutputApplicationUserDto;
+    beneficiaryPerson!: OutputApplicationUserDto | undefined;
 
     constructor(data?: IOutputBeneficiaryDto) {
         if (data) {
@@ -11633,7 +11295,7 @@ export interface IOutputBeneficiaryDto {
     beneficiaryName: string | undefined;
     spendingCategoryId: number | undefined;
     isBeneficiaryInsideKsa: boolean | undefined;
-    beneficiaryPerson: OutputApplicationUserDto;
+    beneficiaryPerson: OutputApplicationUserDto | undefined;
 }
 
 export class OutputEndowmentDetailsDto implements IOutputEndowmentDetailsDto {
@@ -11762,13 +11424,13 @@ export interface IOutputEndowmentDetailsDto {
 
 export class OutputEndowmerDto implements IOutputEndowmerDto {
     endowmerId!: string | undefined;
-    endowmentId!: string;
+    endowmentId!: string | undefined;
     endowmerTypeId!: number | undefined;
     prestigiousAttributeTypeId!: number | undefined;
     commercialNumber!: string | undefined;
     endowmentPartiesTypeId!: number | undefined;
-    isMainApplicant!: boolean;
-    endowmerPerson!: OutputApplicationUserDto;
+    isMainApplicant!: boolean | undefined;
+    endowmerPerson!: OutputApplicationUserDto | undefined;
 
     constructor(data?: IOutputEndowmerDto) {
         if (data) {
@@ -11815,24 +11477,24 @@ export class OutputEndowmerDto implements IOutputEndowmerDto {
 
 export interface IOutputEndowmerDto {
     endowmerId: string | undefined;
-    endowmentId: string;
+    endowmentId: string | undefined;
     endowmerTypeId: number | undefined;
     prestigiousAttributeTypeId: number | undefined;
     commercialNumber: string | undefined;
     endowmentPartiesTypeId: number | undefined;
-    isMainApplicant: boolean;
-    endowmerPerson: OutputApplicationUserDto;
+    isMainApplicant: boolean | undefined;
+    endowmerPerson: OutputApplicationUserDto | undefined;
 }
 
 export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRegistrationRequestDto {
     requestId!: string | undefined;
     applicantTypes!: string | undefined;
-    requestStatusId!: RequestStatusEnum;
-    applicant!: InputApplicantDto;
-    applicantEndowmer!: InputApplicantEndowmerDto;
-    applicantSeer!: InputApplicantSeerDto;
-    applicantAgent!: InputApplicantAgentDto;
-    id!: string;
+    requestStatusId!: RequestStatusEnum | undefined;
+    applicant!: InputApplicantDto | undefined;
+    applicantEndowmer!: InputApplicantEndowmerDto | undefined;
+    applicantSeer!: InputApplicantSeerDto | undefined;
+    applicantAgent!: InputApplicantAgentDto | undefined;
+    id!: string | undefined;
 
     constructor(data?: IOutputEndwomentRegistrationRequestDto) {
         if (data) {
@@ -11880,19 +11542,19 @@ export class OutputEndwomentRegistrationRequestDto implements IOutputEndwomentRe
 export interface IOutputEndwomentRegistrationRequestDto {
     requestId: string | undefined;
     applicantTypes: string | undefined;
-    requestStatusId: RequestStatusEnum;
-    applicant: InputApplicantDto;
-    applicantEndowmer: InputApplicantEndowmerDto;
-    applicantSeer: InputApplicantSeerDto;
-    applicantAgent: InputApplicantAgentDto;
-    id: string;
+    requestStatusId: RequestStatusEnum | undefined;
+    applicant: InputApplicantDto | undefined;
+    applicantEndowmer: InputApplicantEndowmerDto | undefined;
+    applicantSeer: InputApplicantSeerDto | undefined;
+    applicantAgent: InputApplicantAgentDto | undefined;
+    id: string | undefined;
 }
 
 export class OutputFileDto implements IOutputFileDto {
-    id!: string;
+    id!: string | undefined;
     fileData!: string | undefined;
     fileName!: string | undefined;
-    size!: number;
+    size!: number | undefined;
     contentType!: string | undefined;
     extraDatas!: FileExtraData[] | undefined;
 
@@ -11944,10 +11606,10 @@ export class OutputFileDto implements IOutputFileDto {
 }
 
 export interface IOutputFileDto {
-    id: string;
+    id: string | undefined;
     fileData: string | undefined;
     fileName: string | undefined;
-    size: number;
+    size: number | undefined;
     contentType: string | undefined;
     extraDatas: FileExtraData[] | undefined;
 }
@@ -11969,7 +11631,7 @@ export class OutputSeerDto implements IOutputSeerDto {
     endSeerReasonTypeId!: number | undefined;
     isDeleted!: boolean | undefined;
     endowmentPartiesTypeId!: number | undefined;
-    seerPerson!: OutputApplicationUserDto;
+    seerPerson!: OutputApplicationUserDto | undefined;
 
     constructor(data?: IOutputSeerDto) {
         if (data) {
@@ -12049,11 +11711,11 @@ export interface IOutputSeerDto {
     endSeerReasonTypeId: number | undefined;
     isDeleted: boolean | undefined;
     endowmentPartiesTypeId: number | undefined;
-    seerPerson: OutputApplicationUserDto;
+    seerPerson: OutputApplicationUserDto | undefined;
 }
 
 export class PagedResultDtoOfEndowmentDto implements IPagedResultDtoOfEndowmentDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: EndowmentDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfEndowmentDto) {
@@ -12096,12 +11758,12 @@ export class PagedResultDtoOfEndowmentDto implements IPagedResultDtoOfEndowmentD
 }
 
 export interface IPagedResultDtoOfEndowmentDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: EndowmentDto[] | undefined;
 }
 
 export class PagedResultDtoOfEndowmentOutputDto implements IPagedResultDtoOfEndowmentOutputDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: EndowmentOutputDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfEndowmentOutputDto) {
@@ -12144,12 +11806,12 @@ export class PagedResultDtoOfEndowmentOutputDto implements IPagedResultDtoOfEndo
 }
 
 export interface IPagedResultDtoOfEndowmentOutputDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: EndowmentOutputDto[] | undefined;
 }
 
 export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: LookupDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfLookupDto) {
@@ -12192,12 +11854,12 @@ export class PagedResultDtoOfLookupDto implements IPagedResultDtoOfLookupDto {
 }
 
 export interface IPagedResultDtoOfLookupDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: LookupDto[] | undefined;
 }
 
 export class PagedResultDtoOfOutputBeneficiaryDto implements IPagedResultDtoOfOutputBeneficiaryDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: OutputBeneficiaryDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfOutputBeneficiaryDto) {
@@ -12240,12 +11902,12 @@ export class PagedResultDtoOfOutputBeneficiaryDto implements IPagedResultDtoOfOu
 }
 
 export interface IPagedResultDtoOfOutputBeneficiaryDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: OutputBeneficiaryDto[] | undefined;
 }
 
 export class PagedResultDtoOfOutputEndowmerDto implements IPagedResultDtoOfOutputEndowmerDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: OutputEndowmerDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfOutputEndowmerDto) {
@@ -12288,12 +11950,12 @@ export class PagedResultDtoOfOutputEndowmerDto implements IPagedResultDtoOfOutpu
 }
 
 export interface IPagedResultDtoOfOutputEndowmerDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: OutputEndowmerDto[] | undefined;
 }
 
 export class PagedResultDtoOfOutputSeerDto implements IPagedResultDtoOfOutputSeerDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: OutputSeerDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfOutputSeerDto) {
@@ -12336,12 +11998,12 @@ export class PagedResultDtoOfOutputSeerDto implements IPagedResultDtoOfOutputSee
 }
 
 export interface IPagedResultDtoOfOutputSeerDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: OutputSeerDto[] | undefined;
 }
 
 export class PagedResultDtoOfRequestOutputDto implements IPagedResultDtoOfRequestOutputDto {
-    totalCount!: number;
+    totalCount!: number | undefined;
     items!: RequestOutputDto[] | undefined;
 
     constructor(data?: IPagedResultDtoOfRequestOutputDto) {
@@ -12384,7 +12046,7 @@ export class PagedResultDtoOfRequestOutputDto implements IPagedResultDtoOfReques
 }
 
 export interface IPagedResultDtoOfRequestOutputDto {
-    totalCount: number;
+    totalCount: number | undefined;
     items: RequestOutputDto[] | undefined;
 }
 
@@ -12392,10 +12054,10 @@ export class ParticularBenefitAssetData implements IParticularBenefitAssetData {
     benefitValue!: number | undefined;
     isDirectedBenefit!: boolean | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IParticularBenefitAssetData) {
         if (data) {
@@ -12442,10 +12104,62 @@ export interface IParticularBenefitAssetData {
     benefitValue: number | undefined;
     isDirectedBenefit: boolean | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class ParticularBenefitAssetDto implements IParticularBenefitAssetDto {
+    benefitType!: string;
+    benefitDescription!: string | undefined;
+    benefitValue!: number | undefined;
+    isDirectedBenefit!: boolean;
+    id!: string | undefined;
+
+    constructor(data?: IParticularBenefitAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.benefitType = _data["benefitType"];
+            this.benefitDescription = _data["benefitDescription"];
+            this.benefitValue = _data["benefitValue"];
+            this.isDirectedBenefit = _data["isDirectedBenefit"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): ParticularBenefitAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ParticularBenefitAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["benefitType"] = this.benefitType;
+        data["benefitDescription"] = this.benefitDescription;
+        data["benefitValue"] = this.benefitValue;
+        data["isDirectedBenefit"] = this.isDirectedBenefit;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IParticularBenefitAssetDto {
+    benefitType: string;
+    benefitDescription: string | undefined;
+    benefitValue: number | undefined;
+    isDirectedBenefit: boolean;
+    id: string | undefined;
 }
 
 export class PhoneOtpGenerationInputDto implements IPhoneOtpGenerationInputDto {
@@ -12543,10 +12257,10 @@ export class RealEstateAssetData implements IRealEstateAssetData {
     latitude!: number | undefined;
     ownershipDeedAttachementId!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IRealEstateAssetData) {
         if (data) {
@@ -12602,16 +12316,80 @@ export interface IRealEstateAssetData {
     latitude: number | undefined;
     ownershipDeedAttachementId: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
+}
+
+export class RealEstateAssetDto implements IRealEstateAssetDto {
+    id!: string | undefined;
+    assetSubTypeId!: number;
+    regionId!: number;
+    cityId!: number;
+    longitude!: number;
+    latitude!: number;
+    ownershipDeedAttachementId!: string;
+    estimatedAmount!: number;
+
+    constructor(data?: IRealEstateAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.assetSubTypeId = _data["assetSubTypeId"];
+            this.regionId = _data["regionId"];
+            this.cityId = _data["cityId"];
+            this.longitude = _data["longitude"];
+            this.latitude = _data["latitude"];
+            this.ownershipDeedAttachementId = _data["ownershipDeedAttachementId"];
+            this.estimatedAmount = _data["estimatedAmount"];
+        }
+    }
+
+    static fromJS(data: any): RealEstateAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RealEstateAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["assetSubTypeId"] = this.assetSubTypeId;
+        data["regionId"] = this.regionId;
+        data["cityId"] = this.cityId;
+        data["longitude"] = this.longitude;
+        data["latitude"] = this.latitude;
+        data["ownershipDeedAttachementId"] = this.ownershipDeedAttachementId;
+        data["estimatedAmount"] = this.estimatedAmount;
+        return data;
+    }
+}
+
+export interface IRealEstateAssetDto {
+    id: string | undefined;
+    assetSubTypeId: number;
+    regionId: number;
+    cityId: number;
+    longitude: number;
+    latitude: number;
+    ownershipDeedAttachementId: string;
+    estimatedAmount: number;
 }
 
 export class RefreshToken implements IRefreshToken {
     token!: string | undefined;
-    expires!: DateTime;
-    created!: DateTime;
+    expires!: DateTime | undefined;
+    created!: DateTime | undefined;
 
     constructor(data?: IRefreshToken) {
         if (data) {
@@ -12648,21 +12426,21 @@ export class RefreshToken implements IRefreshToken {
 
 export interface IRefreshToken {
     token: string | undefined;
-    expires: DateTime;
-    created: DateTime;
+    expires: DateTime | undefined;
+    created: DateTime | undefined;
 }
 
 export class Region implements IRegion {
     regionCode!: string | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IRegion) {
         if (data) {
@@ -12714,14 +12492,54 @@ export class Region implements IRegion {
 export interface IRegion {
     regionCode: string | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
+}
+
+export class RemoveAssetDto implements IRemoveAssetDto {
+    requestId!: string;
+    id!: string;
+
+    constructor(data?: IRemoveAssetDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.requestId = _data["requestId"];
+            this.id = _data["id"];
+        }
+    }
+
+    static fromJS(data: any): RemoveAssetDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new RemoveAssetDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["requestId"] = this.requestId;
+        data["id"] = this.id;
+        return data;
+    }
+}
+
+export interface IRemoveAssetDto {
+    requestId: string;
+    id: string;
 }
 
 export class RemoveBeneficiaryInputDto implements IRemoveBeneficiaryInputDto {
@@ -12805,22 +12623,22 @@ export interface IRemoveSeerInputDto {
 }
 
 export class Request implements IRequest {
-    requestNumber!: number;
+    requestNumber!: number | undefined;
     applicantId!: string | undefined;
     requestTypeId!: number | undefined;
     requestStatusId!: number | undefined;
     serialNumber!: string | undefined;
     workflowInstanceId!: string | undefined;
     submitionDate!: DateTime | undefined;
-    applicant!: ApplicationUser;
-    endowmentRegistrationRequest!: EndowmentRegistrationRequest;
-    requestType!: RequestType;
-    requestStatus!: RequestStatus;
+    applicant!: ApplicationUser | undefined;
+    endowmentRegistrationRequest!: EndowmentRegistrationRequest | undefined;
+    requestType!: RequestType | undefined;
+    requestStatus!: RequestStatus | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IRequest) {
         if (data) {
@@ -12882,28 +12700,28 @@ export class Request implements IRequest {
 }
 
 export interface IRequest {
-    requestNumber: number;
+    requestNumber: number | undefined;
     applicantId: string | undefined;
     requestTypeId: number | undefined;
     requestStatusId: number | undefined;
     serialNumber: string | undefined;
     workflowInstanceId: string | undefined;
     submitionDate: DateTime | undefined;
-    applicant: ApplicationUser;
-    endowmentRegistrationRequest: EndowmentRegistrationRequest;
-    requestType: RequestType;
-    requestStatus: RequestStatus;
+    applicant: ApplicationUser | undefined;
+    endowmentRegistrationRequest: EndowmentRegistrationRequest | undefined;
+    requestType: RequestType | undefined;
+    requestStatus: RequestStatus | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class RequestDto implements IRequestDto {
-    requestNumber!: number;
+    requestNumber!: number | undefined;
     serialNumber!: string | undefined;
-    id!: string;
+    id!: string | undefined;
 
     constructor(data?: IRequestDto) {
         if (data) {
@@ -12939,14 +12757,14 @@ export class RequestDto implements IRequestDto {
 }
 
 export interface IRequestDto {
-    requestNumber: number;
+    requestNumber: number | undefined;
     serialNumber: string | undefined;
-    id: string;
+    id: string | undefined;
 }
 
 export class RequestModelDto implements IRequestModelDto {
-    requestDto!: RequestDto;
-    actionInput!: ActionInput;
+    requestDto!: RequestDto | undefined;
+    actionInput!: ActionInput | undefined;
 
     constructor(data?: IRequestModelDto) {
         if (data) {
@@ -12980,23 +12798,23 @@ export class RequestModelDto implements IRequestModelDto {
 }
 
 export interface IRequestModelDto {
-    requestDto: RequestDto;
-    actionInput: ActionInput;
+    requestDto: RequestDto | undefined;
+    actionInput: ActionInput | undefined;
 }
 
 export class RequestOutputDto implements IRequestOutputDto {
-    id!: string;
-    requestNumber!: number;
+    id!: string | undefined;
+    requestNumber!: number | undefined;
     applicantId!: string | undefined;
     requestTypeId!: number | undefined;
     requestStatusId!: number | undefined;
     workflowInstanceId!: string | undefined;
     serialNumber!: string | undefined;
     submitionDate!: DateTime | undefined;
-    applicationUser!: ApplicationUser;
-    endowmentRegistrationRequest!: EndowmentRegistrationRequest;
-    requestType!: RequestType;
-    requestStatus!: RequestStatus;
+    applicationUser!: ApplicationUser | undefined;
+    endowmentRegistrationRequest!: EndowmentRegistrationRequest | undefined;
+    requestType!: RequestType | undefined;
+    requestStatus!: RequestStatus | undefined;
 
     constructor(data?: IRequestOutputDto) {
         if (data) {
@@ -13050,32 +12868,32 @@ export class RequestOutputDto implements IRequestOutputDto {
 }
 
 export interface IRequestOutputDto {
-    id: string;
-    requestNumber: number;
+    id: string | undefined;
+    requestNumber: number | undefined;
     applicantId: string | undefined;
     requestTypeId: number | undefined;
     requestStatusId: number | undefined;
     workflowInstanceId: string | undefined;
     serialNumber: string | undefined;
     submitionDate: DateTime | undefined;
-    applicationUser: ApplicationUser;
-    endowmentRegistrationRequest: EndowmentRegistrationRequest;
-    requestType: RequestType;
-    requestStatus: RequestStatus;
+    applicationUser: ApplicationUser | undefined;
+    endowmentRegistrationRequest: EndowmentRegistrationRequest | undefined;
+    requestType: RequestType | undefined;
+    requestStatus: RequestStatus | undefined;
 }
 
 export class RequestStatus implements IRequestStatus {
     statusCode!: string | undefined;
     requestTypes!: RequestType[] | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IRequestStatus) {
         if (data) {
@@ -13138,14 +12956,14 @@ export interface IRequestStatus {
     statusCode: string | undefined;
     requestTypes: RequestType[] | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export enum RequestStatusEnum {
@@ -13165,14 +12983,14 @@ export class RequestType implements IRequestType {
     requestTypePrefix!: string | undefined;
     requestStatuses!: RequestStatus[] | undefined;
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: IRequestType) {
         if (data) {
@@ -13238,19 +13056,19 @@ export interface IRequestType {
     requestTypePrefix: string | undefined;
     requestStatuses: RequestStatus[] | undefined;
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class SentNotificationMessagesDto implements ISentNotificationMessagesDto {
-    notificationMessageDto!: NotificationMessageDto;
-    id!: string;
+    notificationMessageDto!: NotificationMessageDto | undefined;
+    id!: string | undefined;
 
     constructor(data?: ISentNotificationMessagesDto) {
         if (data) {
@@ -13284,8 +13102,8 @@ export class SentNotificationMessagesDto implements ISentNotificationMessagesDto
 }
 
 export interface ISentNotificationMessagesDto {
-    notificationMessageDto: NotificationMessageDto;
-    id: string;
+    notificationMessageDto: NotificationMessageDto | undefined;
+    id: string | undefined;
 }
 
 export class Setting implements ISetting {
@@ -13326,14 +13144,14 @@ export interface ISetting {
 
 export class SpendingCategory implements ISpendingCategory {
     localizedKey!: string | undefined;
-    isEnabled!: boolean;
+    isEnabled!: boolean | undefined;
     name!: string | undefined;
     hintLoclizedKey!: string | undefined;
     createdBy!: string | undefined;
-    creationDate!: DateTime;
+    creationDate!: DateTime | undefined;
     updatedBy!: string | undefined;
     lastUpdate!: DateTime | undefined;
-    id!: number;
+    id!: number | undefined;
 
     constructor(data?: ISpendingCategory) {
         if (data) {
@@ -13382,14 +13200,14 @@ export class SpendingCategory implements ISpendingCategory {
 
 export interface ISpendingCategory {
     localizedKey: string | undefined;
-    isEnabled: boolean;
+    isEnabled: boolean | undefined;
     name: string | undefined;
     hintLoclizedKey: string | undefined;
     createdBy: string | undefined;
-    creationDate: DateTime;
+    creationDate: DateTime | undefined;
     updatedBy: string | undefined;
     lastUpdate: DateTime | undefined;
-    id: number;
+    id: number | undefined;
 }
 
 export class TemplateParameter implements ITemplateParameter {
@@ -13434,8 +13252,8 @@ export interface ITemplateParameter {
 
 export class TokenResponse implements ITokenResponse {
     accessToken!: string | undefined;
-    refreshToken!: RefreshToken;
-    isUserConfirmed!: boolean;
+    refreshToken!: RefreshToken | undefined;
+    isUserConfirmed!: boolean | undefined;
 
     constructor(data?: ITokenResponse) {
         if (data) {
@@ -13472,8 +13290,8 @@ export class TokenResponse implements ITokenResponse {
 
 export interface ITokenResponse {
     accessToken: string | undefined;
-    refreshToken: RefreshToken;
-    isUserConfirmed: boolean;
+    refreshToken: RefreshToken | undefined;
+    isUserConfirmed: boolean | undefined;
 }
 
 export class UpdateUserCityRegionInputDto implements IUpdateUserCityRegionInputDto {
@@ -13616,9 +13434,9 @@ export interface IValidationResultMessage {
 }
 
 export class WeatherForecast implements IWeatherForecast {
-    date!: DateTime;
-    temperatureC!: number;
-    readonly temperatureF!: number;
+    date!: DateTime | undefined;
+    temperatureC!: number | undefined;
+    readonly temperatureF!: number | undefined;
     summary!: string | undefined;
 
     constructor(data?: IWeatherForecast) {
@@ -13657,9 +13475,9 @@ export class WeatherForecast implements IWeatherForecast {
 }
 
 export interface IWeatherForecast {
-    date: DateTime;
-    temperatureC: number;
-    temperatureF: number;
+    date: DateTime | undefined;
+    temperatureC: number | undefined;
+    temperatureF: number | undefined;
     summary: string | undefined;
 }
 

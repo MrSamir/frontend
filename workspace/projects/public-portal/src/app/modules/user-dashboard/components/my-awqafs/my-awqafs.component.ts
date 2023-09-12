@@ -1,9 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ComponentBase } from 'projects/core-lib/src/lib/components/ComponentBase/ComponentBase.component';
 import { PrimengTableHelper } from 'projects/core-lib/src/lib/helpers/PrimengTableHelper';
-import { AccountProxy, EndowmentApplicationServiceProxy, EndowmentDto, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
+import { EndowmentApplicationServiceProxy, EndowmentDto, EndowmentOutputDto, InputLookUpDto, LookupApplicationServiceProxy, LookupDto, RequestApplicationServiceProxy, RequestOutputDto } from '../../../shared/services/services-proxies/service-proxies';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -19,7 +17,6 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit {
 
   constructor(
     _injecter: Injector,
- private requestApplicationServiceServiceProxy: RequestApplicationServiceProxy,
     private endowmentApplicationServiceProxy: EndowmentApplicationServiceProxy,
     private lookupssrv: LookupApplicationServiceProxy
   ) {
@@ -27,7 +24,7 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit {
     this.loadEndowmentStatus();
   }
 
- 
+
 
   private loadEndowmentStatus() {
     this.lookupfliter.lookUpName = "EndowmentStatus";
@@ -60,10 +57,10 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit {
   // }
   loadMyEndowments(event?: LazyLoadEvent) {
     this.primengTableHelper.showLoadingIndicator();
-    
+
     //ToDo To be replaced when filters are applied
-     
-    this.endowmentApplicationServiceProxy.getEndowments('',0,0,'',event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
+
+    this.endowmentApplicationServiceProxy.getEndowments('', 0, 0, '', event?.first || 0, event?.rows || this.primengTableHelper.defaultRecordsCountPerPage).subscribe(
       res => {
         this.primengTableHelper.records = res.dto.items as EndowmentDto[];
         console.log(res.dto.items);
@@ -74,7 +71,7 @@ export class MyAwqafsComponent extends ComponentBase implements OnInit {
     this.primengTableHelper.hideLoadingIndicator();
   }
 
-  getSatus(statusId) {
+  getSatus() {
     return this.endowmentStatusLookup.filter(c => c.id == 1)[0].name;
   }
 

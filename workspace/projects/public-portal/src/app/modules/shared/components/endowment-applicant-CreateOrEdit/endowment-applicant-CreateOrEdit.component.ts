@@ -15,7 +15,8 @@ import {
   InputLookUpDto,
   LookupApplicationServiceProxy,
   LookupDto,
-  MOJApplicationServiceProxy,
+  MojDataMigrationApplicationServicesProxy,
+  MojIntegrationApplicationServiceProxy,
   OutputApplicationUserDto,
   OutputFileDto,
   RequestStatusEnum,
@@ -93,7 +94,7 @@ export class EndowmentApplicantCreateOrEditComponent
     private _endowmentRegistrationService: EndowmentRegistrationApplicationServiceProxy,
     private _lookupService: LookupApplicationServiceProxy,
     private _applicationUserService: ApplicationUserServiceProxy,
-    private _MojServiceProxy: MOJApplicationServiceProxy,
+    private _MojServiceProxy: MojIntegrationApplicationServiceProxy,
     private activatedRoute: ActivatedRoute,
     private cdRef: ChangeDetectorRef
   ) {

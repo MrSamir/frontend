@@ -366,6 +366,7 @@
               [showDisclaimer]="true"
               (OnSelectFile)="EndowmentDeedFileSelect($event)"
             (OnUploadFile)="EndowmentDeedFileUpload($event)"
+            *ngIf="!endowmentDeadAttachemt"
             ></lib-file-uploader>
             <input
               type="text"
@@ -399,7 +400,7 @@
             <app-AttachmentViewer
               *ngIf="endowmentDeadAttachemt"
               (OnAttachementRemove)="EndowmentDeedremoveFile($event)"
-              [Attachements]="[endowmentDeadAttachemt]"
+              [Attachements]="[endowmentDeadAttachemt]" [DownloadButtonLabel]="'Common.DownLoad' | localize" [DeleteButtonLabel]="'Common.Delete' | localize" [ViewButtonLabel]="'Common.View' | localize"
             ></app-AttachmentViewer>
           </div>
       </div>

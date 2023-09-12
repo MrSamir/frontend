@@ -1,100 +1,85 @@
 <div class="row row-cols-1 row-cols-md-2">
-  <div class="form-group col-12">
-    <div *ngIf="!viewOnly" class="d-flex">
-      <label class="col col-form-label"
-        >{{
-          "EndowmentModule.EndowmentRgistrationService.AssetIntellectualTypeLabel"
-            | localize
-        }}
-        <span class="text-danger">*</span></label
-      >
-      <!-- <hint  [hintContent]="Typehint?.hintContentAr" [hintTitle]="Typehint?.hintTitleAr"></hint> -->
-    </div>
-    <label [hidden]="!viewOnly" class="col-form-label"
-      >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetIntellectualTypeLabel"
-          | localize
-      }}
-    </label>
-    <input
-      type="text"
-      class="form-control"
-      [minLength]="1"
-      [maxLength]="250"
-      [hidden]="viewOnly"
-      #ipatType="ngModel"
-      [pattern]="
-        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      "
-      name="benefitType"
-      [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType
-      "
-      required
-    />
-
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatType }}
-    </label>
-
-    <div
-      *ngIf="ipatType.invalid && (ipatType.dirty || ipatType.touched)"
-      class=""
-    >
-      <p *ngIf="ipatType.errors?.['required']" class="text-danger pt-1 small">
-        {{
-          "EndowmentModule.EndowmentRgistrationService.AssetIntellectualRequiredValidationLabel"
-            | localize
-        }}
-      </p>
-      <p *ngIf="ipatType.errors?.['pattern']" class="text-danger pt-1 small">
-        {{
-          "EndowmentModule.EndowmentRgistrationService.AssetIntellectualCharacterValidationLabel"
-            | localize
-        }}
-      </p>
-    </div>
+  <div class="form-group col">
+    <label class="col-form-label">{{
+      "EndowmentModule.EndowmentRgistrationService.AssetFiscalClassificationType"
+      | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <p-dropdown [required]="true" [options]="assetSubTypes" [hidden]="viewOnly" [disabled]="true" [showClear]="true" name="assetSubTypeId"
+      #assetSubTypeId="ngModel"
+      [(ngModel)]="assetInfoModel!.assetSubTypeId" optionLabel="name" optionValue="id"
+      [placeholder]="
+        l(
+          'Common.Choose',
+          l('EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType')
+        )
+      "></p-dropdown>
+      <div>
+        <label class="col-form-label font-weight-bold" *ngIf="viewOnly">&nbsp;{{
+          assetSubTypes[0]?.name }}
+        </label>
+      </div>
+    <app-validationMessages relatedControlName="assetSubTypeId"
+      [control]="assetSubTypeId" [validationMessages]="[
+        {
+          ruleName: 'required',
+          ruleMessage: l(
+            'Common.Required',
+            l('EndowmentModule.EndowmentRgistrationService.AssetBusinessSubType')
+          )
+        }
+      ]">
+    </app-validationMessages>
   </div>
   <div class="form-group col-12">
     <label class="col-form-label"
       >{{
-        "EndowmentModule.EndowmentRgistrationService.AssetIntellectualDescLabel"
+        "EndowmentModule.EndowmentRgistrationService.AssetSubTypeDescriptionLabel"
           | localize
-      }}
-    </label>
-    <textarea
-      [rows]="5"
-      cols="10"
-      class="form-control"
-      [pattern]="
-        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      "
-      #ipatDescription="ngModel"
-      name="ipatDescription"
-      [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
-      "
-      [hidden]="viewOnly"
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
     >
-    </textarea>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatDescription
-      }}
+    <textarea
+    [rows]="5"
+    cols="10"
+    class="form-control"
+    [pattern]="
+      ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+    "
+    #assetSubTypeDescription="ngModel"
+    name="assetSubTypeDescription"
+    [(ngModel)]="assetInfoModel!.assetSubTypeDescription"
+    [hidden]="viewOnly"
+    [required]="true"
+  >
+  </textarea>
+
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel!.assetSubTypeDescription }}
     </label>
+
     <div
       *ngIf="
-        ipatDescription.invalid &&
-        (ipatDescription.dirty || ipatDescription.touched)
+      assetSubTypeDescription.invalid &&
+        (assetSubTypeDescription.dirty ||
+        assetSubTypeDescription.touched)
       "
       class=""
     >
       <p
-        *ngIf="ipatDescription.errors?.['pattern']"
+        *ngIf="assetSubTypeDescription.errors?.['required']"
         class="text-danger pt-1 small"
       >
         {{
-          "EndowmentModule.EndowmentRgistrationService.AssetIntellectualCharacterValidationLabel"
+          "EndowmentModule.EndowmentRgistrationService.AssetSubTypeDescriptionRequired"
+            | localize
+        }}
+      </p>
+
+      <p
+        *ngIf="assetSubTypeDescription.errors?.['pattern']"
+        class="text-danger pt-1 small"
+      >
+        {{
+          "EndowmentModule.EndowmentRgistrationService.AssetBusinessCharacterValidation"
             | localize
         }}
       </p>
@@ -118,13 +103,13 @@
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="ipatValue"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
       "
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
       >&nbsp;{{
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.ipatValue
+        assetInfoModel.intellectualPropertyAndTrademarkAsset.ipatValue
       }}
     </label>
     <div
@@ -151,7 +136,7 @@
       #isDirectedBenefit="ngModel"
       name="isDirectedBenefit"
       [(ngModel)]="
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit
       "
       [hidden]="viewOnly"
       required
@@ -167,17 +152,15 @@
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
+        assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit && viewOnly
       "
-      [hidden]="!viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
     </label>
     <label
       class="col-form-label font-weight-bold"
       *ngIf="
-        !assetInfoModel.intellectualPropertyAndTrademarkAssetObj.isDirectedBenefit
+        !assetInfoModel.intellectualPropertyAndTrademarkAsset.isDirectedBenefit  && viewOnly
       "
-      [hidden]="!viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
     </label>
     <div

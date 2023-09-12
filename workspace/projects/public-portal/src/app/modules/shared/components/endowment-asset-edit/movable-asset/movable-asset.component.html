@@ -1,56 +1,71 @@
 <div class="row row-cols-1 row-cols-md-2">
-  <div class="form-group col-12">
-    <div *ngIf="!viewOnly" class="d-flex">
-      <label class="col col-form-label"
-        >{{
-          "EndowmentModule.EndowmentRgistrationService.AssetMovableTypeLabel"
-            | localize
-        }}<span class="text-danger">*</span></label
-      >
-      <!-- <hint  [hintContent]="movableTypehint?.hintContentAr"
-        [hintTitle]="movableTypehint?.hintTitleAr"></hint> -->
-    </div>
-    <label [hidden]="!viewOnly" class="col-form-label">{{
+  <div class="form-group col">
+    <label class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetMovableTypeLabel"
-        | localize
-    }}</label>
-    <input
-      type="text"
-      class="form-control"
-      [minLength]="1"
-      [maxLength]="250"
-      [hidden]="viewOnly"
-      #movableAssetType="ngModel"
-      [pattern]="
-        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      "
-      name="movableAssetType"
-      [(ngModel)]="assetInfoModel.movableAssetObj.movableAssetType"
-      required
-    />
+      | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label>
+      <p-dropdown [required]="true" [options]="assetSubTypes" [hidden]="viewOnly" [disabled]="true" [showClear]="true" name="assetSubTypeId"
+      #assetSubTypeId="ngModel"
+      [(ngModel)]="assetInfoModel!.assetSubTypeId" optionLabel="name" optionValue="id"
+      [placeholder]="
+        l(
+          'Common.Choose',
+          l('EndowmentModule.EndowmentRgistrationService.AssetMovableTypeLabel')
+        )
+      "></p-dropdown>
+      <div>
+        <label class="col-form-label font-weight-bold" *ngIf="viewOnly">&nbsp;{{
+          assetSubTypes[0]?.name }}
+        </label>
+      </div>
+    <app-validationMessages relatedControlName="assetSubTypeId"
+      [control]="assetSubTypeId" [validationMessages]="[
+        {
+          ruleName: 'required',
+          ruleMessage: l(
+            'Common.Required',
+            l('EndowmentModule.EndowmentRgistrationService.AssetMovableTypeLabel')
+          )
+        }
+      ]">
+    </app-validationMessages>
+  </div>
+  <div class="form-group col-12">
+    <label class="col-form-label"
+      >{{
+        "EndowmentModule.EndowmentRgistrationService.AssetMovableDescriptionLabel"
+          | localize
+      }}<span *ngIf="!viewOnly" class="text-danger">*</span></label
+    >
+    <textarea
+    [rows]="5"
+    cols="10"
+    class="form-control"
+    [pattern]="
+      ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
+    "
+    #assetSubTypeDescription="ngModel"
+    name="assetSubTypeDescription"
+    [(ngModel)]="assetInfoModel!.assetSubTypeDescription"
+    [hidden]="viewOnly"
+    [required]="true"
+  >
+  </textarea>
 
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.movableAssetObj.movableAssetType }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel!.assetSubTypeDescription }}
     </label>
 
     <div
       *ngIf="
-        movableAssetType.invalid &&
-        (movableAssetType.dirty || movableAssetType.touched)
+      assetSubTypeDescription.invalid &&
+        (assetSubTypeDescription.dirty ||
+        assetSubTypeDescription.touched)
       "
       class=""
     >
       <p
-        *ngIf="movableAssetType.errors?.['required']"
-        class="text-danger pt-1 small"
-      >
-        {{
-          "EndowmentModule.EndowmentRgistrationService.AssetMovableRequiredValidationLabel"
-            | localize
-        }}
-      </p>
-      <p
-        *ngIf="movableAssetType.errors?.['pattern']"
+        *ngIf="assetSubTypeDescription.errors?.['required']"
         class="text-danger pt-1 small"
       >
         {{
@@ -58,38 +73,9 @@
             | localize
         }}
       </p>
-    </div>
-  </div>
-  <div class="form-group col-12">
-    <label class="col-form-label">{{
-      "EndowmentModule.EndowmentRgistrationService.AssetMovableDescriptionLabel"
-        | localize
-    }}</label>
-    <textarea
-      [rows]="5"
-      cols="10"
-      class="form-control"
-      [pattern]="
-        ePatternValidation.pattern_arabic_english_any_char_with_space_without_numbers
-      "
-      #movableAssetDescription="ngModel"
-      name="movableAssetDescription"
-      [(ngModel)]="assetInfoModel.movableAssetObj.movableAssetDescription"
-      [hidden]="viewOnly"
-    >
-    </textarea>
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.movableAssetObj.movableAssetDescription }}
-    </label>
-    <div
-      *ngIf="
-        movableAssetDescription.invalid &&
-        (movableAssetDescription.dirty || movableAssetDescription.touched)
-      "
-      class=""
-    >
+
       <p
-        *ngIf="movableAssetDescription.errors?.['pattern']"
+        *ngIf="assetSubTypeDescription.errors?.['pattern']"
         class="text-danger pt-1 small"
       >
         {{
@@ -110,7 +96,7 @@
       <!-- <hint  [hintContent]="movableAssetOwnershipNumberhint?.hintContentAr"
           [hintTitle]="movableAssetOwnershipNumberhint?.hintTitleAr"></hint> -->
     </div>
-    <label [hidden]="!viewOnly" class="col-form-label"
+    <label *ngIf="viewOnly" class="col-form-label"
       >{{
         "EndowmentModule.EndowmentRgistrationService.AssetMovableOwnershipNumberLabel"
           | localize
@@ -126,11 +112,11 @@
       #movableAssetOwnershipNumber="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null : event.charCode >= 48 && event.charCode <= 57"
       name="movableAssetOwnershipNumber"
-      [(ngModel)]="assetInfoModel.movableAssetObj.movableAssetOwnershipNumber"
+      [(ngModel)]="assetInfoModel.movableAsset.movableAssetOwnershipNumber"
       [pattern]="ePatternValidation.pattern_number"
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.movableAssetObj.movableAssetOwnershipNumber }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel.movableAsset.movableAssetOwnershipNumber }}
     </label>
     <div
       *ngIf="
@@ -162,7 +148,7 @@
       <!-- <hint  [hintContent]="movableValuehint?.hintContentAr"
           [hintTitle]="movableValuehint?.hintTitleAr"></hint> -->
     </div>
-    <label [hidden]="!viewOnly" class="col-form-label">{{
+    <label *ngIf="viewOnly" class="col-form-label">{{
       "EndowmentModule.EndowmentRgistrationService.AssetMovableValueLabel"
         | localize
     }}</label>
@@ -176,11 +162,11 @@
       #movableValue="ngModel"
       onkeypress="return event.charCode == 8 || event.charCode == 0 ? null :  event.charCode >= 45 && event.charCode <= 57"
       name="movableValue"
-      [(ngModel)]="assetInfoModel.movableAssetObj.movableValue"
+      [(ngModel)]="assetInfoModel.movableAsset.movableValue"
       [pattern]="ePatternValidation.pattern_decimal_values"
     />
-    <label class="col-form-label font-weight-bold" [hidden]="!viewOnly"
-      >&nbsp;{{ assetInfoModel.movableAssetObj.movableValue }}
+    <label class="col-form-label font-weight-bold" *ngIf="viewOnly"
+      >&nbsp;{{ assetInfoModel.movableAsset.movableValue }}
     </label>
     <div
       *ngIf="
@@ -210,7 +196,7 @@
       class="custom-select"
       #isDirectedBenefit="ngModel"
       name="isDirectedBenefit"
-      [(ngModel)]="assetInfoModel.movableAssetObj.isDirectedBenefit"
+      [(ngModel)]="assetInfoModel.movableAsset.isDirectedBenefit"
       [hidden]="viewOnly"
       required
     >
@@ -224,14 +210,12 @@
     </select>
     <label
       class="col-form-label font-weight-bold"
-      *ngIf="assetInfoModel.movableAssetObj.isDirectedBenefit"
-      [hidden]="!viewOnly"
+      *ngIf="assetInfoModel.movableAsset.isDirectedBenefit && viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.Yes" | localize }}
     </label>
     <label
       class="col-form-label font-weight-bold"
-      *ngIf="!assetInfoModel.movableAssetObj.isDirectedBenefit"
-      [hidden]="!viewOnly"
+      *ngIf="!assetInfoModel.movableAsset.isDirectedBenefit && viewOnly"
       >&nbsp; {{ "EndowmentModule.EndowmentRgistrationService.No" | localize }}
     </label>
     <div
