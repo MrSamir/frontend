@@ -1,6 +1,5 @@
-<div class="d-flex justify-content-center my-6" *ngIf="!this.Assets || this.Assets?.length === 0">
-  <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)"
-    *ngIf="!viewOnly">
+<div class="d-flex justify-content-center my-6" *ngIf="(!this.Assets || this.Assets?.length === 0) && !viewOnly">
+  <a href="javascript:void(0)" class="addBox my-6 py-3 col-xl-5" (click)="onAddNewAssetClicked(addData)">
     <!-- <svg-icon styleClass="fa-3x mr-3 mb-2 " icon="add-icon"></svg-icon> -->
     <!-- <span>يجب إضافة أصل واحد على الأقل</span> -->
     <span>{{
@@ -10,9 +9,9 @@
   </a>
 </div>
 
-<div class="d-flex justify-content-end my-6">
+<div class="d-flex justify-content-end my-6" *ngIf="!viewOnly">
   <a href="javascript:void(0)" class="btn btn-outline-awq-secondary px-6 border-0 shadow-sm"
-    (click)="onAddNewAssetClicked(addData)" *ngIf="!viewOnly">
+    (click)="onAddNewAssetClicked(addData)">
     <!-- <svg-icon styleClass="h1 mr-2" icon="add-icon"></svg-icon> -->
     <!-- <span>إضافة أصل آخر</span> -->
     <span>{{
@@ -226,7 +225,7 @@
   </form>
 </ng-template>
 
-<div class="aw-btn">
+<div class="aw-btn" *ngIf="!viewOnly">
   <button type="button" class="btn btn-awq-secondary"
     (click)="onNextBtnClicked()">{{'EndowmentModule.EndowmentRgistrationService.ButtonNext' | localize}}</button>
   <button type="button" class="btn btn-outline-awq-secondary"
